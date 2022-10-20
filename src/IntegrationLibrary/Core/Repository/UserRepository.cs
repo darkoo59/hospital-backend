@@ -2,6 +2,7 @@
 using IntegrationLibrary.Settings;
 using System.Collections.Generic;
 using System.Linq;
+using static IntegrationLibrary.Core.Model.User;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -21,7 +22,8 @@ namespace IntegrationLibrary.Core.Repository
 
         public void Register(User user)
         {
-            throw new System.NotImplementedException();
+            _context.Users.Add(user);
+            _context.SaveChanges();
         }
     }
 }

@@ -27,7 +27,8 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("AppName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -42,6 +43,9 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
 
                     b.HasData(
@@ -50,7 +54,7 @@ namespace IntegrationLibrary.Migrations
                             Id = 1,
                             AppName = "app1",
                             Email = "email1@gmail.com",
-                            Password = "pw1",
+                            Password = "OLIfDWaYYunpFtiQ",
                             Server = "localhost:5555"
                         },
                         new
@@ -58,7 +62,7 @@ namespace IntegrationLibrary.Migrations
                             Id = 2,
                             AppName = "app2",
                             Email = "email2@gmail.com",
-                            Password = "pw2",
+                            Password = "UzX1V1A0FfLerVn5",
                             Server = "localhost:6555"
                         },
                         new
@@ -66,7 +70,7 @@ namespace IntegrationLibrary.Migrations
                             Id = 3,
                             AppName = "app3",
                             Email = "email3@gmail.com",
-                            Password = "pw3",
+                            Password = "dd13xfCA5Jz9Y9ho",
                             Server = "localhost:7555"
                         });
                 });

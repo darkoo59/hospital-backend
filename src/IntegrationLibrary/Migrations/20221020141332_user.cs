@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class initial : Migration
+    public partial class user : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: true),
-                    AppName = table.Column<string>(type: "text", nullable: false),
+                    AppName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     Server = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -28,10 +28,16 @@ namespace IntegrationLibrary.Migrations
                 columns: new[] { "Id", "AppName", "Email", "Password", "Server" },
                 values: new object[,]
                 {
-                    { 1, "app1", "email1@gmail.com", "pw1", "localhost:5555" },
-                    { 2, "app2", "email2@gmail.com", "pw2", "localhost:6555" },
-                    { 3, "app3", "email3@gmail.com", "pw3", "localhost:7555" }
+                    { 1, "app1", "email1@gmail.com", "OLIfDWaYYunpFtiQ", "localhost:5555" },
+                    { 2, "app2", "email2@gmail.com", "UzX1V1A0FfLerVn5", "localhost:6555" },
+                    { 3, "app3", "email3@gmail.com", "dd13xfCA5Jz9Y9ho", "localhost:7555" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
