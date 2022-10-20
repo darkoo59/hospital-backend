@@ -6,36 +6,36 @@ using System.Linq;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class PatientRepository : IPatientRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly HospitalDbContext _context;
 
-        public PatientRepository(HospitalDbContext context)
+        public AppointmentRepository(HospitalDbContext context)
         {
             _context = context;
         }
 
-        public void Create(Patient patient)
+        public void Create(Appointment appointment)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Patient patient)
+        public void Delete(Appointment appointment)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Patient> GetAll()
+        public IEnumerable<Appointment> GetAll()
         {
-            return _context.Patients.ToList();
+            return _context.Appointments.ToList();
         }
 
-        public Patient GetById(int id)
+        public Appointment GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Patient patient)
+        public void Update(Appointment appointment)
         {
             throw new NotImplementedException();
         }

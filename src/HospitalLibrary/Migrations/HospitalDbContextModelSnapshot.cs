@@ -21,7 +21,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -35,7 +35,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("AppointmentId");
 
                     b.HasIndex("DoctorId");
 
@@ -46,30 +46,16 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            DateTime = new DateTime(2022, 10, 20, 15, 58, 32, 932, DateTimeKind.Local).AddTicks(2376),
+                            AppointmentId = 1,
+                            DateTime = new DateTime(2022, 10, 20, 20, 37, 42, 243, DateTimeKind.Local).AddTicks(6148),
                             DoctorId = 1,
-                            PatientId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateTime = new DateTime(2022, 10, 20, 15, 58, 32, 942, DateTimeKind.Local).AddTicks(7288),
-                            DoctorId = 2,
                             PatientId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateTime = new DateTime(2022, 10, 20, 15, 58, 32, 942, DateTimeKind.Local).AddTicks(7345),
-                            DoctorId = 3,
-                            PatientId = 3
                         });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DoctorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -88,7 +74,7 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("DoctorId");
 
                     b.HasIndex("RoomId");
 
@@ -99,27 +85,11 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            DoctorId = 1,
                             Name = "Ognjen",
                             RoomId = 1,
                             SpecializationId = 3,
                             Surname = "Nikolic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Mika",
-                            RoomId = 2,
-                            SpecializationId = 3,
-                            Surname = "Mikic"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Aleksa",
-                            RoomId = 1,
-                            SpecializationId = 3,
-                            Surname = "Santic"
                         });
                 });
 
@@ -165,7 +135,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -177,26 +147,26 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoomId");
 
                     b.ToTable("Rooms");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            RoomId = 1,
                             Floor = 1,
                             Number = "101A"
                         },
                         new
                         {
-                            Id = 2,
+                            RoomId = 2,
                             Floor = 2,
                             Number = "204"
                         },
                         new
                         {
-                            Id = 3,
+                            RoomId = 3,
                             Floor = 3,
                             Number = "305B"
                         });
@@ -204,7 +174,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Specialization", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SpecializationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -213,24 +183,24 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpecializationId");
 
                     b.ToTable("Specializations");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            SpecializationId = 1,
                             Name = "Anesthesiology"
                         },
                         new
                         {
-                            Id = 2,
+                            SpecializationId = 2,
                             Name = "Dermatology"
                         },
                         new
                         {
-                            Id = 3,
+                            SpecializationId = 3,
                             Name = "Family medicine"
                         });
                 });
@@ -238,13 +208,13 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -271,6 +241,16 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("Specialization");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>

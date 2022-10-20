@@ -5,9 +5,10 @@ namespace HospitalLibrary.Core.Model
 {
     public class Specialization
     {
-        public int Id { get; set; }
+        public int SpecializationId { get; set; }
         [Required]
         public string Name { get; set; }
         public List<Doctor> Doctors { get; set; }
+
     }
 }
