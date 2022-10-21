@@ -11,6 +11,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<WorkTime> WorkTimes { get; set; }
+        public DbSet<Vacation> Vacations { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -47,6 +48,10 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<WorkTime>().HasData(
                new WorkTime() { WorkTimeId = 1, StartDate =  new System.DateTime(2022, 10, 15), EndDate = new System.DateTime(2022, 11, 15), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
            );
+
+            modelBuilder.Entity<Vacation>().HasData(
+              new Vacation() { VacationId = 1, StartDate = new System.DateTime(2022, 11, 17), EndDate = new System.DateTime(2022, 12, 2), DoctorId = 1 }
+          );
 
             base.OnModelCreating(modelBuilder);
         }
