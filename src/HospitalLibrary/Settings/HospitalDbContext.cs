@@ -10,6 +10,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<WorkTime> WorkTimes { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -42,6 +43,11 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Appointment>().HasData(
                new Appointment() { AppointmentId = 1, DateTime = System.DateTime.Now, DoctorId = 1, PatientId = 1 }
            );
+
+            modelBuilder.Entity<WorkTime>().HasData(
+               new WorkTime() { WorkTimeId = 1, StartDate =  new System.DateTime(2022, 10, 15), EndDate = new System.DateTime(2022, 11, 15), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
+           );
+
             base.OnModelCreating(modelBuilder);
         }
     }
