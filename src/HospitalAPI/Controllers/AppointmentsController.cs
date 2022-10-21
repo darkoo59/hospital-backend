@@ -26,5 +26,29 @@ namespace HospitalAPI.Controllers
             return Ok(_appointmentService.GetAll());
         }
 
+        [HttpPost]
+        public ActionResult Create(Appointment appointment)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _appointmentService.Create(appointment);
+            return CreatedAtAction("GetById", new { id = appointment.AppointmentId }, appointment);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var appointment = _appointmentService.GetById(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(appointment);
+        }
+
     }
 }

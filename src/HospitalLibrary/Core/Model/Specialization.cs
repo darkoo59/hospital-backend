@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -8,7 +7,6 @@ namespace HospitalLibrary.Core.Model
         public int SpecializationId { get; set; }
         [Required]
         public string Name { get; set; }
-        public List<Doctor> Doctors { get; set; }
 
     }
 }

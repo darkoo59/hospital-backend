@@ -47,7 +47,7 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             AppointmentId = 1,
-                            DateTime = new DateTime(2022, 10, 20, 20, 37, 42, 243, DateTimeKind.Local).AddTicks(6148),
+                            DateTime = new DateTime(2022, 10, 21, 16, 37, 10, 923, DateTimeKind.Local).AddTicks(615),
                             DoctorId = 1,
                             PatientId = 1
                         });
@@ -95,7 +95,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PatientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -108,26 +108,26 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("PatientId");
 
                     b.ToTable("Patients");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            PatientId = 1,
                             Name = "Pera",
                             Surname = "Peric"
                         },
                         new
                         {
-                            Id = 2,
+                            PatientId = 2,
                             Name = "Marko",
                             Surname = "Markovic"
                         },
                         new
                         {
-                            Id = 3,
+                            PatientId = 3,
                             Name = "Aleksa",
                             Surname = "Aleksic"
                         });
@@ -208,13 +208,13 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany("Appointments")
+                        .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany("Appointments")
+                        .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -227,13 +227,13 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
-                        .WithMany("Doctors")
+                        .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HospitalLibrary.Core.Model.Specialization", "Specialization")
-                        .WithMany("Doctors")
+                        .WithMany()
                         .HasForeignKey("SpecializationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -241,26 +241,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
-                {
-                    b.Navigation("Appointments");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
-                {
-                    b.Navigation("Appointments");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
-                    b.Navigation("Doctors");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Specialization", b =>
-                {
-                    b.Navigation("Doctors");
                 });
 #pragma warning restore 612, 618
         }

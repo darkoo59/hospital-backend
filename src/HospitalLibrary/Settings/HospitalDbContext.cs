@@ -22,9 +22,9 @@ namespace HospitalLibrary.Settings
             );
 
             modelBuilder.Entity<Patient>().HasData(
-                new Patient() { Id = 1, Name = "Pera", Surname = "Peric" },
-                new Patient() { Id = 2, Name = "Marko", Surname = "Markovic" },
-                new Patient() { Id = 3, Name = "Aleksa", Surname = "Aleksic" }
+                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric" },
+                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic" },
+                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic" }
             );
 
             modelBuilder.Entity<Specialization>().HasData(

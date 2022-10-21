@@ -9,8 +9,23 @@ namespace HospitalLibrary.Migrations
         {
             migrationBuilder.RenameColumn(
                 name: "Id",
+                table: "Patients",
+                newName: "PatientId");
+
+            migrationBuilder.UpdateData(
                 table: "Appointments",
-                newName: "AppointmentId");
+                keyColumn: "AppointmentId",
+                keyValue: 1,
+                column: "DateTime",
+                value: new DateTime(2022, 10, 21, 16, 37, 10, 923, DateTimeKind.Local).AddTicks(615));
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.RenameColumn(
+                name: "PatientId",
+                table: "Patients",
+                newName: "Id");
 
             migrationBuilder.UpdateData(
                 table: "Appointments",
@@ -18,21 +33,6 @@ namespace HospitalLibrary.Migrations
                 keyValue: 1,
                 column: "DateTime",
                 value: new DateTime(2022, 10, 20, 20, 37, 42, 243, DateTimeKind.Local).AddTicks(6148));
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "AppointmentId",
-                table: "Appointments",
-                newName: "Id");
-
-            migrationBuilder.UpdateData(
-                table: "Appointments",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "DateTime",
-                value: new DateTime(2022, 10, 20, 20, 10, 8, 323, DateTimeKind.Local).AddTicks(9962));
         }
     }
 }

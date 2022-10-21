@@ -17,7 +17,8 @@ namespace HospitalLibrary.Core.Repository
 
         public void Create(Appointment appointment)
         {
-            throw new NotImplementedException();
+            _context.Appointments.Add(appointment);
+            _context.SaveChanges();
         }
 
         public void Delete(Appointment appointment)
@@ -32,7 +33,7 @@ namespace HospitalLibrary.Core.Repository
 
         public Appointment GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Appointments.Find(id);
         }
 
         public void Update(Appointment appointment)

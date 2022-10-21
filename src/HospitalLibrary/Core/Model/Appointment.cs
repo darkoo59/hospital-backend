@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -6,10 +7,12 @@ namespace HospitalLibrary.Core.Model
     {
         public int AppointmentId { get; set; }
         public DateTime DateTime { get; set; }
-        public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
-        public int PatientId { get; set; }
-        public Patient Patient { get; set; }
+        public int? DoctorId { get; set; }
+        [ForeignKey("DoctorId")]
+        public virtual Doctor Doctor { get; set; }
+        public int? PatientId { get; set; }
+        [ForeignKey("PatientId")]
+        public virtual Patient Patient { get; set; }
 
 
     }
