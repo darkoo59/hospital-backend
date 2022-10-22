@@ -1,3 +1,4 @@
+using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
@@ -40,6 +41,9 @@ namespace HospitalAPI
 
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<AppointmentMapper>();
+            services.AddScoped<PatientMapper>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

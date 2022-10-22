@@ -46,7 +46,7 @@ namespace HospitalLibrary.Settings
            );
 
             modelBuilder.Entity<WorkTime>().HasData(
-               new WorkTime() { WorkTimeId = 1, StartDate =  new System.DateTime(2022, 10, 15), EndDate = new System.DateTime(2022, 11, 15), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
+               new WorkTime() { WorkTimeId = 1, StartDate = new System.DateTime(2022, 10, 15), EndDate = new System.DateTime(2022, 11, 15), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
            );
 
             modelBuilder.Entity<Vacation>().HasData(
