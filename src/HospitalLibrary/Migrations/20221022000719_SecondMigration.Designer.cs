@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221022000719_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +49,7 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             AppointmentId = 1,
-                            DateTime = new DateTime(2022, 10, 22, 2, 1, 9, 283, DateTimeKind.Local).AddTicks(9178),
+                            DateTime = new DateTime(2022, 10, 22, 2, 7, 18, 649, DateTimeKind.Local).AddTicks(1172),
                             DoctorId = 1,
                             PatientId = 1
                         });

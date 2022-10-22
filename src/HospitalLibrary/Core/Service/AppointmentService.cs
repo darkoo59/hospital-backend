@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -36,6 +37,21 @@ namespace HospitalLibrary.Core.Service
         public void Update(Appointment appointment)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Appointment> GetFutureAppointmentsById(int id)
+        {
+            List<Appointment> futureAppointments = new List<Appointment>();
+            List<Appointment> appointments = _appointmentRepository.GetAll().ToList();
+            
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.DoctorId == id && appointment.DateTime >= DateTime.Now)
+                {
+                    futureAppointments.Add(appointment);
+                }
+            }
+            return futureAppointments;
         }
     }
 }

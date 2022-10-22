@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Service
         void Create(Appointment appointment);
         void Update(Appointment ppointment);
         void Delete(Appointment appointment);
+        List<Appointment> GetFutureAppointmentsById(int id);
     }
 }
