@@ -32,10 +32,10 @@ namespace IntegrationLibrary.Core.Service
             //TODO: send email with generated password
             MailContent mailContent = new MailContent();
             mailContent.Subject = "Welcome";
-            mailContent.ToEmail = "darkoo59@gmail.com";
+            mailContent.ToEmail = user.Email;
             mailContent.Attachments = null;
-            mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru!" +
-                "Link : localhost:4200/integration/login";
+            mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru! " +
+                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password;
             try
             {
                 await _mailService.SendEmail(mailContent);
