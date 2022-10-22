@@ -1,7 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace IntegrationLibrary.Core.Model
