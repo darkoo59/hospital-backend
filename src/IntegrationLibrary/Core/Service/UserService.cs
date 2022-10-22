@@ -2,6 +2,8 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Utility;
+using Org.BouncyCastle.Asn1.Cms;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
@@ -15,13 +17,15 @@ namespace IntegrationLibrary.Core.Service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMailService _mailService;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMailService mailService)
         {
             _userRepository = userRepository;
+            _mailService = mailService;
         }
 
-        public void Register(User user)
+        public async void Register(User user)
         {
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
@@ -31,6 +35,20 @@ namespace IntegrationLibrary.Core.Service
             _userRepository.Register(user);
 
             //TODO: send email with generated password
+            MailContent mailContent = new MailContent();
+            mailContent.Subject = "Welcome";
+            mailContent.ToEmail = user.Email;
+            mailContent.Attachments = null;
+            mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru! " +
+                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password;
+            try
+            {
+                await _mailService.SendEmail(mailContent);
+                return;
+            }catch(Exception ex)
+            {
+                throw;
+            }
         }
 
         public string Login(UserLogin userLogin, IConfiguration config)
