@@ -11,10 +11,11 @@ namespace IntegrationLibrary.Core.Service
     {
 
         public BloodTypeService() {}
-        public bool CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey)
+        public bool CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity)
         {
             Console.WriteLine("Blood type: " + bloodType);
             Console.WriteLine("Api key: " + apiKey);
+            Console.WriteLine("Blood quantity: " + bloodQuantity);
             return true;
         }
     }

@@ -23,7 +23,7 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodTypesDTO.BloodType, bloodTypesDTO.ApiKey));
+            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodTypesDTO.BloodType, bloodTypesDTO.ApiKey, bloodTypesDTO.BloodQuantity));
         }
 
 
