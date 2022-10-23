@@ -51,6 +51,7 @@ namespace HospitalLibrary.Core.Service
             throw new NotImplementedException();
         }
 
+
         public bool IsAppointmentAvailable(Appointment appointment)
         {
             bool isAvailable = true;
@@ -96,6 +97,22 @@ namespace HospitalLibrary.Core.Service
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {
             return appointment.DateTime >= workTime.StartDate && appointment.DateTime <= workTime.EndDate && appointment.DateTime.TimeOfDay >= workTime.StartTime && appointment.DateTime.TimeOfDay <= workTime.EndTime;
+        }
+
+        public List<Appointment> GetFutureAppointments(int DoctorId)
+        {
+            List<Appointment> futureAppointments = new List<Appointment>();
+            List<Appointment> appointments = _appointmentRepository.GetAll().ToList();
+
+            foreach (var appointment in appointments)
+            {
+                if (appointment.DoctorId == DoctorId && appointment.DateTime >= DateTime.Now)
+                {
+                    futureAppointments.Add(appointment);
+                }
+            }
+            return futureAppointments;
+
         }
     }
 }
