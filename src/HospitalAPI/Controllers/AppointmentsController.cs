@@ -50,5 +50,11 @@ namespace HospitalAPI.Controllers
             return Ok(appointment);
         }
 
+        [HttpGet("{id}/futureAppointments")]
+        List<Appointment> GetFutureAppointmentsById(int id)
+        {
+            return _appointmentService.GetFutureAppointmentsById(id);
+        }
+
     }
 }
