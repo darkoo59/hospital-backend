@@ -2,7 +2,6 @@
 using IntegrationLibrary.Settings;
 using System.Collections.Generic;
 using System.Linq;
-using static IntegrationLibrary.Core.Model.User;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -18,6 +17,11 @@ namespace IntegrationLibrary.Core.Repository
         public IEnumerable<User> GetAll()
         {
             return _context.Users.ToList();
+        }
+
+        public User GetBy(string email)
+        {
+            return GetAll().FirstOrDefault(user => user.Email.ToLower().Equals(email.ToLower()));
         }
 
         public void Register(User user)
