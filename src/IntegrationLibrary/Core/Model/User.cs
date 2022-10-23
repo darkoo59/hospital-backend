@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace IntegrationLibrary.Core.Model
 {
@@ -9,6 +10,7 @@ namespace IntegrationLibrary.Core.Model
         [Required]
         [EmailAddress]
         public string Email { set; get; }
+        [JsonIgnore]
         public string Password { set; get; }
         [Required]
         [MaxLength(30)]

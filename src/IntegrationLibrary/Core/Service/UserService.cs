@@ -34,7 +34,7 @@ namespace IntegrationLibrary.Core.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
             _userRepository.Register(user);
 
-            //TODO: send email with generated password
+            
             MailContent mailContent = new MailContent();
             mailContent.Subject = "Welcome";
             mailContent.ToEmail = user.Email;
@@ -79,7 +79,7 @@ namespace IntegrationLibrary.Core.Service
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim("email", user.Email)
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"],
