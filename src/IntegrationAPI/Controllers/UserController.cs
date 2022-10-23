@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 namespace IntegrationAPI.Controllers
 {
@@ -52,7 +55,7 @@ namespace IntegrationAPI.Controllers
                 if (token == null) 
                     return NotFound("User not found");
 
-                return Ok(token);
+                return Ok(Content(token, "application/json"));
             }
             catch (Exception e)
             {
@@ -72,6 +75,18 @@ namespace IntegrationAPI.Controllers
         public IActionResult Public()
         {
             return Ok("Authenticated");
+        }
+
+        [Authorize]
+        [HttpGet("data")]
+        public ActionResult GetUserData()
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                return Ok(JsonSerializer.Serialize(_userService.GetBy(email)));
+            }
+            return Unauthorized();
         }
     }
 }
