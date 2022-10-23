@@ -7,5 +7,6 @@ namespace IntegrationLibrary.Core.Repository
     {
         void Register(User user);
         IEnumerable<User> GetAll();
+        User GetBy(string email);
     }
 }
