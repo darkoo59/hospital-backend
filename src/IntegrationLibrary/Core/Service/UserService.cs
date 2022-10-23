@@ -2,8 +2,6 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Utility;
-using Org.BouncyCastle.Asn1.Cms;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using IntegrationLibrary.DTO;
+using static IntegrationLibrary.Core.Model.User;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -62,6 +62,17 @@ namespace IntegrationLibrary.Core.Service
 
             return token;
         }
+
+        public void ChangePassword(string email, ChangePasswordDTO dto)
+        {
+            User user = GetBy(email);
+            if (user == null) return;
+            if (!user.Password.Equals(dto.OldPassword)) throw new BadPasswordException("Bad password");
+            //TODO: password requirements validation
+
+            _userRepository.ChangePassword(user, dto.NewPassword);
+        }
+
         private User Authenticate(UserLogin userLogin)
         {
             var currentUser = GetBy(userLogin.Email);
@@ -79,7 +90,7 @@ namespace IntegrationLibrary.Core.Service
 
             var claims = new[]
             {
-                new Claim("email", user.Email)
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"],

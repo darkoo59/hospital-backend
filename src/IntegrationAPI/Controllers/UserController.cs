@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
+using IntegrationLibrary.DTO;
 
 namespace IntegrationAPI.Controllers
 {
@@ -85,6 +86,26 @@ namespace IntegrationAPI.Controllers
             {
                 string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
                 return Ok(JsonSerializer.Serialize(_userService.GetBy(email)));
+            }
+            return Unauthorized();
+        }
+
+        [Authorize]
+        [HttpPatch("password")]
+        public ActionResult ChangePassword([FromBody] ChangePasswordDTO dto)
+        {
+            if (HttpContext.User.Identity != null && dto != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                try
+                {
+                    _userService.ChangePassword(email, dto);
+                    return Ok();
+                }
+                catch(User.BadPasswordException e)
+                {
+                    return Unauthorized(e.Message);
+                }
             }
             return Unauthorized();
         }

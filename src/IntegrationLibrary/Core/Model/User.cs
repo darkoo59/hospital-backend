@@ -23,5 +23,9 @@ namespace IntegrationLibrary.Core.Model
         {
             public DuplicateEMailException(string message) : base(message) { }
         }
+        public class BadPasswordException : Exception
+        {
+            public BadPasswordException(string message) : base(message) { }
+        }
     }
 }

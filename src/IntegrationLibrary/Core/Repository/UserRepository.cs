@@ -29,5 +29,11 @@ namespace IntegrationLibrary.Core.Repository
             _context.Users.Add(user);
             _context.SaveChanges();
         }
+
+        public void ChangePassword(User user, string password)
+        {
+            user.Password = password;
+            _context.SaveChanges();
+        }
     }
 }
