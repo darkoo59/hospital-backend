@@ -54,9 +54,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("futureAppointments/{doctorId}")]
-        ActionResult GetFutureAppointmentsById(int DoctorId)
+        public ActionResult GetFutureAppointmentsById(int doctorId)
         {
-            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetFutureAppointments(DoctorId)));
+            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetFutureAppointments(doctorId)));
         }
 
     }
