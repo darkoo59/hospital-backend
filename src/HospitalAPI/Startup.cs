@@ -44,6 +44,12 @@ namespace HospitalAPI
             services.AddScoped<AppointmentMapper>();
             services.AddScoped<PatientMapper>();
 
+            services.AddScoped<IVacationService, VacationService>();
+            services.AddScoped<IVacationRepository, VacationRepository>();
+
+            services.AddScoped<IWorkTimeService, WorkTimeService>();
+            services.AddScoped<IWorkTimeRepository, WorkTimeRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

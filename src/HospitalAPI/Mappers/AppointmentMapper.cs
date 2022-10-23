@@ -27,7 +27,8 @@ namespace HospitalAPI.Mappers
 
         public List<Appointment> ToModel(List<AppointmentDTO> appointmentDTOs) {
             List<Appointment> appointments = new List<Appointment>();
-            foreach (var appointmentDTO in appointmentDTOs) {
+            foreach (var appointmentDTO in appointmentDTOs) 
+            {
                 Appointment appointment = new Appointment();
                 appointment.AppointmentId = appointmentDTO.AppointmentId;
                 string hours = appointmentDTO.Time.Split(":")[0];
@@ -56,7 +57,8 @@ namespace HospitalAPI.Mappers
 
         public List<AppointmentDTO> ToDTO(List<Appointment> appointments) {
             List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
-            foreach (var appointment in appointments) {
+            foreach (var appointment in appointments) 
+            {
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.AppointmentId = appointment.AppointmentId;
                 appointmentDTO.Date = appointment.DateTime.Date;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
@@ -6,6 +7,7 @@ namespace HospitalLibrary.Core.Model
     public class Appointment
     {
         public int AppointmentId { get; set; }
+        [Required]
         public DateTime DateTime { get; set; }
         public int? DoctorId { get; set; }
         [ForeignKey("DoctorId")]

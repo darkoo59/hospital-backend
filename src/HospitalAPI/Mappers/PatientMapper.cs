@@ -17,7 +17,8 @@ namespace HospitalAPI.Mappers
 
         public List<Patient> ToModel(List<PatientDTO> patientDTOs) {
             List<Patient> patients = new List<Patient>();
-            foreach (var patientDTO in patientDTOs) {
+            foreach (var patientDTO in patientDTOs) 
+            {
                 Patient patient = new Patient();
                 patient.PatientId = patientDTO.PatientId;
                 patient.Name = patientDTO.Name;
@@ -39,7 +40,8 @@ namespace HospitalAPI.Mappers
 
         public List<PatientDTO> ToDTO(List<Patient> patients) {
             List<PatientDTO> patientDTOs = new List<PatientDTO>();
-            foreach (var patient in patients) {
+            foreach (var patient in patients) 
+            {
                 PatientDTO patientDTO = new PatientDTO();
                 patientDTO.PatientId = patient.PatientId;
                 patientDTO.Name = patient.Name;
