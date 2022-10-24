@@ -4,18 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Appointment
+    public class Vacation
     {
-        public int AppointmentId { get; set; }
+        public int VacationId { get; set; }
         [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime StartDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
+        [Required]
         public int? DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public virtual Doctor Doctor { get; set; }
-        public int? PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public virtual Patient Patient { get; set; }
-
-
     }
 }

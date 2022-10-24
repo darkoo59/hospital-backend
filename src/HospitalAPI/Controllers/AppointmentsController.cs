@@ -1,11 +1,9 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalAPI.Dtos;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers
 {
@@ -14,26 +12,31 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
+        private readonly AppointmentMapper _appointmentMapper;
 
-        public AppointmentsController(IAppointmentService appointmentService)
+        public AppointmentsController(IAppointmentService appointmentService, AppointmentMapper appointmentMapper)
         {
             _appointmentService = appointmentService;
+            _appointmentMapper = appointmentMapper;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_appointmentService.GetAll());
+            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetAll().ToList()));
         }
 
         [HttpPost]
-        public ActionResult Create(Appointment appointment)
+        public ActionResult Create(AppointmentDTO appointmentDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            // zakucano trenutno
+            appointmentDTO.DoctorId = 1;
+            Appointment appointment = _appointmentMapper.ToModel(appointmentDTO);
             _appointmentService.Create(appointment);
             return CreatedAtAction("GetById", new { id = appointment.AppointmentId }, appointment);
         }
@@ -47,7 +50,13 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(appointment);
+            return Ok(_appointmentMapper.ToDTO(appointment));
+        }
+
+        [HttpGet("futureAppointments/{doctorId}")]
+        public ActionResult GetFutureAppointmentsById(int doctorId)
+        {
+            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetFutureAppointments(doctorId)));
         }
 
 

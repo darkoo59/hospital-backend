@@ -8,8 +8,8 @@ namespace HospitalLibrary.Core.Service
         IEnumerable<Appointment> GetAll();
         Appointment GetById(int id);
         void Create(Appointment appointment);
-        void Update(Appointment ppointment);
+        void Update(Appointment appointment);
         void Delete(Appointment appointment);
-        List<Appointment> GetFutureAppointmentsById(int id);
+        List<Appointment> GetFutureAppointments(int id);
     }
 }

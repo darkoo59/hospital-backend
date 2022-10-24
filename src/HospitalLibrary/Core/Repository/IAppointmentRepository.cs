@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Repository
         IEnumerable<Appointment> GetAll();
         Appointment GetById(int id);
         void Create(Appointment appointment);
-        void Update(Appointment ppointment);
+        void Update(Appointment appointment);
         void Delete(Appointment appointment);
     }
 }
