@@ -21,7 +21,7 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(Appointment appointment)
         {
-            throw new NotImplementedException();
+            _appointmentRepository.Delete(appointment);
         }
 
         public IEnumerable<Appointment> GetAll()
@@ -36,7 +36,7 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment appointment)
         {
-            throw new NotImplementedException();
+            _appointmentRepository.Update(appointment);
         }
 
         public List<Appointment> GetFutureAppointmentsById(int id)

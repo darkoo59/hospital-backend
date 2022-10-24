@@ -50,5 +50,48 @@ namespace HospitalAPI.Controllers
             return Ok(appointment);
         }
 
+
+        // DELETE api/appointments/2
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var appointment = _appointmentService.GetById(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            _appointmentService.Delete(appointment);
+            return NoContent();
+        }
+
+
+        // PUT api/appintments/2
+        [HttpPut("{id}")]
+        public ActionResult Update(int id, Appointment appointment)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != appointment.AppointmentId)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                _appointmentService.Update(appointment);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return Ok(appointment);
+        }
+
+
     }
 }
