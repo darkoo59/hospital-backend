@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace HospitalAPI.Mappers
 {
-    public class PatientMapper
+    public class PatientMapper : IGenericMapper<Patient, PatientDTO>
     {
         public Patient ToModel(PatientDTO patientDTO) {
             Patient patient = new Patient();

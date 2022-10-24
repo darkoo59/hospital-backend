@@ -1,4 +1,6 @@
+using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+
 
 namespace HospitalAPI
 {
@@ -43,6 +46,9 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<AppointmentMapper>();
             services.AddScoped<PatientMapper>();
+            //services.AddScoped<IGenericMapper<Model, DTO>, AppointmentMapper>();
+            //services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
+            //services.AddTransient(typeof(IGenericMapper<>), typeof(AppointmentMapper<>));
 
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();

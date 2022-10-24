@@ -1,4 +1,6 @@
-﻿using HospitalAPI.Mappers;
+﻿using HospitalAPI.Dtos;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace HospitalAPI.Controllers
     {
         private readonly IPatientService _patientService;
         private readonly PatientMapper _patientMapper;
+
 
         public PatientsController(IPatientService patientService, PatientMapper patientMapper)
         {

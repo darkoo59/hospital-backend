@@ -14,6 +14,7 @@ namespace HospitalAPI.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly AppointmentMapper _appointmentMapper;
 
+
         public AppointmentsController(IAppointmentService appointmentService, AppointmentMapper appointmentMapper)
         {
             _appointmentService = appointmentService;

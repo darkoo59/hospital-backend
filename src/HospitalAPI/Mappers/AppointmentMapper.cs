@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalAPI.Mappers
 {
-    public class AppointmentMapper
+    public class AppointmentMapper : IGenericMapper<Appointment, AppointmentDTO>
     {
         public Appointment ToModel(AppointmentDTO appointmentDTO) {
             Appointment appointment = new Appointment();
