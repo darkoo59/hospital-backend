@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Service
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
         List<Appointment> GetFutureAppointments(int id);
+
     }
 }

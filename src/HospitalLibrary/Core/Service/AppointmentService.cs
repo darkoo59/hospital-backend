@@ -28,7 +28,7 @@ namespace HospitalLibrary.Core.Service
 
         private bool IsAppointmentValid(Appointment appointment)
         {
-            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment);
+            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.DateTime);
         }
 
         public void Delete(Appointment appointment)
@@ -52,7 +52,7 @@ namespace HospitalLibrary.Core.Service
         }
 
 
-        public bool IsAppointmentAvailable(Appointment appointment)
+        private bool IsAppointmentAvailable(Appointment appointment)
         {
             bool isAvailable = true;
             foreach (var a in _appointmentRepository.GetAll().ToList())
@@ -66,7 +66,7 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
-        public bool IsDoctorOnVacation(Appointment appointment)
+        private bool IsDoctorOnVacation(Appointment appointment)
         {
             bool isAvailable = true;
             foreach (var vacation in _vacationRepository.GetAll().ToList())
@@ -80,7 +80,7 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
-        public bool IsDoctorAvailable(Appointment appointment)
+        private bool IsDoctorAvailable(Appointment appointment)
         {
             bool isAvailable = false;
             foreach (var workTime in _workTimeRepository.GetAll().ToList())
@@ -97,6 +97,11 @@ namespace HospitalLibrary.Core.Service
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {
             return appointment.DateTime >= workTime.StartDate && appointment.DateTime <= workTime.EndDate && appointment.DateTime.TimeOfDay >= workTime.StartTime && appointment.DateTime.TimeOfDay <= workTime.EndTime;
+        }
+
+        private static bool IsWeekend(DateTime date)
+        {
+            return date.DayOfWeek.Equals(DayOfWeek.Saturday) || date.DayOfWeek.Equals(DayOfWeek.Sunday);
         }
 
         public List<Appointment> GetFutureAppointments(int DoctorId)
