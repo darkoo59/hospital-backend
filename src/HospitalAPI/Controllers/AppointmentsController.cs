@@ -78,6 +78,7 @@ namespace HospitalAPI.Controllers
         // PUT api/appintments/2
         [HttpPut("{id}")]
         public ActionResult Update(int id, Appointment appointment)
+
         {
             if (!ModelState.IsValid)
             {
