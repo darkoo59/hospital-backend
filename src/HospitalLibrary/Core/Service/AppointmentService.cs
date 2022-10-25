@@ -18,12 +18,28 @@ namespace HospitalLibrary.Core.Service
             _vacationRepository = vacationRepository;
             _workTimeRepository = workTimeRepository;
         }
+       
+        
+
         public void Create(Appointment appointment)
         {
             if (IsAppointmentValid(appointment))
             {
                 _appointmentRepository.Create(appointment);
             }
+        }
+
+        public void Update(Appointment appointment)
+        {
+           if (IsAppointmentValidToUpdate(appointment))
+            {
+                _appointmentRepository.Update(appointment);
+            }
+        }
+
+        private bool IsAppointmentValidToUpdate(Appointment appointment)
+        {
+            return IsAppointmentAvailableToUpdate(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailableToUpdate(appointment);
         }
 
         private bool IsAppointmentValid(Appointment appointment)
@@ -46,10 +62,7 @@ namespace HospitalLibrary.Core.Service
             return _appointmentRepository.GetById(id);
         }
 
-        public void Update(Appointment appointment)
-        {
-            _appointmentRepository.Update(appointment);
-        }
+       
 
 
         public bool IsAppointmentAvailable(Appointment appointment)
@@ -58,6 +71,21 @@ namespace HospitalLibrary.Core.Service
             foreach (var a in _appointmentRepository.GetAll().ToList())
             {
                 if (a.DateTime == appointment.DateTime)
+                {
+                    isAvailable = false;
+                    break;
+                }
+            }
+            return isAvailable;
+        }
+
+        public bool IsAppointmentAvailableToUpdate(Appointment appointment)
+        {
+            bool isAvailable = true;
+            foreach (var a in _appointmentRepository.GetAll().ToList())
+            {
+             
+                if ((a.DateTime == appointment.DateTime) && a.AppointmentId!=appointment.AppointmentId)
                 {
                     isAvailable = false;
                     break;
@@ -93,6 +121,22 @@ namespace HospitalLibrary.Core.Service
             }
             return isAvailable;
         }
+
+
+        public bool IsDoctorAvailableToUpdate(Appointment appointment)
+        {
+            bool isAvailable = true;
+            foreach (var a in _appointmentRepository.GetAll().ToList())
+            {
+                if ((a.AppointmentId == appointment.AppointmentId)&& (a.DateTime != appointment.DateTime))
+                {
+                    isAvailable = IsDoctorAvailable(appointment);
+                    break;
+                }
+            }
+            return isAvailable;
+        }
+
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {

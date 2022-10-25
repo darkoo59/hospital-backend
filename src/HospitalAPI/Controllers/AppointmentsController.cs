@@ -77,18 +77,20 @@ namespace HospitalAPI.Controllers
 
         // PUT api/appintments/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Appointment appointment)
-
+        public ActionResult Update(int id, AppointmentDTO appointmentDTO)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != appointment.AppointmentId)
+            if (id != appointmentDTO.AppointmentId)
             {
                 return BadRequest();
             }
+
+            Appointment appointment = _appointmentMapper.ToModel(appointmentDTO);
 
             try
             {
@@ -98,6 +100,8 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest();
             }
+
+           
 
             return Ok(appointment);
         }

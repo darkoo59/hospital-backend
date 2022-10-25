@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221025102006_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20221025175717_FirstM")]
+    partial class FirstM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             AppointmentId = 1,
-                            DateTime = new DateTime(2022, 10, 25, 12, 20, 5, 639, DateTimeKind.Local).AddTicks(7752),
+                            DateTime = new DateTime(2022, 10, 25, 19, 57, 16, 683, DateTimeKind.Local).AddTicks(3608),
                             DoctorId = 1,
                             PatientId = 1
                         });

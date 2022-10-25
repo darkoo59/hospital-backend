@@ -47,7 +47,7 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             AppointmentId = 1,
-                            DateTime = new DateTime(2022, 10, 25, 12, 20, 5, 639, DateTimeKind.Local).AddTicks(7752),
+                            DateTime = new DateTime(2022, 10, 25, 19, 57, 16, 683, DateTimeKind.Local).AddTicks(3608),
                             DoctorId = 1,
                             PatientId = 1
                         });
