@@ -23,6 +23,11 @@ namespace HospitalLibrary.Core.Service
             return _roomRepository.GetById(id);
         }
 
+        public IEnumerable<Room> GetRooms(string buildingId, int floorId)
+        {
+            return _roomRepository.GetRooms(buildingId, floorId);
+        }
+
         public void Create(Room room)
         {
             _roomRepository.Create(room);

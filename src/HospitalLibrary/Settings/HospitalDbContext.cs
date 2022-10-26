@@ -14,9 +14,9 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, Number = "101A", Floor = 1 },
-                new Room() { Id = 2, Number = "204", Floor = 2 },
-                new Room() { Id = 3, Number = "305B", Floor = 3 }
+                new Room() { Id = 1, Number = "101A", FloorId = 1 },
+                new Room() { Id = 2, Number = "204", FloorId = 2 },
+                new Room() { Id = 3, Number = "305B", FloorId = 3 }
             );
 
             modelBuilder.Entity<Feedback>().HasData(

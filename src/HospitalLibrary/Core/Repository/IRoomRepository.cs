@@ -7,6 +7,7 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Room> GetAll();
         Room GetById(int id);
+        IEnumerable<Room> GetRooms(string buildingId, int floorId)
         void Create(Room room);
         void Update(Room room);
         void Delete(Room room);
