@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
@@ -11,5 +12,12 @@ namespace HospitalLibrary.Core.Model
         public string Number { get; set; }
         [Range(1, 10)]
         public int Floor { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public RoomType Type { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
     }
 }
