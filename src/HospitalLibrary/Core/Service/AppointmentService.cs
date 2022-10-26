@@ -31,17 +31,13 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment appointment)
         {
-           if (IsAppointmentValidToUpdate(appointment))
-            {
-                _appointmentRepository.Update(appointment);
-            }
+               if (IsAppointmentValid(appointment))
+               {
+                 _appointmentRepository.Update(appointment);
+               }
         }
 
-        private bool IsAppointmentValidToUpdate(Appointment appointment)
-        {
-            return IsAppointmentAvailableToUpdate(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailableToUpdate(appointment);
-        }
-
+       
         private bool IsAppointmentValid(Appointment appointment)
         {
             return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment);
@@ -79,20 +75,7 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
-        public bool IsAppointmentAvailableToUpdate(Appointment appointment)
-        {
-            bool isAvailable = true;
-            foreach (var a in _appointmentRepository.GetAll().ToList())
-            {
-             
-                if ((a.DateTime == appointment.DateTime) && a.AppointmentId!=appointment.AppointmentId)
-                {
-                    isAvailable = false;
-                    break;
-                }
-            }
-            return isAvailable;
-        }
+ 
 
         public bool IsDoctorOnVacation(Appointment appointment)
         {
@@ -123,20 +106,7 @@ namespace HospitalLibrary.Core.Service
         }
 
 
-        public bool IsDoctorAvailableToUpdate(Appointment appointment)
-        {
-            bool isAvailable = true;
-            foreach (var a in _appointmentRepository.GetAll().ToList())
-            {
-                if ((a.AppointmentId == appointment.AppointmentId)&& (a.DateTime != appointment.DateTime))
-                {
-                    isAvailable = IsDoctorAvailable(appointment);
-                    break;
-                }
-            }
-            return isAvailable;
-        }
-
+  
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {
