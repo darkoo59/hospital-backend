@@ -15,7 +15,6 @@ namespace HospitalLibrary.Core.Model
         [Range(1, 10)]
         public int FloorId { get; set; }
         public string BuildingId { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
         public RoomType Type { get; set; }
         public int X { get; set; }

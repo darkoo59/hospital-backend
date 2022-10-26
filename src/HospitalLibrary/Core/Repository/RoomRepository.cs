@@ -25,6 +25,18 @@ namespace HospitalLibrary.Core.Repository
             return _context.Rooms.Find(id);
         }
 
+        public Room GetByNumber(string number)
+        {
+            foreach (Room room in _context.Rooms)
+            {
+                if (room.Number == number)
+                {
+                    return room;
+                }
+            }
+            return null;
+        }
+
         public IEnumerable<Room> GetRooms(string buildingId, int floorId)
         {
             List<Room> res = new List<Room>();
