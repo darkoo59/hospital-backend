@@ -36,9 +36,9 @@ namespace HospitalLibrary.Settings
           );
 
             modelBuilder.Entity<Feedback>().HasData(
-                new Feedback() { Text = "Awesome clinic!", User = "Милош", Date = "25.10.2022" },
-                new Feedback() { Text = "It's okay... I guess.", User = "Немања", Date = "25.10.2022" },
-                new Feedback() { Text = "Awful.", User = "Огњен", Date = "25.10.2022" }
+                new Feedback() {Id = "1", Text = "Awesome clinic!", User = "Милош", Date = "25.10.2022" },
+                new Feedback() {Id = "2", Text = "It's okay... I guess.", User = "Немања", Date = "25.10.2022" },
+                new Feedback() {Id = "3", Text = "Awful.", User = "Огњен", Date = "25.10.2022" }
 
             );
 
