@@ -13,6 +13,7 @@ namespace IntegrationLibrary.Core.Service
         public BloodTypeService() {}
         public bool CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity)
         {
+            //TO DO: Napraviti jedan http request na ISA backendu ako je quantity 0, odnosno drugi ako je quantity > 0.
             Console.WriteLine("Blood type: " + bloodType);
             Console.WriteLine("Api key: " + apiKey);
             Console.WriteLine("Blood quantity: " + bloodQuantity);
