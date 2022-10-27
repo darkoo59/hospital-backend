@@ -99,20 +99,19 @@ namespace HospitalLibrary.Core.Service
             return appointment.DateTime >= workTime.StartDate && appointment.DateTime <= workTime.EndDate && appointment.DateTime.TimeOfDay >= workTime.StartTime && appointment.DateTime.TimeOfDay <= workTime.EndTime;
         }
 
-        public List<Appointment> GetFutureAppointments(int DoctorId)
+        public List<Appointment> GetDoctorAppointments(int DoctorId)
         {
-            List<Appointment> futureAppointments = new List<Appointment>();
+            List<Appointment> doctorAppointments = new List<Appointment>();
             List<Appointment> appointments = _appointmentRepository.GetAll().ToList();
 
             foreach (var appointment in appointments)
             {
-                if (appointment.DoctorId == DoctorId && appointment.DateTime >= DateTime.Now)
+                if (appointment.DoctorId == DoctorId)
                 {
-                    futureAppointments.Add(appointment);
+                    doctorAppointments.Add(appointment);
                 }
             }
-            return futureAppointments;
-
+            return doctorAppointments;
         }
     }
 }
