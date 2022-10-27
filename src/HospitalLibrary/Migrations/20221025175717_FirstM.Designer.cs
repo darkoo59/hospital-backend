@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221021183438_WorkTimeMigration")]
-    partial class WorkTimeMigration
+    [Migration("20221025175717_FirstM")]
+    partial class FirstM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             AppointmentId = 1,
-                            DateTime = new DateTime(2022, 10, 21, 20, 34, 37, 222, DateTimeKind.Local).AddTicks(1756),
+                            DateTime = new DateTime(2022, 10, 25, 19, 57, 16, 683, DateTimeKind.Local).AddTicks(3608),
                             DoctorId = 1,
                             PatientId = 1
                         });
@@ -207,6 +207,39 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
+                {
+                    b.Property<int>("VacationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("DoctorId")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("VacationId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("Vacations");
+
+                    b.HasData(
+                        new
+                        {
+                            VacationId = 1,
+                            DoctorId = 1,
+                            EndDate = new DateTime(2022, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkTime", b =>
                 {
                     b.Property<int>("WorkTimeId")
@@ -280,6 +313,17 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("Specialization");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkTime", b =>

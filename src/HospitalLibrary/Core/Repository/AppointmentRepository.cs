@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,9 @@ namespace HospitalLibrary.Core.Repository
 
         public void Delete(Appointment appointment)
         {
-            throw new NotImplementedException();
+            _context.Appointments.Remove(appointment);
+            _context.SaveChanges();
+          
         }
 
         public IEnumerable<Appointment> GetAll()
@@ -38,7 +41,16 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Appointment appointment)
         {
-            throw new NotImplementedException();
+            _context.Entry(appointment).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }

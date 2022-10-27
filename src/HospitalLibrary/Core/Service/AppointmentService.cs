@@ -18,6 +18,9 @@ namespace HospitalLibrary.Core.Service
             _vacationRepository = vacationRepository;
             _workTimeRepository = workTimeRepository;
         }
+       
+        
+
         public void Create(Appointment appointment)
         {
             if (IsAppointmentValid(appointment))
@@ -26,6 +29,15 @@ namespace HospitalLibrary.Core.Service
             }
         }
 
+        public void Update(Appointment appointment)
+        {
+               if (IsAppointmentValid(appointment))
+               {
+                 _appointmentRepository.Update(appointment);
+               }
+        }
+
+       
         private bool IsAppointmentValid(Appointment appointment)
         {
             return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.DateTime);
@@ -33,7 +45,7 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(Appointment appointment)
         {
-            throw new NotImplementedException();
+            _appointmentRepository.Delete(appointment);
         }
 
         public IEnumerable<Appointment> GetAll()
@@ -46,10 +58,7 @@ namespace HospitalLibrary.Core.Service
             return _appointmentRepository.GetById(id);
         }
 
-        public void Update(Appointment appointment)
-        {
-            throw new NotImplementedException();
-        }
+       
 
 
         private bool IsAppointmentAvailable(Appointment appointment)
@@ -66,7 +75,9 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
-        private bool IsDoctorOnVacation(Appointment appointment)
+ 
+
+        public bool IsDoctorOnVacation(Appointment appointment)
         {
             bool isAvailable = true;
             foreach (var vacation in _vacationRepository.GetAll().ToList())
@@ -93,6 +104,9 @@ namespace HospitalLibrary.Core.Service
             }
             return isAvailable;
         }
+
+
+  
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {

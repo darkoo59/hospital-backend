@@ -60,5 +60,53 @@ namespace HospitalAPI.Controllers
             return Ok(_appointmentMapper.ToDTO(_appointmentService.GetFutureAppointments(doctorId)));
         }
 
+
+        // DELETE api/appointments/2
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var appointment = _appointmentService.GetById(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            _appointmentService.Delete(appointment);
+            return NoContent();
+        }
+
+
+        // PUT api/appintments/2
+        [HttpPut("{id}")]
+        public ActionResult Update(int id, AppointmentDTO appointmentDTO)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != appointmentDTO.AppointmentId)
+            {
+                return BadRequest();
+            }
+
+            Appointment appointment = _appointmentMapper.ToModel(appointmentDTO);
+
+            try
+            {
+                _appointmentService.Update(appointment);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+           
+
+            return Ok(appointment);
+        }
+
+
     }
 }
