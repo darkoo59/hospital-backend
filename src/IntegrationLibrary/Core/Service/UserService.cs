@@ -11,6 +11,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using IntegrationLibrary.DTO;
 using static IntegrationLibrary.Core.Model.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -27,6 +28,7 @@ namespace IntegrationLibrary.Core.Service
 
         public async void Register(User user)
         {
+     
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
                 throw new User.DuplicateEMailException("User with given email already exists.");

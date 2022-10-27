@@ -1,10 +1,14 @@
 using System.Text;
+using System.Text.Json;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing.Matching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,21 +75,29 @@ namespace IntegrationAPI
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Error");
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
 
+            app.UseExceptionHandler("/Error");
+
+
+
             app.UseAuthentication();
+
+            app.UseAuthorization();
+
 
             app.UseRouting();
 
-            app.UseAuthorization();
+         
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
