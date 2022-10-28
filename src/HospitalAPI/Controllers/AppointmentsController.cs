@@ -12,13 +12,15 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly AppointmentMapper _appointmentMapper;
+        private readonly IGenericMapper<Appointment, AppointmentDTO> _appointmentMapper;
+        private readonly INotificationService _notificationService;
 
 
-        public AppointmentsController(IAppointmentService appointmentService, AppointmentMapper appointmentMapper)
+        public AppointmentsController(IAppointmentService appointmentService, IGenericMapper<Appointment, AppointmentDTO> appointmentMapper, INotificationService notificationService)
         {
             _appointmentService = appointmentService;
             _appointmentMapper = appointmentMapper;
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -72,6 +74,7 @@ namespace HospitalAPI.Controllers
             }
 
             _appointmentService.Delete(appointment);
+            _notificationService.SendCancelNotification(appointment);
             return NoContent();
         }
 
@@ -96,6 +99,7 @@ namespace HospitalAPI.Controllers
             try
             {
                 _appointmentService.Update(appointment);
+                _notificationService.SendUpdateNotification(appointment);
             }
             catch
             {

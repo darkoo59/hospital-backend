@@ -1,47 +1,45 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class AppointmentRepository : IAppointmentRepository
+    public class NotificationRepository : INotificationRepository
     {
         private readonly HospitalDbContext _context;
 
-        public AppointmentRepository(HospitalDbContext context)
+        public NotificationRepository(HospitalDbContext context)
         {
             _context = context;
         }
 
-        public void Create(Appointment appointment)
+        public void Create(Notification notification)
         {
-            _context.Appointments.Add(appointment);
+            _context.Notifications.Add(notification);
             _context.SaveChanges();
         }
 
-        public void Delete(Appointment appointment)
+        public void Delete(Notification notification)
         {
-            _context.Appointments.Remove(appointment);
+            _context.Notifications.Remove(notification);
             _context.SaveChanges();
-          
         }
 
-        public IEnumerable<Appointment> GetAll()
+        public IEnumerable<Notification> GetAll()
         {
-            return _context.Appointments.ToList();
+            return _context.Notifications.ToList();
         }
 
-        public Appointment GetById(int id)
+        public Notification GetById(int id)
         {
-            return _context.Appointments.Find(id);
+            return _context.Notifications.Find(id);
         }
 
-        public void Update(Appointment appointment)
+        public void Update(Notification notification)
         {
-             _context.Entry(appointment).State = EntityState.Modified;
+            _context.Entry(notification).State = EntityState.Modified;
 
             try
             {

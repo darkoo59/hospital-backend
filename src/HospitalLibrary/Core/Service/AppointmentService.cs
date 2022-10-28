@@ -31,10 +31,10 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment appointment)
         {
-               if (IsAppointmentValid(appointment))
-               {
+               //if (IsAppointmentValid(appointment))
+               //{
                  _appointmentRepository.Update(appointment);
-               }
+               //}
         }
 
        

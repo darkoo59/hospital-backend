@@ -44,17 +44,18 @@ namespace HospitalAPI
 
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            services.AddScoped<AppointmentMapper>();
-            services.AddScoped<PatientMapper>();
-            //services.AddScoped<IGenericMapper<Model, DTO>, AppointmentMapper>();
-            //services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
-            //services.AddTransient(typeof(IGenericMapper<>), typeof(AppointmentMapper<>));
+            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
+            services.AddScoped<IGenericMapper<Appointment, AppointmentDTO>, AppointmentMapper>();
 
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
 
             services.AddScoped<IWorkTimeService, WorkTimeService>();
             services.AddScoped<IWorkTimeRepository, WorkTimeRepository>();
+
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
 
         }
 

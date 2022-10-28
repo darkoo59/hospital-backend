@@ -12,10 +12,10 @@ namespace HospitalAPI.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
-        private readonly PatientMapper _patientMapper;
+        private readonly IGenericMapper<Patient, PatientDTO> _patientMapper;
 
 
-        public PatientsController(IPatientService patientService, PatientMapper patientMapper)
+        public PatientsController(IPatientService patientService, IGenericMapper<Patient, PatientDTO> patientMapper)
         {
             _patientService = patientService;
             _patientMapper = patientMapper;
