@@ -16,14 +16,16 @@ namespace IntegrationAPI.Controllers
             _bloodTypeService = bloodTypeService;
         }
 
-        [HttpPost]
-        public IActionResult CheckBloodTypeAvailability([FromBody] BloodTypesDTO bloodTypesDTO)
+        [HttpGet]
+        public IActionResult CheckBloodTypeAvailability([FromQuery] BloodTypesEnum bloodType,
+                                                                    string apiKey,
+                                                                    float bloodQuantity)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodTypesDTO.BloodType, bloodTypesDTO.ApiKey, bloodTypesDTO.BloodQuantity));
+            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity));
         }
 
 
