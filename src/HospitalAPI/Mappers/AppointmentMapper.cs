@@ -15,8 +15,6 @@ namespace HospitalAPI.Mappers
             string hours = appointmentDTO.Time.Split(":")[0];
             string minutes = appointmentDTO.Time.Split(":")[1];
             appointment.DateTime = appointmentDTO.Date;
-            // because of time zone mapping 
-            appointment.DateTime = appointment.DateTime.AddHours(1);
             appointment.DateTime = appointment.DateTime.AddHours(Int32.Parse(hours));
             appointment.DateTime = appointment.DateTime.AddMinutes(Int32.Parse(minutes));
             appointment.PatientId = appointmentDTO.PatientId;
