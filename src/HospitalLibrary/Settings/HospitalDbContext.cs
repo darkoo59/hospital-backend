@@ -11,6 +11,8 @@ namespace HospitalLibrary.Settings
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
+        // only for testing purposes
+        // ne treba se koristiti za aplikaciju u produkciji
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Room>().HasData(
@@ -20,9 +22,9 @@ namespace HospitalLibrary.Settings
             );
 
             modelBuilder.Entity<Feedback>().HasData(
-                new Feedback() { Text = "Awesome clinic!", User = "Милош", Date = "25.10.2022" },
-                new Feedback() { Text = "It's okay... I guess.", User = "Немања", Date = "25.10.2022" },
-                new Feedback() { Text = "Awful.", User = "Огњен", Date = "25.10.2022" }
+                new Feedback() { Id = 1, Textt = "Awesome clinic!", User = "Милош", Date = "25.10.2022" },
+                new Feedback() { Id = 2, Textt = "It's okay... I guess.", User = "Немања", Date = "25.10.2022" },
+                new Feedback() { Id = 3, Textt = "Awful.", User = "Огњен", Date = "25.10.2022" }
 
             );
 

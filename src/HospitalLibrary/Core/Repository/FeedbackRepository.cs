@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,20 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Feedbacks.Add(feedback);
             _context.SaveChanges();
+        }
+
+        public void Update(Feedback feedback)
+        {
+            _context.Entry(feedback).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }
