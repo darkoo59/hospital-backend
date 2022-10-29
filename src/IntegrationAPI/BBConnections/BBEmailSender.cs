@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IntegrationLibrary.Core.Model;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.BloodBanks;
 
-namespace IntegrationAPI.Controllers
+namespace IntegrationAPI.BBConnections
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MailController : ControllerBase
+    public class BBEmailSender : ControllerBase
     {
-        private readonly IMailService mailService;
-        public MailController(IMailService mailService)
+        private readonly IEmailSender mailService;
+        public BBEmailSender(IEmailSender mailService)
         {
             this.mailService = mailService;
         }
