@@ -23,6 +23,11 @@ namespace HospitalLibrary.Core.Repository
             return _context.Feedbacks.ToList();
         }
 
+        public IEnumerable<Feedback> GetAllPublic()
+        {
+            return _context.Feedbacks.ToList().Where(feedback => feedback.IsDisplayedPublic==true && feedback.Privatisation==false);
+        }
+
         public IEnumerable<Feedback> GetAllPublicNotPublished()
         {
             return _context.Feedbacks.ToList().Where(feedback => feedback.IsDisplayedPublic==false && feedback.Privatisation==false);

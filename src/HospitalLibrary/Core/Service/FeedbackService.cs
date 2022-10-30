@@ -18,6 +18,12 @@ namespace HospitalLibrary.Core.Service
         {
             return _feedbackRepository.GetAll();
         }
+
+        public IEnumerable<Feedback> GetAllPublic()
+        {
+            return _feedbackRepository.GetAllPublic();
+        }
+
         public Feedback GetById(int id)
         {
             return _feedbackRepository.GetById(id);
