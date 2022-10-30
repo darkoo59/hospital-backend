@@ -13,6 +13,7 @@ namespace HospitalLibrary.Core.Service
         Feedback GetById(int id);
         void Create(Feedback feedback);
         void Update(Feedback feedback);
-
+        public IEnumerable<Feedback> GetAllPrivate();
+        public IEnumerable<Feedback> GetAllPublicNotPublished();
     }
 }
