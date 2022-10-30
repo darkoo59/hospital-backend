@@ -35,7 +35,7 @@ namespace HospitalAPI.Controllers
         }
 
         // GET: api/feedbacksPublic
-        [HttpGet]
+        [HttpGet, Route("feedbacksPublic")]
         public ActionResult GetAllPublic()
         {
             return Ok(_feedbackService.GetAllPublic());
