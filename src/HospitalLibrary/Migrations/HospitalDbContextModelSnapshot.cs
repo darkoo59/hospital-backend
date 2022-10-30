@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 10, 30, 16, 9, 5, 1, DateTimeKind.Local).AddTicks(4167)
+                            Start = new DateTime(2022, 10, 30, 21, 56, 22, 699, DateTimeKind.Local).AddTicks(1115)
                         });
                 });
 

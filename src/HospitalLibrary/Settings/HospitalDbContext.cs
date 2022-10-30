@@ -5,16 +5,16 @@ namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<Specialization> Specializations { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<WorkTime> WorkTimes { get; set; }
-        public DbSet<Vacation> Vacations { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
-
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Vacation> Vacations { get; set; }
+        public DbSet<WorkTime> WorkTimes { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
