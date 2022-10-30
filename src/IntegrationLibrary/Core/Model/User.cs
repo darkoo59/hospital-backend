@@ -1,8 +1,6 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace IntegrationLibrary.Core.Model
 {
@@ -12,6 +10,7 @@ namespace IntegrationLibrary.Core.Model
         [Required]
         [EmailAddress]
         public string Email { set; get; }
+        [JsonIgnore]
         public string Password { set; get; }
         [Required]
         [MaxLength(30)]
@@ -23,6 +22,10 @@ namespace IntegrationLibrary.Core.Model
         public class DuplicateEMailException : Exception
         {
             public DuplicateEMailException(string message) : base(message) { }
+        }
+        public class BadPasswordException : Exception
+        {
+            public BadPasswordException(string message) : base(message) { }
         }
     }
 }

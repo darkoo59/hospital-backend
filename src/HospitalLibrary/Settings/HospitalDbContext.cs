@@ -14,8 +14,12 @@ namespace HospitalLibrary.Settings
         public DbSet<Vacation> Vacations { get; set; }
         public DbSet<Notification> Notifications { get; set; }
 
+        public DbSet<Feedback> Feedbacks { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
+        // only for testing purposes
+        // ne treba se koristiti za aplikaciju u produkciji
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Room>().HasData(
@@ -53,6 +57,14 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Vacation>().HasData(
               new Vacation() { VacationId = 1, StartDate = new System.DateTime(2022, 11, 17), EndDate = new System.DateTime(2022, 12, 2), DoctorId = 1 }
           );
+
+            modelBuilder.Entity<Feedback>().HasData(
+                new Feedback() { Id = 1, Textt = "Awesome clinic!", User = "Милош", Date = "25.10.2022" },
+                new Feedback() { Id = 2, Textt = "It's okay... I guess.", User = "Немања", Date = "25.10.2022" },
+                new Feedback() { Id = 3, Textt = "Awful.", User = "Огњен", Date = "25.10.2022" }
+
+            );
+
 
             base.OnModelCreating(modelBuilder);
         }
