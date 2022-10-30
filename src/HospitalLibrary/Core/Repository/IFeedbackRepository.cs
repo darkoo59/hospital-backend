@@ -10,5 +10,7 @@ namespace HospitalLibrary.Core.Repository
         void Create(Feedback feedback);
         void Update(Feedback feedback);
         void Delete(Feedback feedback);
+        public IEnumerable<Feedback> GetAllPrivate();
+        public IEnumerable<Feedback> GetAllPublicNotPublished();
     }
 }

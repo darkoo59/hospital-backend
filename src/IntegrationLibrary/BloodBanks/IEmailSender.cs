@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.BloodBanks
 {
-    public interface IMailService
+    public interface IEmailSender
     {
         Task SendEmail(MailContent mailContent);
     }
-
 }

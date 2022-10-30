@@ -15,5 +15,7 @@ namespace IntegrationLibrary.Core.Model
         [Required]
         //[MaxLength(8)]    Check ApiKey length
         public string ApiKey { get; set; }
+
+        public float BloodQuantity { get; set; }
     }
 }

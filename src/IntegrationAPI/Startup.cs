@@ -1,10 +1,15 @@
 using System.Text;
+using System.Text.Json;
+using IntegrationLibrary.BloodBanks;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing.Matching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +47,7 @@ namespace IntegrationAPI
                 });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IEmailSender, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
 
@@ -54,7 +59,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBloodTypeService, BloodTypeService>();
+            services.AddScoped<IBloodService, BloodService>();
 
         }
 
@@ -71,10 +76,12 @@ namespace IntegrationAPI
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Error");
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
+
+            app.UseExceptionHandler("/Error");
 
             app.UseAuthentication();
 
@@ -86,6 +93,7 @@ namespace IntegrationAPI
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

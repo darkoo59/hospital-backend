@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
+using IntegrationLibrary.DTO;
+using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
@@ -24,19 +26,14 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public async Task<ActionResult> Register(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            try
-            {
-                _userService.Register(user);
-            }catch(User.DuplicateEMailException e)
-            {
-                return BadRequest(e.Message);
-            }
+            await _userService.Register(user);
+
             return Ok();
         }
 
@@ -85,6 +82,21 @@ namespace IntegrationAPI.Controllers
             {
                 string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
                 return Ok(JsonSerializer.Serialize(_userService.GetBy(email)));
+            }
+            return Unauthorized();
+        }
+
+        [Authorize]
+        [HttpPatch("password")]
+        public ActionResult ChangePassword([FromBody] ChangePasswordDTO dto)
+        {
+            if (HttpContext.User.Identity != null && dto != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                
+                _userService.ChangePassword(email, dto);
+                
+                return Ok();
             }
             return Unauthorized();
         }

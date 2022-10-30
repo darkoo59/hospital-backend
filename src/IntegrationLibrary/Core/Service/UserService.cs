@@ -2,8 +2,6 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Utility;
-using Org.BouncyCastle.Asn1.Cms;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
@@ -11,21 +9,26 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using IntegrationLibrary.DTO;
+using System.Threading.Tasks;
+using IntegrationLibrary.BloodBanks;
+using System.IO;
+using System.Text.Json;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMailService _mailService;
+        private readonly IEmailSender _mailService;
 
-        public UserService(IUserRepository userRepository, IMailService mailService)
+        public UserService(IUserRepository userRepository, IEmailSender mailService)
         {
             _userRepository = userRepository;
             _mailService = mailService;
         }
 
-        public async void Register(User user)
+        public async Task<bool> Register(User user)
         {
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
@@ -34,21 +37,20 @@ namespace IntegrationLibrary.Core.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
             _userRepository.Register(user);
 
-            
-            MailContent mailContent = new MailContent();
-            mailContent.Subject = "Welcome";
+            string key = await BloodService.GenerateApiKey(user);
+
+            MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../IntegrationLibrary/Resources/mailTemplate.json"));
+
             mailContent.ToEmail = user.Email;
-            mailContent.Attachments = null;
-            mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru! " +
-                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password;
+            mailContent.Body = mailContent.Body + user.Password + ". API_KEY: " + key;
             try
             {
                 await _mailService.SendEmail(mailContent);
-                return;
             }catch(Exception ex)
             {
                 throw;
             }
+            return true;
         }
 
         public string Login(UserLogin userLogin, IConfiguration config)
@@ -62,6 +64,17 @@ namespace IntegrationLibrary.Core.Service
 
             return token;
         }
+
+        public void ChangePassword(string email, ChangePasswordDTO dto)
+        {
+            User user = GetBy(email);
+            if (user == null) return;
+            if (!user.Password.Equals(dto.OldPassword)) throw new User.BadPasswordException("Old password is not valid");
+            //TODO: password requirements validation
+
+            _userRepository.ChangePassword(user, dto.NewPassword);
+        }
+
         private User Authenticate(UserLogin userLogin)
         {
             var currentUser = GetBy(userLogin.Email);
@@ -79,7 +92,7 @@ namespace IntegrationLibrary.Core.Service
 
             var claims = new[]
             {
-                new Claim("email", user.Email)
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"],

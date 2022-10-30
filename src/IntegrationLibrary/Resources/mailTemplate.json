@@ -1,0 +1,6 @@
+{
+    "Subject": "Welcome",
+    "ToEmail": "",
+    "Attachment": null,
+    "Body": "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru!Link : localhost:4200/integration/login . Vasa generisana sifra za prvo logovanje : "
+}

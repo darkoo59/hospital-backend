@@ -19,7 +19,19 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_feedbackService.GetAll());
+            string privatisation = HttpContext.Request.Query["private"].ToString();
+            if (privatisation.Length == 0)
+            {
+                return Ok(_feedbackService.GetAll());
+            }
+            else if (privatisation.Equals("true"))
+            {
+                return Ok(_feedbackService.GetAllPrivate());
+            }
+            else 
+            {
+                return Ok(_feedbackService.GetAllPublicNotPublished());
+            }
         }
 
         // GET api/feedbacks/2

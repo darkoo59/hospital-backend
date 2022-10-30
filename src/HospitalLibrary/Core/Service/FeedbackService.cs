@@ -32,10 +32,19 @@ namespace HospitalLibrary.Core.Service
         {
             _feedbackRepository.Update(feedback);
         }
+        public IEnumerable<Feedback> GetAllPublicNotPublished()
+        {
+            return _feedbackRepository.GetAllPublicNotPublished();
+        }
 
         public void Delete(Feedback feedback)
         {
             _feedbackRepository.Delete(feedback);
+        }
+        
+        public IEnumerable<Feedback> GetAllPrivate()
+        {
+            return _feedbackRepository.GetAllPrivate();
         }
     }
 }
