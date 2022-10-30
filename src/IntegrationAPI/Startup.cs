@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using IntegrationLibrary.BloodBanks;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Utility;
@@ -46,7 +47,7 @@ namespace IntegrationAPI
                 });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IEmailSender, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
 
