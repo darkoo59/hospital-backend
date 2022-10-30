@@ -9,7 +9,6 @@ namespace IntegrationLibrary.Core.Service
 {
     public interface IBloodTypeService
     {
-        Boolean CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity);
-
+        Task<Boolean> CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity, string Email);
     }
 }

@@ -2,6 +2,7 @@
 using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace IntegrationAPI.Controllers
 {
@@ -18,16 +19,17 @@ namespace IntegrationAPI.Controllers
 
         [HttpGet]
         public IActionResult CheckBloodTypeAvailability([FromQuery] BloodTypesEnum bloodType,
-                                                                    string apiKey,
-                                                                    float bloodQuantity)
+                                                        [FromHeader] string apiKey,
+                                                        [FromQuery] float bloodQuantity,
+                                                        [FromQuery(Name = "userEmail")] string email)
         {
+            Console.WriteLine("U controlleru " + email);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity));
+            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity, email));
         }
-
 
     }
 }
