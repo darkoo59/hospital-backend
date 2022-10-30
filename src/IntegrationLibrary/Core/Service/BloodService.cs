@@ -30,13 +30,14 @@ namespace IntegrationLibrary.Core.Service
             User user = _userService.GetBy(email);
             string ret;
             string url;
+            Console.WriteLine(bloodQuantity);
             if (bloodQuantity == 0)
             {
                 url = "http://" + user.Server + "/api/blood/type?bloodType=" + bloodType;
             }
             else
             {
-                url = "http://" + user.Server + "/api/blood/type/quantity";
+                url = "http://" + user.Server + "/api/blood/type/quantity?bloodType=" + bloodType + "&quantity=" + bloodQuantity;
             }
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
