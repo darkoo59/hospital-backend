@@ -1,10 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace HospitalLibrary.Core.Service
 {
@@ -31,6 +28,23 @@ namespace HospitalLibrary.Core.Service
             _feedbackRepository.Create(feedback);
         }
 
-       
+        public void Update(Feedback feedback)
+        {
+            _feedbackRepository.Update(feedback);
+        }
+        public IEnumerable<Feedback> GetAllPublicNotPublished()
+        {
+            return _feedbackRepository.GetAllPublicNotPublished();
+        }
+
+        public void Delete(Feedback feedback)
+        {
+            _feedbackRepository.Delete(feedback);
+        }
+        
+        public IEnumerable<Feedback> GetAllPrivate()
+        {
+            return _feedbackRepository.GetAllPrivate();
+        }
     }
 }

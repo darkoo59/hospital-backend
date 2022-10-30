@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using IntegrationLibrary.DTO;
+using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
@@ -25,19 +26,14 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public async Task<ActionResult> Register(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            try
-            {
-                _userService.Register(user);
-            }catch(User.DuplicateEMailException e)
-            {
-                return BadRequest(e.Message);
-            }
+            await _userService.Register(user);
+
             return Ok();
         }
 
@@ -97,15 +93,10 @@ namespace IntegrationAPI.Controllers
             if (HttpContext.User.Identity != null && dto != null)
             {
                 string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
-                try
-                {
-                    _userService.ChangePassword(email, dto);
-                    return Ok();
-                }
-                catch(User.BadPasswordException e)
-                {
-                    return Unauthorized(e.Message);
-                }
+                
+                _userService.ChangePassword(email, dto);
+                
+                return Ok();
             }
             return Unauthorized();
         }

@@ -1,23 +1,23 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Settings;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using MailKit;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.BloodBanks
 {
-    public class MailService : IMailService
+    public class BloodBankService : IEmailSender
     {
         private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettings)
+
+        public BloodBankService(IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value;
         }

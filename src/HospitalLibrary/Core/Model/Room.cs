@@ -21,5 +21,6 @@ namespace HospitalLibrary.Core.Model
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+
     }
 }

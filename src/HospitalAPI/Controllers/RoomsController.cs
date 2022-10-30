@@ -78,7 +78,7 @@ namespace HospitalAPI.Controllers
             }
 
             _roomService.Create(room);
-            return CreatedAtAction("GetById", new { id = room.Id }, room);
+            return CreatedAtAction("GetById", new { id = room.RoomId }, room);
         }
 
         // PUT api/rooms/2
@@ -90,7 +90,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != room.Id)
+            if (id != room.RoomId)
             {
                 return BadRequest();
             }
