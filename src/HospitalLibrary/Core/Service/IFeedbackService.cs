@@ -10,6 +10,7 @@ namespace HospitalLibrary.Core.Service
     public interface IFeedbackService
     {
         IEnumerable<Feedback> GetAll();
+        IEnumerable<Feedback> GetAllPublic();
         Feedback GetById(int id);
         void Create(Feedback feedback);
         void Update(Feedback feedback);
