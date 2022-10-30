@@ -10,25 +10,26 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using IntegrationLibrary.DTO;
-using static IntegrationLibrary.Core.Model.User;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using IntegrationLibrary.BloodBanks;
+using System.IO;
+using System.Text.Json;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMailService _mailService;
+        private readonly IEmailSender _mailService;
 
-        public UserService(IUserRepository userRepository, IMailService mailService)
+        public UserService(IUserRepository userRepository, IEmailSender mailService)
         {
             _userRepository = userRepository;
             _mailService = mailService;
         }
 
-        public async void Register(User user)
+        public async Task<bool> Register(User user)
         {
-     
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
                 throw new User.DuplicateEMailException("User with given email already exists.");
@@ -36,21 +37,20 @@ namespace IntegrationLibrary.Core.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
             _userRepository.Register(user);
 
-            
-            MailContent mailContent = new MailContent();
-            mailContent.Subject = "Welcome";
+            string key = await BloodService.GenerateApiKey(user);
+
+            MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../IntegrationLibrary/Resources/mailTemplate.json"));
+
             mailContent.ToEmail = user.Email;
-            mailContent.Attachments = null;
-            mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru! " +
-                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password;
+            mailContent.Body = mailContent.Body + user.Password + ". API_KEY: " + key;
             try
             {
                 await _mailService.SendEmail(mailContent);
-                return;
             }catch(Exception ex)
             {
                 throw;
             }
+            return true;
         }
 
         public string Login(UserLogin userLogin, IConfiguration config)
@@ -69,7 +69,7 @@ namespace IntegrationLibrary.Core.Service
         {
             User user = GetBy(email);
             if (user == null) return;
-            if (!user.Password.Equals(dto.OldPassword)) throw new BadPasswordException("Bad password");
+            if (!user.Password.Equals(dto.OldPassword)) throw new User.BadPasswordException("Old password is not valid");
             //TODO: password requirements validation
 
             _userRepository.ChangePassword(user, dto.NewPassword);

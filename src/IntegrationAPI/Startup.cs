@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using IntegrationLibrary.BloodBanks;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Utility;
@@ -46,7 +47,7 @@ namespace IntegrationAPI
                 });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IEmailSender, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
 
@@ -58,7 +59,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBloodTypeService, BloodTypeService>();
+            services.AddScoped<IBloodService, BloodService>();
 
         }
 
@@ -82,16 +83,11 @@ namespace IntegrationAPI
 
             app.UseExceptionHandler("/Error");
 
-
-
             app.UseAuthentication();
-
-            app.UseAuthorization();
-
 
             app.UseRouting();
 
-         
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
