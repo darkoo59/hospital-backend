@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Model
     {
         public int AppointmentId { get; set; }
         [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime Start { get; set; }
         public int? DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public virtual Doctor Doctor { get; set; }

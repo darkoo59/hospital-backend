@@ -31,16 +31,16 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment appointment)
         {
-               //if (IsAppointmentValid(appointment))
-               //{
+               if (IsAppointmentValid(appointment))
+               {
                  _appointmentRepository.Update(appointment);
-               //}
+               }
         }
 
        
         private bool IsAppointmentValid(Appointment appointment)
         {
-            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.DateTime);
+            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.Start);
         }
 
         public void Delete(Appointment appointment)
@@ -66,7 +66,7 @@ namespace HospitalLibrary.Core.Service
             bool isAvailable = true;
             foreach (var a in _appointmentRepository.GetAll().ToList())
             {
-                if (a.DateTime == appointment.DateTime)
+                if (a.Start == appointment.Start)
                 {
                     isAvailable = false;
                     break;
@@ -82,7 +82,7 @@ namespace HospitalLibrary.Core.Service
             bool isAvailable = true;
             foreach (var vacation in _vacationRepository.GetAll().ToList())
             {
-                if (appointment.DateTime >= vacation.StartDate && appointment.DateTime <= vacation.EndDate)
+                if (appointment.Start >= vacation.StartDate && appointment.Start <= vacation.EndDate)
                 {
                     isAvailable = false;
                     break;
@@ -110,7 +110,7 @@ namespace HospitalLibrary.Core.Service
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {
-            return appointment.DateTime >= workTime.StartDate && appointment.DateTime <= workTime.EndDate && appointment.DateTime.TimeOfDay >= workTime.StartTime && appointment.DateTime.TimeOfDay <= workTime.EndTime;
+            return appointment.Start >= workTime.StartDate && appointment.Start <= workTime.EndDate && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
         }
 
         private static bool IsWeekend(DateTime date)
@@ -125,7 +125,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach (var appointment in appointments)
             {
-                if (appointment.DoctorId == DoctorId && appointment.DateTime >= DateTime.Now)
+                if (appointment.DoctorId == DoctorId && appointment.Start >= DateTime.Now)
                 {
                     futureAppointments.Add(appointment);
                 }

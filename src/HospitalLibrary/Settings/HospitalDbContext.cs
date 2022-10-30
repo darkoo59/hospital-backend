@@ -43,7 +43,7 @@ namespace HospitalLibrary.Settings
            );
 
             modelBuilder.Entity<Appointment>().HasData(
-               new Appointment() { AppointmentId = 1, DateTime = System.DateTime.Now, DoctorId = 1, PatientId = 1 }
+               new Appointment() { AppointmentId = 1, Start = System.DateTime.Now, DoctorId = 1, PatientId = 1 }
            );
 
             modelBuilder.Entity<WorkTime>().HasData(

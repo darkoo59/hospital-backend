@@ -41,16 +41,18 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Appointment appointment)
         {
-             _context.Entry(appointment).State = EntityState.Modified;
+            _context.Entry(appointment).State = EntityState.Modified;
 
             try
             {
+                _context.Update(appointment);
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
                 throw;
             }
+         
         }
     }
 }
