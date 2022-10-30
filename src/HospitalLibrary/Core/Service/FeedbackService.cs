@@ -33,5 +33,9 @@ namespace HospitalLibrary.Core.Service
             _feedbackRepository.Update(feedback);
         }
 
+        public void Delete(Feedback feedback)
+        {
+            _feedbackRepository.Delete(feedback);
+        }
     }
 }

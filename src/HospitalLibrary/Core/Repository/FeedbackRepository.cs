@@ -47,5 +47,10 @@ namespace HospitalLibrary.Core.Repository
                 throw;
             }
         }
+        public void Delete(Feedback feedback)
+        {
+            _context.Feedbacks.Remove(feedback);
+            _context.SaveChanges();
+        }
     }
 }

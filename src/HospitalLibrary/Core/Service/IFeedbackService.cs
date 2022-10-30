@@ -13,6 +13,6 @@ namespace HospitalLibrary.Core.Service
         Feedback GetById(int id);
         void Create(Feedback feedback);
         void Update(Feedback feedback);
-
+        void Delete(Feedback feedback);
     }
 }

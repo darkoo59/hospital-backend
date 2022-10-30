@@ -73,5 +73,19 @@ namespace HospitalAPI.Controllers
 
             return Ok(feedback);
         }
+
+        // DELETE api/feedbacks/2
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var feedback = _feedbackService.GetById(id);
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+
+            _feedbackService.Delete(feedback);
+            return NoContent();
+        }
     }
 }
