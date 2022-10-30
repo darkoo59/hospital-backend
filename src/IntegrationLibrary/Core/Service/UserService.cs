@@ -10,13 +10,10 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using IntegrationLibrary.DTO;
-using static IntegrationLibrary.Core.Model.User;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using IntegrationLibrary.BloodBanks;
-using System.Text.Json.Serialization;
 using System.IO;
 using System.Text.Json;
-using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -31,7 +28,7 @@ namespace IntegrationLibrary.Core.Service
             _mailService = mailService;
         }
 
-        public async void Register(User user)
+        public async Task<bool> Register(User user)
         {
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
@@ -40,18 +37,20 @@ namespace IntegrationLibrary.Core.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
             _userRepository.Register(user);
 
+            string key = await BloodService.GenerateApiKey(user);
+
             MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../IntegrationLibrary/Resources/mailTemplate.json"));
 
             mailContent.ToEmail = user.Email;
-            mailContent.Body = mailContent.Body + user.Password;
+            mailContent.Body = mailContent.Body + user.Password + ". API_KEY: " + key;
             try
             {
                 await _mailService.SendEmail(mailContent);
-                return;
             }catch(Exception ex)
             {
                 throw;
             }
+            return true;
         }
 
         public string Login(UserLogin userLogin, IConfiguration config)
@@ -70,7 +69,7 @@ namespace IntegrationLibrary.Core.Service
         {
             User user = GetBy(email);
             if (user == null) return;
-            if (!user.Password.Equals(dto.OldPassword)) throw new BadPasswordException("Bad password");
+            if (!user.Password.Equals(dto.OldPassword)) throw new User.BadPasswordException("Old password is not valid");
             //TODO: password requirements validation
 
             _userRepository.ChangePassword(user, dto.NewPassword);
