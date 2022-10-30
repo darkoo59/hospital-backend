@@ -58,7 +58,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBloodTypeService, BloodTypeService>();
+            services.AddScoped<IBloodService, BloodService>();
 
         }
 

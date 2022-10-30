@@ -11,9 +11,9 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class BloodTypeController : ControllerBase
     {
-        private readonly IBloodTypeService _bloodTypeService;
+        private readonly IBloodService _bloodTypeService;
 
-        public BloodTypeController(IBloodTypeService bloodTypeService)
+        public BloodTypeController(IBloodService bloodTypeService)
         {
             _bloodTypeService = bloodTypeService;
         }

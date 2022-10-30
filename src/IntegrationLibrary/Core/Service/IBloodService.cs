@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Service
 {
-    public interface IBloodTypeService
+    public interface IBloodService
     {
-        Task<Boolean> CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity, string Email);
+        Task<bool> CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity, string Email);
     }
 }

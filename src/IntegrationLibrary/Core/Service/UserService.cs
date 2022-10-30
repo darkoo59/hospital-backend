@@ -10,8 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using IntegrationLibrary.DTO;
-using static IntegrationLibrary.Core.Model.User;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -26,7 +25,7 @@ namespace IntegrationLibrary.Core.Service
             _mailService = mailService;
         }
 
-        public async void Register(User user)
+        public async Task<bool> Register(User user)
         {
      
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
@@ -36,21 +35,23 @@ namespace IntegrationLibrary.Core.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
             _userRepository.Register(user);
 
+            string key = await BloodService.GenerateApiKey(user);
             
             MailContent mailContent = new MailContent();
             mailContent.Subject = "Welcome";
             mailContent.ToEmail = user.Email;
             mailContent.Attachments = null;
             mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru! " +
-                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password;
+                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password + 
+                ". API_KEY: " + key;
             try
             {
                 await _mailService.SendEmail(mailContent);
-                return;
             }catch(Exception ex)
             {
                 throw;
             }
+            return true;
         }
 
         public string Login(UserLogin userLogin, IConfiguration config)
@@ -69,7 +70,7 @@ namespace IntegrationLibrary.Core.Service
         {
             User user = GetBy(email);
             if (user == null) return;
-            if (!user.Password.Equals(dto.OldPassword)) throw new BadPasswordException("Bad password");
+            if (!user.Password.Equals(dto.OldPassword)) throw new User.BadPasswordException("Old password is not valid");
             //TODO: password requirements validation
 
             _userRepository.ChangePassword(user, dto.NewPassword);

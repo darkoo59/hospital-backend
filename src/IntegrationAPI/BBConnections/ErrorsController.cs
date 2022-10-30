@@ -25,6 +25,7 @@ namespace IntegrationAPI.BBConnections
             if (exception is KeyNotFoundException) code = HttpStatusCode.NotFound;
             else if (exception is UnauthorizedAccessException) code = HttpStatusCode.Unauthorized;
             else if (exception is User.DuplicateEMailException) code = HttpStatusCode.MultipleChoices;
+            else if (exception is User.BadPasswordException) code = HttpStatusCode.Unauthorized;
             else if (exception is FileNotFoundException) code = HttpStatusCode.NotFound;
             else if (exception is NotImplementedException) code = HttpStatusCode.NotImplemented;
             else if (exception is BadHttpRequestException) code = HttpStatusCode.BadRequest;
