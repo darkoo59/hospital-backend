@@ -12,15 +12,20 @@ using Microsoft.Extensions.Configuration;
 using IntegrationLibrary.DTO;
 using static IntegrationLibrary.Core.Model.User;
 using Microsoft.AspNetCore.Mvc;
+using IntegrationLibrary.BloodBanks;
+using System.Text.Json.Serialization;
+using System.IO;
+using System.Text.Json;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMailService _mailService;
+        private readonly IEmailSender _mailService;
 
-        public UserService(IUserRepository userRepository, IMailService mailService)
+        public UserService(IUserRepository userRepository, IEmailSender mailService)
         {
             _userRepository = userRepository;
             _mailService = mailService;
@@ -28,7 +33,6 @@ namespace IntegrationLibrary.Core.Service
 
         public async void Register(User user)
         {
-     
             if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
                 throw new User.DuplicateEMailException("User with given email already exists.");
@@ -36,13 +40,10 @@ namespace IntegrationLibrary.Core.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
             _userRepository.Register(user);
 
-            
-            MailContent mailContent = new MailContent();
-            mailContent.Subject = "Welcome";
+            MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../IntegrationLibrary/Resources/mailTemplate.json"));
+
             mailContent.ToEmail = user.Email;
-            mailContent.Attachments = null;
-            mailContent.Body = "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru! " +
-                "Link : localhost:4200/integration/login" + " . Vasa generisana sifra za prvo logovanje : " + user.Password;
+            mailContent.Body = mailContent.Body + user.Password;
             try
             {
                 await _mailService.SendEmail(mailContent);
