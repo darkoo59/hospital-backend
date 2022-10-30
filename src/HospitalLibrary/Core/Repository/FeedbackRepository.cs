@@ -30,6 +30,9 @@ namespace HospitalLibrary.Core.Repository
 
         public void Create(Feedback feedback)
         {
+            DateTime timeOfCreation = DateTime.Today;
+            string creationOfFeedback = timeOfCreation.ToString("dd.MM.yyyy.");
+            feedback.Date = creationOfFeedback;
             _context.Feedbacks.Add(feedback);
             _context.SaveChanges();
         }
