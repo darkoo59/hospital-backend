@@ -118,20 +118,19 @@ namespace HospitalLibrary.Core.Service
             return date.DayOfWeek.Equals(DayOfWeek.Saturday) || date.DayOfWeek.Equals(DayOfWeek.Sunday);
         }
 
-        public List<Appointment> GetFutureAppointments(int DoctorId)
+        public List<Appointment> GetDoctorAppointments(int DoctorId)
         {
-            List<Appointment> futureAppointments = new List<Appointment>();
+            List<Appointment> doctorAppointments = new List<Appointment>();
             List<Appointment> appointments = _appointmentRepository.GetAll().ToList();
 
             foreach (var appointment in appointments)
             {
-                if (appointment.DoctorId == DoctorId && appointment.Start >= DateTime.Now)
+                if (appointment.DoctorId == DoctorId)
                 {
-                    futureAppointments.Add(appointment);
+                    doctorAppointments.Add(appointment);
                 }
             }
-            return futureAppointments;
-
+            return doctorAppointments;
         }
     }
 }

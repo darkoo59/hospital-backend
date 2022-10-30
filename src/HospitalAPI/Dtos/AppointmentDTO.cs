@@ -12,6 +12,5 @@ namespace HospitalAPI.Dtos
         public string Time { get; set; }
         public int PatientId {get; set;}
         public int DoctorId { get; set; }
-        
     }
 }

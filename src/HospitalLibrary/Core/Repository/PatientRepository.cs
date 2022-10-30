@@ -32,7 +32,7 @@ namespace HospitalLibrary.Core.Repository
 
         public Patient GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Patients.Find(id);
         }
 
         public void Update(Patient patient)

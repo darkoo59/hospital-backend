@@ -26,5 +26,11 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_patientMapper.ToDTO(_patientService.GetAll().ToList()));
         }
+
+        [HttpGet("getById/{id}")]
+        public ActionResult GetById(int id) 
+        {
+            return Ok(_patientMapper.ToDTO(_patientService.GetById(id)));
+        }
     }
 }

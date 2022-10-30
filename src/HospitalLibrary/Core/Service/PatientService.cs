@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -32,7 +33,7 @@ namespace HospitalLibrary.Core.Service
 
         public Patient GetById(int id)
         {
-            throw new NotImplementedException();
+            return _patientRepository.GetById(id);
         }
 
         public void Update(Patient patient)
