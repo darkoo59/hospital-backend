@@ -2,6 +2,7 @@
 using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using System;
 
 namespace IntegrationAPI.Controllers
@@ -18,7 +19,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult CheckBloodTypeAvailability([FromQuery] BloodTypesEnum bloodType,
+        public async Task<IActionResult> CheckBloodTypeAvailability([FromQuery] BloodTypesEnum bloodType,
                                                         [FromHeader] string apiKey,
                                                         [FromQuery] float bloodQuantity,
                                                         [FromQuery(Name = "userEmail")] string email)
@@ -26,9 +27,11 @@ namespace IntegrationAPI.Controllers
             Console.WriteLine("U controlleru " + email);
             if (!ModelState.IsValid)
             {
+                System.Diagnostics.Debug.WriteLine("ne valja");
                 return BadRequest(ModelState);
             }
-            return Ok(_bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity, email));
+            bool data = await _bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity, email);
+            return Ok(data);
         }
 
     }

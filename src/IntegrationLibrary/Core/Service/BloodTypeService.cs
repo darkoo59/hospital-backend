@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,15 +26,15 @@ namespace IntegrationLibrary.Core.Service
             string ret;
             if (bloodQuantity == 0)
             {
-                HttpResponseMessage response = await _httpClient.GetAsync("http://" + user.Server + "/type/bloodType=" + bloodType);
+                HttpResponseMessage response = await _httpClient.GetAsync("http://" + user.Server + "/api/blood/type?bloodType=" + bloodType);
                 ret = await response.Content.ReadAsStringAsync();
             }
             else
             {
-                HttpResponseMessage response = await _httpClient.GetAsync("http://" + user.Server + "/type/quantity");
+                HttpResponseMessage response = await _httpClient.GetAsync("http://" + user.Server + "/api/blood/type/quantity");
                 ret = await response.Content.ReadAsStringAsync();
             }
-            return JsonConvert.DeserializeObject<Boolean>(ret);
+            return JsonConvert.DeserializeObject<bool>(ret);
         }
     }
 }
