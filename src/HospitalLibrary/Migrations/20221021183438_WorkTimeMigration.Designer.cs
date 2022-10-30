@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221021183438_WorkTimeMigration")]
+    partial class WorkTimeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,14 +28,14 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int?>("DoctorId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("PatientId")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("AppointmentId");
 
@@ -47,9 +49,9 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             AppointmentId = 1,
+                            DateTime = new DateTime(2022, 10, 21, 20, 34, 37, 222, DateTimeKind.Local).AddTicks(1756),
                             DoctorId = 1,
-                            PatientId = 1,
-                            Start = new DateTime(2022, 10, 30, 16, 9, 5, 1, DateTimeKind.Local).AddTicks(4167)
+                            PatientId = 1
                         });
                 });
 
@@ -91,83 +93,6 @@ namespace HospitalLibrary.Migrations
                             SpecializationId = 3,
                             Surname = "Nikolic"
                         });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Date")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDisplayedPublic")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("Privatisation")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Textt")
-                        .HasColumnType("text");
-
-                    b.Property<string>("User")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Feedbacks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Date = "25.10.2022",
-                            IsDisplayedPublic = false,
-                            Privatisation = false,
-                            Textt = "Awesome clinic!",
-                            User = "Милош"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Date = "25.10.2022",
-                            IsDisplayedPublic = false,
-                            Privatisation = false,
-                            Textt = "It's okay... I guess.",
-                            User = "Немања"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Date = "25.10.2022",
-                            IsDisplayedPublic = false,
-                            Privatisation = false,
-                            Textt = "Awful.",
-                            User = "Огњен"
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Notification", b =>
-                {
-                    b.Property<int>("NotificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("NotificationId");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
@@ -282,39 +207,6 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
-                {
-                    b.Property<int>("VacationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int?>("DoctorId")
-                        .IsRequired()
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("VacationId");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Vacations");
-
-                    b.HasData(
-                        new
-                        {
-                            VacationId = 1,
-                            DoctorId = 1,
-                            EndDate = new DateTime(2022, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartDate = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkTime", b =>
                 {
                     b.Property<int>("WorkTimeId")
@@ -388,17 +280,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkTime", b =>
