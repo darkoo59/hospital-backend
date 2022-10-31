@@ -2,5 +2,6 @@
     "Subject": "Welcome",
     "ToEmail": "",
     "Attachment": null,
-    "Body": "Ulogujte se na sledecem linku i nakon toga obavezno promenite sifru!Link : localhost:4200/integration/login . Vasa generisana sifra za prvo logovanje : "
+    "Body": "Please log in on the following link with password sent in this email. Password can be changed in the settings afterwards. Link to the site is: http://localhost:4200/integration/login. Your password is: "
 }
+

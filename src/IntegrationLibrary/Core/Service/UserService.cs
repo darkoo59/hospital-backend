@@ -35,21 +35,18 @@ namespace IntegrationLibrary.Core.Service
                 throw new User.DuplicateEMailException("User with given email already exists.");
             }
             user.Password = KeyGenerator.GetUniqueKey(16);
-            _userRepository.Register(user);
+            
 
             string key = await BloodService.GenerateApiKey(user);
+            _userRepository.Register(user);
 
             MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../IntegrationLibrary/Resources/mailTemplate.json"));
 
             mailContent.ToEmail = user.Email;
             mailContent.Body = mailContent.Body + user.Password + ". API_KEY: " + key;
-            try
-            {
-                await _mailService.SendEmail(mailContent);
-            }catch(Exception ex)
-            {
-                throw;
-            }
+            
+            await _mailService.SendEmail(mailContent);
+            
             return true;
         }
 
