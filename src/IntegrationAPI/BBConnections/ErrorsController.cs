@@ -6,7 +6,6 @@ using IntegrationLibrary.Core.Model;
 using System;
 using System.IO;
 using System.Net;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 
 namespace IntegrationAPI.BBConnections

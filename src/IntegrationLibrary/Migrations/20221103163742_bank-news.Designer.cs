@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221030182643_user")]
-    partial class user
+    [Migration("20221103163742_bank-news")]
+    partial class banknews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,44 @@ namespace IntegrationLibrary.Migrations
                             Email = "email3@gmail.com",
                             Password = "dd13xfCA5Jz9Y9ho",
                             Server = "localhost:7555"
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.BloodBankNews.Model.BankNews", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BankNews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "sadrzaj vijesti 1",
+                            Title = "vijest 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "sadrzaj vijesti 2",
+                            Title = "vijest 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Content = "sadrzaj vijesti 3",
+                            Title = "vijest 3"
                         });
                 });
 #pragma warning restore 612, 618

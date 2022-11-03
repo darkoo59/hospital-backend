@@ -1,6 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;

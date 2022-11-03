@@ -3,10 +3,24 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class user : Migration
+    public partial class banknews : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "BankNews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankNews", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -21,6 +35,16 @@ namespace IntegrationLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.InsertData(
+                table: "BankNews",
+                columns: new[] { "Id", "Content", "Title" },
+                values: new object[,]
+                {
+                    { 1, "sadrzaj vijesti 1", "vijest 1" },
+                    { 2, "sadrzaj vijesti 2", "vijest 2" },
+                    { 3, "sadrzaj vijesti 3", "vijest 3" }
                 });
 
             migrationBuilder.InsertData(
@@ -42,6 +66,9 @@ namespace IntegrationLibrary.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BankNews");
+
             migrationBuilder.DropTable(
                 name: "Users");
         }
