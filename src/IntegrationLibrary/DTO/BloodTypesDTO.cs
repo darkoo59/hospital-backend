@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using IntegrationLibrary.Core.Model;
 
-namespace IntegrationLibrary.Core.Model
+namespace IntegrationLibrary.DTO
 {
     public class BloodTypesDTO
     {

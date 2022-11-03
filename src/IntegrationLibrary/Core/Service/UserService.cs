@@ -50,7 +50,7 @@ namespace IntegrationLibrary.Core.Service
             return true;
         }
 
-        public string Login(UserLogin userLogin, IConfiguration config)
+        public string Login(UserLoginDTO userLogin, IConfiguration config)
         {
             var user = Authenticate(userLogin);
 
@@ -72,7 +72,7 @@ namespace IntegrationLibrary.Core.Service
             _userRepository.ChangePassword(user, dto.NewPassword);
         }
 
-        private User Authenticate(UserLogin userLogin)
+        private User Authenticate(UserLoginDTO userLogin)
         {
             var currentUser = GetBy(userLogin.Email);
 

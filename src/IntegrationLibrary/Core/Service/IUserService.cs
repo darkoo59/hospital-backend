@@ -9,7 +9,7 @@ namespace IntegrationLibrary.Core.Service
     public interface IUserService
     {
         Task<bool> Register(User user);
-        string Login(UserLogin userLogin, IConfiguration config);
+        string Login(UserLoginDTO userLogin, IConfiguration config);
         IEnumerable<User> GetAll();
         User GetBy(string email);
         void ChangePassword(string email, ChangePasswordDTO dto);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service;
@@ -39,7 +38,7 @@ namespace IntegrationAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserLogin userLogin)
+        public IActionResult Login([FromBody] UserLoginDTO userLogin)
         {
             if (!ModelState.IsValid)
             {
