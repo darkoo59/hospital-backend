@@ -6,5 +6,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Repository
     public interface IBankNewsRepository
     {
         IEnumerable<BankNews> GetAll();
+        BankNews GetById(int id);
+        void Update(BankNews news);
     }
 }

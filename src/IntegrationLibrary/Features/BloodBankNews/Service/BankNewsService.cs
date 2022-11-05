@@ -1,6 +1,5 @@
 ﻿using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
-using System;
 using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.BloodBankNews.Service
@@ -15,12 +14,16 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
 
         public void ApproveNews(int id)
         {
-            throw new NotImplementedException();
+            BankNews news = _bankNewsRepository.GetById(id);
+            news.State = NewsStateEnum.APPROVED;
+            _bankNewsRepository.Update(news);
         }
 
-        public void DispproveNews(int id)
+        public void DisapproveNews(int id)
         {
-            throw new NotImplementedException();
+            BankNews news = _bankNewsRepository.GetById(id);
+            news.State = NewsStateEnum.DISAPPROVED;
+            _bankNewsRepository.Update(news);
         }
 
         public IEnumerable<BankNews> GetAll()
@@ -30,7 +33,17 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
 
         public IEnumerable<BankNews> GetAllByState(NewsStateEnum state)
         {
-            throw new NotImplementedException();
+            List<BankNews> res = new();
+            foreach (BankNews news in GetAll())
+            {
+                if (news.State == state) res.Add(news);
+            }
+            return res;
+        }
+
+        public BankNews GetById(int id)
+        {
+            return _bankNewsRepository.GetById(id);
         }
     }
 }

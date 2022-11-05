@@ -5,9 +5,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace IntegrationTests
+namespace IntegrationTests.Unit
 {
-    public class BloodBankNewsTests
+    public class BB_NewsTests
     {
         [Fact]
         public void Get_All_News()
@@ -70,9 +70,20 @@ namespace IntegrationTests
             List<BankNews> data = GetNewsData();
             BankNewsService service = new(CreateNewsRepository(data));
 
-            service.ApproveNews(3);
+            service.DisapproveNews(3);
 
             Assert.Equal(NewsStateEnum.DISAPPROVED, data[2].State);
+        }
+
+        [Fact]
+        public void Get_News_By_Id()
+        {
+            List<BankNews> data = GetNewsData();
+            BankNewsService service = new(CreateNewsRepository(data));
+
+            BankNews news = service.GetById(2);
+
+            Assert.Equal(data[1], news);
         }
 
 
@@ -80,8 +91,11 @@ namespace IntegrationTests
 
         private static IBankNewsRepository CreateNewsRepository(List<BankNews> data)
         {
-            Mock<IBankNewsRepository> studRepo = new Mock<IBankNewsRepository>();
+            Mock<IBankNewsRepository> studRepo = new();
             studRepo.Setup(m => m.GetAll()).Returns(data);
+            studRepo.Setup(m => m.GetById(1)).Returns(data[0]);
+            studRepo.Setup(m => m.GetById(2)).Returns(data[1]);
+            studRepo.Setup(m => m.GetById(3)).Returns(data[2]);
 
             return studRepo.Object;
         }

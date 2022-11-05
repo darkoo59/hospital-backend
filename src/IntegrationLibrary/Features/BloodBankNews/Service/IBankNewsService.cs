@@ -8,6 +8,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
         IEnumerable<BankNews> GetAll();
         IEnumerable<BankNews> GetAllByState(NewsStateEnum state);
         void ApproveNews(int id);
-        void DispproveNews(int id);
+        void DisapproveNews(int id);
+        BankNews GetById(int id);
     }
 }
