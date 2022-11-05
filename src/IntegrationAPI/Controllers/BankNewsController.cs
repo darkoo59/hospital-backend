@@ -40,14 +40,14 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPatch("approve")]
-        public ActionResult ApproveNews([FromQuery(Name = "id")] int id)
+        public ActionResult ApproveNews([FromBody] int id)
         {
             _bankNewsService.ApproveNews(id);
             return Ok();
         }
 
         [HttpPatch("disapprove")]
-        public ActionResult DisapproveNews([FromQuery(Name = "id")] int id)
+        public ActionResult DisapproveNews([FromBody] int id)
         {
             _bankNewsService.DisapproveNews(id);
             return Ok();
