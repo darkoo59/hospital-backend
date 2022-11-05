@@ -5,5 +5,6 @@
         public int Id { set; get; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public NewsStateEnum State { get; set; }
     }
 }

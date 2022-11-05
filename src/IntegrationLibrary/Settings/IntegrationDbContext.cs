@@ -2,6 +2,7 @@
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace IntegrationLibrary.Settings
 {
     public class IntegrationDbContext : DbContext
@@ -20,9 +21,9 @@ namespace IntegrationLibrary.Settings
                 new User() { Id = 3, Email = "email3@gmail.com", AppName = "app3", Password = "dd13xfCA5Jz9Y9ho", Server = "localhost:7555" }
             );
             modelBuilder.Entity<BankNews>().HasData(
-                new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1" },
-                new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2" },
-                new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3" }
+                new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsStateEnum.UNCHECKED },
+                new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsStateEnum.DISAPPROVED },
+                new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3", State = NewsStateEnum.APPROVED }
             );
             base.OnModelCreating(modelBuilder);
         }

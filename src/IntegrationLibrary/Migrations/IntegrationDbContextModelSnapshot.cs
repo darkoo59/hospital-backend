@@ -85,6 +85,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
@@ -97,18 +100,21 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Content = "sadrzaj vijesti 1",
+                            State = 0,
                             Title = "vijest 1"
                         },
                         new
                         {
                             Id = 2,
                             Content = "sadrzaj vijesti 2",
+                            State = 2,
                             Title = "vijest 2"
                         },
                         new
                         {
                             Id = 3,
                             Content = "sadrzaj vijesti 3",
+                            State = 1,
                             Title = "vijest 3"
                         });
                 });

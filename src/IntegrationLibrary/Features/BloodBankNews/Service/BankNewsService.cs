@@ -13,9 +13,24 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             _bankNewsRepository = repo;
         }
 
+        public void ApproveNews(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DispproveNews(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<BankNews> GetAll()
         {
             return _bankNewsRepository.GetAll();
+        }
+
+        public IEnumerable<BankNews> GetAllByState(NewsStateEnum state)
+        {
+            throw new NotImplementedException();
         }
     }
 }
