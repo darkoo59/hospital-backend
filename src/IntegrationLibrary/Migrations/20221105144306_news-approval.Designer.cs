@@ -2,15 +2,17 @@
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221105144306_news-approval")]
+    partial class newsapproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,48 +118,6 @@ namespace IntegrationLibrary.Migrations
                             Content = "sadrzaj vijesti 3",
                             State = 1,
                             Title = "vijest 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Content = "sadrzaj vijesti 4",
-                            State = 0,
-                            Title = "vijest 4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Content = "sadrzaj vijesti 5",
-                            State = 2,
-                            Title = "vijest 5"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Content = "sadrzaj vijesti 6",
-                            State = 0,
-                            Title = "vijest 6"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Content = "sadrzaj vijesti 7",
-                            State = 0,
-                            Title = "vijest 7"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Content = "sadrzaj vijesti 8",
-                            State = 0,
-                            Title = "vijest 8"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Content = "sadrzaj vijesti 9",
-                            State = 1,
-                            Title = "vijest 9"
                         });
                 });
 #pragma warning restore 612, 618

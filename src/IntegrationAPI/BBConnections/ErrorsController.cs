@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using static IntegrationLibrary.Features.BloodBankNews.Model.BankNews;
 
 namespace IntegrationAPI.BBConnections
 {
@@ -28,6 +29,7 @@ namespace IntegrationAPI.BBConnections
             else if (exception is FileNotFoundException) code = HttpStatusCode.NotFound;
             else if (exception is NotImplementedException) code = HttpStatusCode.NotImplemented;
             else if (exception is BadHttpRequestException) code = HttpStatusCode.BadRequest;
+            else if (exception is BankNewsException) code = HttpStatusCode.BadRequest;
             else if (exception is Exception) code = HttpStatusCode.BadRequest;
 
             Response.StatusCode = ((int)code);

@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,28 @@ namespace IntegrationLibrary.Features.BloodBankNews.Repository
         public IEnumerable<BankNews> GetAll()
         {
             return _context.BankNews.ToList();
+        }
+
+        public BankNews GetById(int id)
+        {
+            foreach (BankNews bank in GetAll())
+            {
+                if (bank.Id == id) return bank;
+            }
+            return null;
+        }
+
+        public void Update(BankNews news)
+        {
+            _context.Entry(news).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }
