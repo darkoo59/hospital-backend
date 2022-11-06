@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221103163742_bank-news")]
-    partial class banknews
+    [Migration("20221106092524_more-news")]
+    partial class morenews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,6 +87,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
@@ -99,19 +102,64 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Content = "sadrzaj vijesti 1",
+                            State = 0,
                             Title = "vijest 1"
                         },
                         new
                         {
                             Id = 2,
                             Content = "sadrzaj vijesti 2",
+                            State = 2,
                             Title = "vijest 2"
                         },
                         new
                         {
                             Id = 3,
                             Content = "sadrzaj vijesti 3",
+                            State = 1,
                             Title = "vijest 3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Content = "sadrzaj vijesti 4",
+                            State = 0,
+                            Title = "vijest 4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Content = "sadrzaj vijesti 5",
+                            State = 2,
+                            Title = "vijest 5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Content = "sadrzaj vijesti 6",
+                            State = 0,
+                            Title = "vijest 6"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Content = "sadrzaj vijesti 7",
+                            State = 0,
+                            Title = "vijest 7"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Content = "sadrzaj vijesti 8",
+                            State = 0,
+                            Title = "vijest 8"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Content = "sadrzaj vijesti 9",
+                            State = 1,
+                            Title = "vijest 9"
                         });
                 });
 #pragma warning restore 612, 618
