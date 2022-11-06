@@ -2,9 +2,6 @@
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -28,7 +25,7 @@ namespace HospitalLibrary.Core.Service
 
         public IEnumerable<BloodRequest> GetAll()
         {
-            throw new NotImplementedException();
+            return _bloodRequestRepository.GetAll();
         }
 
         public BloodRequest GetById(int id)

@@ -28,9 +28,10 @@ namespace HospitalTests
             var controller = SetupController(scope);
             BloodRequestDTO bloodRequestDTO = new BloodRequestDTO(1, "A+", 4, "Heart surgery", new DateTime(2022, 12, 13), 1);
 
-            var result = ((OkObjectResult)controller.Create(bloodRequestDTO))?.Value as BloodRequest;
+            var result = ((CreatedAtActionResult)controller.Create(bloodRequestDTO))?.Value as BloodRequest;
 
             Assert.NotNull(result);
+
 
         }
     }

@@ -1,7 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +25,7 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Appointments.Remove(appointment);
             _context.SaveChanges();
-          
+
         }
 
         public IEnumerable<Appointment> GetAll()
@@ -52,7 +51,7 @@ namespace HospitalLibrary.Core.Repository
             {
                 throw;
             }
-         
+
         }
     }
 }

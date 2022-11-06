@@ -46,6 +46,7 @@ namespace HospitalAPI.Mappers
                 bloodRequestDTO.BloodType = "O+";
             }
 
+            bloodRequestDTO.ReasonForRequest = bloodRequest.ReasonForRequest;
             bloodRequestDTO.QuantityInLiters = bloodRequest.QuantityInLiters;
             bloodRequestDTO.FinalDate = bloodRequest.FinalDate;
             bloodRequestDTO.DoctorId = bloodRequest.DoctorId;
@@ -93,6 +94,7 @@ namespace HospitalAPI.Mappers
                     bloodRequestDTO.BloodType = "O+";
                 }
 
+                bloodRequestDTO.ReasonForRequest = bloodRequest.ReasonForRequest;
                 bloodRequestDTO.QuantityInLiters = bloodRequest.QuantityInLiters;
                 bloodRequestDTO.FinalDate = bloodRequest.FinalDate;
                 bloodRequestDTO.DoctorId = bloodRequest.DoctorId;
@@ -140,6 +142,7 @@ namespace HospitalAPI.Mappers
                 bloodRequest.BloodType = BloodType.O_PLUS;
             }
 
+            bloodRequest.ReasonForRequest = bloodRequestDTO.ReasonForRequest;
             bloodRequest.QuantityInLiters = bloodRequestDTO.QuantityInLiters;
             bloodRequest.FinalDate = bloodRequestDTO.FinalDate;
             bloodRequest.DoctorId = bloodRequestDTO.DoctorId;
@@ -187,6 +190,7 @@ namespace HospitalAPI.Mappers
                     bloodRequest.BloodType = BloodType.O_PLUS;
                 }
 
+                bloodRequest.ReasonForRequest = bloodRequestDTO.ReasonForRequest;
                 bloodRequest.QuantityInLiters = bloodRequestDTO.QuantityInLiters;
                 bloodRequest.FinalDate = bloodRequestDTO.FinalDate;
                 bloodRequest.DoctorId = bloodRequestDTO.DoctorId;

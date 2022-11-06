@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -25,17 +23,17 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Feedback> GetAllPublic()
         {
-            return _context.Feedbacks.ToList().Where(feedback => feedback.IsDisplayedPublic==true && feedback.Privatisation==false);
+            return _context.Feedbacks.ToList().Where(feedback => feedback.IsDisplayedPublic == true && feedback.Privatisation == false);
         }
 
         public IEnumerable<Feedback> GetAllPublicNotPublished()
         {
-            return _context.Feedbacks.ToList().Where(feedback => feedback.IsDisplayedPublic==false && feedback.Privatisation==false);
+            return _context.Feedbacks.ToList().Where(feedback => feedback.IsDisplayedPublic == false && feedback.Privatisation == false);
         }
 
         public IEnumerable<Feedback> GetAllPrivate()
         {
-            return _context.Feedbacks.ToList().Where(feedback => feedback.Privatisation == true && feedback.IsDisplayedPublic == false );
+            return _context.Feedbacks.ToList().Where(feedback => feedback.Privatisation == true && feedback.IsDisplayedPublic == false);
         }
 
         public Feedback GetById(int id)

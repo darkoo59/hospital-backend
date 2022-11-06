@@ -24,6 +24,12 @@ namespace HospitalAPI.Controllers
             _bloodRequestMapper = bloodRequestMapper;
         }
 
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_bloodRequestMapper.ToDTO(_bloodRequestService.GetAll().ToList()));
+        }
+
         [HttpPost]
         public ActionResult Create(BloodRequestDTO bloodRequestDTO)
         {

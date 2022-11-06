@@ -3,8 +3,6 @@ using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -29,7 +27,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<BloodRequest> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.BloodRequests.ToList();
         }
 
         public BloodRequest GetById(int id)

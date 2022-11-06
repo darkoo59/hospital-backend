@@ -40,9 +40,9 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<Room> GetRooms(string buildingId, int floorId)
         {
             List<Room> res = new List<Room>();
-            foreach(Room room in _context.Rooms)
+            foreach (Room room in _context.Rooms)
             {
-                if(room.BuildingId == buildingId && room.FloorId == floorId)
+                if (room.BuildingId == buildingId && room.FloorId == floorId)
                 {
                     res.Add(room);
                 }
