@@ -61,6 +61,10 @@ namespace HospitalAPI
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IGenericMapper<BloodRequest, BloodRequestDTO>, BloodRequestMapper>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
