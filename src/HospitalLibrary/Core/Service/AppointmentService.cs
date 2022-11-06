@@ -18,8 +18,8 @@ namespace HospitalLibrary.Core.Service
             _vacationRepository = vacationRepository;
             _workTimeRepository = workTimeRepository;
         }
-       
-        
+
+
 
         public void Create(Appointment appointment)
         {
@@ -31,13 +31,13 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment appointment)
         {
-               if (IsAppointmentValid(appointment))
-               {
-                 _appointmentRepository.Update(appointment);
-               }
+            if (IsAppointmentValid(appointment))
+            {
+                _appointmentRepository.Update(appointment);
+            }
         }
 
-       
+
         private bool IsAppointmentValid(Appointment appointment)
         {
             return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.Start);
@@ -58,7 +58,7 @@ namespace HospitalLibrary.Core.Service
             return _appointmentRepository.GetById(id);
         }
 
-       
+
 
 
         private bool IsAppointmentAvailable(Appointment appointment)
@@ -75,7 +75,7 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
- 
+
 
         public bool IsDoctorOnVacation(Appointment appointment)
         {
@@ -106,7 +106,7 @@ namespace HospitalLibrary.Core.Service
         }
 
 
-  
+
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {

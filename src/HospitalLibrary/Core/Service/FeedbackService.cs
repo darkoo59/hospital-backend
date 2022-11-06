@@ -47,7 +47,7 @@ namespace HospitalLibrary.Core.Service
         {
             _feedbackRepository.Delete(feedback);
         }
-        
+
         public IEnumerable<Feedback> GetAllPrivate()
         {
             return _feedbackRepository.GetAllPrivate();

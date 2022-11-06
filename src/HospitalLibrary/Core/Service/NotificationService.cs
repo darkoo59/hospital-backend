@@ -8,7 +8,8 @@ namespace HospitalLibrary.Core.Service
         private readonly INotificationRepository _notificationRepository;
         private readonly IDoctorRepository _doctorRepository;
 
-        public NotificationService(INotificationRepository notificationRepository, IDoctorRepository doctorRepository) {
+        public NotificationService(INotificationRepository notificationRepository, IDoctorRepository doctorRepository)
+        {
             this._notificationRepository = notificationRepository;
             this._doctorRepository = doctorRepository;
         }
