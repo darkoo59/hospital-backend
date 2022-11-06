@@ -69,7 +69,7 @@ namespace IntegrationTests.Integration
         }
 
         [Fact, Priority(5)]
-        public void Z_Approve_News()
+        public void Approve_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
@@ -80,7 +80,7 @@ namespace IntegrationTests.Integration
         }
 
         [Fact, Priority(5)]
-        public void Z_Disapprove_News()
+        public void Disapprove_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
