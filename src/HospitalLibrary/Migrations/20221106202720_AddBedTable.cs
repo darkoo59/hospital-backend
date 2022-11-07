@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class AddBloodRequestTable : Migration
+    public partial class AddBedTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -103,6 +103,26 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specializations", x => x.SpecializationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Beds",
+                columns: table => new
+                {
+                    BedId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Label = table.Column<string>(type: "text", nullable: true),
+                    RoomId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Beds", x => x.BedId);
+                    table.ForeignKey(
+                        name: "FK_Beds_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,6 +225,16 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Beds",
+                columns: new[] { "BedId", "Label", "RoomId" },
+                values: new object[,]
+                {
+                    { 1, "201B1", null },
+                    { 2, "201B2", null },
+                    { 3, "201B3", null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "BloodRequests",
                 columns: new[] { "BloodRequestId", "BloodType", "DoctorId", "FinalDate", "QuantityInLiters", "ReasonForRequest" },
                 values: new object[,]
@@ -229,9 +259,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "PatientId", "Name", "Surname" },
                 values: new object[,]
                 {
-                    { 2, "Marko", "Markovic" },
                     { 3, "Aleksa", "Aleksic" },
-                    { 1, "Pera", "Peric" }
+                    { 1, "Pera", "Peric" },
+                    { 2, "Marko", "Markovic" }
                 });
 
             migrationBuilder.InsertData(
@@ -247,18 +277,18 @@ namespace HospitalLibrary.Migrations
                     { 27, "B", "neki opis", 1, 250, "204B", 0, 283, 10, 530 },
                     { 28, "B", "neki opis1", 1, 250, "205B", 0, 283, 358, 270 },
                     { 30, "B", "neki opis1", 1, 250, "207B", 0, 282, 706, 270 },
-                    { 35, "B", "neki opis", 2, 250, "304B", 0, 283, 10, 530 },
+                    { 36, "B", "neki opis1", 2, 250, "305B", 0, 283, 358, 270 },
                     { 32, "B", "neki opis", 2, 250, "301B", 0, 485, 10, 10 },
                     { 33, "B", "neki opis1", 2, 250, "302B", 0, 480, 505, 10 },
                     { 34, "B", "neki opis2", 2, 250, "303B", 0, 283, 10, 270 },
+                    { 35, "B", "neki opis", 2, 250, "304B", 0, 283, 10, 530 },
                     { 22, "B", "neki opis1", 0, 250, "107B", 0, 282, 706, 270 },
-                    { 36, "B", "neki opis1", 2, 250, "305B", 0, 283, 358, 270 },
                     { 37, "B", "neki opis2", 2, 250, "306B", 0, 283, 358, 530 },
                     { 38, "B", "neki opis1", 2, 250, "307B", 0, 282, 706, 270 },
                     { 39, "B", "neki opis2", 2, 250, "308B", 0, 282, 706, 530 },
                     { 31, "B", "neki opis2", 1, 250, "208B", 0, 282, 706, 530 },
                     { 21, "B", "neki opis2", 0, 250, "106B", 0, 283, 358, 530 },
-                    { 17, "B", "neki opis1", 0, 250, "102B", 0, 480, 505, 10 },
+                    { 15, "A", "neki opis8", 2, 250, "305A", 0, 170, 220, 530 },
                     { 19, "B", "neki opis", 0, 250, "104B", 0, 283, 10, 530 },
                     { 1, "A", "neki opis", 0, 250, "101A", 0, 380, 10, 10 },
                     { 2, "A", "neki opis1", 0, 250, "102A", 0, 170, 10, 270 },
@@ -274,8 +304,8 @@ namespace HospitalLibrary.Migrations
                     { 12, "A", "neki opis7", 2, 250, "302A", 0, 170, 10, 270 },
                     { 13, "A", "neki opis8", 2, 250, "303A", 0, 170, 10, 530 },
                     { 14, "A", "neki opis7", 2, 250, "304A", 0, 170, 220, 270 },
-                    { 15, "A", "neki opis8", 2, 250, "305A", 0, 170, 220, 530 },
                     { 16, "B", "neki opis", 0, 250, "101B", 0, 485, 10, 10 },
+                    { 17, "B", "neki opis1", 0, 250, "102B", 0, 480, 505, 10 },
                     { 18, "B", "neki opis2", 0, 250, "103B", 0, 283, 10, 270 },
                     { 10, "A", "neki opis5", 1, 250, "205A", 0, 170, 220, 530 }
                 });
@@ -298,7 +328,7 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "Appointments",
                 columns: new[] { "AppointmentId", "DoctorId", "PatientId", "Start" },
-                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 6, 13, 35, 22, 201, DateTimeKind.Local).AddTicks(629) });
+                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 6, 21, 27, 19, 131, DateTimeKind.Local).AddTicks(6224) });
 
             migrationBuilder.InsertData(
                 table: "Vacations",
@@ -319,6 +349,11 @@ namespace HospitalLibrary.Migrations
                 name: "IX_Appointments_PatientId",
                 table: "Appointments",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Beds_RoomId",
+                table: "Beds",
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_RoomId",
@@ -345,6 +380,9 @@ namespace HospitalLibrary.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Appointments");
+
+            migrationBuilder.DropTable(
+                name: "Beds");
 
             migrationBuilder.DropTable(
                 name: "BloodRequests");

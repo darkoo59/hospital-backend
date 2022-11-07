@@ -15,6 +15,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Vacation> Vacations { get; set; }
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<Bed> Beds { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -115,6 +116,14 @@ namespace HospitalLibrary.Settings
                 new BloodRequest() { BloodRequestId = 1, BloodType = BloodType.AB_MINUS, QuantityInLiters = 2.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 13), DoctorId = 1 },
                 new BloodRequest() { BloodRequestId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 3, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 11, 28), DoctorId = 1 },
                 new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 }
+
+            );
+
+            modelBuilder.Entity<Bed>().HasData(
+
+                new Bed() { BedId = 1, Label = "201B1" },
+                new Bed() { BedId = 2, Label = "201B2" },
+                new Bed() { BedId = 3, Label = "201B3" }
 
             );
 

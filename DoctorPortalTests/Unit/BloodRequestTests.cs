@@ -13,8 +13,6 @@ namespace HospitalTests.Unit
         public void Get_all_blood_requests()
         {
             List<BloodRequest> requests = GetRequests();
-            //var stubRepo = new Mock<IBloodRequestRepository>();
-            //stubRepo.Setup(m => m.GetAll()).Returns(requests);
             BloodRequestService service = new(CreateBloodRequestRepository(requests));
 
             IEnumerable<BloodRequest> ret = service.GetAll();
@@ -26,8 +24,6 @@ namespace HospitalTests.Unit
         public void Get_blood_request_by_id()
         {
             List<BloodRequest> requests = GetRequests();
-            //var stubRepo = new Mock<IBloodRequestRepository>();
-            //stubRepo.Setup(m => m.GetById(1)).Returns(requests[0]);
             BloodRequestService service = new(CreateBloodRequestRepository(requests));
 
             BloodRequest bloodRequest = service.GetById(1);
