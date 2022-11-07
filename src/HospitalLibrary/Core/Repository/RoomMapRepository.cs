@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.Repository
         {
             _context = context;
             List<Room> rooms =_context.Rooms.ToList();
-            List<RoomMap> roomsMap = new List<RoomMap>();
+            roomsMap = new List<RoomMap>();
             foreach(Room room in rooms)
             {
                 RoomMap newRoomMap = new RoomMap();
