@@ -88,5 +88,17 @@ namespace HospitalLibrary.Core.Repository
             }
             return equipmentList;
         }
+
+        public IEnumerable<Room> SearchForEquipment(string query)
+        {
+            List<Room> rooms = new List<Room>();
+            List<Equipment> equipmentList = new List<Equipment>();
+            equipmentList = _context.Equipment.Where(e => e.Name.Contains(query)).ToList();
+            foreach(Equipment equipment in equipmentList)
+            {
+                    rooms.Add(_context.Rooms.FirstOrDefault(r => r.Id == equipment.RoomId));
+            }
+            return rooms;
+        }
     }
 }

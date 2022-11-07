@@ -10,6 +10,7 @@ namespace HospitalLibrary.Core.Repository
         Room GetByNumber(string number);
         IEnumerable<Room> GetRooms(string buildingId, int floorId);
         IEnumerable<Equipment> GetEquipment(int id);
+        IEnumerable<Room> SearchForEquipment(string query);
         void Create(Room room);
         void Update(Room room);
         void Delete(Room room);
