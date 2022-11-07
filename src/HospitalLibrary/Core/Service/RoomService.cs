@@ -47,5 +47,10 @@ namespace HospitalLibrary.Core.Service
         {
             _roomRepository.Delete(room);
         }
+
+        public IEnumerable<Equipment> GetEquipment(int id)
+        {
+            return _roomRepository.GetEquipment(id);
+        }
     }
 }

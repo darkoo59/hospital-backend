@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
@@ -17,6 +18,7 @@ namespace HospitalLibrary.Core.Model
         public string BuildingId { get; set; }
         public string Description { get; set; }
         public RoomType Type { get; set; }
+        //public List<Equipment> EquipmentList { get; set;}
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }

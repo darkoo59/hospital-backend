@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Service
         Room GetById(int id);
         Room GetByNumber(string number);
         IEnumerable<Room> GetRooms(string buildingId, int floorId);
+        IEnumerable<Equipment> GetEquipment(int id);
         void Create(Room room);
         void Update(Room room);
         void Delete(Room room);

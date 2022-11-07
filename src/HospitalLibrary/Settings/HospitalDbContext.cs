@@ -1,5 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace HospitalLibrary.Settings
 {
@@ -11,10 +13,15 @@ namespace HospitalLibrary.Settings
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder
+               .EnableSensitiveDataLogging();
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -23,8 +30,12 @@ namespace HospitalLibrary.Settings
         // ne treba se koristiti za aplikaciju u produkciji
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Equipment>().HasData(
+                new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 1, RoomId = 1, Name = "Syringe", Quantity = 50 },
+                new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 }
+                );
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, Number = "101A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis", X = 10, Y = 10, Width = 380, Height = 250 },
+                new Room() { Id = 1, Number = "101A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis", X = 10, Y = 10, Width = 380, Height = 250},
                 new Room() { Id = 2, Number = "102A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis1", X = 10, Y = 270, Width = 170, Height = 250 },
                 new Room() { Id = 3, Number = "103A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis2", X = 10, Y = 530, Width = 170, Height = 250 },
                 new Room() { Id = 4, Number = "104A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis", X = 220, Y = 270, Width = 170, Height = 250 },

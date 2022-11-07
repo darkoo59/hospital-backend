@@ -75,5 +75,18 @@ namespace HospitalLibrary.Core.Repository
             _context.Rooms.Remove(room);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Equipment> GetEquipment(int id)
+        {
+            List<Equipment> equipmentList = new List<Equipment>();
+            foreach(Equipment equipment in _context.Equipment)
+            {
+                if(equipment.RoomId == id)
+                {
+                    equipmentList.Add(equipment);
+                }
+            }
+            return equipmentList;
+        }
     }
 }

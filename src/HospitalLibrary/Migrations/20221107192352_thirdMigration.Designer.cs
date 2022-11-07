@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221107134123_secondMigration")]
-    partial class secondMigration
+    [Migration("20221107192352_thirdMigration")]
+    partial class thirdMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 7, 14, 41, 23, 29, DateTimeKind.Local).AddTicks(8517)
+                            Start = new DateTime(2022, 11, 7, 20, 23, 51, 721, DateTimeKind.Local).AddTicks(1149)
                         });
                 });
 
@@ -148,6 +148,50 @@ namespace HospitalLibrary.Migrations
                             RoomId = 1,
                             SpecializationId = 3,
                             Surname = "Nikolic"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("EquipmentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Equipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EquipmentType = 1,
+                            Name = "Syringe",
+                            Quantity = 50,
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EquipmentType = 1,
+                            Name = "Tounge depressor",
+                            Quantity = 32,
+                            RoomId = 1
                         });
                 });
 
@@ -958,6 +1002,15 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Specialization");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("EquipmentList")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
@@ -978,6 +1031,11 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+                {
+                    b.Navigation("EquipmentList");
                 });
 #pragma warning restore 612, 618
         }
