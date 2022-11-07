@@ -20,6 +20,11 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+            List<Room> rooms = (List<Room>)_roomService.GetAll();
+            foreach (var room in rooms)
+            {
+                System.Console.WriteLine(room.Beds);
+            }
             return Ok(_roomService.GetAll());
         }
 

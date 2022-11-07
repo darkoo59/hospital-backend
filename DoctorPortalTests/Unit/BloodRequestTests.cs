@@ -13,9 +13,7 @@ namespace HospitalTests.Unit
         public void Get_all_blood_requests()
         {
             List<BloodRequest> requests = GetRequests();
-            var stubRepo = new Mock<IBloodRequestRepository>();
-            stubRepo.Setup(m => m.GetAll()).Returns(requests);
-            BloodRequestService service = new(stubRepo.Object);
+            BloodRequestService service = new(CreateBloodRequestRepository(requests));
 
             IEnumerable<BloodRequest> ret = service.GetAll();
 
@@ -26,13 +24,22 @@ namespace HospitalTests.Unit
         public void Get_blood_request_by_id()
         {
             List<BloodRequest> requests = GetRequests();
-            var stubRepo = new Mock<IBloodRequestRepository>();
-            stubRepo.Setup(m => m.GetById(1)).Returns(requests[0]);
-            BloodRequestService service = new(stubRepo.Object);
+            BloodRequestService service = new(CreateBloodRequestRepository(requests));
 
             BloodRequest bloodRequest = service.GetById(1);
 
             Assert.Equal(bloodRequest, requests[0]);
+        }
+
+        #region private
+
+        private static IBloodRequestRepository CreateBloodRequestRepository(List<BloodRequest> requests)
+        {
+            var stubRepo = new Mock<IBloodRequestRepository>();
+            stubRepo.Setup(m => m.GetAll()).Returns(requests);
+            stubRepo.Setup(m => m.GetById(1)).Returns(requests[0]);
+
+            return stubRepo.Object;
         }
 
         private static List<BloodRequest> GetRequests()
@@ -44,5 +51,7 @@ namespace HospitalTests.Unit
                 new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 }
             };
         }
+
+        #endregion
     }
 }

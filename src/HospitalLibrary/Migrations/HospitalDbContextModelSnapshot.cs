@@ -49,7 +49,44 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 6, 13, 35, 22, 201, DateTimeKind.Local).AddTicks(629)
+                            Start = new DateTime(2022, 11, 6, 21, 27, 19, 131, DateTimeKind.Local).AddTicks(6224)
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.Property<int>("BedId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Label")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("BedId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Beds");
+
+                    b.HasData(
+                        new
+                        {
+                            BedId = 1,
+                            Label = "201B1"
+                        },
+                        new
+                        {
+                            BedId = 2,
+                            Label = "201B2"
+                        },
+                        new
+                        {
+                            BedId = 3,
+                            Label = "201B3"
                         });
                 });
 
@@ -937,6 +974,13 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
@@ -976,6 +1020,11 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+                {
+                    b.Navigation("Beds");
                 });
 #pragma warning restore 612, 618
         }
