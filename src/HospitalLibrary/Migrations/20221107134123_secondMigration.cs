@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class AddBloodRequestTable : Migration
+    public partial class secondMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -298,7 +298,7 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "Appointments",
                 columns: new[] { "AppointmentId", "DoctorId", "PatientId", "Start" },
-                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 6, 13, 35, 22, 201, DateTimeKind.Local).AddTicks(629) });
+                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 7, 14, 41, 23, 29, DateTimeKind.Local).AddTicks(8517) });
 
             migrationBuilder.InsertData(
                 table: "Vacations",

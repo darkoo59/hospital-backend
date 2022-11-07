@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221106123523_AddBloodRequestTable")]
-    partial class AddBloodRequestTable
+    [Migration("20221107134123_secondMigration")]
+    partial class secondMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 6, 13, 35, 22, 201, DateTimeKind.Local).AddTicks(629)
+                            Start = new DateTime(2022, 11, 7, 14, 41, 23, 29, DateTimeKind.Local).AddTicks(8517)
                         });
                 });
 
