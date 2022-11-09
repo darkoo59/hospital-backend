@@ -74,9 +74,9 @@ namespace HospitalLibrary.Settings
 
 
             modelBuilder.Entity<Patient>().HasData(
-                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric" },
-                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic" },
-                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic" }
+                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric", Email = "proba@gmail.com", Password = "123"},
+                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic", Email = "proba1@gmail.com", Password = "123" },
+                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic", Email = "proba2@gmail.com", Password = "123" }
             );
 
             modelBuilder.Entity<Specialization>().HasData(

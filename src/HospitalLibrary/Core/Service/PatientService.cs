@@ -17,12 +17,12 @@ namespace HospitalLibrary.Core.Service
         }
         public void Create(Patient patient)
         {
-            throw new NotImplementedException();
+            _patientRepository.Create(patient);
         }
 
         public void Delete(Patient patient)
         {
-            throw new NotImplementedException();
+            _patientRepository.Delete(patient);
         }
 
         public IEnumerable<Patient> GetAll()
