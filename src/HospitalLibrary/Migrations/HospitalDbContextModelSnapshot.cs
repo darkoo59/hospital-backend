@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 6, 21, 27, 19, 131, DateTimeKind.Local).AddTicks(6224)
+                            Start = new DateTime(2022, 11, 10, 1, 35, 48, 7, DateTimeKind.Local).AddTicks(7286)
                         });
                 });
 
@@ -915,6 +915,44 @@ namespace HospitalLibrary.Migrations
                             DoctorId = 1,
                             EndDate = new DateTime(2022, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartDate = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequest", b =>
+                {
+                    b.Property<int>("VacationRequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Urgency")
+                        .HasColumnType("text");
+
+                    b.HasKey("VacationRequestId");
+
+                    b.ToTable("VacationRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            VacationRequestId = 1,
+                            DoctorId = 4,
+                            EndDate = new DateTime(2022, 11, 25, 1, 35, 48, 10, DateTimeKind.Local).AddTicks(8499),
+                            IsApproved = false,
+                            StartDate = new DateTime(2022, 11, 20, 1, 35, 48, 10, DateTimeKind.Local).AddTicks(8183),
+                            Urgency = "NoUrgent"
                         });
                 });
 
