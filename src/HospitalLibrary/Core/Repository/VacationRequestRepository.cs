@@ -22,14 +22,19 @@ namespace HospitalLibrary.Core.Repository
             
             return _context.VacationRequests.ToList();
         }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+        public VacationRequest GetById(int id)
+        {
+            return _context.VacationRequests.Find(id);
+        }
+
+
+
+
+
+
+
+
+
     }
 }

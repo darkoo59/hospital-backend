@@ -28,9 +28,22 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_vacationRequestMapper.ToDTO(_vacationRequestService.GetAll().ToList()));
         }
-    
-    
-    
-    
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var vacationRequest = _vacationRequestService.GetById(id);
+            if (vacationRequest == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_vacationRequestMapper.ToDTO(vacationRequest));
+        }
+
+
+
+
+
     }
 }

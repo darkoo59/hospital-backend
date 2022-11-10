@@ -12,14 +12,17 @@ namespace HospitalLibrary.Core.Service
         private readonly IVacationRepository _vacationRepository;
         private readonly IWorkTimeRepository _workTimeRepository;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository, IWorkTimeRepository workTimeRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository)
+        {
+            _appointmentRepository = appointmentRepository;
+        }
+
+        public AppointmentService(IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository,IWorkTimeRepository workTimeRepository)
         {
             _appointmentRepository = appointmentRepository;
             _vacationRepository = vacationRepository;
             _workTimeRepository = workTimeRepository;
         }
-
-
 
         public void Create(Appointment appointment)
         {
@@ -36,7 +39,6 @@ namespace HospitalLibrary.Core.Service
                 _appointmentRepository.Update(appointment);
             }
         }
-
 
         private bool IsAppointmentValid(Appointment appointment)
         {
@@ -58,9 +60,6 @@ namespace HospitalLibrary.Core.Service
             return _appointmentRepository.GetById(id);
         }
 
-
-
-
         private bool IsAppointmentAvailable(Appointment appointment)
         {
             bool isAvailable = true;
@@ -74,8 +73,6 @@ namespace HospitalLibrary.Core.Service
             }
             return isAvailable;
         }
-
-
 
         public bool IsDoctorOnVacation(Appointment appointment)
         {
@@ -105,9 +102,6 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
-
-
-
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {
             return appointment.Start >= workTime.StartDate && appointment.Start <= workTime.EndDate && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
@@ -131,6 +125,16 @@ namespace HospitalLibrary.Core.Service
                 }
             }
             return doctorAppointments;
+        }
+
+        public bool IsDoctorFreeOnVacationDates(int? DoctorId, VacationRequest vacationRequest)
+        {
+            return true;
+        }
+
+        public bool TransferAppointmentBecauseVacation(Appointment appointment, bool isBusy)
+        {
+            return true;
         }
     }
 }

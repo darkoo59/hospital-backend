@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Repository
     public interface IVacationRequestRepository
     {
         IEnumerable<VacationRequest> GetAll();
+        public VacationRequest GetById(int id);
     }
 }
