@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Service
         IEnumerable<Patient> GetAll();
         Patient GetById(int id);
         void Delete(Patient patient);
+        void ActivateAccount(Patient patient);
     }
 }

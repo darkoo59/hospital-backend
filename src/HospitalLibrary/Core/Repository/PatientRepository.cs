@@ -40,7 +40,8 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Patient patient)
         {
-            throw new NotImplementedException();
+            _context.Patients.Update(patient);
+            _context.SaveChanges();
         }
     }
 }

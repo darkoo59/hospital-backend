@@ -75,5 +75,20 @@ namespace HospitalAPI.Controllers
         }
 
 
+
+        [HttpPut("activateAccount/{id}")]
+        public ActionResult ActivateAccount(int id)
+        {
+            var patient = _patientService.GetById(id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            _patientService.ActivateAccount(patient);
+            return Redirect("http://localhost:4200/login");
+
+        }
+
     }
 }

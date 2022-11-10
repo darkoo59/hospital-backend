@@ -17,6 +17,7 @@ namespace HospitalLibrary.Core.Model
         public string Email { get; set; }
         [Required, NotNull, MinLength(3, ErrorMessage = "Password needs to be atleast 3 characters or more")]
         public string Password { get; set; }
+        public bool IsAccountActivated { get; set; }
 
 
         public class DuplicateEMailException : Exception

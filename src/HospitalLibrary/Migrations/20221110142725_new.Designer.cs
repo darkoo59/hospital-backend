@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221109204030_new")]
+    [Migration("20221110142725_new")]
     partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 9, 21, 40, 29, 920, DateTimeKind.Local).AddTicks(8741)
+                            Start = new DateTime(2022, 11, 10, 15, 27, 24, 949, DateTimeKind.Local).AddTicks(6914)
                         });
                 });
 
@@ -276,6 +276,9 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsAccountActivated")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -300,6 +303,7 @@ namespace HospitalLibrary.Migrations
                         {
                             PatientId = 1,
                             Email = "proba@gmail.com",
+                            IsAccountActivated = false,
                             Name = "Pera",
                             Password = "123",
                             Surname = "Peric"
@@ -308,6 +312,7 @@ namespace HospitalLibrary.Migrations
                         {
                             PatientId = 2,
                             Email = "proba1@gmail.com",
+                            IsAccountActivated = false,
                             Name = "Marko",
                             Password = "123",
                             Surname = "Markovic"
@@ -316,6 +321,7 @@ namespace HospitalLibrary.Migrations
                         {
                             PatientId = 3,
                             Email = "proba2@gmail.com",
+                            IsAccountActivated = false,
                             Name = "Aleksa",
                             Password = "123",
                             Surname = "Aleksic"

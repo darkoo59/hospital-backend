@@ -66,7 +66,8 @@ namespace HospitalLibrary.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false)
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    IsAccountActivated = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -258,12 +259,12 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "Patients",
-                columns: new[] { "PatientId", "Email", "Name", "Password", "Surname" },
+                columns: new[] { "PatientId", "Email", "IsAccountActivated", "Name", "Password", "Surname" },
                 values: new object[,]
                 {
-                    { 3, "proba2@gmail.com", "Aleksa", "123", "Aleksic" },
-                    { 1, "proba@gmail.com", "Pera", "123", "Peric" },
-                    { 2, "proba1@gmail.com", "Marko", "123", "Markovic" }
+                    { 3, "proba2@gmail.com", false, "Aleksa", "123", "Aleksic" },
+                    { 1, "proba@gmail.com", false, "Pera", "123", "Peric" },
+                    { 2, "proba1@gmail.com", false, "Marko", "123", "Markovic" }
                 });
 
             migrationBuilder.InsertData(
@@ -330,7 +331,7 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "Appointments",
                 columns: new[] { "AppointmentId", "DoctorId", "PatientId", "Start" },
-                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 9, 21, 40, 29, 920, DateTimeKind.Local).AddTicks(8741) });
+                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 10, 15, 27, 24, 949, DateTimeKind.Local).AddTicks(6914) });
 
             migrationBuilder.InsertData(
                 table: "Vacations",

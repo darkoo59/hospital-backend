@@ -29,6 +29,12 @@ namespace HospitalLibrary.Core.Service
             _patientRepository.Delete(patient);
         }
 
+        public void ActivateAccount(Patient patient)
+        {
+            patient.IsAccountActivated = true;
+            _patientRepository.Update(patient);
+        }
+
         public IEnumerable<Patient> GetAll()
         {
             return _patientRepository.GetAll();
