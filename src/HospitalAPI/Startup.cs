@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
+using MailKit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,9 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+            services.AddTransient<IEmailSender, RegisterMailService>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
