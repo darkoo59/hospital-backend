@@ -35,7 +35,7 @@ namespace IntegrationTests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=IntegrationTestDb;Username=postgres;Password=andjela;";
+            return "Host=localhost;Database=IntegrationTestDb;Username=postgres;Password=ftn;";
         }
 
         private static void InitializeDatabase(IntegrationDbContext context)

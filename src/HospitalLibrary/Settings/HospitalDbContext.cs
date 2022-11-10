@@ -17,6 +17,13 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
 
+        public DbSet<Blood> Bloods { get; set; }
+
+        public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
+
+
+
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -128,7 +135,30 @@ namespace HospitalLibrary.Settings
             );
 
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Blood>().HasData(
+
+               new Blood() { BloodId = 1, BloodType = BloodType.O_PLUS, QuantityInLiters = 4 } ,
+               new Blood() { BloodId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 3, BloodType = BloodType.B_PLUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 4, BloodType = BloodType.AB_PLUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 5, BloodType = BloodType.O_MINUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 6, BloodType = BloodType.A_MINUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 7, BloodType = BloodType.B_MINUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 8, BloodType = BloodType.AB_MINUS, QuantityInLiters = 4 }
+
+
+             );
+
+            modelBuilder.Entity<BloodUsageEvidency>().HasData(
+
+               new BloodUsageEvidency() { BloodUsageEvidencyId=1 , BloodType = BloodType.A_PLUS, QuantityUsedInMililiters=200 , DateOfUsage = new System.DateTime(2022, 12, 13) , ReasonForUsage= "Hearth surgery" ,DoctorId = 1}
+                
+            );
+
+
+
+
+           base.OnModelCreating(modelBuilder);
         }
     }
 }
