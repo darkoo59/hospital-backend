@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers
 {
@@ -33,7 +34,7 @@ namespace HospitalAPI.Controllers
             return Ok(_patientMapper.ToDTO(_patientService.GetById(id)));
         }
 
-        // POST api/patients/register
+        /*// POST api/patients/register
         [HttpPost, Route("register")]
         public ActionResult Create(Patient patient)
         {
@@ -42,7 +43,20 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _patientService.Create(patient);
+            _patientService.Register(patient);
+            return CreatedAtAction("GetById", new { id = patient.PatientId }, patient);
+        }*/
+
+        // POST api/patients
+        [HttpPost]
+        public async Task<ActionResult> Register(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _patientService.Register(patient);
             return CreatedAtAction("GetById", new { id = patient.PatientId }, patient);
         }
 

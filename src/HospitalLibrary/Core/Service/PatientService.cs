@@ -1,7 +1,13 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using MailKit;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -10,16 +16,14 @@ namespace HospitalLibrary.Core.Service
     {
 
         private readonly IPatientRepository _patientRepository;
+        private readonly IEmailSender _mailService;
 
-        public PatientService(IPatientRepository patientRepository)
+        public PatientService(IPatientRepository patientRepository, IEmailSender mailService)
         {
             _patientRepository = patientRepository;
+            _mailService = mailService;
         }
-        public void Create(Patient patient)
-        {
-            _patientRepository.Create(patient);
-        }
-
+        
         public void Delete(Patient patient)
         {
             _patientRepository.Delete(patient);
@@ -35,9 +39,24 @@ namespace HospitalLibrary.Core.Service
             return _patientRepository.GetById(id);
         }
 
-        public void Update(Patient patient)
+        public async Task<bool> Register(Patient patient)
         {
-            throw new NotImplementedException();
+            if (_patientRepository.GetAll().Any(u => u.Email.Equals(patient.Email)))
+            {
+                throw new Patient.DuplicateEMailException("User with given email already exists.");
+            }
+            
+            _patientRepository.Register(patient);
+
+            MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../HospitalLibrary/Resources/mailTemplate.json"));
+
+            mailContent.ToEmail = patient.Email;
+            mailContent.Body += patient.PatientId;
+
+            await _mailService.SendEmail(mailContent);
+
+            return true;
+
         }
     }
 }

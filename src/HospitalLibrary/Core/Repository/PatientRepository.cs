@@ -15,9 +15,9 @@ namespace HospitalLibrary.Core.Repository
             _context = context;
         }
 
-        public void Create(Patient patient)
+        public void Register(Patient patient)
         {
-            Console.WriteLine(patient);
+            //Console.WriteLine(patient);
             _context.Patients.Add(patient);
             _context.SaveChanges();
         }
