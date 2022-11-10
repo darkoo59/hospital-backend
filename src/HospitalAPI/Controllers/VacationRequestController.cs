@@ -41,9 +41,30 @@ namespace HospitalAPI.Controllers
             return Ok(_vacationRequestMapper.ToDTO(vacationRequest));
         }
 
+        [HttpPost]
+        public ActionResult Create(VacationRequestDTO vacationRequestDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            VacationRequest vacationRequest = _vacationRequestMapper.ToModel(vacationRequestDTO);
+            _vacationRequestService.Create(vacationRequest);
+            return CreatedAtAction("GetById", new { id = vacationRequest.VacationRequestId }, vacationRequest);
+        }
 
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var vacationRequest = _vacationRequestService.GetById(id);
+            if (vacationRequest == null)
+            {
+                return NotFound();
+            }
 
-
+            _vacationRequestService.Delete(vacationRequest);
+            return NoContent();
+        }
     }
 }

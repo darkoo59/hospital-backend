@@ -11,5 +11,7 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<VacationRequest> GetAll();
         public VacationRequest GetById(int id);
+        public void Create(VacationRequest vacationRequest);
+        public void Delete(VacationRequest vacationRequest);
     }
 }

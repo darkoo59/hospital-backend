@@ -96,12 +96,6 @@ namespace HospitalTests.Unit
             Assert.False(isSuccessful);
         }
 
-
-
-
-
-
-
         #region private
 
         private static IVacationRequestRepository CreateVacationRequestRepository(List<VacationRequest> requests)

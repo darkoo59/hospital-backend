@@ -12,5 +12,7 @@ namespace HospitalLibrary.Core.Service
         IEnumerable<VacationRequest> GetAll();
         public VacationRequest GetById(int id);
         public bool IsVacationDateStartValid(VacationRequest vacationRequest);
+        public void Create(VacationRequest vacationRequest);
+        public void Delete(VacationRequest vacationRequest);
     }
 }

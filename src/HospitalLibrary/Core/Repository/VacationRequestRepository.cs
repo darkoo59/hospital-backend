@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,18 @@ namespace HospitalLibrary.Core.Repository
         public VacationRequest GetById(int id)
         {
             return _context.VacationRequests.Find(id);
+        }
+
+        public void Create(VacationRequest vacationRequest)
+        {
+            _context.VacationRequests.Add(vacationRequest);
+            _context.SaveChanges();
+        }
+
+        public void Delete(VacationRequest vacationRequest)
+        {
+            _context.VacationRequests.Remove(vacationRequest);
+            _context.SaveChanges();
         }
 
 
