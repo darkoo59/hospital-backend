@@ -86,8 +86,8 @@ namespace HospitalAPI.Controllers
             }
 
             _patientService.ActivateAccount(patient);
-            return Redirect("http://localhost:4200/login");
-
+            return Ok();
+            //return Redirect("http://localhost:4200/login");
         }
 
     }
