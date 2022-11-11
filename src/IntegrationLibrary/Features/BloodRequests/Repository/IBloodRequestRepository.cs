@@ -6,6 +6,7 @@ namespace IntegrationLibrary.Features.BloodRequests.Repository
     public interface IBloodRequestRepository
     {
         IEnumerable<BloodRequest> GetAll();
+        BloodRequest GetById(int id);
         void Create(BloodRequest bloodRequest);
     }
 }

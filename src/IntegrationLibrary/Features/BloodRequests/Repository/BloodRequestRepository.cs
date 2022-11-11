@@ -15,5 +15,10 @@ namespace IntegrationLibrary.Features.BloodRequests.Repository
         {
             throw new NotImplementedException();
         }
+
+        public BloodRequest GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

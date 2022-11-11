@@ -13,16 +13,21 @@ using Xunit.Priority;
 namespace IntegrationTests.Integration
 {
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
-    public class BB_NewsTests : BaseIntegrationTest
+    [Collection("collection")]
+    public class BB_NewsTests
     {
-        public BB_NewsTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        private TestDatabaseFactory<Startup> Factory { get; }
+
+        public BB_NewsTests(TestDatabaseFactory<Startup> factory) {
+            Factory = factory;
+        }
 
         private static BankNewsController SetupController(IServiceScope scope)
         {
             return new BankNewsController(scope.ServiceProvider.GetRequiredService<IBankNewsService>());
         }
 
-        [Fact, Priority(2)]
+        [Fact, Priority(1)]
         public void Get_All_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();

@@ -83,7 +83,7 @@ namespace IntegrationTests.Unit
 
             BankNews news = service.GetById(2);
 
-            Assert.Equal(data[1], news);
+            Assert.Equal(news, data[1]);
         }
 
 

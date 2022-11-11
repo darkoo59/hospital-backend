@@ -3,13 +3,8 @@ using Xunit;
 
 namespace IntegrationTests.Setup
 {
-    public class BaseIntegrationTest : IClassFixture<TestDatabaseFactory<Startup>>
+    [CollectionDefinition("collection")]
+    public class BaseIntegrationTest : ICollectionFixture<TestDatabaseFactory<Startup>>
     {
-        protected TestDatabaseFactory<Startup> Factory { get; }
-
-        public BaseIntegrationTest(TestDatabaseFactory<Startup> factory)
-        {
-            Factory = factory;
-        }
     }
 }
