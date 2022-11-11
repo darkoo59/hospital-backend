@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class firstMig : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -115,7 +115,8 @@ namespace HospitalLibrary.Migrations
                     EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
                     IsApproved = table.Column<bool>(type: "boolean", nullable: false),
-                    Urgency = table.Column<string>(type: "text", nullable: true)
+                    Urgency = table.Column<string>(type: "text", nullable: true),
+                    Reason = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -339,8 +340,8 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "VacationRequests",
-                columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "IsApproved", "StartDate", "Urgency" },
-                values: new object[] { 1, 4, new DateTime(2022, 11, 25, 1, 35, 48, 10, DateTimeKind.Local).AddTicks(8499), false, new DateTime(2022, 11, 20, 1, 35, 48, 10, DateTimeKind.Local).AddTicks(8183), "NoUrgent" });
+                columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "IsApproved", "Reason", "StartDate", "Urgency" },
+                values: new object[] { 1, 4, new DateTime(2022, 11, 25, 20, 14, 40, 554, DateTimeKind.Local).AddTicks(6425), false, "Tired", new DateTime(2022, 11, 20, 20, 14, 40, 554, DateTimeKind.Local).AddTicks(6140), "NoUrgent" });
 
             migrationBuilder.InsertData(
                 table: "Doctors",
@@ -350,7 +351,7 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "Appointments",
                 columns: new[] { "AppointmentId", "DoctorId", "PatientId", "Start" },
-                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 10, 1, 35, 48, 7, DateTimeKind.Local).AddTicks(7286) });
+                values: new object[] { 1, 1, 1, new DateTime(2022, 11, 10, 20, 14, 40, 551, DateTimeKind.Local).AddTicks(6057) });
 
             migrationBuilder.InsertData(
                 table: "Vacations",

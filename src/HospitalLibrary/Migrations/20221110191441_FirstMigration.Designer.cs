@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221110003548_firstMig")]
-    partial class firstMig
+    [Migration("20221110191441_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 10, 1, 35, 48, 7, DateTimeKind.Local).AddTicks(7286)
+                            Start = new DateTime(2022, 11, 10, 20, 14, 40, 551, DateTimeKind.Local).AddTicks(6057)
                         });
                 });
 
@@ -936,6 +936,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -951,9 +954,10 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 11, 25, 1, 35, 48, 10, DateTimeKind.Local).AddTicks(8499),
+                            EndDate = new DateTime(2022, 11, 25, 20, 14, 40, 554, DateTimeKind.Local).AddTicks(6425),
                             IsApproved = false,
-                            StartDate = new DateTime(2022, 11, 20, 1, 35, 48, 10, DateTimeKind.Local).AddTicks(8183),
+                            Reason = "Tired",
+                            StartDate = new DateTime(2022, 11, 20, 20, 14, 40, 554, DateTimeKind.Local).AddTicks(6140),
                             Urgency = "NoUrgent"
                         });
                 });

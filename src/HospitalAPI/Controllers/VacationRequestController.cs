@@ -66,5 +66,22 @@ namespace HospitalAPI.Controllers
             _vacationRequestService.Delete(vacationRequest);
             return NoContent();
         }
+
+        [HttpGet("doctorVacationRequests/{doctorId}")]
+        public ActionResult GetDoctorVacationRequests(int doctorId)
+        {
+            return Ok(_vacationRequestMapper.ToDTO(_vacationRequestService.GetDoctorVacationRequests(doctorId)));
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }

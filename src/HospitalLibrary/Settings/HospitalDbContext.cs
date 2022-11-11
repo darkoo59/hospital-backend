@@ -131,7 +131,7 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<VacationRequest>().HasData(
                 
-                new VacationRequest() { VacationRequestId = 1 , StartDate = DateTime.Now.AddDays(10),EndDate = DateTime.Now.AddDays(15),DoctorId = 4 , IsApproved = false, Urgency = "NoUrgent"}
+                new VacationRequest() { VacationRequestId = 1 , StartDate = DateTime.Now.AddDays(10),EndDate = DateTime.Now.AddDays(15),DoctorId = 4 , IsApproved = false, Urgency = "NoUrgent" , Reason = "Tired"}
             
                 );
 

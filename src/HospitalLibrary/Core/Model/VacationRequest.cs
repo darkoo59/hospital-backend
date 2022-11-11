@@ -14,5 +14,6 @@ namespace HospitalLibrary.Core.Model
         public int DoctorId { get; set; }
         public bool IsApproved { get; set; }
         public string Urgency { get; set; }
+        public string Reason { get; set; }
     }
 }

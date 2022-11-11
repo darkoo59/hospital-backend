@@ -15,6 +15,7 @@ namespace HospitalAPI.Mappers
             vacationRequestDTO.DoctorId = vacationRequest.DoctorId;
             vacationRequestDTO.IsApproved = vacationRequest.IsApproved;
             vacationRequestDTO.Urgency = vacationRequest.Urgency;
+            vacationRequestDTO.Reason = vacationRequest.Reason;
             return vacationRequestDTO;
         }
 
@@ -32,6 +33,7 @@ namespace HospitalAPI.Mappers
                 vacationRequestDTO.DoctorId = vacationRequest.DoctorId;
                 vacationRequestDTO.IsApproved = vacationRequest.IsApproved;
                 vacationRequestDTO.Urgency = vacationRequest.Urgency;
+                vacationRequestDTO.Reason = vacationRequest.Reason;
                 vacationRequestDTOs.Add(vacationRequestDTO);
             }
             return vacationRequestDTOs;
@@ -46,6 +48,7 @@ namespace HospitalAPI.Mappers
             vacationRequest.DoctorId = vacationRequestDTO.DoctorId;
             vacationRequest.IsApproved = vacationRequestDTO.IsApproved;
             vacationRequest.Urgency = vacationRequestDTO.Urgency;
+            vacationRequest.Reason = vacationRequestDTO.Reason;
             return vacationRequest;
         }
 
@@ -63,6 +66,7 @@ namespace HospitalAPI.Mappers
                 vacationRequest.DoctorId = vacationRequestDTO.DoctorId;
                 vacationRequest.IsApproved = vacationRequestDTO.IsApproved;
                 vacationRequest.Urgency = vacationRequestDTO.Urgency;
+                vacationRequest.Reason = vacationRequestDTO.Reason;
                 vacationRequests.Add(vacationRequest);
             }
             return vacationRequests;

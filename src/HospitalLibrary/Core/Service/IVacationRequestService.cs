@@ -14,5 +14,6 @@ namespace HospitalLibrary.Core.Service
         public bool IsVacationDateStartValid(VacationRequest vacationRequest);
         public void Create(VacationRequest vacationRequest);
         public void Delete(VacationRequest vacationRequest);
+        public List<VacationRequest> GetDoctorVacationRequests(int doctorId);
     }
 }

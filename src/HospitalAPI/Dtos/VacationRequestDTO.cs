@@ -13,10 +13,11 @@ namespace HospitalAPI.Dtos
         public int DoctorId { get; set; }
         public bool IsApproved { get; set; }
         public string Urgency { get; set; }
+        public string Reason { get; set; }
 
         public VacationRequestDTO() { }
 
-        public VacationRequestDTO(int vacationRequestId, DateTime startDate, DateTime endDate, int doctorId, bool isApproved, string urgency)
+        public VacationRequestDTO(int vacationRequestId, DateTime startDate, DateTime endDate, int doctorId, bool isApproved, string urgency,string reason)
         {
             VacationRequestId = vacationRequestId;
             StartDate = startDate;
@@ -24,6 +25,7 @@ namespace HospitalAPI.Dtos
             DoctorId = doctorId;
             IsApproved = isApproved;
             Urgency = urgency;
+            Reason = reason;
         }
     }
 }
