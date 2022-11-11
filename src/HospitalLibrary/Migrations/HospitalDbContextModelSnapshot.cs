@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 10, 20, 14, 40, 551, DateTimeKind.Local).AddTicks(6057)
+                            Start = new DateTime(2022, 11, 11, 11, 52, 22, 583, DateTimeKind.Local).AddTicks(523)
                         });
                 });
 
@@ -931,14 +931,14 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Reason")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Urgency")
                         .HasColumnType("text");
@@ -952,10 +952,30 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 11, 25, 20, 14, 40, 554, DateTimeKind.Local).AddTicks(6425),
-                            IsApproved = false,
+                            EndDate = new DateTime(2022, 11, 26, 11, 52, 22, 590, DateTimeKind.Local).AddTicks(7867),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 11, 20, 20, 14, 40, 554, DateTimeKind.Local).AddTicks(6140),
+                            StartDate = new DateTime(2022, 11, 21, 11, 52, 22, 590, DateTimeKind.Local).AddTicks(7144),
+                            Status = 1,
+                            Urgency = "NoUrgent"
+                        },
+                        new
+                        {
+                            VacationRequestId = 2,
+                            DoctorId = 4,
+                            EndDate = new DateTime(2022, 12, 1, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(804),
+                            Reason = "Tired",
+                            StartDate = new DateTime(2022, 11, 26, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(773),
+                            Status = 2,
+                            Urgency = "Urgent"
+                        },
+                        new
+                        {
+                            VacationRequestId = 3,
+                            DoctorId = 4,
+                            EndDate = new DateTime(2022, 12, 6, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(820),
+                            Reason = "Tired",
+                            StartDate = new DateTime(2022, 12, 1, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(814),
+                            Status = 0,
                             Urgency = "NoUrgent"
                         });
                 });

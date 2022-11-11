@@ -131,8 +131,9 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<VacationRequest>().HasData(
                 
-                new VacationRequest() { VacationRequestId = 1 , StartDate = DateTime.Now.AddDays(10),EndDate = DateTime.Now.AddDays(15),DoctorId = 4 , IsApproved = false, Urgency = "NoUrgent" , Reason = "Tired"}
-            
+                new VacationRequest() { VacationRequestId = 1 , StartDate = DateTime.Now.AddDays(10),EndDate = DateTime.Now.AddDays(15),DoctorId = 4 , Status = Core.Enums.VacationRequestStatus.Approved, Urgency = "NoUrgent" , Reason = "Tired"},
+                new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(15), EndDate = DateTime.Now.AddDays(20), DoctorId = 4, Status = Core.Enums.VacationRequestStatus.OnHold, Urgency = "Urgent", Reason = "Tired" },
+                new VacationRequest() { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 4, Status = Core.Enums.VacationRequestStatus.NotApproved, Urgency = "NoUrgent", Reason = "Tired" }
                 );
 
 

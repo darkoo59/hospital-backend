@@ -48,7 +48,7 @@ namespace HospitalTests.setup
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 });
             
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"VacationRequests\";");
-            context.VacationRequests.Add(new VacationRequest() { VacationRequestId = 1, DoctorId = 1, StartDate = DateTime.Now.AddDays(5),EndDate = DateTime.Now.AddDays(10), IsApproved = true , Urgency = "NoUrgent" });
+            context.VacationRequests.Add(new VacationRequest() { VacationRequestId = 1, DoctorId = 1, StartDate = DateTime.Now.AddDays(5),EndDate = DateTime.Now.AddDays(10), Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved , Urgency = "NoUrgent" });
 
             context.SaveChanges();
         }

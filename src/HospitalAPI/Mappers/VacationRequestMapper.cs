@@ -1,4 +1,5 @@
 ﻿using HospitalAPI.Dtos;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using System.Collections.Generic;
 
@@ -13,11 +14,24 @@ namespace HospitalAPI.Mappers
             vacationRequestDTO.StartDate = vacationRequest.StartDate;
             vacationRequestDTO.EndDate = vacationRequest.EndDate;
             vacationRequestDTO.DoctorId = vacationRequest.DoctorId;
-            vacationRequestDTO.IsApproved = vacationRequest.IsApproved;
+            if(vacationRequest.Status == VacationRequestStatus.Approved)
+            {
+                vacationRequestDTO.Status = "Approved";
+            }
+            else if(vacationRequest.Status == VacationRequestStatus.NotApproved)
+            {
+                vacationRequestDTO.Status = "NotApproved";
+            }
+            else
+            {
+                vacationRequestDTO.Status = "OnHold";
+            }
             vacationRequestDTO.Urgency = vacationRequest.Urgency;
             vacationRequestDTO.Reason = vacationRequest.Reason;
             return vacationRequestDTO;
         }
+
+        
 
         public List<VacationRequestDTO> ToDTO(List<VacationRequest> vacationRequests)
         {
@@ -31,7 +45,18 @@ namespace HospitalAPI.Mappers
                 vacationRequestDTO.StartDate = vacationRequest.StartDate;
                 vacationRequestDTO.EndDate = vacationRequest.EndDate;
                 vacationRequestDTO.DoctorId = vacationRequest.DoctorId;
-                vacationRequestDTO.IsApproved = vacationRequest.IsApproved;
+                if (vacationRequest.Status == VacationRequestStatus.Approved)
+                {
+                    vacationRequestDTO.Status = "Approved";
+                }
+                else if (vacationRequest.Status == VacationRequestStatus.NotApproved)
+                {
+                    vacationRequestDTO.Status = "NotApproved";
+                }
+                else
+                {
+                    vacationRequestDTO.Status = "OnHold";
+                }
                 vacationRequestDTO.Urgency = vacationRequest.Urgency;
                 vacationRequestDTO.Reason = vacationRequest.Reason;
                 vacationRequestDTOs.Add(vacationRequestDTO);
@@ -46,7 +71,18 @@ namespace HospitalAPI.Mappers
             vacationRequest.StartDate = vacationRequestDTO.StartDate;
             vacationRequest.EndDate = vacationRequestDTO.EndDate;
             vacationRequest.DoctorId = vacationRequestDTO.DoctorId;
-            vacationRequest.IsApproved = vacationRequestDTO.IsApproved;
+            if (vacationRequestDTO.Status.Equals("Approved"))
+            {
+                vacationRequest.Status = VacationRequestStatus.Approved;
+            }
+            else if (vacationRequestDTO.Status.Equals("NotApproved"))
+            {
+                vacationRequest.Status = VacationRequestStatus.NotApproved;
+            }
+            else
+            {
+                vacationRequest.Status = VacationRequestStatus.OnHold;
+            }
             vacationRequest.Urgency = vacationRequestDTO.Urgency;
             vacationRequest.Reason = vacationRequestDTO.Reason;
             return vacationRequest;
@@ -64,7 +100,18 @@ namespace HospitalAPI.Mappers
                 vacationRequest.StartDate = vacationRequestDTO.StartDate;
                 vacationRequest.EndDate = vacationRequestDTO.EndDate;
                 vacationRequest.DoctorId = vacationRequestDTO.DoctorId;
-                vacationRequest.IsApproved = vacationRequestDTO.IsApproved;
+                if (vacationRequestDTO.Status.Equals("Approved"))
+                {
+                    vacationRequest.Status = VacationRequestStatus.Approved;
+                }
+                else if (vacationRequestDTO.Status.Equals("NotApproved"))
+                {
+                    vacationRequest.Status = VacationRequestStatus.NotApproved;
+                }
+                else
+                {
+                    vacationRequest.Status = VacationRequestStatus.OnHold;
+                }
                 vacationRequest.Urgency = vacationRequestDTO.Urgency;
                 vacationRequest.Reason = vacationRequestDTO.Reason;
                 vacationRequests.Add(vacationRequest);

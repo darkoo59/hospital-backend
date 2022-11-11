@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace HospitalLibrary.Core.Model
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int DoctorId { get; set; }
-        public bool IsApproved { get; set; }
+        public VacationRequestStatus Status { get; set; }
         public string Urgency { get; set; }
         public string Reason { get; set; }
     }

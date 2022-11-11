@@ -2,6 +2,7 @@
 using HospitalAPI.Controllers;
 using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalTests.setup;
@@ -27,7 +28,7 @@ namespace HospitalTests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            VacationRequestDTO vacationRequestDTO = new VacationRequestDTO(13,DateTime.Now.AddDays(10),DateTime.Now.AddDays(15),1,true,"NoUrgent","NoReason");
+            VacationRequestDTO vacationRequestDTO = new VacationRequestDTO(13,DateTime.Now.AddDays(10),DateTime.Now.AddDays(15),1,"Approved","NoUrgent","NoReason");
 
             var result = ((CreatedAtActionResult)controller.Create(vacationRequestDTO))?.Value as VacationRequest;
 

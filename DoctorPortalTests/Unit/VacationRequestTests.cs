@@ -111,9 +111,9 @@ namespace HospitalTests.Unit
         {
             return new()
             {
-                new VacationRequest() { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(10) , EndDate = DateTime.Now.AddDays(15) , DoctorId = 1 , IsApproved = true , Urgency = "NoUrgent" },
-                new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(3), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, IsApproved = true, Urgency = "Urgent" },
-                new VacationRequest() { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 3, IsApproved = true, Urgency = "NoUrgent" }
+                new VacationRequest() { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(10) , EndDate = DateTime.Now.AddDays(15) , DoctorId = 1 , Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved , Urgency = "NoUrgent" },
+                new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(3), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.Approved, Urgency = "Urgent" },
+                new VacationRequest() { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 3, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.OnHold, Urgency = "NoUrgent" }
             };
         }
 
