@@ -31,6 +31,10 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
         public void DisapproveNews(int id)
         {
             BankNews news = _bankNewsRepository.GetById(id);
+            if (news == null)
+            {
+                throw new BankNews.BankNewsException("News with the supplied id have not been found.");
+            }
             news.State = NewsStateEnum.DISAPPROVED;
             _bankNewsRepository.Update(news);
         }

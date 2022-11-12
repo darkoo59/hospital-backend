@@ -5,9 +5,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace IntegrationTests.Unit
+namespace IntegrationTests.BBNewsTests
 {
-    public class BB_NewsTests
+    public class UnitTests
     {
         [Fact]
         public void Get_All_News()
@@ -83,7 +83,7 @@ namespace IntegrationTests.Unit
 
             BankNews news = service.GetById(2);
 
-            Assert.Equal(data[1], news);
+            Assert.Equal(news, data[1]);
         }
 
 

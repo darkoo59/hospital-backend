@@ -2,7 +2,6 @@
 using IntegrationAPI.Controllers;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodBankNews.Service;
-using IntegrationTests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -10,12 +9,17 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Priority;
 
-namespace IntegrationTests.Integration
+namespace IntegrationTests.BBNewsTests
 {
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
-    public class BB_NewsTests : BaseIntegrationTest
+    [Collection("collection")]
+    public class IntegrationTests
     {
-        public BB_NewsTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        private TestDatabaseFactory<Startup> Factory { get; }
+
+        public IntegrationTests(TestDatabaseFactory<Startup> factory) {
+            Factory = factory;
+        }
 
         private static BankNewsController SetupController(IServiceScope scope)
         {
