@@ -6,6 +6,8 @@ using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
+using IntegrationLibrary.Features.BloodRequests.Repository;
+using IntegrationLibrary.Features.BloodRequests.Service;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -64,6 +66,9 @@ namespace IntegrationAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBankNewsService, BankNewsService>();
             services.AddScoped<IBankNewsRepository, BankNewsRepository>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+
 
         }
 
