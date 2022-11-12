@@ -83,7 +83,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
         private void HandleMessage(string content, IBankNewsService _bankNewsService)
         {  
             BankNews message = JsonConvert.DeserializeObject<BankNews>(content);
-            message.State = NewsStateEnum.UNCHECKED;
+            message.State = NewsState.UNCHECKED;
             _bankNewsService.AddNews(message);
         }
 

@@ -2,7 +2,7 @@
 
 namespace IntegrationLibrary.Features.BloodBankNews.Model
 {
-    public enum NewsStateEnum
+    public enum NewsState
     {
         UNCHECKED,
         APPROVED,

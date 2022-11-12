@@ -24,7 +24,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             {
                 throw new BankNews.BankNewsException("News with the supplied id have not been found.");
             }
-            news.State = NewsStateEnum.APPROVED;
+            news.State = NewsState.APPROVED;
             _bankNewsRepository.Update(news);
         }
 
@@ -35,7 +35,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             {
                 throw new BankNews.BankNewsException("News with the supplied id have not been found.");
             }
-            news.State = NewsStateEnum.DISAPPROVED;
+            news.State = NewsState.DISAPPROVED;
             _bankNewsRepository.Update(news);
         }
 
@@ -44,7 +44,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             return _bankNewsRepository.GetAll();
         }
 
-        public IEnumerable<BankNews> GetAllByState(NewsStateEnum state)
+        public IEnumerable<BankNews> GetAllByState(NewsState state)
         {
             List<BankNews> res = new();
             foreach (BankNews news in GetAll())

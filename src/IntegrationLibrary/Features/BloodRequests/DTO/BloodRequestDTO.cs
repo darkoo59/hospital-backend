@@ -9,7 +9,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
     public class BloodRequestDTO
     {
         public int Id { get; set; }
-        public BloodType BloodType { get; set; }
+        public string BloodType { get; set; }
         public double QuantityInLiters { get; set; }
         public string ReasonForRequest { get; set; }
         public DateTime FinalDate { get; set; }
@@ -20,12 +20,12 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
         public BloodRequestDTO(BloodRequest br)
         {
             Id = br.Id;
-            BloodType = br.BloodType;
+            BloodType = BloodTypeToString(br.BloodType);
             QuantityInLiters = br.QuantityInLiters;
             ReasonForRequest = br.ReasonForRequest;
             FinalDate = br.FinalDate;
 
-            Doctor = new() { DoctorId = 1, Name = "Ime", Surname = "Prezime"};
+            Doctor = new() { Id = 1, Name = "Ime", Surname = "Prezime"};
         }
 
         public static List<BloodRequestDTO> ToDTOList(List<BloodRequest> brs)
@@ -50,6 +50,16 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
                 return true;
             }
             return base.Equals(obj);
+        }
+
+        public static string BloodTypeToString(BloodType bt)
+        {
+            string[] arr = { "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (bt == (BloodType)i) return arr[i];
+            }
+            return "NONE";
         }
     }
 }

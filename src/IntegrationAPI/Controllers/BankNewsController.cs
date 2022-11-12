@@ -24,19 +24,19 @@ namespace IntegrationAPI.Controllers
         [HttpGet("unchecked")]
         public ActionResult GetUncheckedNews()
         {
-            return Ok(_bankNewsService.GetAllByState(NewsStateEnum.UNCHECKED));
+            return Ok(_bankNewsService.GetAllByState(NewsState.UNCHECKED));
         }
 
         [HttpGet("approved")]
         public ActionResult GetApprovedNews()
         {
-            return Ok(_bankNewsService.GetAllByState(NewsStateEnum.APPROVED));
+            return Ok(_bankNewsService.GetAllByState(NewsState.APPROVED));
         }
 
         [HttpGet("disapproved")]
         public ActionResult GetDisapprovedNews()
         {
-            return Ok(_bankNewsService.GetAllByState(NewsStateEnum.DISAPPROVED));
+            return Ok(_bankNewsService.GetAllByState(NewsState.DISAPPROVED));
         }
 
         [HttpPatch("approve")]
