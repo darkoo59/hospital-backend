@@ -49,6 +49,7 @@ namespace IntegrationAPI
                 });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
             services.AddTransient<IEmailSender, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
@@ -64,6 +65,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBankNewsService, BankNewsService>();
             services.AddScoped<IBankNewsRepository, BankNewsRepository>();
+            services.AddHostedService<RabbitMQService>();
 
         }
 
@@ -77,6 +79,9 @@ namespace IntegrationAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
+
+
+ 
 
             if (env.IsDevelopment())
             {

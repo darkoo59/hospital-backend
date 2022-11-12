@@ -8,5 +8,6 @@ namespace IntegrationLibrary.Features.BloodBankNews.Repository
         IEnumerable<BankNews> GetAll();
         BankNews GetById(int id);
         void Update(BankNews news);
+        void Add(BankNews bankNews);
     }
 }

@@ -10,5 +10,6 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
         void ApproveNews(int id);
         void DisapproveNews(int id);
         BankNews GetById(int id);
+        void AddNews(BankNews bankNews);
     }
 }
