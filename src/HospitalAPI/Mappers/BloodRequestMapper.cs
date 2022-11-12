@@ -113,7 +113,7 @@ namespace HospitalAPI.Mappers
             {
                 bloodRequest.BloodType = BloodType.AB_MINUS;
             }
-            else if (bloodRequest.BloodType == BloodType.AB_PLUS)
+            else if (bloodRequestDTO.BloodType.Equals("AB+"))
             {
                 bloodRequest.BloodType = BloodType.AB_PLUS;
             }

@@ -31,8 +31,7 @@ namespace HospitalTests
             var result = ((CreatedAtActionResult)controller.Create(bloodRequestDTO))?.Value as BloodRequest;
 
             Assert.NotNull(result);
-
-
+            
         }
     }
 }
