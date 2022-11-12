@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,7 +36,14 @@ namespace HospitalLibrary.Core.Service
 
         public bool IsVacationDateStartValid(VacationRequest vacationRequest)
         {
-            return true;
+            DateTime now = new DateTime();
+            now = DateTime.Now;
+
+            if(vacationRequest.StartDate >= now.AddDays(4))
+            {
+                return true;
+            }
+            return false;
         }
 
         public List<VacationRequest> GetDoctorVacationRequests(int doctorId)
@@ -52,5 +60,12 @@ namespace HospitalLibrary.Core.Service
             }
             return doctorVacationRequests;
         }
+
+        public bool IsValidationRequestValid(VacationRequest vacationRequest)
+        {
+            bool isValid = true;
+            isValid = IsVacationDateStartValid(vacationRequest);
+            return isValid;
+        } 
     }
 }

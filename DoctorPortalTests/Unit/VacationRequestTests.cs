@@ -14,8 +14,8 @@ namespace HospitalTests.Unit
         public void Check_vacation_request_unvalid_start_date()
         {
             List<VacationRequest> requests = GetVacationRequests();
-            VacationRequestService service = new(CreateVacationRequestRepository(requests));
-            VacationRequest vacationRequest = service.GetById(2);
+            VacationRequestService service = new(CreateVacationRequestRepository(requests,1));
+            VacationRequest vacationRequest = service.GetById(1);
 
             bool IsValid = service.IsVacationDateStartValid(vacationRequest);
 
@@ -26,8 +26,8 @@ namespace HospitalTests.Unit
         public void Check_vacation_request_valid_start_date()
         {
             List<VacationRequest> requests = GetVacationRequests();
-            VacationRequestService service = new(CreateVacationRequestRepository(requests));
-            VacationRequest vacationRequest = service.GetById(3);
+            VacationRequestService service = new(CreateVacationRequestRepository(requests,2));
+            VacationRequest vacationRequest = service.GetById(2);
 
             bool IsValid = service.IsVacationDateStartValid(vacationRequest);
 
@@ -98,11 +98,11 @@ namespace HospitalTests.Unit
 
         #region private
 
-        private static IVacationRequestRepository CreateVacationRequestRepository(List<VacationRequest> requests)
+        private static IVacationRequestRepository CreateVacationRequestRepository(List<VacationRequest> requests,int number)
         {
             var stubRepo = new Mock<IVacationRequestRepository>();
             stubRepo.Setup(m => m.GetAll()).Returns(requests);
-            stubRepo.Setup(m => m.GetById(1)).Returns(requests[0]);
+            stubRepo.Setup(m => m.GetById(number)).Returns(requests[number - 1]);
 
             return stubRepo.Object;
         }
@@ -111,8 +111,8 @@ namespace HospitalTests.Unit
         {
             return new()
             {
-                new VacationRequest() { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(10) , EndDate = DateTime.Now.AddDays(15) , DoctorId = 1 , Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved , Urgency = "NoUrgent" },
-                new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(3), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.Approved, Urgency = "Urgent" },
+                new VacationRequest() { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(3) , EndDate = DateTime.Now.AddDays(15) , DoctorId = 1 , Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved , Urgency = "NoUrgent" },
+                new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(5), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.Approved, Urgency = "Urgent" },
                 new VacationRequest() { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 3, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.OnHold, Urgency = "NoUrgent" }
             };
         }

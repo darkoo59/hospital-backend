@@ -48,7 +48,9 @@ namespace HospitalTests.setup
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 });
             
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"VacationRequests\";");
-            context.VacationRequests.Add(new VacationRequest() { VacationRequestId = 1, DoctorId = 1, StartDate = DateTime.Now.AddDays(5),EndDate = DateTime.Now.AddDays(10), Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved , Urgency = "NoUrgent" });
+            context.VacationRequests.Add (new VacationRequest { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(10), EndDate = DateTime.Now.AddDays(15), DoctorId = 1, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved, Urgency = "NoUrgent" });
+            context.VacationRequests.Add(new VacationRequest { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(3), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.Approved, Urgency = "Urgent" });
+            context.VacationRequests.Add(new VacationRequest { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 3, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.OnHold, Urgency = "NoUrgent" });
 
             context.SaveChanges();
         }

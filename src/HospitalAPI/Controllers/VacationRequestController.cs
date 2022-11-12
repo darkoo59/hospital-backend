@@ -50,8 +50,12 @@ namespace HospitalAPI.Controllers
             }
 
             VacationRequest vacationRequest = _vacationRequestMapper.ToModel(vacationRequestDTO);
-            _vacationRequestService.Create(vacationRequest);
-            return CreatedAtAction("GetById", new { id = vacationRequest.VacationRequestId }, vacationRequest);
+            if (_vacationRequestService.IsValidationRequestValid(vacationRequest))
+            {
+                _vacationRequestService.Create(vacationRequest);
+                return CreatedAtAction("GetById", new { id = vacationRequest.VacationRequestId }, vacationRequest);
+            }
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
@@ -72,6 +76,8 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_vacationRequestMapper.ToDTO(_vacationRequestService.GetDoctorVacationRequests(doctorId)));
         }
+
+
 
 
 
