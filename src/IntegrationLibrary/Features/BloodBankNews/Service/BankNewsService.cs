@@ -12,6 +12,11 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             _bankNewsRepository = repo;
         }
 
+        public void AddNews(BankNews bankNews)
+        {
+            _bankNewsRepository.Add(bankNews);
+        }
+
         public void ApproveNews(int id)
         {
             BankNews news = _bankNewsRepository.GetById(id);
