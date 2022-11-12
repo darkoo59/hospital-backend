@@ -5,9 +5,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace IntegrationTests.Unit
+namespace IntegrationTests.BBNewsTests
 {
-    public class BB_NewsTests
+    public class UnitTests
     {
         [Fact]
         public void Get_All_News()

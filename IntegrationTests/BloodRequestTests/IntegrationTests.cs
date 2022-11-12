@@ -1,6 +1,5 @@
 ﻿using Xunit.Priority;
 using Xunit;
-using IntegrationTests.Setup;
 using IntegrationAPI.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using IntegrationLibrary.Features.BloodRequests.Service;
@@ -9,15 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using IntegrationLibrary.Features.BloodRequests.Model;
 
-namespace IntegrationTests.Integration
+namespace IntegrationTests.BloodRequestTests
 {
 
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     [Collection("collection")]
-    public class BloodRequestTests
+    public class IntegrationTests
     {
         private TestDatabaseFactory<Startup> Factory { get; }
-        public BloodRequestTests(TestDatabaseFactory<Startup> factory) {
+        public IntegrationTests(TestDatabaseFactory<Startup> factory)
+        {
             Factory = factory;
         }
 

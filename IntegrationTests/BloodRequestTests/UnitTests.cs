@@ -7,9 +7,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace IntegrationTests.Unit
+namespace IntegrationTests.BloodRequestTests
 {
-    public class BloodRequestTests
+    public class UnitTests
     {
 
         [Fact]

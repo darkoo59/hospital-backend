@@ -1,7 +1,7 @@
 ﻿using IntegrationAPI;
 using Xunit;
 
-namespace IntegrationTests.Setup
+namespace IntegrationTests
 {
     [CollectionDefinition("collection")]
     public class BaseIntegrationTest : ICollectionFixture<TestDatabaseFactory<Startup>>
