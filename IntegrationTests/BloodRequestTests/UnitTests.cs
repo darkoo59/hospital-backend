@@ -1,5 +1,4 @@
 ﻿using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
@@ -32,20 +31,6 @@ namespace IntegrationTests.BloodRequestTests
             BloodRequest ret = service.GetById(2);
 
             Assert.Equal(ret, data[1]);
-        }
-
-        [Fact]
-        public void Get_Create_Blood_Request()
-        {
-            List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
-
-            BloodRequestDTO ret = new() { BloodType = "AB_MINUS", QuantityInLiters = 5, ReasonForRequest = "treba 4", FinalDate = new System.DateTime(), DoctorId = 3 };
-            service.Create(ret);
-
-            BloodRequest expected = new() { Id = 4, BloodType = BloodType.AB_MINUS, QuantityInLiters = 5, ReasonForRequest = "treba 4", FinalDate = new System.DateTime(), DoctorId = 3 };
-
-            Assert.Equal(data[3], expected);
         }
 
 

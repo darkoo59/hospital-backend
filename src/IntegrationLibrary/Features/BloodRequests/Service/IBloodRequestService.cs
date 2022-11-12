@@ -8,6 +8,6 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
     {
         IEnumerable<BloodRequest> GetAll();
         BloodRequest GetById(int id);
-        void Create(BloodRequestDTO dto);
+        void Create(BloodRequest br);
     }
 }

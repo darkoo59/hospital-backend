@@ -1,26 +1,55 @@
-﻿using System;
+﻿using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.DTO;
+using IntegrationLibrary.Features.BloodRequests.Model;
+using System;
+using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.BloodRequests.DTO
 {
     public class BloodRequestDTO
     {
-        public string BloodType { get; set; }
+        public int Id { get; set; }
+        public BloodType BloodType { get; set; }
         public double QuantityInLiters { get; set; }
         public string ReasonForRequest { get; set; }
         public DateTime FinalDate { get; set; }
-        public int DoctorId { get; set; }
+        public DoctorDTO Doctor { get; set; }
 
-        public BloodRequestDTO()
+        public BloodRequestDTO() { }
+
+        public BloodRequestDTO(BloodRequest br)
         {
+            Id = br.Id;
+            BloodType = br.BloodType;
+            QuantityInLiters = br.QuantityInLiters;
+            ReasonForRequest = br.ReasonForRequest;
+            FinalDate = br.FinalDate;
+
+            Doctor = new() { DoctorId = 1, Name = "Ime", Surname = "Prezime"};
         }
 
-        public BloodRequestDTO(string bloodType, double quantityInLiters, string reasonForRequest, DateTime finalDate, int doctorId)
+        public static List<BloodRequestDTO> ToDTOList(List<BloodRequest> brs)
         {
-            BloodType = bloodType;
-            QuantityInLiters = quantityInLiters;
-            ReasonForRequest = reasonForRequest;
-            FinalDate = finalDate;
-            DoctorId = doctorId;
+            List<BloodRequestDTO> temp = new();
+            foreach(BloodRequest b in brs)
+            {
+                temp.Add(new BloodRequestDTO(b));
+            }
+            return temp;
+        }
+
+        public bool Equals(BloodRequestDTO obj)
+        {
+            if(obj != null)
+            {
+                if (obj.Id != Id) return false; 
+                if (obj.BloodType != BloodType) return false; 
+                if (obj.QuantityInLiters != QuantityInLiters) return false; 
+                if (!obj.ReasonForRequest.Equals(ReasonForRequest)) return false;
+                if (obj.FinalDate != FinalDate) return false;
+                return true;
+            }
+            return base.Equals(obj);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 
 namespace IntegrationLibrary.Core.Enums
 {
@@ -6,11 +6,17 @@ namespace IntegrationLibrary.Core.Enums
     {
         A_PLUS,
         A_MINUS,
-        BPositive,
         B_PLUS,
+        B_MINUS,
         O_PLUS, 
         O_MINUS,
         AB_PLUS, 
-        AB_MINUS
+        AB_MINUS,
+        NONE
+    }
+
+    public class InvalidBloodTypeException : Exception
+    {
+        public InvalidBloodTypeException(string message) : base(message) { }
     }
 }
