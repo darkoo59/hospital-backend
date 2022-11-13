@@ -1,6 +1,8 @@
 ﻿using IntegrationLibrary.Core.Enums;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
+using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,20 +26,25 @@ namespace IntegrationLibrary.Settings
                 new User() { Id = 3, Email = "email3@gmail.com", AppName = "app3", Password = "dd13xfCA5Jz9Y9ho", Server = "localhost:7555" }
             );
             modelBuilder.Entity<BankNews>().HasData(
-                new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsStateEnum.UNCHECKED },
-                new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsStateEnum.DISAPPROVED },
-                new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3", State = NewsStateEnum.APPROVED },
-                new BankNews() { Id = 4, Title = "vijest 4", Content = "sadrzaj vijesti 4", State = NewsStateEnum.UNCHECKED },
-                new BankNews() { Id = 5, Title = "vijest 5", Content = "sadrzaj vijesti 5", State = NewsStateEnum.DISAPPROVED },
-                new BankNews() { Id = 6, Title = "vijest 6", Content = "sadrzaj vijesti 6", State = NewsStateEnum.UNCHECKED },
-                new BankNews() { Id = 7, Title = "vijest 7", Content = "sadrzaj vijesti 7", State = NewsStateEnum.UNCHECKED },
-                new BankNews() { Id = 8, Title = "vijest 8", Content = "sadrzaj vijesti 8", State = NewsStateEnum.UNCHECKED },
-                new BankNews() { Id = 9, Title = "vijest 9", Content = "sadrzaj vijesti 9", State = NewsStateEnum.APPROVED }
+                new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsState.NEW },
+                new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsState.DECLINED },
+                new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3", State = NewsState.APPROVED },
+                new BankNews() { Id = 4, Title = "vijest 4", Content = "sadrzaj vijesti 4", State = NewsState.NEW },
+                new BankNews() { Id = 5, Title = "vijest 5", Content = "sadrzaj vijesti 5", State = NewsState.DECLINED },
+                new BankNews() { Id = 6, Title = "vijest 6", Content = "sadrzaj vijesti 6", State = NewsState.NEW },
+                new BankNews() { Id = 7, Title = "vijest 7", Content = "sadrzaj vijesti 7", State = NewsState.NEW },
+                new BankNews() { Id = 8, Title = "vijest 8", Content = "sadrzaj vijesti 8", State = NewsState.NEW },
+                new BankNews() { Id = 9, Title = "vijest 9", Content = "sadrzaj vijesti 9", State = NewsState.APPROVED }
             );
             modelBuilder.Entity<BloodRequest>().HasData(
-                new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1 },
-                new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1 },
-                new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2 }    
+                new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.NEW },
+                new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED },
+                new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED },
+                new BloodRequest() { Id = 4, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 4", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE },
+                new BloodRequest() { Id = 5, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 5", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.NEW },
+                new BloodRequest() { Id = 6, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 6", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED },
+                new BloodRequest() { Id = 7, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 7", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED },
+                new BloodRequest() { Id = 8, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 8", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE }
             );
             base.OnModelCreating(modelBuilder);
         }

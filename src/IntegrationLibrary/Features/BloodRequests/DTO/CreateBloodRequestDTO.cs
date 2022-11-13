@@ -1,17 +1,15 @@
 ﻿using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.Features.BloodRequests.Enums;
 using System;
 
-namespace IntegrationLibrary.Features.BloodRequests.Model
+namespace IntegrationLibrary.Features.BloodRequests.DTO
 {
-    public class BloodRequest
+    public class CreateBloodRequestDTO
     {
-        public int Id { get; set; }
+        public int BloodRequestId { get; set; }
         public BloodType BloodType { get; set; }
         public double QuantityInLiters { get; set; }
         public string ReasonForRequest { get; set; }
         public DateTime FinalDate { get; set; }
         public int DoctorId { get; set; }
-        public BloodRequestState State { get; set; }
     }
 }
