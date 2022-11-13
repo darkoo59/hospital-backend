@@ -1,7 +1,7 @@
 ﻿using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.DTO;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
+using IntegrationLibrary.HospitalRepository;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
         public double QuantityInLiters { get; set; }
         public string ReasonForRequest { get; set; }
         public DateTime FinalDate { get; set; }
-        public DoctorDTO Doctor { get; set; }
+        public Doctor Doctor { get; set; }
         public BloodRequestState State { get; set; }
 
         public BloodRequestDTO() { }
@@ -27,8 +27,6 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
             ReasonForRequest = br.ReasonForRequest;
             FinalDate = br.FinalDate;
             State = br.State;
-
-            Doctor = new() { Id = 1, Name = "Ime", Surname = "Prezime"};
         }
 
         public static List<BloodRequestDTO> ToDTOList(List<BloodRequest> brs)
@@ -57,7 +55,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
 
         public static string BloodTypeToString(BloodType bt)
         {
-            string[] arr = { "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
+            string[] arr = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
             for(int i = 0; i < arr.Length; i++)
             {
                 if (bt == (BloodType)i) return arr[i];

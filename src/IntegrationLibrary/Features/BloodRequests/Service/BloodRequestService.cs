@@ -1,20 +1,35 @@
-﻿using IntegrationLibrary.Features.BloodRequests.Enums;
+﻿using IntegrationLibrary.Features.BloodRequests.DTO;
+using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
+using IntegrationLibrary.HospitalRepository;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Features.BloodRequests.Service
 {
     public class BloodRequestService : IBloodRequestService
     {
         private readonly IBloodRequestRepository _bloodRequestRepository;
-        public BloodRequestService(IBloodRequestRepository bloodRequestRepository)
+        private readonly IHospitalRepository _hospitalRepository;
+        public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IHospitalRepository hospitalRepository)
         {
             _bloodRequestRepository = bloodRequestRepository;
+            _hospitalRepository = hospitalRepository;
         }
 
-        public void Create(BloodRequest br)
+        public void Create(CreateBloodRequestDTO dto)
         {
+            BloodRequest br = new()
+            {
+                Id = dto.BloodRequestId,
+                BloodType = dto.BloodType,
+                QuantityInLiters = dto.QuantityInLiters,
+                ReasonForRequest = dto.ReasonForRequest,
+                DoctorId = dto.DoctorId,
+                State = BloodRequestState.NEW
+            };
             _bloodRequestRepository.Create(br);
         }
 
@@ -23,13 +38,25 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
             return _bloodRequestRepository.GetAll();
         }
 
-        public IEnumerable<BloodRequest> GetAllByState(BloodRequestState state)
+        public async Task<IEnumerable<BloodRequestDTO>> GetAllByState(BloodRequestState state)
         {
-            List<BloodRequest> res = new();
+            List<Doctor> doctors = await _hospitalRepository.GetAllDoctors() as List<Doctor>;
+
+            List<BloodRequestDTO> res = new();
             foreach (BloodRequest br in GetAll())
             {
-                if (br.State == state) res.Add(br);
+                if (br.State == state)
+                {
+                    BloodRequestDTO temp = new BloodRequestDTO(br);
+                    Doctor d = doctors.FirstOrDefault(x => x.DoctorId == br.DoctorId);
+                    if(d != null)
+                    {
+                        temp.Doctor = d;
+                    }
+                    res.Add(temp);
+                }
             }
+
             return res;
         }
 

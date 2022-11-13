@@ -86,9 +86,9 @@ namespace HospitalLibrary.Settings
            );
 
             modelBuilder.Entity<Doctor>().HasData(
-               new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic", SpecializationId = 3, RoomId = 1 }
-               /*new Doctor() { Id = 2, Name = "Mika", Surname = "Mikic", SpecializationId = 3, RoomId = 2 },
-               new Doctor() { Id = 3, Name = "Aleksa", Surname = "Santic", SpecializationId = 3, RoomId = 1 }*/
+               new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic", SpecializationId = 3, RoomId = 1 },
+               new Doctor() { DoctorId = 2, Name = "Mika", Surname = "Mikic", SpecializationId = 3, RoomId = 2 },
+               new Doctor() { DoctorId = 3, Name = "Aleksa", Surname = "Santic", SpecializationId = 3, RoomId = 1 }
            );
 
             modelBuilder.Entity<Appointment>().HasData(
