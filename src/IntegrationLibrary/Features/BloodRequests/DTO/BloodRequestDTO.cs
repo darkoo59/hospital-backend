@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Enums;
 using IntegrationLibrary.DTO;
+using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
         public string ReasonForRequest { get; set; }
         public DateTime FinalDate { get; set; }
         public DoctorDTO Doctor { get; set; }
+        public BloodRequestState State { get; set; }
 
         public BloodRequestDTO() { }
 
@@ -24,6 +26,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
             QuantityInLiters = br.QuantityInLiters;
             ReasonForRequest = br.ReasonForRequest;
             FinalDate = br.FinalDate;
+            State = br.State;
 
             Doctor = new() { Id = 1, Name = "Ime", Surname = "Prezime"};
         }

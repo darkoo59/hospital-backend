@@ -1,4 +1,5 @@
 ﻿using System;
+using IntegrationLibrary.Features.BloodBankNews.Enums;
 
 namespace IntegrationLibrary.Features.BloodBankNews.Model
 {

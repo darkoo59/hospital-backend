@@ -35,12 +35,12 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact]
-        public void Get_Unchecked_Blood_Requests()
+        public void Get_New_Blood_Requests()
         {
             List<BloodRequest> data = GetBloodRequestData();
             BloodRequestService service = new(CreateBloodRequestRepository(data));
 
-            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.UNCHECKED) as List<BloodRequest>;
+            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.NEW) as List<BloodRequest>;
 
             Assert.Equal(ret[0], data[0]);
         }
@@ -57,12 +57,12 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact]
-        public void Get_Disapproved_Blood_Requests()
+        public void Get_Declined_Blood_Requests()
         {
             List<BloodRequest> data = GetBloodRequestData();
             BloodRequestService service = new(CreateBloodRequestRepository(data));
 
-            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.DISAPPROVED) as List<BloodRequest>;
+            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequest>;
 
             Assert.Equal(ret[0], data[2]);
         }
@@ -95,9 +95,9 @@ namespace IntegrationTests.BloodRequestTests
         {
             return new()
             {
-                new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.UNCHECKED },
+                new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.NEW },
                 new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED },
-                new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DISAPPROVED },
+                new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED },
                 new BloodRequest() { Id = 4, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 4", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE }
             };
         }

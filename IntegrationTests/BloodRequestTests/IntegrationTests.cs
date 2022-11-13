@@ -55,12 +55,12 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact, Priority(2)]
-        public void Get_Unchecked_Blood_Requests()
+        public void Get_New_Blood_Requests()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
 
-            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetUnchecked()).Value as List<BloodRequestDTO>;
+            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetNew()).Value as List<BloodRequestDTO>;
 
             Assert.Equal(1, result[0].Id);
         }
@@ -77,12 +77,12 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact, Priority(2)]
-        public void Get_Disapproved_Blood_Requests()
+        public void Get_Declined_Blood_Requests()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
 
-            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetDisapproved()).Value as List<BloodRequestDTO>;
+            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetDeclined()).Value as List<BloodRequestDTO>;
 
             Assert.Equal(3, result[0].Id);
         }

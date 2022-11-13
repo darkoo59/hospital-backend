@@ -44,10 +44,10 @@ namespace IntegrationAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("unchecked")]
-        public ActionResult GetUnchecked()
+        [HttpGet("new")]
+        public ActionResult GetNew()
         {
-            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.UNCHECKED) as List<BloodRequest>;
+            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.NEW) as List<BloodRequest>;
             return Ok(BloodRequestDTO.ToDTOList(temp));
         }
 
@@ -58,10 +58,10 @@ namespace IntegrationAPI.Controllers
             return Ok(BloodRequestDTO.ToDTOList(temp));
         }
 
-        [HttpGet("disapproved")]
-        public ActionResult GetDisapproved()
+        [HttpGet("declined")]
+        public ActionResult GetDeclined()
         {
-            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.DISAPPROVED) as List<BloodRequest>;
+            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequest>;
             return Ok(BloodRequestDTO.ToDTOList(temp));
         }
         [HttpGet("update")]

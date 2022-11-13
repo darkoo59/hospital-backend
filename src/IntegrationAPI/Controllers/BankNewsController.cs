@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Features.BloodBankNews.Service;
-using IntegrationLibrary.Features.BloodBankNews.Model;
+using IntegrationLibrary.Features.BloodBankNews.Enums;
 
 namespace IntegrationAPI.Controllers
 {
@@ -21,10 +21,10 @@ namespace IntegrationAPI.Controllers
             return Ok(_bankNewsService.GetAll());
         }
 
-        [HttpGet("unchecked")]
-        public ActionResult GetUncheckedNews()
+        [HttpGet("new")]
+        public ActionResult GetNewNews()
         {
-            return Ok(_bankNewsService.GetAllByState(NewsState.UNCHECKED));
+            return Ok(_bankNewsService.GetAllByState(NewsState.NEW));
         }
 
         [HttpGet("approved")]
@@ -33,10 +33,10 @@ namespace IntegrationAPI.Controllers
             return Ok(_bankNewsService.GetAllByState(NewsState.APPROVED));
         }
 
-        [HttpGet("disapproved")]
-        public ActionResult GetDisapprovedNews()
+        [HttpGet("declined")]
+        public ActionResult GetDeclinedNews()
         {
-            return Ok(_bankNewsService.GetAllByState(NewsState.DISAPPROVED));
+            return Ok(_bankNewsService.GetAllByState(NewsState.DECLINED));
         }
 
         [HttpPatch("approve")]
@@ -46,10 +46,10 @@ namespace IntegrationAPI.Controllers
             return Ok();
         }
 
-        [HttpPatch("disapprove")]
-        public ActionResult DisapproveNews([FromBody] int id)
+        [HttpPatch("decline")]
+        public ActionResult DeclineNews([FromBody] int id)
         {
-            _bankNewsService.DisapproveNews(id);
+            _bankNewsService.DeclineNews(id);
             return Ok();
         }
     }

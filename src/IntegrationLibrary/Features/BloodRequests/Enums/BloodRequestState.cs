@@ -2,9 +2,9 @@
 {
     public enum BloodRequestState
     {
-        UNCHECKED,
+        NEW,
         APPROVED,
-        DISAPPROVED,
+        DECLINED,
         UPDATE
     }
 }
