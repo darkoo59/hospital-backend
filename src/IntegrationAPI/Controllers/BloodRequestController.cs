@@ -5,6 +5,7 @@ using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(BloodRequest br)
+        public IActionResult Create([FromBody] CreateBloodRequestDTO br)
         {
             if (!ModelState.IsValid)
             {
@@ -45,30 +46,30 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet("new")]
-        public ActionResult GetNew()
+        public async Task<IActionResult> GetNew()
         {
-            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.NEW) as List<BloodRequest>;
-            return Ok(BloodRequestDTO.ToDTOList(temp));
+            List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.NEW) as List<BloodRequestDTO>;
+            return Ok(temp);
         }
 
         [HttpGet("approved")]
-        public ActionResult GetApproved()
+        public async Task<IActionResult> GetApproved()
         {
-            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.APPROVED) as List<BloodRequest>;
-            return Ok(BloodRequestDTO.ToDTOList(temp));
+            List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.APPROVED) as List<BloodRequestDTO>;
+            return Ok(temp);
         }
 
         [HttpGet("declined")]
-        public ActionResult GetDeclined()
+        public async Task<IActionResult> GetDeclined()
         {
-            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequest>;
-            return Ok(BloodRequestDTO.ToDTOList(temp));
+            List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequestDTO>;
+            return Ok(temp);
         }
         [HttpGet("update")]
-        public ActionResult GetBloodrequestsForUpdate()
+        public async Task<IActionResult> GetBloodrequestsForUpdate()
         {
-            List<BloodRequest> temp = _bloodRequestService.GetAllByState(BloodRequestState.UPDATE) as List<BloodRequest>;
-            return Ok(BloodRequestDTO.ToDTOList(temp));
+            List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.UPDATE) as List<BloodRequestDTO>;
+            return Ok(temp);
         }
     }
 }

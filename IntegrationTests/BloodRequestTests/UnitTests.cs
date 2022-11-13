@@ -1,10 +1,14 @@
 ﻿using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
+using IntegrationLibrary.HospitalRepository;
 using Moq;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests.BloodRequestTests
@@ -16,7 +20,8 @@ namespace IntegrationTests.BloodRequestTests
         public void Get_All_Blood_Requests()
         {
             List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
+            List<Doctor> doctors = GetDoctorData();
+            BloodRequestService service = new(CreateBloodRequestRepository(data), CreateHospitalRepository(doctors));
 
             IEnumerable<BloodRequest> ret = service.GetAll();
 
@@ -27,7 +32,8 @@ namespace IntegrationTests.BloodRequestTests
         public void Get_Blood_Request_By_Id()
         {
             List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
+            List<Doctor> doctors = GetDoctorData();
+            BloodRequestService service = new(CreateBloodRequestRepository(data), CreateHospitalRepository(doctors));
 
             BloodRequest ret = service.GetById(2);
 
@@ -35,47 +41,59 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact]
-        public void Get_New_Blood_Requests()
+        public async Task<bool> Get_New_Blood_Requests()
         {
             List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
+            List<Doctor> doctors = GetDoctorData();
+            BloodRequestService service = new(CreateBloodRequestRepository(data), CreateHospitalRepository(doctors));
 
-            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.NEW) as List<BloodRequest>;
+            List<BloodRequestDTO> ret = await service.GetAllByState(BloodRequestState.NEW) as List<BloodRequestDTO>;
 
-            Assert.Equal(ret[0], data[0]);
+            Assert.True(ret[0].Equals(new BloodRequestDTO(data[0])));
+
+            return true;
         }
 
         [Fact]
-        public void Get_Approved_Blood_Requests()
+        public async Task<bool> Get_Approved_Blood_Requests()
         {
             List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
+            List<Doctor> doctors = GetDoctorData();
+            BloodRequestService service = new(CreateBloodRequestRepository(data), CreateHospitalRepository(doctors));
 
-            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.APPROVED) as List<BloodRequest>;
+            List<BloodRequestDTO> ret = await service.GetAllByState(BloodRequestState.APPROVED) as List<BloodRequestDTO>;
 
-            Assert.Equal(ret[0], data[1]);
+            Assert.True(ret[0].Equals(new BloodRequestDTO(data[1])));
+
+            return true;
         }
 
         [Fact]
-        public void Get_Declined_Blood_Requests()
+        public async Task<bool> Get_Declined_Blood_Requests()
         {
             List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
+            List<Doctor> doctors = GetDoctorData();
+            BloodRequestService service = new(CreateBloodRequestRepository(data), CreateHospitalRepository(doctors));
 
-            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequest>;
+            List<BloodRequestDTO> ret = await service.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequestDTO>;
 
-            Assert.Equal(ret[0], data[2]);
+            Assert.True(ret[0].Equals(new BloodRequestDTO(data[2])));
+
+            return true;
         }
 
         [Fact]
-        public void Get_Blood_Requests_For_Update()
+        public async Task<bool> Get_Blood_Requests_For_Update()
         {
             List<BloodRequest> data = GetBloodRequestData();
-            BloodRequestService service = new(CreateBloodRequestRepository(data));
+            List<Doctor> doctors = GetDoctorData();
+            BloodRequestService service = new(CreateBloodRequestRepository(data), CreateHospitalRepository(doctors));
 
-            List<BloodRequest> ret = service.GetAllByState(BloodRequestState.UPDATE) as List<BloodRequest>;
+            List<BloodRequestDTO> ret = await service.GetAllByState(BloodRequestState.UPDATE) as List<BloodRequestDTO>;
 
-            Assert.Equal(ret[0], data[3]);
+            Assert.True(ret[0].Equals(new BloodRequestDTO(data[3])));
+
+            return true;
         }
 
         #region private
@@ -91,6 +109,15 @@ namespace IntegrationTests.BloodRequestTests
             return studRepo.Object;
         }
 
+        private static IHospitalRepository CreateHospitalRepository(IEnumerable<Doctor> data)
+        {
+            Mock<IHospitalRepository> studRepo = new();
+
+            studRepo.Setup(m => m.GetAllDoctors()).Returns(Task.FromResult(data));
+
+            return studRepo.Object;
+        }
+
         private static List<BloodRequest> GetBloodRequestData()
         {
             return new()
@@ -99,6 +126,15 @@ namespace IntegrationTests.BloodRequestTests
                 new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED },
                 new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED },
                 new BloodRequest() { Id = 4, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 4", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE }
+            };
+        }
+
+        private static List<Doctor> GetDoctorData()
+        {
+            return new() {
+                new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic" },
+                new Doctor() { DoctorId = 2, Name = "Mika", Surname = "Mikic" },
+                new Doctor() { DoctorId = 3, Name = "Aleksa", Surname = "Santic" }
             };
         }
 

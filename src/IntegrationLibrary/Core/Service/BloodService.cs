@@ -31,7 +31,6 @@ namespace IntegrationLibrary.Core.Service
             User user = _userService.GetBy(email);
             string ret;
             string url;
-            Console.WriteLine(bloodQuantity);
             if (bloodQuantity == 0)
             {
                 url = "http://" + user.Server + "/api/blood/type?bloodType=" + bloodType;

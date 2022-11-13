@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Core.Enums;
+using System.Threading.Tasks;
 
 namespace IntegrationTests.BloodRequestTests
 {
@@ -55,47 +56,63 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact, Priority(2)]
-        public void Get_New_Blood_Requests()
+        public async Task<bool> Get_New_Blood_Requests()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
 
-            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetNew()).Value as List<BloodRequestDTO>;
+            IActionResult res = await controller.GetNew();
+
+            List<BloodRequestDTO> result = ((OkObjectResult)res).Value as List<BloodRequestDTO>;
 
             Assert.Equal(1, result[0].Id);
+
+            return true;
         }
 
         [Fact, Priority(2)]
-        public void Get_Approved_Blood_Requests()
+        public async Task<bool> Get_Approved_Blood_Requests()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
 
-            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetApproved()).Value as List<BloodRequestDTO>;
+            IActionResult res = await controller.GetApproved();
+
+            List<BloodRequestDTO> result = ((OkObjectResult)res).Value as List<BloodRequestDTO>;
 
             Assert.Equal(2, result[0].Id);
+
+            return true;
         }
 
         [Fact, Priority(2)]
-        public void Get_Declined_Blood_Requests()
+        public async Task<bool> Get_Declined_Blood_Requests()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
 
-            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetDeclined()).Value as List<BloodRequestDTO>;
+            IActionResult res = await controller.GetDeclined();
+
+            List<BloodRequestDTO> result = ((OkObjectResult)res).Value as List<BloodRequestDTO>;
 
             Assert.Equal(3, result[0].Id);
+
+            return true;
         }
 
         [Fact, Priority(2)]
-        public void Get_Blood_Requests_For_Update()
+        public async Task<bool> Get_Blood_Requests_For_Update()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
 
-            List<BloodRequestDTO> result = ((OkObjectResult)controller.GetBloodrequestsForUpdate()).Value as List<BloodRequestDTO>;
+            IActionResult res = await controller.GetBloodrequestsForUpdate();
+
+            List<BloodRequestDTO> result = ((OkObjectResult)res).Value as List<BloodRequestDTO>;
 
             Assert.Equal(4, result[0].Id);
+
+            return true;
         }
 
         [Fact, Priority(5)]
@@ -103,11 +120,19 @@ namespace IntegrationTests.BloodRequestTests
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
-            BloodRequest br = new() { Id = 5, BloodType = BloodType.AB_MINUS, QuantityInLiters = 6, ReasonForRequest = "treba 5", FinalDate = new System.DateTime(), DoctorId = 2 };
+            CreateBloodRequestDTO br = new() { BloodRequestId = 5, BloodType = BloodType.AB_MINUS, QuantityInLiters = 6, ReasonForRequest = "treba 5", FinalDate = new System.DateTime(), DoctorId = 2 };
 
             controller.Create(br);
 
-            BloodRequestDTO expected = new(br);
+            BloodRequestDTO expected = new()
+            {
+                Id = 5,
+                BloodType = "AB-",
+                QuantityInLiters = 6,
+                ReasonForRequest = "treba 5",
+                FinalDate = new System.DateTime(),
+            };
+
             BloodRequestDTO actual = ((OkObjectResult)controller.GetById(5)).Value as BloodRequestDTO;
 
             Assert.True(actual.Equals(expected));
