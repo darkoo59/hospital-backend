@@ -32,8 +32,17 @@ namespace HospitalLibrary.Settings
         {
             modelBuilder.Entity<Equipment>().HasData(
                 new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 1, RoomId = 1, Name = "Syringe", Quantity = 50 },
-                new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 }
-                );
+                new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 3, RoomId = 2, Name = "Gloves", Quantity = 50 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 4, RoomId = 2, Name = "Scissors", Quantity = 10 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 5, RoomId = 2, Name = "Wheelchairs", Quantity = 2 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 6, RoomId = 3, Name = "Scalpel", Quantity = 4 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 7, RoomId = 3, Name = "Defibrillator", Quantity = 2 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 8, RoomId = 4, Name = "Ultrasound ", Quantity = 1 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 9, RoomId = 4, Name = "CT scanner", Quantity = 2 },
+				new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 10, RoomId = 5, Name = "Tounge depressor", Quantity = 12 }
+
+				);
             modelBuilder.Entity<Room>().HasData(
                 new Room() { Id = 1, Number = "101A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis", X = 10, Y = 10, Width = 380, Height = 250},
                 new Room() { Id = 2, Number = "102A", FloorId = 0, BuildingId = "A", Type = Core.Enums.RoomType.AppointmentRoom, Description = "neki opis1", X = 10, Y = 270, Width = 170, Height = 250 },
