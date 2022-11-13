@@ -136,5 +136,51 @@ namespace HospitalLibrary.Core.Service
         {
             return true;
         }
+
+        public Appointment GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate)
+        {
+
+            List<Appointment> doctorAppointments = GetDoctorAppointments((int)doctorId);
+
+            foreach (Appointment appointment in doctorAppointments)
+            {
+                if (appointment.Start > startDate && appointment.Start < endDate)
+                {
+                    return appointment;
+                }
+            }
+            return null;
+        }
+
+        public bool IsDoctorScheduled(Appointment appointment, int doctorId)
+        {
+            List<Appointment> appointments = _appointmentRepository.GetAll().ToList();
+
+            foreach (Appointment app in appointments)
+            {
+                if (app.Start == appointment.Start && app.DoctorId == doctorId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void ChangeAppointmentDoctor(Appointment appointmentInVacationDate, int doctorId)
+        {
+            bool IsDoctorFree = IsDoctorScheduled(appointmentInVacationDate, doctorId);
+            List<Doctor> doctors = new List<Doctor>();
+
+            if (IsDoctorFree == false)
+            {
+                return;
+            }
+            else
+            {
+                appointmentInVacationDate.DoctorId = 1;
+                _appointmentRepository.Update(appointmentInVacationDate);
+            }
+        }
     }
 }
+

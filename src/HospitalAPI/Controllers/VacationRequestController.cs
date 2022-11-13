@@ -77,6 +77,24 @@ namespace HospitalAPI.Controllers
             return Ok(_vacationRequestMapper.ToDTO(_vacationRequestService.GetDoctorVacationRequests(doctorId)));
         }
 
+        [HttpPost("createUrgentRequest")]
+        public ActionResult CreateUrgentVacation(VacationRequestDTO vacationRequestDTO)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            VacationRequest vacationRequest = _vacationRequestMapper.ToModel(vacationRequestDTO);
+            if (_vacationRequestService.IsValidationRequestValid(vacationRequest))
+            {
+                _vacationRequestService.CreateUrgentVacation(vacationRequest.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate, vacationRequest);
+                return CreatedAtAction("GetById", new { id = vacationRequest.VacationRequestId }, vacationRequest);
+            }
+            return BadRequest();
+        }
+
 
 
 

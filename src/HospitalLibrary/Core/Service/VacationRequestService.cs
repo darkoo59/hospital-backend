@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,13 @@ namespace HospitalLibrary.Core.Service
     public class VacationRequestService : IVacationRequestService
     {
         private readonly IVacationRequestRepository _vacationRequestRepository;
+        private readonly IAppointmentService _appointmentService;
+ 
 
-        public VacationRequestService(IVacationRequestRepository vacationRequestRepository)
+        public VacationRequestService(IVacationRequestRepository vacationRequestRepository,IAppointmentService appointmentService)
         {
             _vacationRequestRepository = vacationRequestRepository;
+            _appointmentService = appointmentService;
         }
 
         public IEnumerable<VacationRequest> GetAll()
@@ -66,6 +70,22 @@ namespace HospitalLibrary.Core.Service
             bool isValid = true;
             isValid = IsVacationDateStartValid(vacationRequest);
             return isValid;
-        } 
+        }
+
+        public void CreateUrgentVacation(int doctorId, DateTime start, DateTime end, VacationRequest vacationRequest)
+        {
+            Appointment appointmentInDataRange = _appointmentService.GetAppointmentInVacationDataRange(doctorId, start, end);
+
+            if (appointmentInDataRange == null)
+            {
+                vacationRequest.Status = VacationRequestStatus.OnHold;
+                _vacationRequestRepository.Create(vacationRequest);
+            }
+            else
+            {
+                _appointmentService.ChangeAppointmentDoctor(appointmentInDataRange, 4);
+                _vacationRequestRepository.Create(vacationRequest);
+            }
+        }
     }
 }

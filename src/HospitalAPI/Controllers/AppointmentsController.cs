@@ -3,6 +3,7 @@ using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace HospitalAPI.Controllers
@@ -109,6 +110,12 @@ namespace HospitalAPI.Controllers
            
 
             return Ok(appointment);
+        }
+
+        [HttpGet("appointmentsInDataRange/{doctorId}")]
+        public ActionResult GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate)
+        {
+            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetAppointmentInVacationDataRange(doctorId, startDate, endDate)));
         }
 
 
