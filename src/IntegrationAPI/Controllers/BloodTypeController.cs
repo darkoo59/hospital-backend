@@ -1,8 +1,8 @@
-﻿using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Service;
+﻿using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using IntegrationLibrary.Core.Enums;
 
 namespace IntegrationAPI.Controllers
 {
@@ -18,7 +18,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CheckBloodTypeAvailability([FromQuery] BloodTypesEnum bloodType,
+        public async Task<IActionResult> CheckBloodTypeAvailability([FromQuery] BloodType bloodType,
                                                         [FromHeader] string apiKey,
                                                         [FromQuery] float bloodQuantity,
                                                         [FromQuery(Name = "userEmail")] string email)

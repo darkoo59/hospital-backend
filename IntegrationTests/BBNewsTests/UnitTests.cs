@@ -1,3 +1,4 @@
+using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
@@ -5,9 +6,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace IntegrationTests.Unit
+namespace IntegrationTests.BBNewsTests
 {
-    public class BB_NewsTests
+    public class UnitTests
     {
         [Fact]
         public void Get_All_News()
@@ -21,12 +22,12 @@ namespace IntegrationTests.Unit
         }
 
         [Fact]
-        public void Get_Unchecked_News()
+        public void Get_New_News()
         {
             List<BankNews> data = GetNewsData();
             BankNewsService service = new(CreateNewsRepository(data));
 
-            List<BankNews> ret = service.GetAllByState(NewsStateEnum.UNCHECKED) as List<BankNews>;
+            List<BankNews> ret = service.GetAllByState(NewsState.NEW) as List<BankNews>;
 
             Assert.Equal(ret[0], data[0]);
         }
@@ -37,18 +38,18 @@ namespace IntegrationTests.Unit
             List<BankNews> data = GetNewsData();
             BankNewsService service = new(CreateNewsRepository(data));
 
-            List<BankNews> ret = service.GetAllByState(NewsStateEnum.APPROVED) as List<BankNews>;
+            List<BankNews> ret = service.GetAllByState(NewsState.APPROVED) as List<BankNews>;
 
             Assert.Equal(ret[0], data[2]);
         }
 
         [Fact]
-        public void Get_Disapproved_News()
+        public void Get_Declined_News()
         {
             List<BankNews> data = GetNewsData();
             BankNewsService service = new(CreateNewsRepository(data));
 
-            List<BankNews> ret = service.GetAllByState(NewsStateEnum.DISAPPROVED) as List<BankNews>;
+            List<BankNews> ret = service.GetAllByState(NewsState.DECLINED) as List<BankNews>;
 
             Assert.Equal(ret[0], data[1]);
         }
@@ -61,18 +62,18 @@ namespace IntegrationTests.Unit
 
             service.ApproveNews(1);
 
-            Assert.Equal(NewsStateEnum.APPROVED, data[0].State);
+            Assert.Equal(NewsState.APPROVED, data[0].State);
         }
 
         [Fact]
-        public void Disapprove_News()
+        public void Decline_News()
         {
             List<BankNews> data = GetNewsData();
             BankNewsService service = new(CreateNewsRepository(data));
 
-            service.DisapproveNews(3);
+            service.DeclineNews(3);
 
-            Assert.Equal(NewsStateEnum.DISAPPROVED, data[2].State);
+            Assert.Equal(NewsState.DECLINED, data[2].State);
         }
 
         [Fact]
@@ -83,7 +84,7 @@ namespace IntegrationTests.Unit
 
             BankNews news = service.GetById(2);
 
-            Assert.Equal(data[1], news);
+            Assert.Equal(news, data[1]);
         }
 
 
@@ -104,9 +105,9 @@ namespace IntegrationTests.Unit
         {
             return new()
             {
-                new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsStateEnum.UNCHECKED },
-                new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsStateEnum.DISAPPROVED },
-                new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3", State = NewsStateEnum.APPROVED }
+                new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsState.NEW },
+                new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsState.DECLINED },
+                new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3", State = NewsState.APPROVED }
             };
         }
 

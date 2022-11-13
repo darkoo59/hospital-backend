@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
 using Microsoft.AspNetCore.Http;
 using Org.BouncyCastle.Ocsp;
@@ -25,7 +26,7 @@ namespace IntegrationLibrary.Core.Service
         }
 
 
-        public async Task<Boolean> CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity, string email)
+        public async Task<Boolean> CheckBloodTypeAvailability(BloodType bloodType, string apiKey, float bloodQuantity, string email)
         {
             User user = _userService.GetBy(email);
             string ret;

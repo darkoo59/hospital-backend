@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221111161351_blood-requests")]
+    partial class bloodrequests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,9 +186,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("ReasonForRequest")
                         .HasColumnType("text");
 
-                    b.Property<int>("State")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
@@ -199,18 +198,16 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 1,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 1.0,
-                            ReasonForRequest = "treba 1",
-                            State = 0
+                            ReasonForRequest = "treba 1"
                         },
                         new
                         {
                             Id = 2,
-                            BloodType = 2,
+                            BloodType = 3,
                             DoctorId = 1,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 4.0,
-                            ReasonForRequest = "treba 2",
-                            State = 1
+                            ReasonForRequest = "treba 2"
                         },
                         new
                         {
@@ -219,58 +216,7 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 2,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
-                            ReasonForRequest = "treba 3",
-                            State = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BloodType = 5,
-                            DoctorId = 3,
-                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            QuantityInLiters = 12.0,
-                            ReasonForRequest = "treba 4",
-                            State = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BloodType = 0,
-                            DoctorId = 1,
-                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            QuantityInLiters = 1.0,
-                            ReasonForRequest = "treba 5",
-                            State = 0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BloodType = 2,
-                            DoctorId = 1,
-                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            QuantityInLiters = 4.0,
-                            ReasonForRequest = "treba 6",
-                            State = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BloodType = 5,
-                            DoctorId = 2,
-                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            QuantityInLiters = 9.0,
-                            ReasonForRequest = "treba 7",
-                            State = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            BloodType = 5,
-                            DoctorId = 3,
-                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            QuantityInLiters = 12.0,
-                            ReasonForRequest = "treba 8",
-                            State = 3
+                            ReasonForRequest = "treba 3"
                         });
                 });
 #pragma warning restore 612, 618

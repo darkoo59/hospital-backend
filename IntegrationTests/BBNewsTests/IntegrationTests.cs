@@ -2,7 +2,6 @@
 using IntegrationAPI.Controllers;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodBankNews.Service;
-using IntegrationTests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -10,12 +9,17 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Priority;
 
-namespace IntegrationTests.Integration
+namespace IntegrationTests.BBNewsTests
 {
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
-    public class BB_NewsTests : BaseIntegrationTest
+    [Collection("collection")]
+    public class IntegrationTests
     {
-        public BB_NewsTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        private TestDatabaseFactory<Startup> Factory { get; }
+
+        public IntegrationTests(TestDatabaseFactory<Startup> factory) {
+            Factory = factory;
+        }
 
         private static BankNewsController SetupController(IServiceScope scope)
         {
@@ -36,12 +40,12 @@ namespace IntegrationTests.Integration
         }
 
         [Fact, Priority(2)]
-        public void Get_Unchecked_News()
+        public void Get_New_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
 
-            List<BankNews> result = ((OkObjectResult)controller.GetUncheckedNews()).Value as List<BankNews>;
+            List<BankNews> result = ((OkObjectResult)controller.GetNewNews()).Value as List<BankNews>;
 
             Assert.Equal(1, result[0].Id);
         }
@@ -58,12 +62,12 @@ namespace IntegrationTests.Integration
         }
 
         [Fact, Priority(2)]
-        public void Get_Disapproved_News()
+        public void Get_Declined_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
 
-            List<BankNews> result = ((OkObjectResult)controller.GetDisapprovedNews()).Value as List<BankNews>;
+            List<BankNews> result = ((OkObjectResult)controller.GetDeclinedNews()).Value as List<BankNews>;
 
             Assert.Equal(2, result[0].Id);
         }
@@ -80,12 +84,12 @@ namespace IntegrationTests.Integration
         }
 
         [Fact, Priority(5)]
-        public void Disapprove_News()
+        public void Decline_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
 
-            ActionResult res = controller.DisapproveNews(3);
+            ActionResult res = controller.DeclineNews(3);
 
             res.ShouldBeOfType<OkResult>();
         }
