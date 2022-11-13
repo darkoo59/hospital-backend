@@ -32,7 +32,7 @@ namespace HospitalTests
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            BloodUsageEvidencyDTO bloodUsageEvidencyDTO = new BloodUsageEvidencyDTO(2, "O+", 200, "Heart surgery", 1);
+            BloodUsageEvidencyDTO bloodUsageEvidencyDTO = new BloodUsageEvidencyDTO(2,"O+", 200, "Heart surgery", 1);
 
             var result = ((CreatedAtActionResult)controller.Create(bloodUsageEvidencyDTO))?.Value as BloodUsageEvidency;
 

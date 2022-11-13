@@ -58,7 +58,7 @@ namespace HospitalTests.setup
             context.Bloods.Add(new Blood() { BloodId = 6, BloodType = BloodType.A_MINUS, QuantityInLiters = 4 });
             context.Bloods.Add(new Blood() { BloodId = 7, BloodType = BloodType.B_MINUS, QuantityInLiters = 4 });
             context.Bloods.Add(new Blood() { BloodId = 8, BloodType = BloodType.AB_MINUS, QuantityInLiters = 4 });
-            
+         
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE  \"BloodUsageEvidencies\";");
 

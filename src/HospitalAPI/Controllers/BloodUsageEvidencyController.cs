@@ -34,26 +34,31 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         public ActionResult Create(BloodUsageEvidencyDTO bloodUsageEvidencyDTO)
-        {
+        { 
+             // zakucano trenutno
+            bloodUsageEvidencyDTO.DoctorId = 1;
+          
+           
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             BloodUsageEvidency bloodUsageEvidency = _bloodUsageEvidencyMapper.ToModel(bloodUsageEvidencyDTO);
-
+            Boolean isEnoughBlood;
             try
             {
-                _bloodService.ChangeQuantity(bloodUsageEvidency);
-
+               isEnoughBlood = _bloodService.ChangeQuantity(bloodUsageEvidency);
+                
             }
             catch
             {
                 return BadRequest();
             }
-
-
-            _bloodUsageEvidencyService.Create(bloodUsageEvidency);
+            if (isEnoughBlood)
+            {
+                _bloodUsageEvidencyService.Create(bloodUsageEvidency);
+            }
             return CreatedAtAction("GetById", new { id = bloodUsageEvidency.BloodUsageEvidencyId }, bloodUsageEvidency);
 
         }
