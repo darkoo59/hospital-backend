@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodBankNews.Model;
+﻿using IntegrationLibrary.Features.BloodBankNews.Enums;
+using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -83,7 +84,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
         private void HandleMessage(string content, IBankNewsService _bankNewsService)
         {  
             BankNews message = JsonConvert.DeserializeObject<BankNews>(content);
-            message.State = NewsStateEnum.UNCHECKED;
+            message.State = NewsState.NEW;
             _bankNewsService.AddNews(message);
         }
 

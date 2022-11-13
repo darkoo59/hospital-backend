@@ -1,7 +1,6 @@
-﻿using IntegrationLibrary.Features.BloodRequests.DTO;
+﻿using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
-using System;
 using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.BloodRequests.Service
@@ -14,19 +13,29 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
             _bloodRequestRepository = bloodRequestRepository;
         }
 
-        public void Create(BloodRequestDTO dto)
+        public void Create(BloodRequest br)
         {
-            throw new NotImplementedException();
+            _bloodRequestRepository.Create(br);
         }
 
         public IEnumerable<BloodRequest> GetAll()
         {
-            throw new NotImplementedException();
+            return _bloodRequestRepository.GetAll();
+        }
+
+        public IEnumerable<BloodRequest> GetAllByState(BloodRequestState state)
+        {
+            List<BloodRequest> res = new();
+            foreach (BloodRequest br in GetAll())
+            {
+                if (br.State == state) res.Add(br);
+            }
+            return res;
         }
 
         public BloodRequest GetById(int id)
         {
-            throw new NotImplementedException();
+            return _bloodRequestRepository.GetById(id);
         }
     }
 }
