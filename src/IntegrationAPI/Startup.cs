@@ -6,6 +6,7 @@ using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
+using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
 using IntegrationLibrary.HospitalRepository;
@@ -71,7 +72,11 @@ namespace IntegrationAPI
             services.AddHostedService<RabbitMQService>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+
             services.AddScoped<IHospitalRepository, HospitalRepository>();
+
+            services.AddScoped<IBBReportsService, BBReportsService>();
+
 
         }
 
