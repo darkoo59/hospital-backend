@@ -15,6 +15,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<BankNews> BankNews { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
+
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

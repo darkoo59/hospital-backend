@@ -90,6 +90,74 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Blood", b =>
+                {
+                    b.Property<int>("BloodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("QuantityInLiters")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("BloodId");
+
+                    b.ToTable("Bloods");
+
+                    b.HasData(
+                        new
+                        {
+                            BloodId = 1,
+                            BloodType = 6,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 2,
+                            BloodType = 0,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 3,
+                            BloodType = 2,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 4,
+                            BloodType = 4,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 5,
+                            BloodType = 7,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 6,
+                            BloodType = 1,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 7,
+                            BloodType = 3,
+                            QuantityInLiters = 4.0
+                        },
+                        new
+                        {
+                            BloodId = 8,
+                            BloodType = 5,
+                            QuantityInLiters = 4.0
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.BloodRequest", b =>
                 {
                     b.Property<int>("BloodRequestId")
@@ -143,6 +211,44 @@ namespace HospitalLibrary.Migrations
                             FinalDate = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 3.5,
                             ReasonForRequest = "Heart surgery"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.BloodUsageEvidency", b =>
+                {
+                    b.Property<int>("BloodUsageEvidencyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateOfUsage")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("QuantityUsedInMililiters")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("ReasonForUsage")
+                        .HasColumnType("text");
+
+                    b.HasKey("BloodUsageEvidencyId");
+
+                    b.ToTable("BloodUsageEvidencies");
+
+                    b.HasData(
+                        new
+                        {
+                            BloodUsageEvidencyId = 1,
+                            BloodType = 0,
+                            DateOfUsage = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 200.0,
+                            ReasonForUsage = "Hearth surgery"
                         });
                 });
 

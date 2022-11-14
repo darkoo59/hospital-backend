@@ -32,8 +32,7 @@ namespace HospitalTests
             var result = ((CreatedAtActionResult)r)?.Value as BloodRequest;
 
             Assert.NotNull(result);
-
-
+            
         }
     }
 }
