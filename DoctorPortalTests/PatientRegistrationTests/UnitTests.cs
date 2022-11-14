@@ -9,17 +9,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace HospitalTests.Unit
+namespace HospitalTests.PatientRegistrationTests
 {
-    public class PatientRegistrationTests
+    public class UnitTests
     {
         [Fact]
         public void Get_All_Patients()
         {
             List<Patient> data = GetPatientsData();
-            
+
             PatientService service = new(CreatePatientsRepository(data), null);
-        
+
             IEnumerable<Patient> ret = service.GetAll();
 
             Assert.Equal(ret, data);
@@ -55,7 +55,7 @@ namespace HospitalTests.Unit
 
         private static IPatientRepository CreatePatientsRepository(List<Patient> data)
         {
-            Mock<IPatientRepository> studRepo = new(); 
+            Mock<IPatientRepository> studRepo = new();
             studRepo.Setup(m => m.GetAll()).Returns(data);
             studRepo.Setup(m => m.GetById(1)).Returns(data[0]);
             studRepo.Setup(m => m.GetById(2)).Returns(data[1]);
