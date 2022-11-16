@@ -71,5 +71,19 @@ namespace IntegrationAPI.Controllers
             List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.UPDATE) as List<BloodRequestDTO>;
             return Ok(temp);
         }
+
+        [HttpPatch("approve")]
+        public IActionResult ApproveRequest([FromBody] int id)
+        {
+            _bloodRequestService.ChangeState(id, BloodRequestState.APPROVED);
+            return Ok();
+        }
+
+        [HttpPatch("decline")]
+        public IActionResult DeclineRequest([FromBody] int id)
+        {
+            _bloodRequestService.ChangeState(id, BloodRequestState.DECLINED);
+            return Ok();
+        }
     }
 }

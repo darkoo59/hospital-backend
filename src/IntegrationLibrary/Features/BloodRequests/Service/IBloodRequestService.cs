@@ -12,5 +12,6 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
         BloodRequest GetById(int id);
         void Create(CreateBloodRequestDTO dto);
         Task<IEnumerable<BloodRequestDTO>> GetAllByState(BloodRequestState state);
+        void ChangeState(int id, BloodRequestState newState);
     }
 }

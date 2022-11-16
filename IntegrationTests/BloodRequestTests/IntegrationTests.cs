@@ -6,10 +6,10 @@ using IntegrationLibrary.Features.BloodRequests.Service;
 using IntegrationAPI;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Core.Enums;
 using System.Threading.Tasks;
+using IntegrationLibrary.Features.BloodRequests.Enums;
 
 namespace IntegrationTests.BloodRequestTests
 {
@@ -115,7 +115,7 @@ namespace IntegrationTests.BloodRequestTests
             return true;
         }
 
-        [Fact, Priority(5)]
+        [Fact, Priority(4)]
         public void Create_Blood_Request()
         {
             IServiceScope scope = Factory.Services.CreateScope();
@@ -136,6 +136,32 @@ namespace IntegrationTests.BloodRequestTests
             BloodRequestDTO actual = ((OkObjectResult)controller.GetById(5)).Value as BloodRequestDTO;
 
             Assert.True(actual.Equals(expected));
+        }
+
+        [Fact, Priority(5)]
+        public void Approve_Blood_Request()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            controller.ApproveRequest(1);
+
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(1)).Value as BloodRequestDTO;
+
+            Assert.True(actual.State == BloodRequestState.APPROVED);
+        }
+
+        [Fact, Priority(5)]
+        public void Decline_Blood_Request()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            controller.DeclineRequest(5);
+
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(5)).Value as BloodRequestDTO;
+
+            Assert.True(actual.State == BloodRequestState.DECLINED);
         }
     }
 }

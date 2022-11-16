@@ -47,7 +47,7 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
             {
                 if (br.State == state)
                 {
-                    BloodRequestDTO temp = new BloodRequestDTO(br);
+                    BloodRequestDTO temp = new(br);
                     Doctor d = doctors.FirstOrDefault(x => x.DoctorId == br.DoctorId);
                     if(d != null)
                     {
@@ -63,6 +63,18 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
         public BloodRequest GetById(int id)
         {
             return _bloodRequestRepository.GetById(id);
+        }
+
+        public void ChangeState(int id, BloodRequestState newState)
+        {
+            BloodRequest br = GetById(id);
+            if (br == null) 
+                throw new System.Exception("Blood request with given ID has not been found.");
+            if (br.State != BloodRequestState.NEW)
+                throw new System.Exception("Invalid action");
+
+            br.State = newState;
+            _bloodRequestRepository.Update(br);
         }
     }
 }

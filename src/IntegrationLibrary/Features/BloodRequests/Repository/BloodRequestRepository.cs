@@ -1,6 +1,6 @@
 ﻿using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Settings;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +27,19 @@ namespace IntegrationLibrary.Features.BloodRequests.Repository
         public BloodRequest GetById(int id)
         {
             return _context.BloodRequests.Find(id);
+        }
+
+        public void Update(BloodRequest bloodRequest)
+        {
+            _context.Entry(bloodRequest).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }
