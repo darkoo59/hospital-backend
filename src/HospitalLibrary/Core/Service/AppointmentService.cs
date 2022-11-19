@@ -108,9 +108,10 @@ namespace HospitalLibrary.Core.Service
         }
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
-        {
+        {  
             return appointment.Start >= workTime.StartDate && appointment.Start <= workTime.EndDate && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
         }
+
 
         private static bool IsWeekend(DateTime date)
         {
@@ -172,15 +173,24 @@ namespace HospitalLibrary.Core.Service
             List<Doctor> doctors = _doctorService.GetAll().ToList(); //treba da budu svi dobavljeni
             //List<Appointment> transeferedAppointments = new List<Appointment>();
             //List<Appointment> appointmentsForFunction = appointmentsInVacationDate;
+            List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
+            WorkTime doctorWorkTime = new WorkTime();
             int counter = 0;
 
             foreach (Doctor doctor in doctors)
             {
+                foreach(WorkTime workTime in workTimes)
+                {
+                    if (workTime.DoctorId.Equals(doctor.DoctorId))
+                    {
+                        doctorWorkTime = workTime;
+                    }
+                }
+                
                 foreach (Appointment appointment in appointmentsInVacationDate)
                 {
                     Doctor doc = _doctorRepository.GetById((int)appointment.DoctorId);
-
-                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && doc.SpecializationId == doctor.SpecializationId)
+                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && doc.SpecializationId == doctor.SpecializationId && IsDoctorWorking(appointment,doctorWorkTime) == true)
                     {
                         counter++;
                     }

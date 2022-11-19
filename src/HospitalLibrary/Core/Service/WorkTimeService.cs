@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalLibrary.Core.Service
 {
