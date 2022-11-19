@@ -69,7 +69,19 @@ namespace HospitalAPI.Controllers
             return Ok(_roomService.GetEquipment(id));
         }
 
-        [HttpGet("equipmentSearch/{query}")]
+		// GET api/rooms/equipment
+		[HttpGet("equipment")]
+		public ActionResult GetAllEquipment()
+		{
+			List<Equipment> equipmentList = (List<Equipment>)_roomService.GetAllEquipment();
+			if (equipmentList.Count == 0)
+			{
+				return NotFound();
+			}
+			return Ok(_roomService.GetAllEquipment());
+		}
+
+		[HttpGet("equipmentSearch/{query}")]
         public ActionResult SearchForEquipment(string query)
         {
             List<Room> roomList = (List<Room>)_roomService.SearchForEquipment(query);
