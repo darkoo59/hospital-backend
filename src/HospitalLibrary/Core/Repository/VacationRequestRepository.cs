@@ -40,14 +40,5 @@ namespace HospitalLibrary.Core.Repository
             _context.VacationRequests.Remove(vacationRequest);
             _context.SaveChanges();
         }
-
-
-
-
-
-
-
-
-
     }
 }
