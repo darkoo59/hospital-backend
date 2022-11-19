@@ -114,68 +114,42 @@ namespace HospitalLibrary.Core.Repository
             }
             return rooms;
         }
-        public bool EquipmentExist(int RoomId, Equipment equipment) 
+
+        public void ChangeEquipmentQuantity(Equipment equipment, int quantity)
         {
-            if (equipment.RoomId == RoomId)
-            {
-                return true;
-
-            }
-            return false;
-
+            Equipment eqToBeUpdated = _context.Equipment.Find(equipment.Id);
+            eqToBeUpdated.Quantity += quantity;
+            _context.Update(eqToBeUpdated);
+            _context.SaveChanges();
         }
 
         public void AddEquipment(MoveRequest moveRequest,Equipment equipment) 
         {
-            
-            if (moveRequest.equipment == equipment.Name)
+            Equipment existingEquipment = _context.Equipment.Where(e => e.RoomId == moveRequest.toRoomId).Where(e => e.Name == moveRequest.equipment).FirstOrDefault();
+            if(existingEquipment != null)
             {
-                equipment.Quantity = equipment.Quantity + moveRequest.quantity;
-                _context.Equipment.Add(new Equipment { Id = equipment.Id, RoomId = moveRequest.toRoomId, EquipmentType = equipment.EquipmentType, Name = moveRequest.equipment, Quantity = equipment.Quantity });
-                
+                ChangeEquipmentQuantity(existingEquipment, moveRequest.quantity);
             }
-            else if (moveRequest.equipment != equipment.Name)
+            else
             {
-                _context.Equipment.Add(new Equipment { Id = equipment.Id, RoomId = moveRequest.toRoomId, EquipmentType = equipment.EquipmentType, Name = moveRequest.equipment, Quantity = moveRequest.quantity });
-
-
+                _context.Equipment.Add(equipment);
             }
-            
-
+            _context.SaveChanges();
         }
 
         public void MoveEquipment(MoveRequest moveRequest) 
         {
-         
-            foreach (Equipment equipment in _context.Equipment) 
+            List<Equipment> eqList = _context.Equipment.Where(e => e.RoomId == moveRequest.fromRoomId).ToList();
+            foreach(Equipment eq in eqList)
             {
-                if(moveRequest.fromRoomId == equipment.RoomId)
+                if (moveRequest.equipment == eq.Name)
                 {
-                    if (moveRequest.equipment == equipment.Name) {
-                        equipment.Quantity = equipment.Quantity - moveRequest.quantity;
-                        _context.Equipment.Add(new Equipment { Id = equipment.Id, RoomId = equipment.Id, EquipmentType = equipment.EquipmentType, Name = equipment.Name, Quantity = equipment.Quantity });
-                        
-
-                    }
+                    ChangeEquipmentQuantity(eq, -moveRequest.quantity);
+                    int newId = _context.Equipment.OrderBy(e => e.Id).Last().Id + 1;
+                    Equipment EqToBeAdded = new Equipment { Id = newId, RoomId = moveRequest.toRoomId, EquipmentType = eq.EquipmentType, Name = eq.Name, Quantity = moveRequest.quantity };
+                    AddEquipment(moveRequest, EqToBeAdded);
                 }
-                if (moveRequest.toRoomId == equipment.RoomId)
-                {
-                    AddEquipment(moveRequest,equipment);
-
-                }
-
-                
-
             }
-         
-
-
-
-
-
-
-
-
         }
     }
 }
