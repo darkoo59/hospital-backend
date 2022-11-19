@@ -40,12 +40,12 @@ namespace IntegrationTests.BBNewsTests
         }
 
         [Fact, Priority(2)]
-        public void Get_Unchecked_News()
+        public void Get_New_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
 
-            List<BankNews> result = ((OkObjectResult)controller.GetUncheckedNews()).Value as List<BankNews>;
+            List<BankNews> result = ((OkObjectResult)controller.GetNewNews()).Value as List<BankNews>;
 
             Assert.Equal(1, result[0].Id);
         }
@@ -62,12 +62,12 @@ namespace IntegrationTests.BBNewsTests
         }
 
         [Fact, Priority(2)]
-        public void Get_Disapproved_News()
+        public void Get_Declined_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
 
-            List<BankNews> result = ((OkObjectResult)controller.GetDisapprovedNews()).Value as List<BankNews>;
+            List<BankNews> result = ((OkObjectResult)controller.GetDeclinedNews()).Value as List<BankNews>;
 
             Assert.Equal(2, result[0].Id);
         }
@@ -84,12 +84,12 @@ namespace IntegrationTests.BBNewsTests
         }
 
         [Fact, Priority(5)]
-        public void Disapprove_News()
+        public void Decline_News()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BankNewsController controller = SetupController(scope);
 
-            ActionResult res = controller.DisapproveNews(3);
+            ActionResult res = controller.DeclineNews(3);
 
             res.ShouldBeOfType<OkResult>();
         }

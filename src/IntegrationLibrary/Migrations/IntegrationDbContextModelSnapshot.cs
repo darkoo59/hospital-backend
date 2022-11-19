@@ -184,6 +184,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("ReasonForRequest")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
@@ -196,16 +199,18 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 1,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 1.0,
-                            ReasonForRequest = "treba 1"
+                            ReasonForRequest = "treba 1",
+                            State = 0
                         },
                         new
                         {
                             Id = 2,
-                            BloodType = 3,
+                            BloodType = 2,
                             DoctorId = 1,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 4.0,
-                            ReasonForRequest = "treba 2"
+                            ReasonForRequest = "treba 2",
+                            State = 1
                         },
                         new
                         {
@@ -214,7 +219,58 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 2,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
-                            ReasonForRequest = "treba 3"
+                            ReasonForRequest = "treba 3",
+                            State = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BloodType = 5,
+                            DoctorId = 3,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 12.0,
+                            ReasonForRequest = "treba 4",
+                            State = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BloodType = 0,
+                            DoctorId = 1,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 1.0,
+                            ReasonForRequest = "treba 5",
+                            State = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BloodType = 2,
+                            DoctorId = 1,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 4.0,
+                            ReasonForRequest = "treba 6",
+                            State = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BloodType = 5,
+                            DoctorId = 2,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 9.0,
+                            ReasonForRequest = "treba 7",
+                            State = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            BloodType = 5,
+                            DoctorId = 3,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 12.0,
+                            ReasonForRequest = "treba 8",
+                            State = 3
                         });
                 });
 #pragma warning restore 612, 618
