@@ -1,50 +1,19 @@
 ﻿using HospitalAPI.Dtos;
 using HospitalLibrary.Core.Model;
-using System;
 using System.Collections.Generic;
 
 namespace HospitalAPI.Mappers
 {
     public class DoctorMapper : IGenericMapper<Doctor, DoctorDTO>
     {
-        public DoctorDTO ToDTO(Doctor doctor)
-        {
-            DoctorDTO doctorDTO = new DoctorDTO();
-            doctorDTO.DoctorId = doctor.DoctorId;
-            doctorDTO.Name = doctor.Name;
-            doctorDTO.Surname = doctor.Surname;
-            doctorDTO.RoomId = doctor.RoomId;
-            doctorDTO.SpecializationId = doctor.SpecializationId;
-
-            return doctorDTO;
-        }
-
-        public List<DoctorDTO> ToDTO(List<Doctor> doctors)
-        {
-            List<DoctorDTO> doctorDTOs = new List<DoctorDTO>();
-            foreach (var doctor in doctors)
-            {
-                DoctorDTO doctorDTO = new DoctorDTO();
-                doctorDTO.DoctorId = doctor.DoctorId;
-                doctorDTO.Name = doctor.Name;
-                doctorDTO.Surname = doctor.Surname;
-                doctorDTO.RoomId = doctor.RoomId;
-                doctorDTO.SpecializationId = doctor.SpecializationId;
-
-                doctorDTOs.Add(doctorDTO);
-            }
-
-            return doctorDTOs;
-        }
-
         public Doctor ToModel(DoctorDTO doctorDTO)
         {
             Doctor doctor = new Doctor();
             doctor.DoctorId = doctorDTO.DoctorId;
             doctor.Name = doctorDTO.Name;
             doctor.Surname = doctorDTO.Surname;
-            doctor.RoomId = doctorDTO.RoomId;
             doctor.SpecializationId = doctorDTO.SpecializationId;
+            doctor.RoomId = doctorDTO.RoomId;
 
             return doctor;
         }
@@ -58,11 +27,42 @@ namespace HospitalAPI.Mappers
                 doctor.DoctorId = doctorDTO.DoctorId;
                 doctor.Name = doctorDTO.Name;
                 doctor.Surname = doctorDTO.Surname;
-                doctor.RoomId = doctorDTO.RoomId;
                 doctor.SpecializationId = doctorDTO.SpecializationId;
+                doctor.RoomId = doctorDTO.RoomId;
                 doctors.Add(doctor);
             }
+
             return doctors;
+        }
+
+        public DoctorDTO ToDTO(Doctor doctor)
+        {
+            DoctorDTO doctorDTO = new DoctorDTO();
+            doctorDTO.DoctorId = doctor.DoctorId;
+            doctorDTO.Name = doctor.Name;
+            doctorDTO.Surname = doctor.Surname;
+            doctorDTO.SpecializationId = doctor.SpecializationId;
+            doctorDTO.RoomId = doctor.RoomId;
+
+            return doctorDTO;
+        }
+
+        public List<DoctorDTO> ToDTO(List<Doctor> doctors)
+        {
+            List<DoctorDTO> doctorDTOs = new List<DoctorDTO>();
+            foreach (var doctor in doctors)
+            {
+                DoctorDTO doctorDTO = new DoctorDTO();
+                doctorDTO.DoctorId = doctor.DoctorId;
+                doctorDTO.Name = doctor.Name;
+                doctorDTO.Surname = doctor.Surname;
+                doctorDTO.SpecializationId = doctor.SpecializationId;
+                doctorDTO.RoomId = doctor.RoomId;
+
+                doctorDTOs.Add(doctorDTO);
+            }
+            
+            return doctorDTOs;
         }
     }
 }

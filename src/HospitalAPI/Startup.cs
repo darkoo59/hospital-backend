@@ -70,6 +70,10 @@ namespace HospitalAPI
             services.AddScoped<IVacationRequestRepository, VacationRequestRepository>();
             services.AddScoped<IGenericMapper<VacationRequest, VacationRequestDTO>, VacationRequestMapper>();
 
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IGenericMapper<Doctor, DoctorDTO>, DoctorMapper>();
+
 
 
         }

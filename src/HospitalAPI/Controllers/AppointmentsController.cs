@@ -115,7 +115,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("appointmentsInDataRange/{doctorId}")]
         public ActionResult GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate)
         {
-            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetAppointmentInVacationDataRange(doctorId, startDate, endDate)));
+            return Ok(_appointmentMapper.ToDTO(_appointmentService.GetAppointmentInVacationDateRange(doctorId, startDate, endDate)));
         }
 
 

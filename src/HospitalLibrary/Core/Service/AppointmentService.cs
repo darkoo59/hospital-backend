@@ -127,9 +127,8 @@ namespace HospitalLibrary.Core.Service
             return doctorAppointments;
         }
         //Start functions in user story Create VacationRequest
-        public List<Appointment> GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate)
+        public List<Appointment> GetAppointmentInVacationDateRange(int? doctorId, DateTime startDate, DateTime endDate)
         {
-
             List<Appointment> doctorAppointments = GetDoctorAppointments((int)doctorId);
             List<Appointment> doctorAppointmentsInVacationDate = new List<Appointment>();
 
@@ -160,14 +159,14 @@ namespace HospitalLibrary.Core.Service
         public void MakeTransfer(Appointment appointment,int doctorId)
         {
             appointment.DoctorId = doctorId;
+            _appointmentRepository.Update(appointment);
         }
-        
-        
         
         public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
         {
             List<Doctor> doctors = new List<Doctor>(); //treba da budu svi dobavljeni
             List<Appointment> transeferedAppointments = new List<Appointment>();
+            List<Appointment> appointmentsForFunction = appointmentsInVacationDate;
 
             foreach(Doctor doctor in doctors)
             {
@@ -177,16 +176,20 @@ namespace HospitalLibrary.Core.Service
                     if(IsDoctorScheduled(appointment,doctor.DoctorId) == true)
                     {
                         transeferedAppointments.Add(appointment);
-                        appointmentsInVacationDate.Remove(appointment);
+                        appointmentsForFunction.Remove(appointment);
                     }
-                    if(appointmentsInVacationDate.Count == 0)
+                    if (appointmentsInVacationDate.Count == 0)
                     {
-                        foreach(Appointment appointment1 in transeferedAppointments)
+                        foreach (Appointment appointment1 in transeferedAppointments)
                         {
                             MakeTransfer(appointment1, doctor.DoctorId);
                         }
                         return true;
-                    }          
+                    }
+                    else
+                    {
+                        appointmentsForFunction = appointmentsInVacationDate;
+                    }
                 }
             }
             return false;

@@ -24,12 +24,22 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetById(int id)
+        public ActionResult GetAll()
         {
-            return Ok(_doctorMapper.ToDTO(_doctorService.GetById(id)));
+            return Ok(_doctorMapper.ToDTO(_doctorService.GetAll().ToList()));
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var doctor = _doctorService.GetById(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
 
+            return Ok(_doctorMapper.ToDTO(doctor));
+        }
 
     }
 }

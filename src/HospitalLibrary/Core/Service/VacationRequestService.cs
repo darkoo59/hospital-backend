@@ -71,10 +71,10 @@ namespace HospitalLibrary.Core.Service
             isValid = IsVacationDateStartValid(vacationRequest);
             return isValid;
         }
-
+    
         public void CreateUrgentVacation(int doctorId, DateTime start, DateTime end, VacationRequest vacationRequest)
         {
-            List<Appointment> appointmentInDataRange = _appointmentService.GetAppointmentInVacationDataRange(doctorId, start, end);
+            List<Appointment> appointmentInDataRange = _appointmentService.GetAppointmentInVacationDateRange(doctorId, start, end);
 
             if (appointmentInDataRange == null)
             {
