@@ -12,6 +12,7 @@ namespace IntegrationLibrary.Features.BloodRequests.Model
         public string ReasonForRequest { get; set; }
         public DateTime FinalDate { get; set; }
         public int DoctorId { get; set; }
+        public string ReasonForAdjustment { get; set; }
         public BloodRequestState State { get; set; }
     }
 }

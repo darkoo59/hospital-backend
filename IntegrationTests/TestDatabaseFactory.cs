@@ -56,7 +56,9 @@ namespace IntegrationTests
             context.BloodRequests.Add(new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED });
             context.BloodRequests.Add(new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED });
             context.BloodRequests.Add(new BloodRequest() { Id = 4, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 4", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE });
-
+            context.BloodRequests.Add(new BloodRequest() { Id = 5, BloodType = BloodType.AB_MINUS, QuantityInLiters = 6, ReasonForRequest = "treba 5", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.NEW });
+            context.BloodRequests.Add(new BloodRequest() { Id = 6, BloodType = BloodType.O_PLUS, QuantityInLiters = 12, ReasonForRequest = "treba 6", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.NEW});
+            context.BloodRequests.Add(new BloodRequest() { Id = 7, BloodType = BloodType.O_MINUS, QuantityInLiters = 11, ReasonForRequest = "treba 7", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.NEW});
 
             context.SaveChanges();
         }

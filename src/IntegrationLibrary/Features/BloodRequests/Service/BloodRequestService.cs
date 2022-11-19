@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodRequests.DTO;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
@@ -74,6 +75,60 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
                 throw new System.Exception("Invalid action");
 
             br.State = newState;
+            _bloodRequestRepository.Update(br);
+        }
+
+        public void RequestAdjustment(RequestAdjustmentDTO dto)
+        {
+            BloodRequest br = GetById(dto.Id);
+            if (br == null)
+                throw new System.Exception("Blood request with given ID has not been found.");
+            if (br.State != BloodRequestState.NEW)
+                throw new System.Exception("Invalid action");
+            br.State = BloodRequestState.UPDATE;
+            br.ReasonForAdjustment = dto.Reason;
+            _bloodRequestRepository.Update(br);
+        }
+
+        public IEnumerable<BloodRequest> GetAllByDoctorId(int doctorId)
+        {
+            List<BloodRequest> temp = new();
+            foreach (BloodRequest br in GetAll())
+            {   if(br.DoctorId == doctorId)
+                {
+                    temp.Add(br);
+                }
+
+            }
+            return temp;
+        }
+        public IEnumerable<BloodRequest> GetAllForAdjustmentByDoctorId(int doctorId)
+        {
+            List<BloodRequest> temp = new();
+            foreach (BloodRequest br in GetAll())
+            {
+                if (br.DoctorId == doctorId && br.State == BloodRequestState.UPDATE)
+                {
+                    temp.Add(br);
+                }
+
+            }
+            return temp;
+        }
+
+        public void UpdateBloodRequestForAdjustment(UpdateBloodRequestDTO dto)
+        {
+            BloodRequest br = GetById(dto.Id);
+            if (br == null)
+                throw new System.Exception("Blood request with given ID has not been found.");
+            if (br.State != BloodRequestState.UPDATE)
+                throw new System.Exception("Invalid action");
+
+            br.State = BloodRequestState.NEW;
+            br.ReasonForRequest = dto.NewReason;
+            br.QuantityInLiters = dto.NewQuantity;
+            br.ReasonForAdjustment = null;
+
             _bloodRequestRepository.Update(br);
         }
     }

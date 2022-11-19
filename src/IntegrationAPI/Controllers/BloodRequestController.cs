@@ -1,5 +1,4 @@
-﻿using IntegrationLibrary.Features.BloodBankNews.Model;
-using IntegrationLibrary.Features.BloodRequests.DTO;
+﻿using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Service;
@@ -13,25 +12,20 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class BloodRequestController : ControllerBase
     {
+        #region setup
         private readonly IBloodRequestService _bloodRequestService;
         
         public BloodRequestController(IBloodRequestService service)
         {
             _bloodRequestService = service;
         }
+        #endregion
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok(BloodRequestDTO.ToDTOList(_bloodRequestService.GetAll() as List<BloodRequest>));
-        }
+        #region PUBLIC API
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            return Ok(new BloodRequestDTO(_bloodRequestService.GetById(id)));
-        }
-
+        /// <summary>
+        /// Creates the new blood request from the DTO.
+        /// </summary>
         [HttpPost]
         public IActionResult Create([FromBody] CreateBloodRequestDTO br)
         {
@@ -43,6 +37,50 @@ namespace IntegrationAPI.Controllers
             _bloodRequestService.Create(br);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Route for getting all blood requests that belong to the doctor with the given Id.
+        /// </summary>
+        [HttpGet("doctor")]
+        public IActionResult GetAllByDoctorId(int id)
+        {
+            return Ok(_bloodRequestService.GetAllByDoctorId(id));
+        }
+
+        /// <summary>
+        /// Route for getting all blood requests marked for adjustment that belong to the doctor with the given Id.
+        /// </summary>
+        [HttpGet("doctor/adjustments")]
+        public IActionResult GetAllForAdjustmentByDoctorId(int id)
+        {
+            return Ok(_bloodRequestService.GetAllForAdjustmentByDoctorId(id));
+        }
+
+        /// <summary>
+        /// This route will update the reason, quantity and state for the blood request that has the same Id as provided in the DTO.
+        /// If the blood request hasn't been previously marked for adjustment, exception will be thrown.
+        /// </summary>
+        [HttpPatch("update")]
+        public IActionResult UpdateBloodRequestForAdjustment(UpdateBloodRequestDTO dto)
+        {
+            _bloodRequestService.UpdateBloodRequestForAdjustment(dto);
+            return Ok();
+        }
+
+        #endregion
+
+        #region INTERNAL API
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(BloodRequestDTO.ToDTOList(_bloodRequestService.GetAll() as List<BloodRequest>));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(new BloodRequestDTO(_bloodRequestService.GetById(id)));
         }
 
         [HttpGet("new")]
@@ -85,5 +123,14 @@ namespace IntegrationAPI.Controllers
             _bloodRequestService.ChangeState(id, BloodRequestState.DECLINED);
             return Ok();
         }
+
+        [HttpPatch("adjustment")]
+        public IActionResult RequestAdjustment([FromBody] RequestAdjustmentDTO dto)
+        {
+            _bloodRequestService.RequestAdjustment(dto);
+            return Ok();
+        }
+
+        #endregion
     }
 }
