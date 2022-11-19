@@ -9,11 +9,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using IntegrationLibrary.DTO;
 using System.Threading.Tasks;
 using IntegrationLibrary.BloodBanks;
 using System.IO;
 using System.Text.Json;
+using IntegrationLibrary.Core.DTO;
 
 namespace IntegrationLibrary.Core.Service
 {

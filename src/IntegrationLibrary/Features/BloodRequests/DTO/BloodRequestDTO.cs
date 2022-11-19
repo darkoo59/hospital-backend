@@ -1,7 +1,7 @@
 ﻿using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
-using IntegrationLibrary.HospitalRepository;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +16,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
         public DateTime FinalDate { get; set; }
         public Doctor Doctor { get; set; }
         public BloodRequestState State { get; set; }
+        public string ReasonForAdjustment{ get; set; }
 
         public BloodRequestDTO() { }
 
@@ -27,6 +28,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
             ReasonForRequest = br.ReasonForRequest;
             FinalDate = br.FinalDate;
             State = br.State;
+            ReasonForAdjustment = br.ReasonForAdjustment;
         }
 
         public static List<BloodRequestDTO> ToDTOList(List<BloodRequest> brs)
