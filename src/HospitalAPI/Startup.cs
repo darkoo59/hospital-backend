@@ -60,8 +60,9 @@ namespace HospitalAPI
 
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
-            services.AddScoped<IDoctorRepository, DoctorRepository>();
 
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorService, DoctorService>();
 
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
@@ -69,6 +70,16 @@ namespace HospitalAPI
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IGenericMapper<BloodRequest, BloodRequestDTO>, BloodRequestMapper>();
+
+
+            services.AddScoped<IBloodService, BloodService>();
+            services.AddScoped<IBloodRepository, BloodRepository>();
+            services.AddScoped<IGenericMapper<Blood, BloodDTO>, BloodMapper>();
+
+            services.AddScoped<IBloodUsageEvidencyService, BloodUsageEvidencyService>();
+            services.AddScoped<IBloodUsageEvidencyRepository, BloodUsageEvidencyRepository>();
+            services.AddScoped<IGenericMapper<BloodUsageEvidency, BloodUsageEvidencyDTO>, BloodUsageEvidencyMapper>();
+
 
         }
 

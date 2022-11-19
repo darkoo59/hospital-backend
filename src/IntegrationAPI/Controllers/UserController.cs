@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
-using IntegrationLibrary.DTO;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.DTO;
 
 namespace IntegrationAPI.Controllers
 {
