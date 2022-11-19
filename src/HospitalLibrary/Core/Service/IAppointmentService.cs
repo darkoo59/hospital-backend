@@ -15,5 +15,6 @@ namespace HospitalLibrary.Core.Service
         bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate);
         bool IsDoctorScheduled(Appointment appointment, int doctorId);
         List<Appointment> GetAppointmentInVacationDateRange(int? doctorId, DateTime startDate, DateTime endDate);
+        bool IsDoctorScheduledInVacationDataRange(int doctorId, DateTime dateStart, DateTime dateEnd);
     }
 }

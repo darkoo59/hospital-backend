@@ -148,6 +148,20 @@ namespace HospitalLibrary.Core.Service
             return doctorAppointmentsInVacationDate;
         }
 
+        public bool IsDoctorScheduledInVacationDataRange(int doctorId,DateTime dateStart,DateTime dateEnd)
+        {
+            List<Appointment> appointments = GetDoctorAppointments((int)doctorId);
+
+            foreach(Appointment appointment in appointments)
+            {
+                if(appointment.Start >= dateStart && appointment.Start <= dateEnd)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool IsDoctorScheduled(Appointment appointment, int doctorId)
         {
             List<Appointment> appointments = GetDoctorAppointments(doctorId);
@@ -161,6 +175,7 @@ namespace HospitalLibrary.Core.Service
             }
             return false;
         }
+
 
         public void MakeTransfer(Appointment appointment, int doctorId)
         {
