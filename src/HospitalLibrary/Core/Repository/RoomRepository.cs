@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -69,6 +70,19 @@ namespace HospitalLibrary.Core.Repository
                 throw;
             }
         }
+        public void Update1(Equipment equipment)
+        {
+            _context.Entry(equipment).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+        }
 
         public void Delete(Room room)
         {
@@ -79,9 +93,9 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<Equipment> GetEquipment(int id)
         {
             List<Equipment> equipmentList = new List<Equipment>();
-            foreach(Equipment equipment in _context.Equipment)
+            foreach (Equipment equipment in _context.Equipment)
             {
-                if(equipment.RoomId == id)
+                if (equipment.RoomId == id)
                 {
                     equipmentList.Add(equipment);
                 }
@@ -93,12 +107,75 @@ namespace HospitalLibrary.Core.Repository
         {
             List<Room> rooms = new List<Room>();
             List<Equipment> equipmentList = new List<Equipment>();
-            equipmentList = _context.Equipment.Where(e => e.Name.Contains(query)).ToList();
-            foreach(Equipment equipment in equipmentList)
+            equipmentList = _context.Equipment.Where(e => e.Name.ToLower().Contains(query.ToLower())).ToList();
+            foreach (Equipment equipment in equipmentList)
             {
-                    rooms.Add(_context.Rooms.FirstOrDefault(r => r.Id == equipment.RoomId));
+                rooms.Add(_context.Rooms.FirstOrDefault(r => r.Id == equipment.RoomId));
             }
             return rooms;
+        }
+        public bool EquipmentExist(int RoomId, Equipment equipment) 
+        {
+            if (equipment.RoomId == RoomId)
+            {
+                return true;
+
+            }
+            return false;
+
+        }
+
+        public void AddEquipment(MoveRequest moveRequest,Equipment equipment) 
+        {
+            
+            if (moveRequest.equipment == equipment.Name)
+            {
+                equipment.Quantity = equipment.Quantity + moveRequest.quantity;
+                _context.Equipment.Add(new Equipment { Id = equipment.Id, RoomId = moveRequest.toRoomId, EquipmentType = equipment.EquipmentType, Name = moveRequest.equipment, Quantity = equipment.Quantity });
+                
+            }
+            else if (moveRequest.equipment != equipment.Name)
+            {
+                _context.Equipment.Add(new Equipment { Id = equipment.Id, RoomId = moveRequest.toRoomId, EquipmentType = equipment.EquipmentType, Name = moveRequest.equipment, Quantity = moveRequest.quantity });
+
+
+            }
+            
+
+        }
+
+        public void MoveEquipment(MoveRequest moveRequest) 
+        {
+         
+            foreach (Equipment equipment in _context.Equipment) 
+            {
+                if(moveRequest.fromRoomId == equipment.RoomId)
+                {
+                    if (moveRequest.equipment == equipment.Name) {
+                        equipment.Quantity = equipment.Quantity - moveRequest.quantity;
+                        _context.Equipment.Add(new Equipment { Id = equipment.Id, RoomId = equipment.Id, EquipmentType = equipment.EquipmentType, Name = equipment.Name, Quantity = equipment.Quantity });
+                        
+
+                    }
+                }
+                if (moveRequest.toRoomId == equipment.RoomId)
+                {
+                    AddEquipment(moveRequest,equipment);
+
+                }
+
+                
+
+            }
+         
+
+
+
+
+
+
+
+
         }
     }
 }

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221107192352_thirdMigration")]
-    partial class thirdMigration
+    [Migration("20221115103346_UpdateMigration")]
+    partial class UpdateMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 7, 20, 23, 51, 721, DateTimeKind.Local).AddTicks(1149)
+                            Start = new DateTime(2022, 11, 15, 11, 33, 45, 594, DateTimeKind.Local).AddTicks(2776)
                         });
                 });
 
@@ -172,8 +172,6 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
-
                     b.ToTable("Equipment");
 
                     b.HasData(
@@ -192,6 +190,70 @@ namespace HospitalLibrary.Migrations
                             Name = "Tounge depressor",
                             Quantity = 32,
                             RoomId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EquipmentType = 1,
+                            Name = "Gloves",
+                            Quantity = 50,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EquipmentType = 1,
+                            Name = "Scissors",
+                            Quantity = 10,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EquipmentType = 1,
+                            Name = "Wheelchairs",
+                            Quantity = 2,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            EquipmentType = 1,
+                            Name = "Scalpel",
+                            Quantity = 4,
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            EquipmentType = 1,
+                            Name = "Defibrillator",
+                            Quantity = 2,
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            EquipmentType = 1,
+                            Name = "Ultrasound ",
+                            Quantity = 1,
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            EquipmentType = 1,
+                            Name = "CT scanner",
+                            Quantity = 2,
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            Id = 10,
+                            EquipmentType = 1,
+                            Name = "Tounge depressor",
+                            Quantity = 12,
+                            RoomId = 5
                         });
                 });
 
@@ -1002,15 +1064,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Specialization");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
-                        .WithMany("EquipmentList")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
@@ -1031,11 +1084,6 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
-                    b.Navigation("EquipmentList");
                 });
 #pragma warning restore 612, 618
         }

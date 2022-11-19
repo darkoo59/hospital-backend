@@ -14,5 +14,7 @@ namespace HospitalLibrary.Core.Repository
         void Create(Room room);
         void Update(Room room);
         void Delete(Room room);
+        void MoveEquipment(MoveRequest moveRequest);
+        
     }
 }
