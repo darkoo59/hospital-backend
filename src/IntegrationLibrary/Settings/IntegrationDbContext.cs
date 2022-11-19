@@ -1,7 +1,10 @@
-﻿using IntegrationLibrary.Core.Enums;
+﻿using System;
+using IntegrationLibrary.Core.Enums;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Model;
+using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,6 +15,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<User> Users { get; set; }
         public DbSet<BankNews> BankNews { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
@@ -38,6 +42,30 @@ namespace IntegrationLibrary.Settings
                 new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1 },
                 new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1 },
                 new BloodRequest() { Id = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 3", FinalDate = new System.DateTime(), DoctorId = 2 }    
+            );
+            modelBuilder.Entity<ReportConfiguration>().HasData(
+                new ReportConfiguration()
+                {
+                    Id = 1, 
+                    ReportFrequency = 7, 
+                    ReportRange = new DateRange(
+                        new DateTime(2022, 11, 3, 0, 0, 0), 
+                        new DateTime(2022, 11, 10, 0, 0, 0))
+                },
+                new ReportConfiguration() { 
+                    Id = 2, 
+                    ReportFrequency = 30, 
+                    ReportRange = new DateRange(
+                        new DateTime(2022, 10, 1, 0, 0, 0), 
+                        new DateTime(2022, 11, 1, 0, 0, 0))
+                },
+                new ReportConfiguration() { 
+                    Id = 3, 
+                    ReportFrequency = 14, 
+                    ReportRange = new DateRange(
+                        new DateTime(2022, 10, 16, 0, 0, 0), 
+                        new DateTime(2022, 11, 30, 0, 0, 0))
+                }
             );
             base.OnModelCreating(modelBuilder);
         }
