@@ -126,30 +126,21 @@ namespace HospitalLibrary.Core.Service
             }
             return doctorAppointments;
         }
-
-        public bool IsDoctorFreeOnVacationDates(int? DoctorId, VacationRequest vacationRequest)
-        {
-            return true;
-        }
-
-        public bool TransferAppointmentBecauseVacation(Appointment appointment, bool isBusy)
-        {
-            return true;
-        }
-
-        public Appointment GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate)
+        //Start functions in user story Create VacationRequest
+        public List<Appointment> GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate)
         {
 
             List<Appointment> doctorAppointments = GetDoctorAppointments((int)doctorId);
+            List<Appointment> doctorAppointmentsInVacationDate = new List<Appointment>();
 
             foreach (Appointment appointment in doctorAppointments)
             {
                 if (appointment.Start > startDate && appointment.Start < endDate)
                 {
-                    return appointment;
+                    doctorAppointmentsInVacationDate.Add(appointment);
                 }
             }
-            return null;
+            return doctorAppointmentsInVacationDate;
         }
 
         public bool IsDoctorScheduled(Appointment appointment, int doctorId)
@@ -158,7 +149,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Appointment app in appointments)
             {
-                if (app.Start == appointment.Start && app.DoctorId == doctorId)
+                if (app.Start == appointment.Start && app.DoctorId != doctorId)
                 {
                     return true;
                 }
@@ -166,20 +157,39 @@ namespace HospitalLibrary.Core.Service
             return false;
         }
 
-        public void ChangeAppointmentDoctor(Appointment appointmentInVacationDate, int doctorId)
+        public void MakeTransfer(Appointment appointment,int doctorId)
         {
-            bool IsDoctorFree = IsDoctorScheduled(appointmentInVacationDate, doctorId);
-            List<Doctor> doctors = new List<Doctor>();
+            appointment.DoctorId = doctorId;
+        }
+        
+        
+        
+        public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
+        {
+            List<Doctor> doctors = new List<Doctor>(); //treba da budu svi dobavljeni
+            List<Appointment> transeferedAppointments = new List<Appointment>();
 
-            if (IsDoctorFree == false)
+            foreach(Doctor doctor in doctors)
             {
-                return;
+                foreach(Appointment appointment in appointmentsInVacationDate)
+                {
+                    
+                    if(IsDoctorScheduled(appointment,doctor.DoctorId) == true)
+                    {
+                        transeferedAppointments.Add(appointment);
+                        appointmentsInVacationDate.Remove(appointment);
+                    }
+                    if(appointmentsInVacationDate.Count == 0)
+                    {
+                        foreach(Appointment appointment1 in transeferedAppointments)
+                        {
+                            MakeTransfer(appointment1, doctor.DoctorId);
+                        }
+                        return true;
+                    }          
+                }
             }
-            else
-            {
-                appointmentInVacationDate.DoctorId = 1;
-                _appointmentRepository.Update(appointmentInVacationDate);
-            }
+            return false;
         }
     }
 }

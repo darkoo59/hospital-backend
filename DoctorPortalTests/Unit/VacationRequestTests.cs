@@ -10,8 +10,8 @@ namespace HospitalTests.Unit
 {
     public class VacationRequestTests
     {
-        [Fact]
-        public void Check_vacation_request_unvalid_start_date()
+        //[Fact]
+        /*public void Check_vacation_request_unvalid_start_date()
         {
             List<VacationRequest> requests = GetVacationRequests();
             VacationRequestService service = new(CreateVacationRequestRepository(requests,1));
@@ -32,8 +32,8 @@ namespace HospitalTests.Unit
             bool IsValid = service.IsVacationDateStartValid(vacationRequest);
 
             Assert.True(IsValid);
-        }
-
+        }*/
+        /*
         [Fact]
         public void Check_busy_doctor_on_vacation_date()
         {
@@ -47,9 +47,9 @@ namespace HospitalTests.Unit
             bool isBusy = service.IsDoctorFreeOnVacationDates(appointment.DoctorId, vacationRequest);
 
             Assert.False(isBusy);
-        }
+        }*/
 
-        [Fact]
+        /*[Fact]
         public void Check_free_doctor_on_vacation_date()
         {
             List<Appointment> appointments = GetAppointments();
@@ -62,9 +62,9 @@ namespace HospitalTests.Unit
             bool isBusy = service.IsDoctorFreeOnVacationDates(appointment.DoctorId, vacationRequest);
 
             Assert.True(isBusy);
-        }
+        }*/
 
-        [Fact]
+        /*[Fact]
         public void Check_successful_transfer()
         {
             List<Appointment> appointments = GetAppointments();
@@ -78,8 +78,8 @@ namespace HospitalTests.Unit
             bool isSuccessful = service.TransferAppointmentBecauseVacation(appointment,isBusy);
 
             Assert.True(isSuccessful);
-        }
-
+        }*/
+        /*
         [Fact]
         public void Check_unsuccessful_transfer()
         {
@@ -94,7 +94,7 @@ namespace HospitalTests.Unit
             bool isSuccessful = service.TransferAppointmentBecauseVacation(appointment, isBusy);
 
             Assert.False(isSuccessful);
-        }
+        }*/
 
         #region private
 

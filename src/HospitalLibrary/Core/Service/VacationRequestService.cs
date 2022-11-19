@@ -74,16 +74,16 @@ namespace HospitalLibrary.Core.Service
 
         public void CreateUrgentVacation(int doctorId, DateTime start, DateTime end, VacationRequest vacationRequest)
         {
-            Appointment appointmentInDataRange = _appointmentService.GetAppointmentInVacationDataRange(doctorId, start, end);
+            List<Appointment> appointmentInDataRange = _appointmentService.GetAppointmentInVacationDataRange(doctorId, start, end);
 
             if (appointmentInDataRange == null)
             {
                 vacationRequest.Status = VacationRequestStatus.OnHold;
                 _vacationRequestRepository.Create(vacationRequest);
             }
-            else
+
+            if(_appointmentService.ChangeAppointmentDoctor(appointmentInDataRange) == true)
             {
-                _appointmentService.ChangeAppointmentDoctor(appointmentInDataRange, 4);
                 _vacationRequestRepository.Create(vacationRequest);
             }
         }

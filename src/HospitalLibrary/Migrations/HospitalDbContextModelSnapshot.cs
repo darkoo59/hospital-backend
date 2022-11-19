@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 11, 11, 52, 22, 583, DateTimeKind.Local).AddTicks(523)
+                            Start = new DateTime(2022, 11, 19, 15, 16, 12, 232, DateTimeKind.Local).AddTicks(2390)
                         });
                 });
 
@@ -952,9 +952,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 11, 26, 11, 52, 22, 590, DateTimeKind.Local).AddTicks(7867),
+                            EndDate = new DateTime(2022, 12, 4, 15, 16, 12, 235, DateTimeKind.Local).AddTicks(3583),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 11, 21, 11, 52, 22, 590, DateTimeKind.Local).AddTicks(7144),
+                            StartDate = new DateTime(2022, 11, 29, 15, 16, 12, 235, DateTimeKind.Local).AddTicks(3292),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -962,9 +962,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 1, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(804),
+                            EndDate = new DateTime(2022, 12, 9, 15, 16, 12, 235, DateTimeKind.Local).AddTicks(4667),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 11, 26, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(773),
+                            StartDate = new DateTime(2022, 12, 4, 15, 16, 12, 235, DateTimeKind.Local).AddTicks(4656),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -972,9 +972,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 6, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(820),
+                            EndDate = new DateTime(2022, 12, 14, 15, 16, 12, 235, DateTimeKind.Local).AddTicks(4673),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 1, 11, 52, 22, 591, DateTimeKind.Local).AddTicks(814),
+                            StartDate = new DateTime(2022, 12, 9, 15, 16, 12, 235, DateTimeKind.Local).AddTicks(4670),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });

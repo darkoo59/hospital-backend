@@ -12,8 +12,8 @@ namespace HospitalLibrary.Core.Service
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
         List<Appointment> GetDoctorAppointments(int id);
-        void ChangeAppointmentDoctor(Appointment appointmentInVacationDate, int doctorId);
+        bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate);
         bool IsDoctorScheduled(Appointment appointment, int doctorId);
-        Appointment GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate);
+        List<Appointment> GetAppointmentInVacationDataRange(int? doctorId, DateTime startDate, DateTime endDate);
     }
 }
