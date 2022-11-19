@@ -30,12 +30,12 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
 
         public async void GenerateReport(List<BloodUsageEvidency> evidencies)
         {
-            //List<BloodUsageEvidency> usageEvidencies = await GetEvidencies();
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
 
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
             section.AddParagraph("Report for the past xx days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
+            
             foreach (BloodUsageEvidency evidency in evidencies)
             {
                 section.AddParagraph("On the day of " + evidency.DateOfUsage.ToShortDateString().ToString() + ", " + evidency.QuantityUsedInMililiters + "ml of blood type " + evidency.BloodType.ToString() + " was used.").SetFontSize(14).SetMarginTop(10).ToDocument();
