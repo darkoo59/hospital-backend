@@ -9,19 +9,24 @@ namespace HospitalLibrary.Core.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IDoctorRepository _doctorRepository;
         private readonly IVacationRepository _vacationRepository;
         private readonly IWorkTimeRepository _workTimeRepository;
+        private readonly IDoctorService _doctorService;
+
 
         public AppointmentService(IAppointmentRepository appointmentRepository)
         {
             _appointmentRepository = appointmentRepository;
         }
 
-        public AppointmentService(IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository,IWorkTimeRepository workTimeRepository)
+        public AppointmentService(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository, IWorkTimeRepository workTimeRepository, IDoctorService doctorService)
         {
             _appointmentRepository = appointmentRepository;
             _vacationRepository = vacationRepository;
             _workTimeRepository = workTimeRepository;
+            _doctorService = doctorService;
+            _doctorRepository = doctorRepository;
         }
 
         public void Create(Appointment appointment)
@@ -144,11 +149,11 @@ namespace HospitalLibrary.Core.Service
 
         public bool IsDoctorScheduled(Appointment appointment, int doctorId)
         {
-            List<Appointment> appointments = _appointmentRepository.GetAll().ToList();
+            List<Appointment> appointments = GetDoctorAppointments(doctorId);
 
             foreach (Appointment app in appointments)
             {
-                if (app.Start == appointment.Start && app.DoctorId != doctorId)
+                if (app.Start == appointment.Start)
                 {
                     return true;
                 }
@@ -156,44 +161,51 @@ namespace HospitalLibrary.Core.Service
             return false;
         }
 
-        public void MakeTransfer(Appointment appointment,int doctorId)
+        public void MakeTransfer(Appointment appointment, int doctorId)
         {
             appointment.DoctorId = doctorId;
             _appointmentRepository.Update(appointment);
         }
-        
+
         public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
         {
-            List<Doctor> doctors = new List<Doctor>(); //treba da budu svi dobavljeni
-            List<Appointment> transeferedAppointments = new List<Appointment>();
-            List<Appointment> appointmentsForFunction = appointmentsInVacationDate;
+            List<Doctor> doctors = _doctorService.GetAll().ToList(); //treba da budu svi dobavljeni
+            //List<Appointment> transeferedAppointments = new List<Appointment>();
+            //List<Appointment> appointmentsForFunction = appointmentsInVacationDate;
+            int counter = 0;
 
-            foreach(Doctor doctor in doctors)
+            foreach (Doctor doctor in doctors)
             {
-                foreach(Appointment appointment in appointmentsInVacationDate)
+                foreach (Appointment appointment in appointmentsInVacationDate)
                 {
-                    
-                    if(IsDoctorScheduled(appointment,doctor.DoctorId) == true)
+                    Doctor doc = _doctorRepository.GetById((int)appointment.DoctorId);
+
+                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && doc.SpecializationId == doctor.SpecializationId)
                     {
-                        transeferedAppointments.Add(appointment);
-                        appointmentsForFunction.Remove(appointment);
+                        counter++;
                     }
-                    if (appointmentsInVacationDate.Count == 0)
+                    if (counter == appointmentsInVacationDate.Count())
                     {
-                        foreach (Appointment appointment1 in transeferedAppointments)
+                        foreach (Appointment app in appointmentsInVacationDate)
                         {
-                            MakeTransfer(appointment1, doctor.DoctorId);
+                            MakeTransfer(app, doctor.DoctorId);
+                            counter = counter - 1;
+                            if (counter == 0)
+                            {
+                                return true;
+                            }
                         }
-                        return true;
-                    }
-                    else
-                    {
-                        appointmentsForFunction = appointmentsInVacationDate;
+
                     }
                 }
             }
             return false;
         }
+    
+    
+    
+    
+    
     }
 }
 
