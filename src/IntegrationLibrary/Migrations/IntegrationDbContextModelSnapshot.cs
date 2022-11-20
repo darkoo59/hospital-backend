@@ -181,6 +181,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("QuantityInLiters")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("ReasonForAdjustment")
+                        .HasColumnType("text");
+
                     b.Property<string>("ReasonForRequest")
                         .HasColumnType("text");
 
@@ -215,7 +218,7 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 3,
-                            BloodType = 5,
+                            BloodType = 7,
                             DoctorId = 2,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
@@ -225,10 +228,11 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 4,
-                            BloodType = 5,
+                            BloodType = 7,
                             DoctorId = 3,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 12.0,
+                            ReasonForAdjustment = "Ne moze",
                             ReasonForRequest = "treba 4",
                             State = 3
                         },
@@ -255,7 +259,7 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 7,
-                            BloodType = 5,
+                            BloodType = 7,
                             DoctorId = 2,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
@@ -265,10 +269,11 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 8,
-                            BloodType = 5,
+                            BloodType = 7,
                             DoctorId = 3,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 12.0,
+                            ReasonForAdjustment = "Ne moze 2",
                             ReasonForRequest = "treba 8",
                             State = 3
                         });

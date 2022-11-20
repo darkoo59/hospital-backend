@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.HospitalRepository
+﻿namespace IntegrationLibrary.Core.Model
 {
     public class Doctor
     {

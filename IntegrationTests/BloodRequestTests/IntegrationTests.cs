@@ -6,10 +6,11 @@ using IntegrationLibrary.Features.BloodRequests.Service;
 using IntegrationAPI;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Core.Enums;
 using System.Threading.Tasks;
+using IntegrationLibrary.Features.BloodRequests.Enums;
+using IntegrationLibrary.Features.BloodRequests.Model;
 
 namespace IntegrationTests.BloodRequestTests
 {
@@ -116,24 +117,114 @@ namespace IntegrationTests.BloodRequestTests
         }
 
         [Fact, Priority(5)]
+        public void Approve_Blood_Request()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            controller.ApproveRequest(1);
+
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(1)).Value as BloodRequestDTO;
+
+            Assert.True(actual.State == BloodRequestState.APPROVED);
+        }
+
+        [Fact, Priority(5)]
+        public void Decline_Blood_Request()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            controller.DeclineRequest(5);
+
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(5)).Value as BloodRequestDTO;
+
+            Assert.True(actual.State == BloodRequestState.DECLINED);
+        }
+
+        [Fact, Priority(6)]
+        public void Request_Adjustment()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            RequestAdjustmentDTO dto = new()
+            {
+                Id = 6,
+                Reason = "Novi razlog"
+            };
+
+            controller.RequestAdjustment(dto);
+
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(6)).Value as BloodRequestDTO;
+
+            Assert.Equal(dto.Reason, actual.ReasonForAdjustment);
+            Assert.Equal(BloodRequestState.UPDATE, actual.State);
+        }
+
+        [Fact, Priority(6)]
+        public void Get_All_By_Doctor_Id()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            List<BloodRequest> list = ((OkObjectResult)controller.GetAllByDoctorId(2)).Value as List<BloodRequest>;
+
+            Assert.Equal(3, list[0].Id);
+            Assert.Equal(5, list[1].Id);
+        }
+
+        [Fact, Priority(7)]
+        public void Get_All_For_Adjustment_By_Doctor_Id()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            List<BloodRequest> list = ((OkObjectResult)controller.GetAllForAdjustmentByDoctorId(3)).Value as List<BloodRequest>;
+
+            Assert.Equal(4, list[0].Id);
+        }
+
+        [Fact, Priority(14)]
+        public void Update_Blood_Request_For_Adjustment()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            BloodRequestController controller = SetupController(scope);
+
+            UpdateBloodRequestDTO dto = new()
+            {
+                Id = 4,
+                NewReason = "Novi razlog",
+                NewQuantity = 65
+            };
+
+            controller.UpdateBloodRequestForAdjustment(dto);
+
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(4)).Value as BloodRequestDTO;
+            Assert.Equal(dto.NewReason, actual.ReasonForRequest);
+            Assert.Equal(dto.NewQuantity, actual.QuantityInLiters);
+            Assert.Equal(BloodRequestState.NEW, actual.State);
+        }
+
+        [Fact, Priority(15)]
         public void Create_Blood_Request()
         {
             IServiceScope scope = Factory.Services.CreateScope();
             BloodRequestController controller = SetupController(scope);
-            CreateBloodRequestDTO br = new() { BloodRequestId = 5, BloodType = BloodType.AB_MINUS, QuantityInLiters = 6, ReasonForRequest = "treba 5", FinalDate = new System.DateTime(), DoctorId = 2 };
+            CreateBloodRequestDTO br = new() { BloodRequestId = 20, BloodType = BloodType.AB_MINUS, QuantityInLiters = 6, ReasonForRequest = "treba 5", FinalDate = new System.DateTime(), DoctorId = 2 };
 
             controller.Create(br);
 
             BloodRequestDTO expected = new()
             {
-                Id = 5,
+                Id = 20,
                 BloodType = "AB-",
                 QuantityInLiters = 6,
                 ReasonForRequest = "treba 5",
                 FinalDate = new System.DateTime(),
             };
 
-            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(5)).Value as BloodRequestDTO;
+            BloodRequestDTO actual = ((OkObjectResult)controller.GetById(20)).Value as BloodRequestDTO;
 
             Assert.True(actual.Equals(expected));
         }

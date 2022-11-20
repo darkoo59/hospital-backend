@@ -8,5 +8,6 @@ namespace IntegrationLibrary.Features.BloodRequests.Repository
         IEnumerable<BloodRequest> GetAll();
         BloodRequest GetById(int id);
         void Create(BloodRequest bloodRequest);
+        void Update(BloodRequest bloodRequest);
     }
 }
