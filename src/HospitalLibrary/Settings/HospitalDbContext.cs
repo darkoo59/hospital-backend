@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings
@@ -16,7 +17,7 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
-
+        public DbSet<User> Users { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -127,6 +128,9 @@ namespace HospitalLibrary.Settings
 
             );
 
+            modelBuilder.Entity<User>().HasData(
+                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
+            );
 
             base.OnModelCreating(modelBuilder);
         }

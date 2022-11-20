@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalLibrary.Settings;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -33,18 +34,18 @@ namespace HospitalTests.setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=andjela;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureCreated();
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\";");
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 1, BloodType = BloodType.AB_MINUS, QuantityInLiters = 2.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 13), DoctorId = 1 });
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 3, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 11, 28), DoctorId = 1 });
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 });
-
+            context.Users.Add(new User() { Username = "username", Password = "password" });
 
             context.SaveChanges();
         }
