@@ -9,8 +9,10 @@ using IntegrationLibrary.HospitalRepository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +34,6 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
         {
             //List<BloodUsageEvidency> usageEvidencies = await GetEvidencies();
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
-
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
             section.AddParagraph("Report for the past xx days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
@@ -94,13 +95,34 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                 section.AddParagraph("Total blood of type O positive spent: " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
                 section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             }
-            builder.Build("Result.pdf");
+            builder.Build("../IntegrationLibrary/Result.pdf");
+
+            SendReportInRequest();
+        }
+
+        public async void SendReportInRequest()
+        {
+            var url = "http://localhost:6555/api/blood-use-report";
+            HttpClient httpClient = new HttpClient();
+
+            var fileName = "Result.pdf";
+
+            using var requestContent = new MultipartFormDataContent();
+            using var fileStream = File.OpenRead(fileName);
+            requestContent.Add(new StreamContent(fileStream), "file", fileName);
+            await httpClient.PostAsync(url,requestContent);
         }
 
         public async Task<List<BloodUsageEvidency>> GetEvidencies()
         {
 
             return await _hospitalRepository.GetAllEvidency();
+        }
+
+        public async void SendReport()
+        {
+            List<BloodUsageEvidency> data = await GetEvidencies();
+            GenerateReport(data);
         }
     }
 }

@@ -13,5 +13,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
         void GenerateReport(List<BloodUsageEvidency> evidencies);
 
         Task<List<BloodUsageEvidency>> GetEvidencies();
+
+        void SendReport();
     }
 }
