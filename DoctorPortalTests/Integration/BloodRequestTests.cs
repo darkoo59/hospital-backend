@@ -16,9 +16,9 @@ namespace HospitalTests
     {
         public BloodRequestTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-        private static BloodRequestController SetupController(IServiceScope scope)
+        private static BloodRequestsController SetupController(IServiceScope scope)
         {
-            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IGenericMapper<BloodRequest, BloodRequestDTO>>());
+            return new BloodRequestsController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IGenericMapper<BloodRequest, BloodRequestDTO>>());
         }
 
         [Fact]
