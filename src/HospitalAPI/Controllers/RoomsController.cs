@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.HospitalMap.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 

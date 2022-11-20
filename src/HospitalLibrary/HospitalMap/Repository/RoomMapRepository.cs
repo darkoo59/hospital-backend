@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.HospitalMap.Repository
 {
     public class RoomMapRepository : IRoomMapRepository
     {
@@ -16,9 +17,9 @@ namespace HospitalLibrary.Core.Repository
         public RoomMapRepository(HospitalDbContext context)
         {
             _context = context;
-            List<Room> rooms =_context.Rooms.ToList();
+            List<Room> rooms = _context.Rooms.ToList();
             roomsMap = new List<RoomMap>();
-            foreach(Room room in rooms)
+            foreach (Room room in rooms)
             {
                 RoomMap newRoomMap = new RoomMap();
                 newRoomMap.Id = room.Id;
@@ -41,7 +42,7 @@ namespace HospitalLibrary.Core.Repository
 
         public RoomMap GetById(int id)
         {
-            foreach(RoomMap r in roomsMap)
+            foreach (RoomMap r in roomsMap)
             {
                 if (r.Id == id)
                     return r;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace HospitalLibrary.HospitalMap.Model
 {
     public class RoomMap
     {

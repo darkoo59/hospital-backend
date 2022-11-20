@@ -1,12 +1,12 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+﻿using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.HospitalMap.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.HospitalMap.Service
 {
     public class RoomMapService : IRoomMapService
     {

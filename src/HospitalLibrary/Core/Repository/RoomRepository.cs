@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Enums
+﻿namespace HospitalLibrary.HospitalMap.Enums
 {
     public enum RoomType
     {

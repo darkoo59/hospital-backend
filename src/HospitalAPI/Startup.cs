@@ -3,6 +3,8 @@ using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.HospitalMap.Repository;
+using HospitalLibrary.HospitalMap.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

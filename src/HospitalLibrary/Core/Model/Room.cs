@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Enums;
+﻿using HospitalLibrary.HospitalMap.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
