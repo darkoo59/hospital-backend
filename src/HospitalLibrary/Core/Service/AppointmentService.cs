@@ -14,10 +14,17 @@ namespace HospitalLibrary.Core.Service
         private readonly IWorkTimeRepository _workTimeRepository;
         private readonly IDoctorService _doctorService;
 
-
         public AppointmentService(IAppointmentRepository appointmentRepository)
         {
             _appointmentRepository = appointmentRepository;
+        }
+
+        public AppointmentService(IDoctorService doctorService,IDoctorRepository doctorRepository,IWorkTimeRepository workTimeRepository, IAppointmentRepository appointmentRepositroy)
+        {
+            _doctorService = doctorService;
+            _workTimeRepository = workTimeRepository;
+            _appointmentRepository = appointmentRepositroy;
+            _doctorRepository = doctorRepository;
         }
 
         public AppointmentService(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository, IWorkTimeRepository workTimeRepository, IDoctorService doctorService)
