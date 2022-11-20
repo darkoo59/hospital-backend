@@ -46,7 +46,6 @@ namespace IntegrationTests.Setup
             context.BankNews.Add(new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsStateEnum.UNCHECKED });
             context.BankNews.Add(new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsStateEnum.DISAPPROVED });
             context.BankNews.Add(new BankNews() { Id = 3, Title = "vijest 3", Content = "sadrzaj vijesti 3", State = NewsStateEnum.APPROVED });
-
             context.SaveChanges();
         }
     }

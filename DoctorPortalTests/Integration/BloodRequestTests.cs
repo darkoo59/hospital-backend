@@ -7,11 +7,13 @@ using HospitalLibrary.Core.Service;
 using HospitalTests.setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Xunit;
 
 namespace HospitalTests
 {
+    [Collection("Sequential")]
     public class BloodRequestTests : BaseIntegrationTest
     {
         public BloodRequestTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
@@ -20,6 +22,7 @@ namespace HospitalTests
         {
             return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IGenericMapper<BloodRequest, BloodRequestDTO>>());
         }
+
 
         [Fact]
         public void Creates_blood_request()
@@ -30,8 +33,10 @@ namespace HospitalTests
 
             var result = ((CreatedAtActionResult)controller.Create(bloodRequestDTO))?.Value as BloodRequest;
 
-            Assert.NotNull(result);
+            Xunit.Assert.NotNull(result);
             
         }
+  
     }
+
 }

@@ -59,9 +59,12 @@ namespace HospitalAPI.Controllers
             {
                 _bloodUsageEvidencyService.Create(bloodUsageEvidency);
             }
+
             return CreatedAtAction("GetById", new { id = bloodUsageEvidency.BloodUsageEvidencyId }, bloodUsageEvidency);
 
         }
+
+
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
