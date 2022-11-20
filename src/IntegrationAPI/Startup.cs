@@ -1,11 +1,15 @@
 using System.Text;
 using System.Text.Json;
-using IntegrationLibrary.BloodBanks;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
+using IntegrationLibrary.Features.BloodBankRegister;
+using IntegrationLibrary.Features.BloodBankReports.Service;
+using IntegrationLibrary.Features.BloodRequests.Repository;
+using IntegrationLibrary.Features.BloodRequests.Service;
+using IntegrationLibrary.HospitalRepository;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +53,8 @@ namespace IntegrationAPI
                 });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient<IEmailSender, BloodBankService>();
+            services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
+            services.AddTransient<IBloodBankService, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
 
@@ -64,6 +69,14 @@ namespace IntegrationAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBankNewsService, BankNewsService>();
             services.AddScoped<IBankNewsRepository, BankNewsRepository>();
+            services.AddHostedService<RabbitMQService>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+
+            services.AddScoped<IHospitalRepository, HospitalRepository>();
+
+            services.AddScoped<IBBReportsService, BBReportsService>();
+
 
         }
 
@@ -77,6 +90,9 @@ namespace IntegrationAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
+
+
+ 
 
             if (env.IsDevelopment())
             {

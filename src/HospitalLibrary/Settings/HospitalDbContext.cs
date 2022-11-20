@@ -1,6 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.HospitalMap.Enums;
-using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -19,6 +18,15 @@ namespace HospitalLibrary.Settings
         public DbSet<Vacation> Vacations { get; set; }
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<Bed> Beds { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Blood> Bloods { get; set; }
+
+        public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -106,9 +114,9 @@ namespace HospitalLibrary.Settings
            );
 
             modelBuilder.Entity<Doctor>().HasData(
-               new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic", SpecializationId = 3, RoomId = 1 }
-               /*new Doctor() { Id = 2, Name = "Mika", Surname = "Mikic", SpecializationId = 3, RoomId = 2 },
-               new Doctor() { Id = 3, Name = "Aleksa", Surname = "Santic", SpecializationId = 3, RoomId = 1 }*/
+               new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic", SpecializationId = 3, RoomId = 1 },
+               new Doctor() { DoctorId = 2, Name = "Mika", Surname = "Mikic", SpecializationId = 3, RoomId = 2 },
+               new Doctor() { DoctorId = 3, Name = "Aleksa", Surname = "Santic", SpecializationId = 3, RoomId = 1 }
            );
 
             modelBuilder.Entity<Appointment>().HasData(
@@ -139,8 +147,46 @@ namespace HospitalLibrary.Settings
 
             );
 
+            modelBuilder.Entity<Bed>().HasData(
 
-            base.OnModelCreating(modelBuilder);
+                new Bed() { BedId = 1, Label = "201B1" },
+                new Bed() { BedId = 2, Label = "201B2" },
+                new Bed() { BedId = 3, Label = "201B3" }
+
+            );
+
+
+            modelBuilder.Entity<Blood>().HasData(
+
+               new Blood() { BloodId = 1, BloodType = BloodType.O_PLUS, QuantityInLiters = 4 } ,
+               new Blood() { BloodId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 3, BloodType = BloodType.B_PLUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 4, BloodType = BloodType.AB_PLUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 5, BloodType = BloodType.O_MINUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 6, BloodType = BloodType.A_MINUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 7, BloodType = BloodType.B_MINUS, QuantityInLiters = 4 },
+               new Blood() { BloodId = 8, BloodType = BloodType.AB_MINUS, QuantityInLiters = 4 }
+
+
+             );
+
+            modelBuilder.Entity<BloodUsageEvidency>().HasData(
+
+               new BloodUsageEvidency() { BloodUsageEvidencyId=1 , BloodType = BloodType.A_PLUS, QuantityUsedInMililiters=200 , DateOfUsage = new System.DateTime(2022, 12, 13) , ReasonForUsage= "Hearth surgery" ,DoctorId = 1},
+                new BloodUsageEvidency() { BloodUsageEvidencyId = 2, BloodType = BloodType.B_MINUS, QuantityUsedInMililiters = 300, DateOfUsage = new System.DateTime(2022, 11, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 3, BloodType = BloodType.O_PLUS, QuantityUsedInMililiters = 450, DateOfUsage = new System.DateTime(2022, 11, 8), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 4, BloodType = BloodType.A_PLUS, QuantityUsedInMililiters = 700, DateOfUsage = new System.DateTime(2022, 11, 17), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 5, BloodType = BloodType.B_MINUS, QuantityUsedInMililiters = 180, DateOfUsage = new System.DateTime(2022, 5, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 6, BloodType = BloodType.AB_MINUS, QuantityUsedInMililiters = 1100, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 }
+            );
+
+            modelBuilder.Entity<User>().HasData(
+                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
+            );
+
+
+
+           base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(BloodRequestDTO bloodRequestDTO)
+        public async Task<ActionResult> Create(BloodRequestDTO bloodRequestDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -39,7 +39,7 @@ namespace HospitalAPI.Controllers
             }
 
             BloodRequest bloodRequest = _bloodRequestMapper.ToModel(bloodRequestDTO);
-            _bloodRequestService.Create(bloodRequest);
+            await _bloodRequestService.Create(bloodRequest);
             return CreatedAtAction("GetById", new { id = bloodRequest.BloodRequestId }, bloodRequest);
         }
 

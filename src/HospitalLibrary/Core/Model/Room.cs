@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -23,6 +25,7 @@ namespace HospitalLibrary.Core.Model
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public ICollection<Bed> Beds { get; set; }
 
     }
 }
