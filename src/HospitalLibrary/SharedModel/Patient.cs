@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
@@ -18,6 +20,8 @@ namespace HospitalLibrary.Core.Model
         [Required, NotNull, MinLength(3, ErrorMessage = "Password needs to be atleast 3 characters or more")]
         public string Password { get; set; }
         public bool IsAccountActivated { get; set; }
+        public int MedicalRecord { get; set; }
+        public ICollection<Doctor> Doctors { get; set; }
 
 
         public class DuplicateEMailException : Exception
