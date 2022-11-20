@@ -151,8 +151,12 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<BloodUsageEvidency>().HasData(
 
-               new BloodUsageEvidency() { BloodUsageEvidencyId=1 , BloodType = BloodType.A_PLUS, QuantityUsedInMililiters=200 , DateOfUsage = new System.DateTime(2022, 12, 13) , ReasonForUsage= "Hearth surgery" ,DoctorId = 1}
-                
+               new BloodUsageEvidency() { BloodUsageEvidencyId=1 , BloodType = BloodType.A_PLUS, QuantityUsedInMililiters=200 , DateOfUsage = new System.DateTime(2022, 12, 13) , ReasonForUsage= "Hearth surgery" ,DoctorId = 1},
+                new BloodUsageEvidency() { BloodUsageEvidencyId = 2, BloodType = BloodType.B_MINUS, QuantityUsedInMililiters = 300, DateOfUsage = new System.DateTime(2022, 11, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 3, BloodType = BloodType.O_PLUS, QuantityUsedInMililiters = 450, DateOfUsage = new System.DateTime(2022, 11, 8), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 4, BloodType = BloodType.A_PLUS, QuantityUsedInMililiters = 700, DateOfUsage = new System.DateTime(2022, 11, 17), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 5, BloodType = BloodType.B_MINUS, QuantityUsedInMililiters = 180, DateOfUsage = new System.DateTime(2022, 5, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 },
+               new BloodUsageEvidency() { BloodUsageEvidencyId = 6, BloodType = BloodType.AB_MINUS, QuantityUsedInMililiters = 1100, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 }
             );
 
 
