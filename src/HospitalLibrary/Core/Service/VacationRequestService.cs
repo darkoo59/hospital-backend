@@ -11,12 +11,16 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly IVacationRequestRepository _vacationRequestRepository;
         private readonly IAppointmentService _appointmentService;
- 
-
+   
         public VacationRequestService(IVacationRequestRepository vacationRequestRepository,IAppointmentService appointmentService)
         {
             _vacationRequestRepository = vacationRequestRepository;
             _appointmentService = appointmentService;
+        }
+
+        public VacationRequestService(IVacationRequestRepository vacationRequestRepository)
+        {
+            _vacationRequestRepository = vacationRequestRepository;
         }
 
         public IEnumerable<VacationRequest> GetAll()

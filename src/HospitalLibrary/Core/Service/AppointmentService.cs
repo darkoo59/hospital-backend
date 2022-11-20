@@ -148,7 +148,7 @@ namespace HospitalLibrary.Core.Service
             return doctorAppointmentsInVacationDate;
         }
 
-        public bool IsDoctorScheduledInVacationDataRange(int doctorId,DateTime dateStart,DateTime dateEnd)
+        public bool IsDoctorScheduledInVacationDateRange(int doctorId,DateTime dateStart,DateTime dateEnd)
         {
             List<Appointment> appointments = GetDoctorAppointments((int)doctorId);
 
@@ -176,7 +176,6 @@ namespace HospitalLibrary.Core.Service
             return false;
         }
 
-
         public void MakeTransfer(Appointment appointment, int doctorId)
         {
             appointment.DoctorId = doctorId;
@@ -185,11 +184,9 @@ namespace HospitalLibrary.Core.Service
 
         public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
         {
-            List<Doctor> doctors = _doctorService.GetAll().ToList(); //treba da budu svi dobavljeni
-            //List<Appointment> transeferedAppointments = new List<Appointment>();
-            //List<Appointment> appointmentsForFunction = appointmentsInVacationDate;
-            List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
             WorkTime doctorWorkTime = new WorkTime();
+            List<Doctor> doctors = _doctorService.GetAll().ToList();
+            List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
             int counter = 0;
 
             foreach (Doctor doctor in doctors)
@@ -204,8 +201,10 @@ namespace HospitalLibrary.Core.Service
                 
                 foreach (Appointment appointment in appointmentsInVacationDate)
                 {
-                    Doctor doc = _doctorRepository.GetById((int)appointment.DoctorId);
-                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && doc.SpecializationId == doctor.SpecializationId && IsDoctorWorking(appointment,doctorWorkTime) == true)
+                    
+                    Doctor originalAppointmentDoctor = _doctorRepository.GetById((int)appointment.DoctorId);
+                    
+                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && originalAppointmentDoctor.SpecializationId == doctor.SpecializationId && IsDoctorWorking(appointment,doctorWorkTime) == true)
                     {
                         counter++;
                     }
@@ -225,12 +224,7 @@ namespace HospitalLibrary.Core.Service
                 }
             }
             return false;
-        }
-    
-    
-    
-    
-    
+        } 
     }
 }
 
