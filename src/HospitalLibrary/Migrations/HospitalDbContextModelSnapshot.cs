@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 20, 15, 15, 53, 463, DateTimeKind.Local).AddTicks(5240)
+                            Start = new DateTime(2022, 11, 20, 16, 2, 43, 529, DateTimeKind.Local).AddTicks(4975)
                         });
                 });
 
@@ -1123,6 +1123,38 @@ namespace HospitalLibrary.Migrations
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             StartDate = new DateTime(2022, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new TimeSpan(0, 8, 0, 0, 0)
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.SharedModel.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Password = "password",
+                            Role = 0,
+                            Username = "username"
                         });
                 });
 

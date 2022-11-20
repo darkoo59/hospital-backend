@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221110152406_FirstMigration")]
+    [Migration("20221120150244_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 10, 16, 24, 5, 602, DateTimeKind.Local).AddTicks(1459)
+                            Start = new DateTime(2022, 11, 20, 16, 2, 43, 529, DateTimeKind.Local).AddTicks(4975)
                         });
                 });
 
@@ -251,6 +251,51 @@ namespace HospitalLibrary.Migrations
                             DoctorId = 1,
                             QuantityUsedInMililiters = 200.0,
                             ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 2,
+                            BloodType = 3,
+                            DateOfUsage = new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 300.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 3,
+                            BloodType = 6,
+                            DateOfUsage = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 450.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 4,
+                            BloodType = 0,
+                            DateOfUsage = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 700.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 5,
+                            BloodType = 3,
+                            DateOfUsage = new DateTime(2022, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 180.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 6,
+                            BloodType = 5,
+                            DateOfUsage = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 1100.0,
+                            ReasonForUsage = "Hearth surgery"
                         });
                 });
 
@@ -291,6 +336,22 @@ namespace HospitalLibrary.Migrations
                             RoomId = 1,
                             SpecializationId = 3,
                             Surname = "Nikolic"
+                        },
+                        new
+                        {
+                            DoctorId = 2,
+                            Name = "Mika",
+                            RoomId = 2,
+                            SpecializationId = 3,
+                            Surname = "Mikic"
+                        },
+                        new
+                        {
+                            DoctorId = 3,
+                            Name = "Aleksa",
+                            RoomId = 1,
+                            SpecializationId = 3,
+                            Surname = "Santic"
                         });
                 });
 
@@ -1064,6 +1125,38 @@ namespace HospitalLibrary.Migrations
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             StartDate = new DateTime(2022, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new TimeSpan(0, 8, 0, 0, 0)
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.SharedModel.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Password = "password",
+                            Role = 0,
+                            Username = "username"
                         });
                 });
 

@@ -1,6 +1,7 @@
 ﻿using HospitalAPI;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace HospitalTests.setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=ftn;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)

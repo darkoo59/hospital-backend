@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings
@@ -16,6 +17,7 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Blood> Bloods { get; set; }
 
@@ -159,6 +161,9 @@ namespace HospitalLibrary.Settings
                new BloodUsageEvidency() { BloodUsageEvidencyId = 6, BloodType = BloodType.AB_MINUS, QuantityUsedInMililiters = 1100, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 }
             );
 
+            modelBuilder.Entity<User>().HasData(
+                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
+            );
 
 
 
