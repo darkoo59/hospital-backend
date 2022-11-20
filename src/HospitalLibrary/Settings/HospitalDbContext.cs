@@ -1,4 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.HospitalMap.Enums;
+using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
