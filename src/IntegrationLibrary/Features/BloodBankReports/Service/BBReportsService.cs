@@ -29,7 +29,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             this._hospitalRepository = hospitalRepository;
         }
 
-        public async void GenerateReport(List<BloodUsageEvidency> evidencies)
+        public async void GenerateReport(List<BloodUsageEvidency> evidencies, int days)
         {
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
             var folderPath = Environment.CurrentDirectory + "/PDFs";
@@ -43,7 +43,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
 
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
-            section.AddParagraph("Report for the past xx days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
+            section.AddParagraph("Report for the past " + days.ToString() + " days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
             
             foreach (BloodUsageEvidency evidency in evidencies)
             {
@@ -93,16 +93,16 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                     default:
                             break;
                 }
-                section.AddLine().ToDocument();
-                section.AddParagraph("Total blood of type A positive spent: " + totalAPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type A negative spent: " + totalAMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type B positive spent: " + totalBPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type B negative spent: " + totalBMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type AB positive spent: " + totalABPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type AB negative spent: " + totalABMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type O positive spent: " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             }
+            section.AddLine().ToDocument();
+            section.AddParagraph("Total blood of type A positive spent: " + totalAPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type A negative spent: " + totalAMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type B positive spent: " + totalBPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type B negative spent: " + totalBMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type AB positive spent: " + totalABPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type AB negative spent: " + totalABMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type O positive spent: " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             builder.Build(myStream);
             myStream.Close();
         }
@@ -121,6 +121,14 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                 }
             }
             return ret;
+        }
+
+        public  void SendReport(int days)
+        {
+            List<BloodUsageEvidency> desiredEvidency = GetEvidencies(days).Result;
+            GenerateReport(desiredEvidency, days);
+
+            //TO DO: Dodati da se generisani pdf-ovi salju
         }
     }
 }

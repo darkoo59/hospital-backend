@@ -42,7 +42,14 @@ namespace ReportSenderService
         {   
             _cron.Add(_configurationCheckInterval, () =>
             {
-                _httpClient.PostAsync(_integrationAPIUrl + Constants.GenerateReportRoute, null);
+                _httpClient.PostAsync(_integrationAPIUrl + Constants.GenerateReportRoute,
+                    new FormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        { Constants.BankIdKey, "5" },
+                        { Constants.DaysIncludedKey, "15" }
+                    })
+                );
+
                 //this.GetBloodBankConfigurations();
             });
         }
