@@ -67,14 +67,9 @@ namespace HospitalTests.Unit
         [Fact]
         public void Check_successful_transfer()
         {
-            //WorkTime section
             List<WorkTime> workTimes = GetWorkTimes();
-            
-            //Doctors section
             List<Doctor> doctors = GetDoctors();
             DoctorService doctorService = new(CreateDoctorRepository(doctors));
-            
-            //Appointment section
             List<Appointment> appointments = GetAppointments();
             List<Appointment> appointmentsForTransfer = new List<Appointment>();
             AppointmentService appointmentService1 = new(CreateAppointmentRepository(appointments));
@@ -90,14 +85,9 @@ namespace HospitalTests.Unit
         [Fact]
         public void Check_unsuccessful_transfer()
         {
-            //WorkTime section
             List<WorkTime> workTimes = GetWorkTimes();
-
-            //Doctors section
             List<Doctor> doctors = GetDoctors();
             DoctorService doctorService = new(CreateDoctorRepository(doctors));
-
-            //Appointment section
             List<Appointment> appointments = GetAppointments();
             List<Appointment> appointmentsForTransfer = new List<Appointment>();
             AppointmentService appointmentService1 = new(CreateAppointmentRepository(appointments));
@@ -128,11 +118,9 @@ namespace HospitalTests.Unit
         {
             return new()
             {
-                // For test 1,2,3,4
                 new VacationRequest() { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(3), EndDate = DateTime.Now.AddDays(15), DoctorId = 1, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved, Urgency = "NoUrgent" },
                 new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(5), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.Approved, Urgency = "Urgent" },
                 new VacationRequest() { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(10), EndDate = DateTime.Now.AddDays(13), DoctorId = 3, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.OnHold, Urgency = "NoUrgent" },
-                //For test 5,6
                 new VacationRequest() { VacationRequestId = 4, StartDate = new DateTime(2022, 11, 26), EndDate = new DateTime(2022, 11, 30), DoctorId = 5, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.OnHold, Urgency = "Urgent" },
             };
         }
@@ -146,7 +134,6 @@ namespace HospitalTests.Unit
             stubRepo.Setup(m => m.GetById(3)).Returns(appointments[2]);
             stubRepo.Setup(m => m.GetById(4)).Returns(appointments[3]);
 
-
             return stubRepo.Object;
         }
 
@@ -154,10 +141,8 @@ namespace HospitalTests.Unit
         {
             return new()
             {
-                //For tests 3,4
                 new Appointment() { AppointmentId = 1, DoctorId = 1, PatientId = 1, Start = DateTime.Now.AddDays(12) },
                 new Appointment() { AppointmentId = 2, DoctorId = 2, PatientId = 2, Start = DateTime.Now.AddDays(20) },
-                //For test 5,6
                 new Appointment() { AppointmentId = 3, DoctorId = 5, PatientId = 3, Start = new DateTime(2022, 11, 28, 16, 15,0) },
                 new Appointment() { AppointmentId = 4, DoctorId = 3, PatientId = 3, Start = new DateTime(2022, 11, 28, 16, 15, 0) }
             };
@@ -170,7 +155,6 @@ namespace HospitalTests.Unit
             stubRepo.Setup(m => m.GetById(1)).Returns(workTimes[0]);
             stubRepo.Setup(m => m.GetById(2)).Returns(workTimes[1]);
            
-
             return stubRepo.Object;
         }
 
@@ -199,10 +183,8 @@ namespace HospitalTests.Unit
         {
             return new()
             {
-                //For test 5
                 new Doctor() { DoctorId = 2, Name = "Dejan", Surname = "Dejanovic", SpecializationId = 1, RoomId = 2 },
                 new Doctor() { DoctorId = 5, Name = "Marko", Surname = "Cvijetic", SpecializationId = 1, RoomId = 1 },
-                //For test 6
                 new Doctor() { DoctorId = 3, Name = "Mirko", Surname = "Marjanovic", SpecializationId = 3, RoomId = 3 },
             };
         }

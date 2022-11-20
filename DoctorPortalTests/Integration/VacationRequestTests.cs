@@ -8,6 +8,7 @@ using HospitalLibrary.Core.Service;
 using HospitalTests.setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -23,8 +24,8 @@ namespace HospitalTests.Integration
             return new VacationRequestController(scope.ServiceProvider.GetRequiredService<IVacationRequestService>(), scope.ServiceProvider.GetRequiredService<IGenericMapper<VacationRequest, VacationRequestDTO>>());
         }
 
-        [Fact]
-        public void Creates_vacation_request()
+        [Fact,Priority(2)]
+        public void Create_correct_vacation_request()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -34,10 +35,5 @@ namespace HospitalTests.Integration
 
             Assert.NotNull(result);
         }
-
-
-
-
-
     }
 }
