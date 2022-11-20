@@ -1,4 +1,5 @@
 ﻿using HospitalAPI;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Hosting;
@@ -41,13 +42,30 @@ namespace HospitalTests.setup
         {
             context.Database.EnsureCreated();
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\";");
-            //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 1, BloodType = BloodType.AB_MINUS, QuantityInLiters = 2.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 13), DoctorId = 1 });
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
+            //  context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 1, BloodType = BloodType.AB_MINUS, QuantityInLiters = 2.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 13), DoctorId = 1 });
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 3, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 11, 28), DoctorId = 1 });
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 });
-            context.Users.Add(new User() { Username = "username", Password = "password" });
+
+
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Bloods\";");
+            
+            context.Bloods.Add(new Blood() { BloodId = 1, BloodType = BloodType.O_PLUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 3, BloodType = BloodType.B_PLUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 4, BloodType = BloodType.AB_PLUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 5, BloodType = BloodType.O_MINUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 6, BloodType = BloodType.A_MINUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 7, BloodType = BloodType.B_MINUS, QuantityInLiters = 4 });
+            context.Bloods.Add(new Blood() { BloodId = 8, BloodType = BloodType.AB_MINUS, QuantityInLiters = 4 });
+            
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE  \"BloodUsageEvidencies\";");
+
+            context.BloodUsageEvidencies.Add(new BloodUsageEvidency() { BloodUsageEvidencyId = 1, BloodType = BloodType.A_PLUS, QuantityUsedInMililiters = 200, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 });
 
             context.SaveChanges();
-        }
+         }
     }
 }

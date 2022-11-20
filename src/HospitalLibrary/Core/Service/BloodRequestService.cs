@@ -1,7 +1,12 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -13,9 +18,19 @@ namespace HospitalLibrary.Core.Service
         {
             _bloodRequestRepository = bloodRequestRepository;
         }
-        public void Create(BloodRequest bloodRequest)
+        public async Task<bool> Create(BloodRequest bloodRequest)
         {
-            _bloodRequestRepository.Create(bloodRequest);
+            using var httpClient = AppSettings.AddApiKey(new HttpClient());
+
+            string url = AppSettings.IntegrationApiUrl + "/api/BloodRequest";
+            var content = new StringContent(JsonSerializer.Serialize(bloodRequest), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await httpClient.PostAsync(url, content);
+
+            response.EnsureSuccessStatusCode();
+
+            //_bloodRequestRepository.Create(bloodRequest);
+
+            return true;
         }
 
         public void Delete(BloodRequest bloodRequest)

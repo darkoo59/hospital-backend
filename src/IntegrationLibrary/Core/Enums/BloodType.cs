@@ -4,15 +4,7 @@ namespace IntegrationLibrary.Core.Enums
 {
     public enum BloodType
     {
-        A_PLUS,
-        A_MINUS,
-        B_PLUS,
-        B_MINUS,
-        O_PLUS, 
-        O_MINUS,
-        AB_PLUS, 
-        AB_MINUS,
-        NONE
+        A_PLUS, A_MINUS, B_PLUS, B_MINUS, AB_PLUS, AB_MINUS, O_PLUS, O_MINUS
     }
 
     public class InvalidBloodTypeException : Exception

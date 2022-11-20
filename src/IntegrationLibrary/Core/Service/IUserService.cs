@@ -1,5 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.DTO;
+﻿using IntegrationLibrary.Core.DTO;
+using IntegrationLibrary.Core.Model;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;

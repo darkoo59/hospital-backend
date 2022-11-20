@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -7,7 +8,7 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<BloodRequest> GetAll();
         BloodRequest GetById(int id);
-        void Create(BloodRequest bloodRequest);
+        Task<bool> Create(BloodRequest bloodRequest);
         void Update(BloodRequest bloodRequest);
         void Delete(BloodRequest bloodRequest);
     }
