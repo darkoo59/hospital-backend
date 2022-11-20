@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -74,6 +75,41 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Rooms.Remove(room);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Equipment> GetEquipment(int id)
+        {
+            List<Equipment> equipmentList = new List<Equipment>();
+            foreach(Equipment equipment in _context.Equipment)
+            {
+                if(equipment.RoomId == id)
+                {
+                    equipmentList.Add(equipment);
+                }
+            }
+            return equipmentList;
+        }
+
+		public IEnumerable<Equipment> GetAllEquipment()
+		{
+			List<Equipment> equipmentList = new List<Equipment>();
+			foreach (Equipment equipment in _context.Equipment)
+			{
+			    equipmentList.Add(equipment);
+			}
+            return equipmentList;
+		}
+
+		public IEnumerable<Room> SearchForEquipment(string query)
+        {
+            List<Room> rooms = new List<Room>();
+            List<Equipment> equipmentList = new List<Equipment>();
+            equipmentList = _context.Equipment.Where(e => e.Name.Contains(query)).ToList();
+            foreach(Equipment equipment in equipmentList)
+            {
+                    rooms.Add(_context.Rooms.FirstOrDefault(r => r.Id == equipment.RoomId));
+            }
+            return rooms;
         }
     }
 }

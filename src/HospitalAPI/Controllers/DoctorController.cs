@@ -22,6 +22,11 @@ namespace HospitalAPI.Controllers
             _doctorService = doctorService;
             _doctorMapper = doctorMapper;
         }
+        
+        public DoctorController(IDoctorService doctorService)
+        {
+            _doctorService = doctorService;
+        }
 
         [HttpGet]
         public ActionResult GetAll()
@@ -40,6 +45,5 @@ namespace HospitalAPI.Controllers
 
             return Ok(_doctorMapper.ToDTO(doctor));
         }
-
     }
 }

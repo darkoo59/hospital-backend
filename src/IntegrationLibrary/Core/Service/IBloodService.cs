@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace IntegrationLibrary.Core.Service
 {
     public interface IBloodService
     {
-        Task<bool> CheckBloodTypeAvailability(BloodTypesEnum bloodType, string apiKey, float bloodQuantity, string Email);
+        Task<bool> CheckBloodTypeAvailability(BloodType bloodType, string apiKey, float bloodQuantity, string Email);
     }
 }

@@ -2,15 +2,18 @@
 using HospitalLibrary.Core.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+
 
 namespace HospitalLibrary.Core.Service
 {
     public class DoctorService : IDoctorService
     {
         private readonly IDoctorRepository _doctorRepository;
+
         private readonly IWorkTimeRepository _workTimeRepository;
         Doctor doctor = new Doctor();
-        
+
         public DoctorService(IDoctorRepository doctorRepository)
         {
             _doctorRepository = doctorRepository;
@@ -38,6 +41,5 @@ namespace HospitalLibrary.Core.Service
             }
             return doctor;
         }
-
     }
 }
