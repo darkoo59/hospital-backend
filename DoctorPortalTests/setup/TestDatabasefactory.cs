@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 
 namespace HospitalTests.setup
@@ -46,7 +47,11 @@ namespace HospitalTests.setup
             //  context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 1, BloodType = BloodType.AB_MINUS, QuantityInLiters = 2.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 13), DoctorId = 1 });
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 2, BloodType = BloodType.A_PLUS, QuantityInLiters = 3, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 11, 28), DoctorId = 1 });
             //context.BloodRequests.Add(new BloodRequest() { BloodRequestId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 3.5, ReasonForRequest = "Heart surgery", FinalDate = new System.DateTime(2022, 12, 6), DoctorId = 1 });
-
+            
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"VacationRequests\";");
+            context.VacationRequests.Add (new VacationRequest { VacationRequestId = 1, StartDate = DateTime.Now.AddDays(10), EndDate = DateTime.Now.AddDays(15), DoctorId = 1, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.NotApproved, Urgency = "NoUrgent" });
+            context.VacationRequests.Add(new VacationRequest { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(3), EndDate = DateTime.Now.AddDays(13), DoctorId = 2, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.Approved, Urgency = "Urgent" });
+            context.VacationRequests.Add(new VacationRequest { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 3, Status = HospitalLibrary.Core.Enums.VacationRequestStatus.OnHold, Urgency = "NoUrgent" });
 
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Bloods\";");
