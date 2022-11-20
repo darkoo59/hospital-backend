@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BloodBanks
+namespace IntegrationLibrary.Features.BloodBankRegister
 {
-    public interface IEmailSender
+    public interface IBloodBankService
     {
         Task SendEmail(MailContent mailContent);
     }

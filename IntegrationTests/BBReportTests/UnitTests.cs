@@ -20,7 +20,7 @@ namespace IntegrationTests.BBReportTests
             List<BloodUsageEvidency> data = GetBloodUsageEvidencyData();
             BBReportsService service = new(CreateHospitalRepository(data));
 
-            List<BloodUsageEvidency> ret = await service.GetEvidencies();
+            List<BloodUsageEvidency> ret = await service.GetEvidencies(1000);
 
             Assert.Equal(ret, data);
        }

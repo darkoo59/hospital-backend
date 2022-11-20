@@ -40,8 +40,8 @@ namespace IntegrationLibrary.HospitalRepository
 
             var list = JsonConvert.DeserializeObject<List<BloodUsageEvidencyDTO>>(ret);
             BloodUsageEvidencyMapper mapper = new BloodUsageEvidencyMapper();
+            
             return mapper.ToModel(list);
-
         }
     }
 }

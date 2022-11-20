@@ -10,19 +10,19 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using IntegrationLibrary.BloodBanks;
 using System.IO;
 using System.Text.Json;
 using IntegrationLibrary.Core.DTO;
+using IntegrationLibrary.Features.BloodBankRegister;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailSender _mailService;
+        private readonly IBloodBankService _mailService;
 
-        public UserService(IUserRepository userRepository, IEmailSender mailService)
+        public UserService(IUserRepository userRepository, IBloodBankService mailService)
         {
             _userRepository = userRepository;
             _mailService = mailService;
