@@ -4,6 +4,8 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.SharedModel;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.HospitalMap.Repository;
+using HospitalLibrary.HospitalMap.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +49,9 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+
+            services.AddScoped<IRoomMapRepository, RoomMapRepository>();
+            services.AddScoped<IRoomMapService, RoomMapService>();
 
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();

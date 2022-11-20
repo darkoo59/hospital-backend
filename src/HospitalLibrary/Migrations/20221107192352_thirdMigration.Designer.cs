@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221107192352_thirdMigration")]
+    partial class thirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,112 +51,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 20, 16, 2, 43, 529, DateTimeKind.Local).AddTicks(4975)
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
-                {
-                    b.Property<int>("BedId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Label")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("BedId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Beds");
-
-                    b.HasData(
-                        new
-                        {
-                            BedId = 1,
-                            Label = "201B1"
-                        },
-                        new
-                        {
-                            BedId = 2,
-                            Label = "201B2"
-                        },
-                        new
-                        {
-                            BedId = 3,
-                            Label = "201B3"
-                        });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Blood", b =>
-                {
-                    b.Property<int>("BloodId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("QuantityInLiters")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("BloodId");
-
-                    b.ToTable("Bloods");
-
-                    b.HasData(
-                        new
-                        {
-                            BloodId = 1,
-                            BloodType = 6,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 2,
-                            BloodType = 0,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 3,
-                            BloodType = 2,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 4,
-                            BloodType = 4,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 5,
-                            BloodType = 7,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 6,
-                            BloodType = 1,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 7,
-                            BloodType = 3,
-                            QuantityInLiters = 4.0
-                        },
-                        new
-                        {
-                            BloodId = 8,
-                            BloodType = 5,
-                            QuantityInLiters = 4.0
+                            Start = new DateTime(2022, 11, 7, 20, 23, 51, 721, DateTimeKind.Local).AddTicks(1149)
                         });
                 });
 
@@ -214,89 +111,6 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.BloodUsageEvidency", b =>
-                {
-                    b.Property<int>("BloodUsageEvidencyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("DateOfUsage")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("QuantityUsedInMililiters")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("ReasonForUsage")
-                        .HasColumnType("text");
-
-                    b.HasKey("BloodUsageEvidencyId");
-
-                    b.ToTable("BloodUsageEvidencies");
-
-                    b.HasData(
-                        new
-                        {
-                            BloodUsageEvidencyId = 1,
-                            BloodType = 0,
-                            DateOfUsage = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1,
-                            QuantityUsedInMililiters = 200.0,
-                            ReasonForUsage = "Hearth surgery"
-                        },
-                        new
-                        {
-                            BloodUsageEvidencyId = 2,
-                            BloodType = 3,
-                            DateOfUsage = new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1,
-                            QuantityUsedInMililiters = 300.0,
-                            ReasonForUsage = "Hearth surgery"
-                        },
-                        new
-                        {
-                            BloodUsageEvidencyId = 3,
-                            BloodType = 6,
-                            DateOfUsage = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1,
-                            QuantityUsedInMililiters = 450.0,
-                            ReasonForUsage = "Hearth surgery"
-                        },
-                        new
-                        {
-                            BloodUsageEvidencyId = 4,
-                            BloodType = 0,
-                            DateOfUsage = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1,
-                            QuantityUsedInMililiters = 700.0,
-                            ReasonForUsage = "Hearth surgery"
-                        },
-                        new
-                        {
-                            BloodUsageEvidencyId = 5,
-                            BloodType = 3,
-                            DateOfUsage = new DateTime(2022, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1,
-                            QuantityUsedInMililiters = 180.0,
-                            ReasonForUsage = "Hearth surgery"
-                        },
-                        new
-                        {
-                            BloodUsageEvidencyId = 6,
-                            BloodType = 5,
-                            DateOfUsage = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1,
-                            QuantityUsedInMililiters = 1100.0,
-                            ReasonForUsage = "Hearth surgery"
-                        });
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.Property<int>("DoctorId")
@@ -334,22 +148,6 @@ namespace HospitalLibrary.Migrations
                             RoomId = 1,
                             SpecializationId = 3,
                             Surname = "Nikolic"
-                        },
-                        new
-                        {
-                            DoctorId = 2,
-                            Name = "Mika",
-                            RoomId = 2,
-                            SpecializationId = 3,
-                            Surname = "Mikic"
-                        },
-                        new
-                        {
-                            DoctorId = 3,
-                            Name = "Aleksa",
-                            RoomId = 1,
-                            SpecializationId = 3,
-                            Surname = "Santic"
                         });
                 });
 
@@ -374,6 +172,8 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoomId");
+
                     b.ToTable("Equipment");
 
                     b.HasData(
@@ -392,70 +192,6 @@ namespace HospitalLibrary.Migrations
                             Name = "Tounge depressor",
                             Quantity = 32,
                             RoomId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            EquipmentType = 1,
-                            Name = "Gloves",
-                            Quantity = 50,
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            EquipmentType = 1,
-                            Name = "Scissors",
-                            Quantity = 10,
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            EquipmentType = 1,
-                            Name = "Wheelchairs",
-                            Quantity = 2,
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            EquipmentType = 1,
-                            Name = "Scalpel",
-                            Quantity = 4,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 7,
-                            EquipmentType = 1,
-                            Name = "Defibrillator",
-                            Quantity = 2,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            EquipmentType = 1,
-                            Name = "Ultrasound ",
-                            Quantity = 1,
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            Id = 9,
-                            EquipmentType = 1,
-                            Name = "CT scanner",
-                            Quantity = 2,
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            Id = 10,
-                            EquipmentType = 1,
-                            Name = "Tounge depressor",
-                            Quantity = 12,
-                            RoomId = 5
                         });
                 });
 
@@ -1232,38 +968,6 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.SharedModel.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            Password = "password",
-                            Role = 0,
-                            Username = "username"
-                        });
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
@@ -1277,13 +981,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
-                        .WithMany("Beds")
-                        .HasForeignKey("RoomId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -1303,6 +1000,15 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("Specialization");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("EquipmentList")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
@@ -1329,7 +1035,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
                 {
-                    b.Navigation("Beds");
+                    b.Navigation("EquipmentList");
                 });
 #pragma warning restore 612, 618
         }
