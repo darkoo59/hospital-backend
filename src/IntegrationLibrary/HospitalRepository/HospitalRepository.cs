@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodBankReports.DTO;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.BloodBankReports.DTO;
 using IntegrationLibrary.Features.BloodBankReports.Mapper;
 using IntegrationLibrary.Features.BloodBankReports.Model;
 using IntegrationLibrary.Settings;
@@ -39,8 +40,8 @@ namespace IntegrationLibrary.HospitalRepository
 
             var list = JsonConvert.DeserializeObject<List<BloodUsageEvidencyDTO>>(ret);
             BloodUsageEvidencyMapper mapper = new BloodUsageEvidencyMapper();
+            
             return mapper.ToModel(list);
-
         }
     }
 }

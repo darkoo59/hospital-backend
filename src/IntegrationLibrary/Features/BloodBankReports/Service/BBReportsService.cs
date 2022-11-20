@@ -30,13 +30,21 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             this._hospitalRepository = hospitalRepository;
         }
 
-        public async void GenerateReport(List<BloodUsageEvidency> evidencies)
+        public async void GenerateReport(List<BloodUsageEvidency> evidencies, int days)
         {
-            //List<BloodUsageEvidency> usageEvidencies = await GetEvidencies();
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
+            var folderPath = Environment.CurrentDirectory + "/PDFs";
+            var filePath = Path.Combine(folderPath, "Report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
+                + "-" + DateTime.Now.Year.ToString() + "-" +
+                DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".pdf");
+            Console.WriteLine("File path: " + filePath);
+
+            var myStream = new FileStream(filePath, FileMode.Create);
+
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
-            section.AddParagraph("Report for the past xx days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
+            section.AddParagraph("Report for the past " + days.ToString() + " days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
+            
             foreach (BloodUsageEvidency evidency in evidencies)
             {
                 section.AddParagraph("On the day of " + evidency.DateOfUsage.ToShortDateString().ToString() + ", " + evidency.QuantityUsedInMililiters + "ml of blood type " + evidency.BloodType.ToString() + " was used.").SetFontSize(14).SetMarginTop(10).ToDocument();
@@ -85,15 +93,6 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                     default:
                             break;
                 }
-                section.AddLine().ToDocument();
-                section.AddParagraph("Total blood of type A positive spent: " + totalAPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type A negative spent: " + totalAMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type B positive spent: " + totalBPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type B negative spent: " + totalBMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type AB positive spent: " + totalABPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type AB negative spent: " + totalABMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type O positive spent: " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
-                section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             }
             builder.Build("../IntegrationLibrary/Result.pdf");
 
@@ -111,12 +110,42 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             using var fileStream = File.OpenRead(fileName);
             requestContent.Add(new StreamContent(fileStream), "file", fileName);
             await httpClient.PostAsync(url,requestContent);
+
+            section.AddLine().ToDocument();
+            section.AddParagraph("Total blood of type A positive spent: " + totalAPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type A negative spent: " + totalAMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type B positive spent: " + totalBPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type B negative spent: " + totalBMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type AB positive spent: " + totalABPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type AB negative spent: " + totalABMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type O positive spent: " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
+            builder.Build(myStream);
+            myStream.Close();
         }
 
-        public async Task<List<BloodUsageEvidency>> GetEvidencies()
+        public async Task<List<BloodUsageEvidency>> GetEvidencies(int days)
         {
+            List<BloodUsageEvidency> allEvidency = _hospitalRepository.GetAllEvidency().Result;
+            List<BloodUsageEvidency> ret = new List<BloodUsageEvidency>();
+            DateTime minDate = DateTime.Now.AddDays(-days);
 
-            return await _hospitalRepository.GetAllEvidency();
+            foreach (BloodUsageEvidency evidency in allEvidency)
+            {
+                if (evidency.DateOfUsage >= minDate)
+                {
+                    ret.Add(evidency);
+                }
+            }
+            return ret;
+        }
+
+        public  void SendReport(int days)
+        {
+            List<BloodUsageEvidency> desiredEvidency = GetEvidencies(days).Result;
+            GenerateReport(desiredEvidency, days);
+
+            //TO DO: Dodati da se generisani pdf-ovi salju
         }
 
         public async void SendReport()

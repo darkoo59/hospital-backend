@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.DTO
+﻿namespace IntegrationLibrary.Core.DTO
 {
     public class UserLoginDTO
     {
