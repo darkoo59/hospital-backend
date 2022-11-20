@@ -37,7 +37,6 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             var filePath = Path.Combine(folderPath, "Report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
                 + "-" + DateTime.Now.Year.ToString() + "-" +
                 DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".pdf");
-            Console.WriteLine("File path: " + filePath);
 
             var myStream = new FileStream(filePath, FileMode.Create);
 
@@ -94,23 +93,6 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                             break;
                 }
             }
-            builder.Build("../IntegrationLibrary/Result.pdf");
-
-            SendReportInRequest();
-        }
-
-        public async void SendReportInRequest()
-        {
-            var url = "http://localhost:6555/api/blood-use-report";
-            HttpClient httpClient = new HttpClient();
-
-            var fileName = "Result.pdf";
-
-            using var requestContent = new MultipartFormDataContent();
-            using var fileStream = File.OpenRead(fileName);
-            requestContent.Add(new StreamContent(fileStream), "file", fileName);
-            await httpClient.PostAsync(url,requestContent);
-
             section.AddLine().ToDocument();
             section.AddParagraph("Total blood of type A positive spent: " + totalAPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             section.AddParagraph("Total blood of type A negative spent: " + totalAMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
@@ -122,6 +104,18 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             builder.Build(myStream);
             myStream.Close();
+
+            SendReportInRequest(filePath);
+        }
+
+        public async void SendReportInRequest(String filePath)
+        {
+            var url = "http://localhost:6555/api/blood-use-report";
+
+            using var requestContent = new MultipartFormDataContent();
+            using var fileStream = File.OpenRead(filePath);
+            requestContent.Add(new StreamContent(fileStream), "file", filePath);
+            await _httpClient.PostAsync(url,requestContent);
         }
 
         public async Task<List<BloodUsageEvidency>> GetEvidencies(int days)
@@ -146,12 +140,6 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             GenerateReport(desiredEvidency, days);
 
             //TO DO: Dodati da se generisani pdf-ovi salju
-        }
-
-        public async void SendReport()
-        {
-            List<BloodUsageEvidency> data = await GetEvidencies();
-            GenerateReport(data);
         }
     }
 }

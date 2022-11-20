@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BloodBanks
+namespace IntegrationLibrary.Features.BloodBankRegister
 {
-    public class BloodBankService : IEmailSender
+    public class BloodBankService : IBloodBankService
     {
         private readonly MailSettings _mailSettings;
 

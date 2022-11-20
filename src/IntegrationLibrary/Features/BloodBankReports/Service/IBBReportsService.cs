@@ -12,9 +12,6 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
     {
         void GenerateReport(List<BloodUsageEvidency> evidencies, int days);
 
-        Task<List<BloodUsageEvidency>> GetEvidencies();
-
-        void SendReport();
         Task<List<BloodUsageEvidency>> GetEvidencies(int days);
 
         void SendReport(int days);
