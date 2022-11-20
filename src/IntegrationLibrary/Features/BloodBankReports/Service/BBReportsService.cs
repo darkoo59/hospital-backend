@@ -9,6 +9,7 @@ using IntegrationLibrary.HospitalRepository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -31,6 +32,14 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
         public async void GenerateReport(List<BloodUsageEvidency> evidencies)
         {
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
+            var folderPath = Environment.CurrentDirectory + "/PDFs";
+            var filePath = Path.Combine(folderPath, "Report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
+                + "-" + DateTime.Now.Year.ToString() + "-" +
+                DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".pdf");
+            Console.WriteLine("File path: " + filePath);
+
+            var myStream = new FileStream(filePath, FileMode.Create);
+
 
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
@@ -94,13 +103,24 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                 section.AddParagraph("Total blood of type O positive spent: " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
                 section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             }
-            builder.Build("Result.pdf");
+            builder.Build(myStream);
+            myStream.Close();
         }
 
-        public async Task<List<BloodUsageEvidency>> GetEvidencies()
+        public async Task<List<BloodUsageEvidency>> GetEvidencies(int days)
         {
+            List<BloodUsageEvidency> allEvidency = _hospitalRepository.GetAllEvidency().Result;
+            List<BloodUsageEvidency> ret = new List<BloodUsageEvidency>();
+            DateTime minDate = DateTime.Now.AddDays(-days);
 
-            return await _hospitalRepository.GetAllEvidency();
+            foreach (BloodUsageEvidency evidency in allEvidency)
+            {
+                if (evidency.DateOfUsage >= minDate)
+                {
+                    ret.Add(evidency);
+                }
+            }
+            return ret;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace IntegrationAPI.Controllers
             _bbReportsService = service;
         }
 
-        [HttpPost("test")]
+        [HttpPost("send-report")]
         public IActionResult TestWindowsService()
         {
             Console.WriteLine("Okinuto u " + DateTime.Now.Hour + " : " + DateTime.Now.Minute);

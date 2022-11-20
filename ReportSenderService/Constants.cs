@@ -13,6 +13,6 @@ namespace ReportSenderService
         internal const string ReportFrequencyKey = "reportFrequency";
 
         internal const string ConfigurationsRoute = "/configurations";
-        internal const string GenerateReportRoute = "/test";
+        internal const string GenerateReportRoute = "/send-report";
     }
 }

@@ -43,7 +43,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet("test")]
         public async Task<IActionResult> GetTestValues()
         {
-            List<BloodUsageEvidency> data = await _bbReportsService.GetEvidencies();
+            List<BloodUsageEvidency> data = await _bbReportsService.GetEvidencies(2);
             _bbReportsService.GenerateReport(data);
             return Ok(data);
         }
