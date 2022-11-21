@@ -1,30 +1,22 @@
-﻿using HospitalLibrary.Core.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace HospitalAPI.Dtos
 {
-    public class Room
+    public class RoomDTO
     {
         public int Id { get; set; }
-
-        [Required]
-        [MinLength(3)]
         public string Number { get; set; }
-
-        [Range(1, 10)]
         public int FloorId { get; set; }
         public string BuildingId { get; set; }
         public string Description { get; set; }
-        public RoomType Type { get; set; }
+        public string Type { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public List<Bed> Beds { get; set; }
-
+        public List<BedDTO> Beds { get; set; }
     }
 }

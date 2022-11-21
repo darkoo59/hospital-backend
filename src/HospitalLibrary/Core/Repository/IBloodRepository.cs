@@ -16,7 +16,5 @@ namespace HospitalLibrary.Core.Repository
         void Update(Blood blood);
         void Delete(Blood blood);
         
-
-        
     }
 }

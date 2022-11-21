@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Room> GetAll()
         {
-            return _context.Rooms.ToList();
+            return _context.Rooms.Include(r => r.Beds).ToList();
         }
 
         public Room GetById(int id)
