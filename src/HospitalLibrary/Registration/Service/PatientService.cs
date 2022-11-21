@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Registration.Model;
+using HospitalLibrary.Registration.Repository;
 using MailKit;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Registration.Service
 {
 
     public class PatientService : IPatientService
@@ -23,7 +24,7 @@ namespace HospitalLibrary.Core.Service
             _patientRepository = patientRepository;
             _mailService = mailService;
         }
-        
+
         public void Delete(Patient patient)
         {
             _patientRepository.Delete(patient);
@@ -51,7 +52,7 @@ namespace HospitalLibrary.Core.Service
             {
                 throw new Patient.DuplicateEMailException("User with given email already exists.");
             }
-            
+
             _patientRepository.Register(patient);
 
             MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../HospitalLibrary/Resources/mailTemplate.json"));

@@ -1,5 +1,4 @@
-﻿using HospitalAPI.Dtos;
-using HospitalAPI.Mappers;
+﻿using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.SharedModel;
 using HospitalLibrary.Security;
@@ -11,8 +10,9 @@ using System;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Diagnostics;
+using HospitalAPI.Registration.Dtos;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Registration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -37,7 +37,7 @@ namespace HospitalAPI.Controllers
             }
             try
             {
-                var token =  _userService.Login(userLogin.Username, userLogin.Password);
+                var token = _userService.Login(userLogin.Username, userLogin.Password);
 
                 if (token == null)
                     return NotFound("User not found");

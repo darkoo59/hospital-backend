@@ -1,11 +1,11 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Feedbacks.Repository
 {
     public class FeedbackRepository : IFeedbackRepository
     {

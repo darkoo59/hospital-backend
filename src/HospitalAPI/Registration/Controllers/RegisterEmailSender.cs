@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Registration.Model;
+using HospitalLibrary.Registration.Service;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Registration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

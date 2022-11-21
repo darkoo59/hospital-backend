@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using HospitalAPI.Dtos;
+using HospitalAPI.Mappers;
+using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.SharedModel;
 
-namespace HospitalAPI.Mappers
+namespace HospitalAPI.Registration.Mappers
 {
     public class UserMapper : IGenericMapper<User, UserDTO>
     {

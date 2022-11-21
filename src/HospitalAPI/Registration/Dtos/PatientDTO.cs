@@ -1,4 +1,4 @@
-﻿namespace HospitalAPI.Dtos
+﻿namespace HospitalAPI.Registration.Dtos
 {
     public class PatientDTO
     {

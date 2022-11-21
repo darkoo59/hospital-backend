@@ -1,8 +1,8 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Feedbacks.Model;
+using HospitalLibrary.Feedbacks.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Feedbacks.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,7 +28,7 @@ namespace HospitalAPI.Controllers
             {
                 return Ok(_feedbackService.GetAllPrivate());
             }
-            else 
+            else
             {
                 return Ok(_feedbackService.GetAllPublicNotPublished());
             }
