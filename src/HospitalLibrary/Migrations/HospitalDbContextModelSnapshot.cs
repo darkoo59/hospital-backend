@@ -49,7 +49,13 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
+<<<<<<< HEAD
                             Start = new DateTime(2022, 11, 20, 20, 36, 18, 546, DateTimeKind.Local).AddTicks(2505)
+=======
+
+                            Start = new DateTime(2022, 11, 21, 11, 51, 18, 816, DateTimeKind.Local).AddTicks(68)
+
+>>>>>>> dev
                         });
                 });
 
@@ -1257,6 +1263,75 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequest", b =>
+                {
+                    b.Property<int>("VacationRequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Urgency")
+                        .HasColumnType("text");
+
+                    b.HasKey("VacationRequestId");
+
+                    b.ToTable("VacationRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            VacationRequestId = 1,
+                            DoctorId = 4,
+
+
+                            EndDate = new DateTime(2022, 12, 6, 11, 51, 18, 819, DateTimeKind.Local).AddTicks(5962),
+                            Reason = "Tired",
+                            StartDate = new DateTime(2022, 12, 1, 11, 51, 18, 819, DateTimeKind.Local).AddTicks(5623),
+
+                            Status = 1,
+                            Urgency = "NoUrgent"
+                        },
+                        new
+                        {
+                            VacationRequestId = 2,
+                            DoctorId = 4,
+
+                            EndDate = new DateTime(2022, 12, 11, 11, 51, 18, 819, DateTimeKind.Local).AddTicks(7111),
+                            Reason = "Tired",
+                            StartDate = new DateTime(2022, 12, 6, 11, 51, 18, 819, DateTimeKind.Local).AddTicks(7099),
+
+                            Status = 2,
+                            Urgency = "Urgent"
+                        },
+                        new
+                        {
+                            VacationRequestId = 3,
+                            DoctorId = 4,
+
+                            EndDate = new DateTime(2022, 12, 16, 11, 51, 18, 819, DateTimeKind.Local).AddTicks(7119),
+                            Reason = "Tired",
+                            StartDate = new DateTime(2022, 12, 11, 11, 51, 18, 819, DateTimeKind.Local).AddTicks(7117),
+
+                            Status = 0,
+                            Urgency = "NoUrgent"
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkTime", b =>
                 {
                     b.Property<int>("WorkTimeId")
@@ -1295,6 +1370,144 @@ namespace HospitalLibrary.Migrations
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             StartDate = new DateTime(2022, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new TimeSpan(0, 8, 0, 0, 0)
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.HospitalMap.Model.Equipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("EquipmentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Equipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EquipmentType = 1,
+                            Name = "Syringe",
+                            Quantity = 50,
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EquipmentType = 1,
+                            Name = "Tounge depressor",
+                            Quantity = 32,
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EquipmentType = 1,
+                            Name = "Gloves",
+                            Quantity = 50,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EquipmentType = 1,
+                            Name = "Scissors",
+                            Quantity = 10,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EquipmentType = 1,
+                            Name = "Wheelchairs",
+                            Quantity = 2,
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            EquipmentType = 1,
+                            Name = "Scalpel",
+                            Quantity = 4,
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            EquipmentType = 1,
+                            Name = "Defibrillator",
+                            Quantity = 2,
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            EquipmentType = 1,
+                            Name = "Ultrasound ",
+                            Quantity = 1,
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            EquipmentType = 1,
+                            Name = "CT scanner",
+                            Quantity = 2,
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            Id = 10,
+                            EquipmentType = 1,
+                            Name = "Tounge depressor",
+                            Quantity = 12,
+                            RoomId = 5
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.SharedModel.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Password = "password",
+                            Role = 0,
+                            Username = "username"
                         });
                 });
 

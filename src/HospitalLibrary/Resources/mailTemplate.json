@@ -1,0 +1,7 @@
+{
+    "Subject": "Welcome",
+    "ToEmail": "",
+    "Attachment": null,
+    "Body": "Please activate your account on the following link sent in this email. Link to the account activation is: http://localhost:4200/auth/"
+}
+

@@ -546,3 +546,7 @@ $RECYCLE.BIN/
 #JetBrains
 .DS_Store
 .idea
+
+src/IntegrationAPI/PDFs/*
+src/IntegrationAPI/*.pdf
+src/IntegrationLibrary/*.pdf

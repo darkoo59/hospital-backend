@@ -1,5 +1,5 @@
-﻿using IntegrationAPI;
-using IntegrationLibrary.Core.Enums;
+﻿    using IntegrationAPI;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;
@@ -47,6 +47,7 @@ namespace IntegrationTests
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BankNews\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportConfigurations\";");
 
             context.BankNews.Add(new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsState.NEW });
             context.BankNews.Add(new BankNews() { Id = 2, Title = "vijest 2", Content = "sadrzaj vijesti 2", State = NewsState.DECLINED });

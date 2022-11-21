@@ -10,8 +10,11 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
 {
     public interface IBBReportsService
     {
-        void GenerateReport(List<BloodUsageEvidency> evidencies);
+        String GenerateReport(int bankId,List<BloodUsageEvidency> evidencies, int days);
 
-        Task<List<BloodUsageEvidency>> GetEvidencies();
+        List<BloodUsageEvidency> GetEvidencies(int days);
+
+        void SendReport(int bankId,int days);
+        void SendReportInRequest(int bankId,String filePath);
     }
 }

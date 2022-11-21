@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace HospitalTests.Unit
 {
     public class BloodTests
     {
+
         [Fact]
         public void Get_blood()
         {
@@ -21,8 +23,9 @@ namespace HospitalTests.Unit
 
             IEnumerable<Blood> ret = service.GetAll();
 
-            Assert.Equal(ret, bloods);
+            Xunit.Assert.Equal(ret, bloods);
         }
+
 
         [Fact]
         public void Get_blood_by_id()
@@ -32,10 +35,9 @@ namespace HospitalTests.Unit
 
             Blood blood = service.GetById(1);
 
-            Assert.Equal(blood, bloods[0]);
+            Xunit.Assert.Equal(blood, bloods[0]);
         }
 
-        
         [Fact]
         public void Get_blood_by_blood_type()
         {
@@ -44,7 +46,7 @@ namespace HospitalTests.Unit
 
             Blood blood = service.GetByBloodType(BloodType.O_PLUS);
 
-            Assert.Equal(blood, bloods[0]);
+            Xunit.Assert.Equal(blood, bloods[0]);
         }
 
 
@@ -56,14 +58,24 @@ namespace HospitalTests.Unit
             BloodUsageEvidency bloodUsageEvidency = new BloodUsageEvidency() { BloodUsageEvidencyId = 1, BloodType = BloodType.O_PLUS, QuantityUsedInMililiters = 200, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 };
             service.ChangeQuantity(bloodUsageEvidency);
             Blood blood = service.GetByBloodType(BloodType.O_PLUS);
-            Assert.Equal(3.8, bloods[0].QuantityInLiters);
+            Xunit.Assert.Equal(3.8, bloods[0].QuantityInLiters);
+        }
+
+        [Fact]
+        public void Blood_change_quantity_more_tham_in_bank()
+        {
+            List<Blood> bloods = GetBlood();
+            BloodService service = new(CreateBloodRepository(bloods));
+            BloodUsageEvidency bloodUsageEvidency = new BloodUsageEvidency() { BloodUsageEvidencyId = 1, BloodType = BloodType.O_PLUS, QuantityUsedInMililiters = 20000, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 };
+            service.ChangeQuantity(bloodUsageEvidency);
+            Blood blood = service.GetByBloodType(BloodType.O_PLUS);
+            Xunit.Assert.Equal(4, bloods[0].QuantityInLiters);
         }
 
 
+        #region private
 
-            #region private
-
-            private static IBloodRepository CreateBloodRepository(List<Blood> blood)
+        private static IBloodRepository CreateBloodRepository(List<Blood> blood)
         {
             var stubRepo = new Mock<IBloodRepository>();
             stubRepo.Setup(m => m.GetAll()).Returns(blood);
@@ -92,6 +104,7 @@ namespace HospitalTests.Unit
             return stubRepo.Object;
         }
 
+        
         private static List<Blood> GetBlood()
         {
             return new()
@@ -108,5 +121,7 @@ namespace HospitalTests.Unit
         }
 
         #endregion
-    }
+   
+   
+        }
 }

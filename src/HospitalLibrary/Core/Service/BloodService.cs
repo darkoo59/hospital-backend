@@ -52,7 +52,7 @@ namespace HospitalLibrary.Core.Service
             return blood.QuantityInLiters >= (usedQuantityInMililitersLiters/1000);
         }
 
-        public void ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
         {
 
             Blood blood = _bloodRepository.GetByBloodType(bloodUsageEvidency.BloodType);
@@ -60,13 +60,15 @@ namespace HospitalLibrary.Core.Service
             {
                  blood.QuantityInLiters = Math.Round(blood.QuantityInLiters - bloodUsageEvidency.QuantityUsedInMililiters/1000 , 3);
                 _bloodRepository.Update(blood);
+                return true;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Blood amount is out of range.");
+                return false;
 
             }
-
+        
+        
 
 
         }

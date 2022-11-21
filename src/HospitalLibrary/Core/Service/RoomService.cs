@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.HospitalMap.Model;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -42,10 +43,32 @@ namespace HospitalLibrary.Core.Service
         {
             _roomRepository.Update(room);
         }
+        
 
         public void Delete(Room room)
         {
             _roomRepository.Delete(room);
+        }
+
+        public IEnumerable<Equipment> GetEquipment(int id)
+        {
+            return _roomRepository.GetEquipment(id);
+        }
+
+		public IEnumerable<Equipment> GetAllEquipment()
+		{
+			return _roomRepository.GetAllEquipment();
+		}
+
+		public IEnumerable<Room> SearchForEquipment(string query)
+        {
+            return _roomRepository.SearchForEquipment(query);
+        }
+        public void MoveEquipment(MoveRequest moveRequest)
+        {
+            _roomRepository.MoveEquipment(moveRequest);
+        
+        
         }
     }
 }
