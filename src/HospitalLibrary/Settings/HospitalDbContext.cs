@@ -26,10 +26,18 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
+<<<<<<< HEAD
+=======
         public DbSet<VacationRequest> VacationRequests {get;set;}
         public DbSet<User> Users { get; set; }
+>>>>>>> dev
         public DbSet<Blood> Bloods { get; set; }
         public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<BloodTherapy> BloodTherapies { get; set; }
+        public DbSet<MedicineTherapy> MedicineTherapies { get; set; }
+        public DbSet<InpatientTreatment> InpatientTreatments { get; set; }
+        public DbSet<InpatientTreatmentTherapy> InpatientTreatmentTherapies { get; set; }
 
 
 
@@ -195,9 +203,9 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<Bed>().HasData(
 
-                new Bed() { BedId = 1, Label = "201B1" },
-                new Bed() { BedId = 2, Label = "201B2" },
-                new Bed() { BedId = 3, Label = "201B3" }
+                new Bed() { BedId = 1, Label = "201B1", IsAvailable = false },
+                new Bed() { BedId = 2, Label = "201B2", IsAvailable = true },
+                new Bed() { BedId = 3, Label = "201B3", IsAvailable = true }
 
             );
 
@@ -233,13 +241,49 @@ namespace HospitalLibrary.Settings
                new BloodUsageEvidency() { BloodUsageEvidencyId = 6, BloodType = BloodType.AB_MINUS, QuantityUsedInMililiters = 1100, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 }
             );
 
+<<<<<<< HEAD
+            modelBuilder.Entity<Medicine>().HasData(
+
+                new Medicine() { MedicineId = 1, Name = "Aspirin", Manufacturer = "Galenika" },
+                new Medicine() { MedicineId = 2, Name = "Bromazepam", Manufacturer = "Hemofarm" },
+                new Medicine() { MedicineId = 3, Name = "Caffetin", Manufacturer = "Hemofarm" }
+
+            );
+
+           // modelBuilder.Entity<BloodTherapy>().HasData(
+
+           //     new BloodTherapy() { BloodTherapyId = 1, BloodType = BloodType.AB_PLUS, QuantityInLiters = 5, Start = new System.DateTime(2022, 11, 19), End = new System.DateTime(2022, 11, 25) },
+           //     new BloodTherapy() { BloodTherapyId = 2, BloodType = BloodType.B_MINUS, QuantityInLiters = 3, Start = new System.DateTime(2022, 11, 24), End = new System.DateTime(2022, 11, 27) },
+           //     new BloodTherapy() { BloodTherapyId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 2, Start = new System.DateTime(2022, 11, 20), End = new System.DateTime(2022, 11, 28) }
+
+           // );
+
+           // modelBuilder.Entity<MedicineTherapy>().HasData(
+
+           //    new MedicineTherapy() { MedicineTherapyId = 1, MedicineId = 1, Dosage = "Once per day", Start = new System.DateTime(2022, 11, 18), End = new System.DateTime(2022, 12, 5) },
+           //    new MedicineTherapy() { MedicineTherapyId = 2, MedicineId = 2, Dosage = "Three times per day", Start = new System.DateTime(2022, 11, 17), End = new System.DateTime(2022, 12, 1) },
+           //    new MedicineTherapy() { MedicineTherapyId = 3, MedicineId = 3, Dosage = "Two times per day", Start = new System.DateTime(2022, 11, 15), End = new System.DateTime(2022, 12, 7) }
+
+           //);
+
+            modelBuilder.Entity<InpatientTreatment>().HasData(
+
+               new InpatientTreatment() { InpatientTreatmentId = 1, PatientId = 1, ReasonForAdmission = "Headache", RoomId = 21, BedId = 1, DateOfAdmission = new System.DateTime(2022, 11, 18) }
+           );
+
+            modelBuilder.Entity<InpatientTreatmentTherapy>().HasData(
+
+               new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
+           );
+=======
             modelBuilder.Entity<User>().HasData(
                 new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
             );
+>>>>>>> dev
 
 
 
-           base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

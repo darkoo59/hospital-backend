@@ -13,12 +13,12 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BloodRequestController : ControllerBase
+    public class BloodRequestsController : ControllerBase
     {
         private readonly IBloodRequestService _bloodRequestService;
         private readonly IGenericMapper<BloodRequest, BloodRequestDTO> _bloodRequestMapper;
 
-        public BloodRequestController(IBloodRequestService bloodRequestService, IGenericMapper<BloodRequest, BloodRequestDTO> bloodRequestMapper)
+        public BloodRequestsController(IBloodRequestService bloodRequestService, IGenericMapper<BloodRequest, BloodRequestDTO> bloodRequestMapper)
         {
             _bloodRequestService = bloodRequestService;
             _bloodRequestMapper = bloodRequestMapper;
