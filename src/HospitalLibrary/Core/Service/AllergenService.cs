@@ -13,6 +13,11 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly IAllergenRepository _allergenRepository;
 
+        public AllergenService(IAllergenRepository allergenRepository)
+        {
+            _allergenRepository = allergenRepository;
+        }
+
         public IEnumerable<Allergen> GetAll()
         {
             return _allergenRepository.GetAll();

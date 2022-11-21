@@ -47,6 +47,14 @@ namespace HospitalAPI
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
 
+            services.AddScoped<IAllergenService, AllergenService>();
+            services.AddScoped<IAllergenRepository, AllergenRepository>();
+            services.AddScoped<IGenericMapper<Allergen, AllergenDTO>, AllergenMapper>();
+
+            //services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+            //services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
+            //services.AddScoped<IGenericMapper<MedicalRecord, MedicalRecordDTO>, MedicalRecordMapper>();
+
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();

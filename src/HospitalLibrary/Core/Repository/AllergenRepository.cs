@@ -12,9 +12,15 @@ namespace HospitalLibrary.Core.Repository
     {
         private readonly HospitalDbContext _context;
 
+        public AllergenRepository(HospitalDbContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<Allergen> GetAll()
         {
             return _context.Allergens.ToList();
+
         }
 
         public Allergen GetById(int id)
