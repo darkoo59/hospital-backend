@@ -7,8 +7,5 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Vacation> GetAll();
         Vacation GetById(int id);
-        void Create(Vacation vacation);
-        void Update(Vacation vacation);
-        void Delete(Vacation vacation);
     }
 }

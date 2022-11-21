@@ -8,7 +8,8 @@ using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using static IntegrationLibrary.Features.BloodBankNews.Model.BankNews;
-using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.Blood.Enums;
 
 namespace IntegrationAPI.BBConnections
 {

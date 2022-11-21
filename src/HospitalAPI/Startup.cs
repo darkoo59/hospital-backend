@@ -80,6 +80,13 @@ namespace HospitalAPI
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IGenericMapper<BloodRequest, BloodRequestDTO>, BloodRequestMapper>();
 
+            services.AddScoped<IVacationRequestService, VacationRequestService>();
+            services.AddScoped<IVacationRequestRepository, VacationRequestRepository>();
+            services.AddScoped<IGenericMapper<VacationRequest, VacationRequestDTO>, VacationRequestMapper>();
+
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IGenericMapper<Doctor, DoctorDTO>, DoctorMapper>();
 
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();

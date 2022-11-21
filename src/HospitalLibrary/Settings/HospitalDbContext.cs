@@ -3,7 +3,9 @@ using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+
 
 namespace HospitalLibrary.Settings
 {
@@ -21,10 +23,9 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
+        public DbSet<VacationRequest> VacationRequests {get;set;}
         public DbSet<User> Users { get; set; }
-
         public DbSet<Blood> Bloods { get; set; }
-
         public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
 
 
@@ -33,6 +34,7 @@ namespace HospitalLibrary.Settings
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                .EnableSensitiveDataLogging();
+
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -156,6 +158,13 @@ namespace HospitalLibrary.Settings
                 new Bed() { BedId = 3, Label = "201B3" }
 
             );
+
+            modelBuilder.Entity<VacationRequest>().HasData(
+                
+                new VacationRequest() { VacationRequestId = 1 , StartDate = DateTime.Now.AddDays(10),EndDate = DateTime.Now.AddDays(15),DoctorId = 4 , Status = Core.Enums.VacationRequestStatus.Approved, Urgency = "NoUrgent" , Reason = "Tired"},
+                new VacationRequest() { VacationRequestId = 2, StartDate = DateTime.Now.AddDays(15), EndDate = DateTime.Now.AddDays(20), DoctorId = 4, Status = Core.Enums.VacationRequestStatus.OnHold, Urgency = "Urgent", Reason = "Tired" },
+                new VacationRequest() { VacationRequestId = 3, StartDate = DateTime.Now.AddDays(20), EndDate = DateTime.Now.AddDays(25), DoctorId = 4, Status = Core.Enums.VacationRequestStatus.NotApproved, Urgency = "NoUrgent", Reason = "Tired" }
+                );
 
 
             modelBuilder.Entity<Blood>().HasData(
