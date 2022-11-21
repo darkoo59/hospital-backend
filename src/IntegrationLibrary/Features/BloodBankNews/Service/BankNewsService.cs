@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodBankNews.Model;
+﻿using IntegrationLibrary.Features.BloodBankNews.Enums;
+using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using System.Collections.Generic;
 
@@ -12,6 +13,11 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             _bankNewsRepository = repo;
         }
 
+        public void AddNews(BankNews bankNews)
+        {
+            _bankNewsRepository.Add(bankNews);
+        }
+
         public void ApproveNews(int id)
         {
             BankNews news = _bankNewsRepository.GetById(id);
@@ -19,14 +25,18 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             {
                 throw new BankNews.BankNewsException("News with the supplied id have not been found.");
             }
-            news.State = NewsStateEnum.APPROVED;
+            news.State = NewsState.APPROVED;
             _bankNewsRepository.Update(news);
         }
 
-        public void DisapproveNews(int id)
+        public void DeclineNews(int id)
         {
             BankNews news = _bankNewsRepository.GetById(id);
-            news.State = NewsStateEnum.DISAPPROVED;
+            if (news == null)
+            {
+                throw new BankNews.BankNewsException("News with the supplied id have not been found.");
+            }
+            news.State = NewsState.DECLINED;
             _bankNewsRepository.Update(news);
         }
 
@@ -35,7 +45,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             return _bankNewsRepository.GetAll();
         }
 
-        public IEnumerable<BankNews> GetAllByState(NewsStateEnum state)
+        public IEnumerable<BankNews> GetAllByState(NewsState state)
         {
             List<BankNews> res = new();
             foreach (BankNews news in GetAll())

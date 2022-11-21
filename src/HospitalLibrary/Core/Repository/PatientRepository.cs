@@ -15,14 +15,17 @@ namespace HospitalLibrary.Core.Repository
             _context = context;
         }
 
-        public void Create(Patient patient)
+        public void Register(Patient patient)
         {
-            throw new NotImplementedException();
+            //Console.WriteLine(patient);
+            _context.Patients.Add(patient);
+            _context.SaveChanges();
         }
 
         public void Delete(Patient patient)
         {
-            throw new NotImplementedException();
+            _context.Patients.Remove(patient);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Patient> GetAll()
@@ -37,7 +40,8 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Patient patient)
         {
-            throw new NotImplementedException();
+            _context.Patients.Update(patient);
+            _context.SaveChanges();
         }
     }
 }

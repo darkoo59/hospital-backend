@@ -25,13 +25,14 @@ namespace HospitalTests
 
 
         [Fact]
-        public void Creates_blood_request()
+        public async void Creates_blood_request()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             BloodRequestDTO bloodRequestDTO = new BloodRequestDTO(1, "A+", 4, "Heart surgery", new DateTime(2022, 12, 13), 1);
 
-            var result = ((CreatedAtActionResult)controller.Create(bloodRequestDTO))?.Value as BloodRequest;
+            var r = await controller.Create(bloodRequestDTO);
+            var result = ((CreatedAtActionResult)r)?.Value as BloodRequest;
 
             Xunit.Assert.NotNull(result);
             
