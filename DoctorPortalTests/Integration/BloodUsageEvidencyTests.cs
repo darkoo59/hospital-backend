@@ -17,6 +17,7 @@ using Xunit;
 
 namespace HospitalTests
 {
+    [Collection("Sequential")]
     public class BloodUsageEvidencyTests : BaseIntegrationTest
     {
         public BloodUsageEvidencyTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
