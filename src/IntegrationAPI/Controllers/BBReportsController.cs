@@ -17,9 +17,9 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost("send-report")]
-        public ActionResult SendReport([FromForm] int bankId, [FromForm] int daysIncluded)
+        public ActionResult SendReport([FromForm] int bloodBankId, [FromForm] int reportPeriod)
         {
-            _bbReportsService.SendReport(bankId,daysIncluded);
+            _bbReportsService.SendReport(bloodBankId,reportPeriod);
 
             return Ok();
         }

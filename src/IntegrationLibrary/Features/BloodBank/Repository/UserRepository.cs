@@ -36,7 +36,7 @@ namespace IntegrationLibrary.Features.BloodBank.Repository
             _context.SaveChanges();
         }
 
-        public User GetById(long id)
+        public User GetById(int id)
         {
             return GetAll().FirstOrDefault(user => user.Id == id);
         }
