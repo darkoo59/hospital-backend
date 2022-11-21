@@ -8,11 +8,11 @@ namespace ReportSenderService
 {
     internal static class Constants
     {
-        internal const string BankIdKey = "bankId";
-        internal const string DaysIncludedKey = "daysIncluded";
+        internal const string BankIdKey = "bloodBankId";
+        internal const string DaysIncludedKey = "reportPeriod";
         internal const string ReportFrequencyKey = "reportFrequency";
 
-        internal const string ConfigurationsRoute = "/configurations";
-        internal const string GenerateReportRoute = "/send-report";
+        internal const string ConfigurationsRoute = "/ReportConfiguration";
+        internal const string GenerateReportRoute = "/BBReports/send-report";
     }
 }

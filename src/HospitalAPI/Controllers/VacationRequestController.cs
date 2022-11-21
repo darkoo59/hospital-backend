@@ -92,7 +92,7 @@ namespace HospitalAPI.Controllers
                 _vacationRequestService.CreateUrgentVacation(vacationRequest.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate, vacationRequest);
                 return CreatedAtAction("GetById", new { id = vacationRequest.VacationRequestId }, vacationRequest);
             }
-            return BadRequest();
+            return null;
         }
         [HttpPut("VacationApproveId/{VacationRequestid}")]
         public ActionResult ApproveRequest(int VacationRequestid)

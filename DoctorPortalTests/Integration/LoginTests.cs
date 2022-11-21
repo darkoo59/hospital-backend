@@ -1,7 +1,7 @@
 ﻿using HospitalAPI;
-using HospitalAPI.Controllers;
-using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
+using HospitalAPI.Registration.Controllers;
+using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Security;

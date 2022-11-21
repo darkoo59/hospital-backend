@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.SharedModel;
@@ -11,9 +12,11 @@ namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
+        public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -105,22 +108,61 @@ namespace HospitalLibrary.Settings
           );
 
 
-            modelBuilder.Entity<Patient>().HasData(
-                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric" },
-                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic" },
-                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic" }
+            modelBuilder.Entity<Allergen>().HasData(
+                new Allergen() { AllergenId = 1, Name = "Peanuts"},
+                new Allergen() { AllergenId = 2, Name = "Dust"},
+                new Allergen() { AllergenId = 3, Name = "Fungal spores"},
+                new Allergen() { AllergenId = 4, Name = "Insect and mite feces" },
+                new Allergen() { AllergenId = 5, Name = "Insect bites and stinges (their venom)" },
+                new Allergen() { AllergenId = 6, Name = "Pollen" },
+                new Allergen() { AllergenId = 7, Name = "Milk and/or dairy products" },
+                new Allergen() { AllergenId = 8, Name = "Eggs" },
+                new Allergen() { AllergenId = 9, Name = "Wheat" }
             );
 
+            modelBuilder.Entity<Allergen>().HasMany(a => a.MedicalRecords).WithMany(mr => mr.Allergens);
+
+            modelBuilder.Entity<MedicalRecord>().HasData(
+                new MedicalRecord() { Id = 1, BloodType = BloodType.A_PLUS, Allergens = { } },
+                new MedicalRecord() { Id = 2, BloodType = BloodType.O_PLUS, Allergens = { } },
+                new MedicalRecord() { Id = 3, BloodType = BloodType.AB_MINUS, Allergens = { } },
+                new MedicalRecord() { Id = 4, BloodType = BloodType.B_PLUS, Allergens = { } },
+                new MedicalRecord() { Id = 5, BloodType = BloodType.O_MINUS, Allergens = { } },
+                new MedicalRecord() { Id = 6, BloodType = BloodType.A_MINUS, Allergens = { } },
+                new MedicalRecord() { Id = 7, BloodType = BloodType.AB_PLUS, Allergens = { } },
+                new MedicalRecord() { Id = 8, BloodType = BloodType.O_MINUS, Allergens = { } },
+                new MedicalRecord() { Id = 9, BloodType = BloodType.B_MINUS, Allergens = { } }
+            );
+            
+            modelBuilder.Entity<MedicalRecord>().HasMany(mr => mr.Allergens).WithMany(a => a.MedicalRecords);
+
+            modelBuilder.Entity<Patient>().HasData(
+                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric", Email = "proba@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 1},
+                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic", Email = "proba1@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 2},
+                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic", Email = "proba2@gmail.com", Password = "123", IsAccountActivated = false , MedicalRecord = 3},
+                new Patient() { PatientId = 4, Name = "Pera", Surname = "Peric", Email = "proba3@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 4 },
+                new Patient() { PatientId = 5, Name = "Marko", Surname = "Markovic", Email = "proba4@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 5 },
+                new Patient() { PatientId = 6, Name = "Aleksa", Surname = "Aleksic", Email = "proba5@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 6 },
+                new Patient() { PatientId = 7, Name = "Pera", Surname = "Peric", Email = "proba6@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 7 },
+                new Patient() { PatientId = 8, Name = "Marko", Surname = "Markovic", Email = "proba7@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 8 },
+                new Patient() { PatientId = 9, Name = "Aleksa", Surname = "Aleksic", Email = "proba8@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 9 }
+            );
+
+            modelBuilder.Entity<Patient>().HasMany(p => p.Doctors).WithMany(dr => dr.Patients);
+
+            modelBuilder.Entity<Doctor>().HasData(
+               new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic", SpecializationId = 3, RoomId = 1},
+               new Doctor() { DoctorId = 2, Name = "Mika", Surname = "Mikic", SpecializationId = 1, RoomId = 2},
+               new Doctor() { DoctorId = 3, Name = "Aleksa", Surname = "Santic", SpecializationId = 2, RoomId = 1 },
+               new Doctor() { DoctorId = 4, Name = "Nikola", Surname = "Peric", SpecializationId = 3, RoomId = 1 }
+           );
+            
+            modelBuilder.Entity<Doctor>().HasMany(dr => dr.Patients).WithMany(p => p.Doctors);
+            
             modelBuilder.Entity<Specialization>().HasData(
                new Specialization() { SpecializationId = 1, Name = "Anesthesiology" },
                new Specialization() { SpecializationId = 2, Name = "Dermatology" },
                new Specialization() { SpecializationId = 3, Name = "Family medicine" }
-           );
-
-            modelBuilder.Entity<Doctor>().HasData(
-               new Doctor() { DoctorId = 1, Name = "Ognjen", Surname = "Nikolic", SpecializationId = 3, RoomId = 1 },
-               new Doctor() { DoctorId = 2, Name = "Mika", Surname = "Mikic", SpecializationId = 3, RoomId = 2 },
-               new Doctor() { DoctorId = 3, Name = "Aleksa", Surname = "Santic", SpecializationId = 3, RoomId = 1 }
            );
 
             modelBuilder.Entity<Appointment>().HasData(

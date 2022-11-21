@@ -49,6 +49,7 @@ namespace HospitalTests.Integration
             result.ShouldBeOfType<BadRequestResult>();
         }
 
+
         [Fact]
         public void ApproveRequest()
         {
@@ -71,6 +72,7 @@ namespace HospitalTests.Integration
             Xunit.Assert.NotNull(result);
 
         }
+
 
 
     }

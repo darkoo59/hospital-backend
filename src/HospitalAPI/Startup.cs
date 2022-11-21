@@ -7,6 +7,7 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.HospitalMap.Repository;
 using HospitalLibrary.HospitalMap.Service;
 using HospitalLibrary.Settings;
+using MailKit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,12 @@ using HospitalLibrary.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Registration.Repository;
+using HospitalLibrary.Registration.Service;
+using HospitalAPI.Registration.Mappers;
+using HospitalAPI.Registration.Dtos;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 
 namespace HospitalAPI
 {
@@ -38,6 +45,9 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+            services.AddTransient<IEmailSender, RegisterMailService>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
@@ -55,6 +65,14 @@ namespace HospitalAPI
 
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
+
+            services.AddScoped<IAllergenService, AllergenService>();
+            services.AddScoped<IAllergenRepository, AllergenRepository>();
+            services.AddScoped<IGenericMapper<Allergen, AllergenDTO>, AllergenMapper>();
+
+            //services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+            //services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
+            //services.AddScoped<IGenericMapper<MedicalRecord, MedicalRecordDTO>, MedicalRecordMapper>();
 
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
