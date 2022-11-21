@@ -1,5 +1,4 @@
-﻿using IntegrationLibrary.Core.DTO;
-using IntegrationLibrary.Features.BloodBankReports.Service;
+﻿using IntegrationLibrary.Features.BloodBankReports.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

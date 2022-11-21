@@ -1,10 +1,10 @@
-﻿using IntegrationLibrary.Core.DTO;
-using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Features.BloodBank.DTO;
+using IntegrationLibrary.Features.BloodBank.Model;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Features.BloodBank.Service
 {
     public interface IUserService
     {

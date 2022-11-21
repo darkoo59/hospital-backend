@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Enums;
+﻿using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankReports.Model;
 using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationLibrary.HospitalRepository;

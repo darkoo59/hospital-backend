@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.Core.DTO
+﻿namespace IntegrationLibrary.Features.BloodBank.DTO
 {
     public class ChangePasswordDTO
     {

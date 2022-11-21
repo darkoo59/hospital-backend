@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using IntegrationLibrary.Features.BloodBankRegister;
+using IntegrationLibrary.Features.BloodBank;
 
 namespace IntegrationAPI.BBConnections
 {

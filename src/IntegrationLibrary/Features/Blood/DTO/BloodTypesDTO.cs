@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Features.Blood.Enums;
 
-namespace IntegrationLibrary.Core.DTO
+namespace IntegrationLibrary.Features.Blood.DTO
 {
     public class BloodTypesDTO
     {
