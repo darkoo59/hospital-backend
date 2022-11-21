@@ -30,7 +30,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             this._hospitalRepository = hospitalRepository;
         }
 
-        public async void GenerateReport(List<BloodUsageEvidency> evidencies, int days)
+        public String GenerateReport(List<BloodUsageEvidency> evidencies, int days)
         {
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
             var folderPath = Environment.CurrentDirectory + "/PDFs";
@@ -43,7 +43,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
             section.AddParagraph("Report for the past " + days.ToString() + " days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
-            
+
             foreach (BloodUsageEvidency evidency in evidencies)
             {
                 section.AddParagraph("On the day of " + evidency.DateOfUsage.ToShortDateString().ToString() + ", " + evidency.QuantityUsedInMililiters + "ml of blood type " + evidency.BloodType.ToString() + " was used.").SetFontSize(14).SetMarginTop(10).ToDocument();
@@ -75,22 +75,22 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
                             break;
                         }
                     case BloodType.AB_PLUS:
-                        { 
-                            totalABPlus += evidency.QuantityUsedInMililiters; 
+                        {
+                            totalABPlus += evidency.QuantityUsedInMililiters;
                             break;
                         }
                     case BloodType.O_MINUS:
-                        { 
+                        {
                             totalOMinus += evidency.QuantityUsedInMililiters;
                             break;
                         }
                     case BloodType.O_PLUS:
-                        { 
+                        {
                             totalOPlus += evidency.QuantityUsedInMililiters;
                             break;
                         }
                     default:
-                            break;
+                        break;
                 }
             }
             section.AddLine().ToDocument();
@@ -104,8 +104,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             section.AddParagraph("Total blood of type O negative spent: " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             builder.Build(myStream);
             myStream.Close();
-
-            SendReportInRequest(filePath);
+            return filePath;
         }
 
         public async void SendReportInRequest(String filePath)
@@ -137,8 +136,8 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
         public  void SendReport(int days)
         {
             List<BloodUsageEvidency> desiredEvidency = GetEvidencies(days);
-            GenerateReport(desiredEvidency, days);
-
+            String filePath = GenerateReport(desiredEvidency, days);
+            SendReportInRequest(filePath);
             //TO DO: Dodati da se generisani pdf-ovi salju
         }
     }

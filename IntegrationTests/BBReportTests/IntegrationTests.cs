@@ -12,6 +12,9 @@ using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
+using HospitalLibrary.Core.Model;
+using IntegrationLibrary.Features.BloodBankReports.Model;
+using BloodUsageEvidency = IntegrationLibrary.Features.BloodBankReports.Model.BloodUsageEvidency;
 
 namespace IntegrationTests.BBReportTests
 {
@@ -40,6 +43,19 @@ namespace IntegrationTests.BBReportTests
 
             res.ShouldBeOfType<OkResult>();
         }
+
+        [Fact]
+        public void Get_Blood_Usage_Evidency_Data()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+            var service = scope.ServiceProvider.GetRequiredService<IBBReportsService>();
+
+            List<BloodUsageEvidency> evidencies = service.GetEvidencies(15);
+
+            evidencies.ShouldNotBeNull();
+        }
+
+
 
 
     }

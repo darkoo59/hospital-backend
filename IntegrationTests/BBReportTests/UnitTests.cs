@@ -25,6 +25,22 @@ namespace IntegrationTests.BBReportTests
             Assert.Equal(ret, data);
        }
 
+        [Fact]
+        public void Generate_Report()
+        {
+            List<BloodUsageEvidency> data = GetBloodUsageEvidencyData();
+            BBReportsService service = new(CreateHospitalRepository(data));
+
+            String filePath = service.GenerateReport(data, 15);
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+                Assert.True(true);
+            }
+            else
+                Assert.True(false);
+        }
+
 
 
 
