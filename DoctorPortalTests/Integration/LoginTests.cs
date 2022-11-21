@@ -30,9 +30,9 @@ namespace HospitalTests
             var controller = SetupController(scope);
             UserDTO loginDTO = new UserDTO("username", "password");
 
-            var result = ((CreatedAtActionResult)controller.Login(loginDTO))?.Value as String;
+            var result = ((ObjectResult)controller.Login(loginDTO))?.Value as ContentResult;
             
-            Assert.NotNull(result);
+            Assert.NotNull(result.Content);
         }
         [Fact]
         public void Check_if_user_not_exist()
@@ -41,7 +41,7 @@ namespace HospitalTests
             var controller = SetupController(scope);
             UserDTO loginDTO = new UserDTO("username", "passwor");
 
-            var result = ((CreatedAtActionResult)controller.Login(loginDTO))?.Value as String;
+            var result = ((ObjectResult)controller.Login(loginDTO))?.Value as ContentResult;
            
             Assert.Null(result);
         }
