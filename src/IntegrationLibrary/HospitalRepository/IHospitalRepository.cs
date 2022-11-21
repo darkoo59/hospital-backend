@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodBankReports.Model;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.BloodBankReports.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

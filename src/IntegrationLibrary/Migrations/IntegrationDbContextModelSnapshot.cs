@@ -181,6 +181,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("QuantityInLiters")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("ReasonForAdjustment")
+                        .HasColumnType("text");
+
                     b.Property<string>("ReasonForRequest")
                         .HasColumnType("text");
 
@@ -229,6 +232,7 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 3,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 12.0,
+                            ReasonForAdjustment = "Ne moze",
                             ReasonForRequest = "treba 4",
                             State = 3
                         },
@@ -269,6 +273,7 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 3,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 12.0,
+                            ReasonForAdjustment = "Ne moze 2",
                             ReasonForRequest = "treba 8",
                             State = 3
                         });

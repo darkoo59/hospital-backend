@@ -1,9 +1,11 @@
 using System.Text;
 using IntegrationLibrary.BloodBanks;
+using System.Text.Json;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
+using IntegrationLibrary.Features.BloodBankRegister;
 using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
@@ -52,7 +54,7 @@ namespace IntegrationAPI
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
-            services.AddTransient<IEmailSender, BloodBankService>();
+            services.AddTransient<IBloodBankService, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
 

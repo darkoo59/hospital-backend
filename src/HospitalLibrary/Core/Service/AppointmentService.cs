@@ -9,17 +9,32 @@ namespace HospitalLibrary.Core.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IDoctorRepository _doctorRepository;
         private readonly IVacationRepository _vacationRepository;
         private readonly IWorkTimeRepository _workTimeRepository;
+        private readonly IDoctorService _doctorService;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository, IWorkTimeRepository workTimeRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository)
+        {
+            _appointmentRepository = appointmentRepository;
+        }
+
+        public AppointmentService(IDoctorService doctorService,IDoctorRepository doctorRepository,IWorkTimeRepository workTimeRepository, IAppointmentRepository appointmentRepositroy)
+        {
+            _doctorService = doctorService;
+            _workTimeRepository = workTimeRepository;
+            _appointmentRepository = appointmentRepositroy;
+            _doctorRepository = doctorRepository;
+        }
+
+        public AppointmentService(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository, IVacationRepository vacationRepository, IWorkTimeRepository workTimeRepository, IDoctorService doctorService)
         {
             _appointmentRepository = appointmentRepository;
             _vacationRepository = vacationRepository;
             _workTimeRepository = workTimeRepository;
+            _doctorService = doctorService;
+            _doctorRepository = doctorRepository;
         }
-
-
 
         public void Create(Appointment appointment)
         {
@@ -36,7 +51,6 @@ namespace HospitalLibrary.Core.Service
                 _appointmentRepository.Update(appointment);
             }
         }
-
 
         private bool IsAppointmentValid(Appointment appointment)
         {
@@ -58,9 +72,6 @@ namespace HospitalLibrary.Core.Service
             return _appointmentRepository.GetById(id);
         }
 
-
-
-
         private bool IsAppointmentAvailable(Appointment appointment)
         {
             bool isAvailable = true;
@@ -74,8 +85,6 @@ namespace HospitalLibrary.Core.Service
             }
             return isAvailable;
         }
-
-
 
         public bool IsDoctorOnVacation(Appointment appointment)
         {
@@ -105,13 +114,11 @@ namespace HospitalLibrary.Core.Service
             return isAvailable;
         }
 
-
-
-
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
-        {
+        {  
             return appointment.Start >= workTime.StartDate && appointment.Start <= workTime.EndDate && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
         }
+
 
         private static bool IsWeekend(DateTime date)
         {
@@ -132,5 +139,99 @@ namespace HospitalLibrary.Core.Service
             }
             return doctorAppointments;
         }
+        //Start functions in user story Create VacationRequest
+        public List<Appointment> GetAppointmentInVacationDateRange(int? doctorId, DateTime startDate, DateTime endDate)
+        {
+            List<Appointment> doctorAppointments = GetDoctorAppointments((int)doctorId);
+            List<Appointment> doctorAppointmentsInVacationDate = new List<Appointment>();
+
+            foreach (Appointment appointment in doctorAppointments)
+            {
+                if (appointment.Start > startDate && appointment.Start < endDate)
+                {
+                    doctorAppointmentsInVacationDate.Add(appointment);
+                }
+            }
+            return doctorAppointmentsInVacationDate;
+        }
+
+        public bool IsDoctorScheduledInVacationDateRange(int doctorId,DateTime dateStart,DateTime dateEnd)
+        {
+            List<Appointment> appointments = GetDoctorAppointments((int)doctorId);
+
+            foreach(Appointment appointment in appointments)
+            {
+                if(appointment.Start >= dateStart && appointment.Start <= dateEnd)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsDoctorScheduled(Appointment appointment, int doctorId)
+        {
+            List<Appointment> appointments = GetDoctorAppointments(doctorId);
+
+            foreach (Appointment app in appointments)
+            {
+                if (app.Start == appointment.Start)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void MakeTransfer(Appointment appointment, int doctorId)
+        {
+            appointment.DoctorId = doctorId;
+            _appointmentRepository.Update(appointment);
+        }
+
+        public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
+        {
+            WorkTime doctorWorkTime = new WorkTime();
+            List<Doctor> doctors = _doctorService.GetAll().ToList();
+            List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
+            int counter = 0;
+
+            foreach (Doctor doctor in doctors)
+            {
+                foreach(WorkTime workTime in workTimes)
+                {
+                    if (workTime.DoctorId.Equals(doctor.DoctorId))
+                    {
+                        doctorWorkTime = workTime;
+                    }
+                }
+                
+                foreach (Appointment appointment in appointmentsInVacationDate)
+                {
+                    
+                    Doctor originalAppointmentDoctor = _doctorRepository.GetById((int)appointment.DoctorId);
+                    
+                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && originalAppointmentDoctor.SpecializationId == doctor.SpecializationId && IsDoctorWorking(appointment,doctorWorkTime) == true)
+                    {
+                        counter++;
+                    }
+                    if (counter == appointmentsInVacationDate.Count())
+                    {
+                        foreach (Appointment app in appointmentsInVacationDate)
+                        {
+                            MakeTransfer(app, doctor.DoctorId);
+                            counter = counter - 1;
+                            if (counter == 0)
+                            {
+                                return true;
+                            }
+                        }
+
+                    }
+                }
+            }
+            return false;
+        } 
     }
 }
+
