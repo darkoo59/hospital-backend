@@ -7,10 +7,10 @@ using IntegrationAPI;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using IntegrationLibrary.Features.BloodRequests.DTO;
-using IntegrationLibrary.Core.Enums;
 using System.Threading.Tasks;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
+using IntegrationLibrary.Features.Blood.Enums;
 
 namespace IntegrationTests.BloodRequestTests
 {

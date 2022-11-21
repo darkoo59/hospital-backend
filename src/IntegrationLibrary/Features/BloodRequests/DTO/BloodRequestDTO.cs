@@ -1,5 +1,5 @@
-﻿using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using System;

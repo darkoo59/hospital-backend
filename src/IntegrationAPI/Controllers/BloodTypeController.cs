@@ -1,11 +1,11 @@
-﻿using IntegrationLibrary.Core.Service;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using IntegrationLibrary.Core.Enums;
 using IntegrationLibrary.Features.BloodBankReports.Service;
 using System.Collections.Generic;
 using IntegrationLibrary.Features.BloodBankReports.Model;
+using IntegrationLibrary.Features.Blood.Service;
+using IntegrationLibrary.Features.Blood.Enums;
 
 namespace IntegrationAPI.Controllers
 {
@@ -43,8 +43,8 @@ namespace IntegrationAPI.Controllers
         [HttpGet("test")]
         public async Task<IActionResult> GetTestValues()
         {
-            List<BloodUsageEvidency> data = await _bbReportsService.GetEvidencies();
-            _bbReportsService.GenerateReport(data);
+            List<BloodUsageEvidency> data = await _bbReportsService.GetEvidencies(20);
+            _bbReportsService.GenerateReport(data, 20);
             return Ok(data);
         }
 

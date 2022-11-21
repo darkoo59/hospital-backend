@@ -1,9 +1,10 @@
-﻿using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
+using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,6 +15,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<User> Users { get; set; }
         public DbSet<BankNews> BankNews { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
 
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
@@ -46,6 +48,16 @@ namespace IntegrationLibrary.Settings
                 new BloodRequest() { Id = 6, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 6", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED },
                 new BloodRequest() { Id = 7, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 7", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED },
                 new BloodRequest() { Id = 8, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 8", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE, ReasonForAdjustment = "Ne moze 2" }
+            );
+            modelBuilder.Entity<ReportConfiguration>().HasIndex(r => r.BloodBankId).IsUnique();
+            modelBuilder.Entity<ReportConfiguration>().HasData(
+                new ReportConfiguration()
+                {
+                    Id = 1, 
+                    ReportFrequency = "* * * * *", 
+                    ReportPeriod = 3,
+                    BloodBankId = 2
+                }
             );
             base.OnModelCreating(modelBuilder);
         }

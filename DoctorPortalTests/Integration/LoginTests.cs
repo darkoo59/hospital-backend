@@ -1,0 +1,49 @@
+﻿using HospitalAPI;
+using HospitalAPI.Controllers;
+using HospitalAPI.Dtos;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Security;
+using HospitalLibrary.SharedModel;
+using HospitalTests.setup;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using Xunit;
+
+namespace HospitalTests
+{
+    public class LoginTests : BaseIntegrationTest
+    {
+        public LoginTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+
+        private static UsersController SetupController(IServiceScope scope)
+        {
+            return new UsersController(scope.ServiceProvider.GetRequiredService<IUserService>(), scope.ServiceProvider.GetRequiredService<IGenericMapper<User, UserDTO>>());
+        }
+
+        [Fact]
+        public void Check_if_user_exist()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            UserDTO loginDTO = new UserDTO("username", "password");
+
+            var result = ((CreatedAtActionResult)controller.Login(loginDTO))?.Value as String;
+            
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public void Check_if_user_not_exist()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            UserDTO loginDTO = new UserDTO("username", "passwor");
+
+            var result = ((CreatedAtActionResult)controller.Login(loginDTO))?.Value as String;
+           
+            Assert.Null(result);
+        }
+    }
+}

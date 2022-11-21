@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Enums;
+﻿using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankReports.Model;
 using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationLibrary.HospitalRepository;
@@ -20,7 +20,7 @@ namespace IntegrationTests.BBReportTests
             List<BloodUsageEvidency> data = GetBloodUsageEvidencyData();
             BBReportsService service = new(CreateHospitalRepository(data));
 
-            List<BloodUsageEvidency> ret = await service.GetEvidencies();
+            List<BloodUsageEvidency> ret = await service.GetEvidencies(1000);
 
             Assert.Equal(ret, data);
        }
