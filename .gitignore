@@ -548,3 +548,5 @@ $RECYCLE.BIN/
 .idea
 
 src/IntegrationAPI/PDFs/*
+src/IntegrationAPI/*.pdf
+src/IntegrationLibrary/*.pdf

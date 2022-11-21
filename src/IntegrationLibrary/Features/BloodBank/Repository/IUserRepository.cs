@@ -1,7 +1,7 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Features.BloodBank.Model;
 using System.Collections.Generic;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Features.BloodBank.Repository
 {
     public interface IUserRepository
     {

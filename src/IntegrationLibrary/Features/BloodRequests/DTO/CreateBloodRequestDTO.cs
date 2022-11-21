@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Enums;
+﻿using IntegrationLibrary.Features.Blood.Enums;
 using System;
 
 namespace IntegrationLibrary.Features.BloodRequests.DTO

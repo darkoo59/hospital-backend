@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Enums;
+﻿using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using System;
 

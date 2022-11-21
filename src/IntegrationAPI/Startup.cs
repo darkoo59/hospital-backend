@@ -1,9 +1,12 @@
 using System.Text;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Features.Blood.Service;
+using IntegrationLibrary.Features.BloodBank.Repository;
+using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
-using IntegrationLibrary.Features.BloodBankRegister;
+using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
