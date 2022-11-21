@@ -1,6 +1,4 @@
 using System.Text;
-using IntegrationLibrary.BloodBanks;
-using System.Text.Json;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Features.BloodBankNews.Repository;

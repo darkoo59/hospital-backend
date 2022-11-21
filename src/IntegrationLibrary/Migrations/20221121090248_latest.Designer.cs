@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221121083112_new")]
-    partial class @new
+    [Migration("20221121090248_latest")]
+    partial class latest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,6 +183,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("QuantityInLiters")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("ReasonForAdjustment")
+                        .HasColumnType("text");
+
                     b.Property<string>("ReasonForRequest")
                         .HasColumnType("text");
 
@@ -231,6 +234,7 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 3,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 12.0,
+                            ReasonForAdjustment = "Ne moze",
                             ReasonForRequest = "treba 4",
                             State = 3
                         },
@@ -271,6 +275,7 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 3,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 12.0,
+                            ReasonForAdjustment = "Ne moze 2",
                             ReasonForRequest = "treba 8",
                             State = 3
                         });
