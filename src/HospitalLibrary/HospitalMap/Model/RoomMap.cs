@@ -1,13 +1,13 @@
-﻿using HospitalLibrary.HospitalMap.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace HospitalLibrary.HospitalMap.Model
 {
-    public class Room
+    public class RoomMap
     {
         public int Id { get; set; }
 
@@ -18,14 +18,10 @@ namespace HospitalLibrary.Core.Model
         [Range(1, 10)]
         public int FloorId { get; set; }
         public string BuildingId { get; set; }
-        public string Description { get; set; }
-        public RoomType Type { get; set; }
-        //public List<Equipment> EquipmentList { get; set;}
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public ICollection<Bed> Beds { get; set; }
 
     }
 }

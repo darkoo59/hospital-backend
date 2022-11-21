@@ -4,6 +4,8 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.SharedModel;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.HospitalMap.Repository;
+using HospitalLibrary.HospitalMap.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,6 +50,9 @@ namespace HospitalAPI
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
 
+            services.AddScoped<IRoomMapRepository, RoomMapRepository>();
+            services.AddScoped<IRoomMapService, RoomMapService>();
+
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
 
@@ -75,6 +80,13 @@ namespace HospitalAPI
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IGenericMapper<BloodRequest, BloodRequestDTO>, BloodRequestMapper>();
 
+            services.AddScoped<IVacationRequestService, VacationRequestService>();
+            services.AddScoped<IVacationRequestRepository, VacationRequestRepository>();
+            services.AddScoped<IGenericMapper<VacationRequest, VacationRequestDTO>, VacationRequestMapper>();
+
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IGenericMapper<Doctor, DoctorDTO>, DoctorMapper>();
 
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
