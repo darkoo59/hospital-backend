@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IntegrationLibrary.Core.Enums
+namespace IntegrationLibrary.Features.Blood.Enums
 {
     public enum BloodType
     {

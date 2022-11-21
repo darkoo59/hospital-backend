@@ -1,11 +1,11 @@
-﻿using IntegrationLibrary.Core.Enums;
+﻿using IntegrationLibrary.Features.Blood.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Features.Blood.Service
 {
     public interface IBloodService
     {

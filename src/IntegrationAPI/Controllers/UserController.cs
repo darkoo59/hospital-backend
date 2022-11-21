@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Security.Claims;
-using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using System.Threading.Tasks;
-using IntegrationLibrary.Core.DTO;
+using IntegrationLibrary.Features.BloodBank.Service;
+using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.BloodBank.DTO;
 
 namespace IntegrationAPI.Controllers
 {

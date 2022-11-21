@@ -1,6 +1,5 @@
 ﻿using System;
 using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Utility;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +11,12 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
-using IntegrationLibrary.Core.DTO;
-using IntegrationLibrary.Features.BloodBankRegister;
+using IntegrationLibrary.Features.BloodBank.Repository;
+using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.BloodBank.DTO;
+using IntegrationLibrary.Features.Blood.Service;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Features.BloodBank.Service
 {
     public class UserService : IUserService
     {
@@ -35,7 +36,7 @@ namespace IntegrationLibrary.Core.Service
                 throw new User.DuplicateEMailException("User with given email already exists.");
             }
             user.Password = KeyGenerator.GetUniqueKey(16);
-            
+
 
             string key = await BloodService.GenerateApiKey(user);
             _userRepository.Register(user);
@@ -44,9 +45,9 @@ namespace IntegrationLibrary.Core.Service
 
             mailContent.ToEmail = user.Email;
             mailContent.Body = mailContent.Body + user.Password + ". API_KEY: " + key;
-            
+
             await _mailService.SendEmail(mailContent);
-            
+
             return true;
         }
 
@@ -56,7 +57,7 @@ namespace IntegrationLibrary.Core.Service
 
             if (user == null)
                 return null;
-            
+
             var token = Generate(user, config);
 
             return token;

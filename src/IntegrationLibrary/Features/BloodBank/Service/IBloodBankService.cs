@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Features.BloodBankRegister
+namespace IntegrationLibrary.Features.BloodBank
 {
     public interface IBloodBankService
     {

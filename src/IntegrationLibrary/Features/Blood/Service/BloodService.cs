@@ -1,32 +1,26 @@
-﻿using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Repository;
-using Microsoft.AspNetCore.Http;
-using Org.BouncyCastle.Ocsp;
+﻿using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.BloodBank.Service;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Features.Blood.Service
 {
     public class BloodService : IBloodService
     {
         private readonly IUserService _userService;
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        public BloodService(IUserService userService) {
+        public BloodService(IUserService userService)
+        {
             _userService = userService;
         }
 
 
-        public async Task<Boolean> CheckBloodTypeAvailability(BloodType bloodType, string apiKey, float bloodQuantity, string email)
+        public async Task<bool> CheckBloodTypeAvailability(BloodType bloodType, string apiKey, float bloodQuantity, string email)
         {
             User user = _userService.GetBy(email);
             string ret;
@@ -47,7 +41,8 @@ namespace IntegrationLibrary.Core.Service
             if (response.StatusCode.Equals(System.Net.HttpStatusCode.Unauthorized))
             {
                 throw new Exception("API key is not valid");
-            }else if (!response.IsSuccessStatusCode)
+            }
+            else if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Error while communicating with ISA server");
             }
@@ -56,7 +51,7 @@ namespace IntegrationLibrary.Core.Service
 
             return JsonSerializer.Deserialize<bool>(ret);
         }
-        
+
         public static async Task<string> GenerateApiKey(User user)
         {
             HttpContent content = new StringContent(user.Email);

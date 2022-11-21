@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace IntegrationLibrary.Core.Model
+namespace IntegrationLibrary.Features.BloodBank.Model
 {
     public class User
     {
