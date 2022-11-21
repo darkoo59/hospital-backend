@@ -1,12 +1,15 @@
 ﻿using HospitalAPI.Mappers;
 using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Service;
 using System.Collections.Generic;
 
 namespace HospitalAPI.Registration.Mappers
 {
     public class PatientMapper : IGenericMapper<Patient, PatientDTO>
     {
+        public DoctorService _doctorService;
+
         public Patient ToModel(PatientDTO patientDTO)
         {
             Patient patient = new Patient();
@@ -16,6 +19,15 @@ namespace HospitalAPI.Registration.Mappers
             patient.Email = patientDTO.Email;
             patient.Password = patientDTO.Password;
             patient.IsAccountActivated = patientDTO.IsAccountActivated;
+            patient.Doctors.Add(_doctorService.GetById(patientDTO.DoctorsId));
+
+
+
+
+            //MedicalRecord tempMR = new MedicalRecord(, , patientDTO.DoctorsId);
+
+            //patient.MedicalRecord = tempMR.Id;
+
 
             return patient;
         }

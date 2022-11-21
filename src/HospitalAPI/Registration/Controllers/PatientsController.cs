@@ -34,19 +34,6 @@ namespace HospitalAPI.Registration.Controllers
             return Ok(_patientMapper.ToDTO(_patientService.GetById(id)));
         }
 
-        /*// POST api/patients/register
-        [HttpPost, Route("register")]
-        public ActionResult Create(Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _patientService.Register(patient);
-            return CreatedAtAction("GetById", new { id = patient.PatientId }, patient);
-        }*/
-
         // POST api/patients
         [HttpPost]
         public async Task<ActionResult> Register(Patient patient)
@@ -56,7 +43,7 @@ namespace HospitalAPI.Registration.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _patientService.Register(patient);
+            await _patientService.Register(patient, _patientMapper);
             return CreatedAtAction("GetById", new { id = patient.PatientId }, patient);
         }
 
