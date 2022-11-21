@@ -94,6 +94,30 @@ namespace HospitalAPI.Controllers
             }
             return null;
         }
+        [HttpPut("VacationApproveId/{VacationRequestid}")]
+        public ActionResult ApproveRequest(int VacationRequestid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _vacationRequestService.approveVacationRequest(VacationRequestid);
+
+            return Ok(VacationRequestid);
+        }
+
+        [HttpPut("VacationNotApproveId/{VacationRequestid}")]
+        public ActionResult NotApproveRequest(int VacationRequestid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _vacationRequestService.NotapproveVacationRequest(VacationRequestid);
+
+            return Ok(VacationRequestid);
+        }
+
 
 
 

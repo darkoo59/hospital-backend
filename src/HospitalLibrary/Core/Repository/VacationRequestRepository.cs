@@ -40,5 +40,37 @@ namespace HospitalLibrary.Core.Repository
             _context.VacationRequests.Remove(vacationRequest);
             _context.SaveChanges();
         }
+        public void  approveVacationRequest(int vacationRequestId)
+        {
+            foreach (VacationRequest vacationRequest in _context.VacationRequests)
+            {
+                if (vacationRequest.VacationRequestId == vacationRequestId)
+                {
+                    vacationRequest.Status = Enums.VacationRequestStatus.Approved;
+                    _context.Update(vacationRequest);
+
+                }
+            
+            }
+            _context.SaveChanges();
+ 
+        }
+        public void NotapproveVacationRequest(int vacationRequestId)
+        {
+            foreach (VacationRequest vacationRequest in _context.VacationRequests)
+            {
+                if (vacationRequest.VacationRequestId == vacationRequestId)
+                {
+              
+                    vacationRequest.Status = Enums.VacationRequestStatus.NotApproved;
+                    _context.Update(vacationRequest);
+
+                }
+
+            }
+            _context.SaveChanges();
+
+        }
+
     }
 }

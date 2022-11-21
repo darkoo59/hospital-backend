@@ -91,5 +91,16 @@ namespace HospitalLibrary.Core.Service
                 _vacationRequestRepository.Create(vacationRequest);
             }
         }
+        public void approveVacationRequest(int vacationRequestId)
+        {
+           _vacationRequestRepository.approveVacationRequest(vacationRequestId);
+        
+        }
+        public void NotapproveVacationRequest(int vacationRequestId)
+        {
+            _vacationRequestRepository.NotapproveVacationRequest(vacationRequestId);
+
+
+        }
     }
 }
