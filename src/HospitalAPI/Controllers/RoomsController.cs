@@ -113,6 +113,19 @@ namespace HospitalAPI.Controllers
             _roomService.Create(room);
             return CreatedAtAction("GetById", new { id = room.Id }, room);
         }
+        
+        [HttpPatch]
+        public ActionResult MoveEquipment(MoveRequest moveRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _roomService.MoveEquipment(moveRequest);
+            return Ok(moveRequest);
+        }
+      
+        
 
         // PUT api/rooms/2
         [HttpPut("{id}")]
@@ -139,6 +152,9 @@ namespace HospitalAPI.Controllers
 
             return Ok(room);
         }
+       
+ 
+
 
         // DELETE api/rooms/2
         [HttpDelete("{id}")]
