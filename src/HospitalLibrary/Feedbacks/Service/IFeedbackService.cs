@@ -1,7 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Feedbacks.Model;
 using System.Collections.Generic;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Feedbacks.Service
 {
     public interface IFeedbackService
     {

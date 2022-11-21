@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -13,6 +14,6 @@ namespace HospitalLibrary.Core.Model
         public Specialization Specialization { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
-
+        public ICollection<Patient> Patients { get; set; }
     }
 }

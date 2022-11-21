@@ -43,6 +43,7 @@ namespace HospitalLibrary.Core.Service
         {
             _roomRepository.Update(room);
         }
+        
 
         public void Delete(Room room)
         {
@@ -62,6 +63,12 @@ namespace HospitalLibrary.Core.Service
 		public IEnumerable<Room> SearchForEquipment(string query)
         {
             return _roomRepository.SearchForEquipment(query);
+        }
+        public void MoveEquipment(MoveRequest moveRequest)
+        {
+            _roomRepository.MoveEquipment(moveRequest);
+        
+        
         }
     }
 }

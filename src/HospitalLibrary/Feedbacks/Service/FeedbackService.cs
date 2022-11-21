@@ -1,9 +1,9 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+﻿using HospitalLibrary.Feedbacks.Model;
+using HospitalLibrary.Feedbacks.Repository;
 using System.Collections.Generic;
 
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Feedbacks.Service
 {
     public class FeedbackService : IFeedbackService
     {
