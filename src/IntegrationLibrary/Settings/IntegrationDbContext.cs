@@ -1,7 +1,3 @@
-using System;
-using IntegrationLibrary.Core.Enums;
-using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBankNews.Enums;

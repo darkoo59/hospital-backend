@@ -1,6 +1,4 @@
 using System.Text;
-using IntegrationLibrary.Core.Repository;
-using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Features.Blood.Service;
 using IntegrationLibrary.Features.BloodBank.Repository;
 using IntegrationLibrary.Features.BloodBank.Service;
