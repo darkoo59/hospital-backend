@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Patient> GetAll();
         Patient GetById(int id);
-        void Create(Patient patient);
+        void Register(Patient patient);
         void Update(Patient patient);
         void Delete(Patient patient);
     }

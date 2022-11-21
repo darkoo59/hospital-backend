@@ -11,6 +11,9 @@ namespace HospitalAPI.Mappers
             patient.PatientId = patientDTO.PatientId;
             patient.Name = patientDTO.Name;
             patient.Surname = patientDTO.Surname;
+            patient.Email = patientDTO.Email;
+            patient.Password = patientDTO.Password;
+            patient.IsAccountActivated = patientDTO.IsAccountActivated;
 
             return patient;
         }
@@ -23,6 +26,9 @@ namespace HospitalAPI.Mappers
                 patient.PatientId = patientDTO.PatientId;
                 patient.Name = patientDTO.Name;
                 patient.Surname = patientDTO.Surname;
+                patient.Email = patientDTO.Email;
+                patient.Password = patientDTO.Password;
+                patient.IsAccountActivated = patientDTO.IsAccountActivated;
                 patients.Add(patient);
             }
 
@@ -34,6 +40,9 @@ namespace HospitalAPI.Mappers
             patientDTO.PatientId = patient.PatientId;
             patientDTO.Name = patient.Name;
             patientDTO.Surname = patient.Surname;
+            patientDTO.Email = patient.Email;
+            patientDTO.Password= patient.Password;
+            patientDTO.IsAccountActivated = patient.IsAccountActivated;
 
             return patientDTO;
         }
@@ -46,6 +55,9 @@ namespace HospitalAPI.Mappers
                 patientDTO.PatientId = patient.PatientId;
                 patientDTO.Name = patient.Name;
                 patientDTO.Surname = patient.Surname;
+                patientDTO.Email = patient.Email;
+                patientDTO.Password = patient.Password;
+                patientDTO.IsAccountActivated = patient.IsAccountActivated;
 
                 patientDTOs.Add(patientDTO);
             }
