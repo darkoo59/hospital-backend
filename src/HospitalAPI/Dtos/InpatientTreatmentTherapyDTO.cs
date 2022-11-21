@@ -9,7 +9,7 @@ namespace HospitalAPI.Dtos
     {
         public int InpatientTreatmentTherapyId { get; set; }
         public int InpatientTreatmentId { get; set; }
-        public InpatientTreatmentDTO InpatientTreatmentDTO { get; set; }
+        public InpatientTreatmentDTO InpatientTreatment { get; set; }
         public List<MedicineTherapyDTO> MedicineTherapies { get; set; }
         public List<BloodTherapyDTO> BloodTherapies { get; set; }
     }

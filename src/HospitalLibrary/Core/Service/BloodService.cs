@@ -75,6 +75,18 @@ namespace HospitalLibrary.Core.Service
         {
             return _bloodRepository.GetByBloodType(bloodType);
         }
+
+        public bool IsThereEnoughBlood(BloodTherapy bloodTherapy)
+        {
+            foreach (var blood in GetAll())
+            {
+                if (bloodTherapy.BloodType == blood.BloodType && bloodTherapy.QuantityInLiters < blood.QuantityInLiters)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 }

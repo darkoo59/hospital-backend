@@ -28,7 +28,7 @@ namespace HospitalLibrary.Core.Service
 
         public IEnumerable<InpatientTreatmentTherapy> GetAll()
         {
-            throw new NotImplementedException();
+            return _inpatientTreatmentTherapyRepository.GetAll();
         }
 
         public InpatientTreatmentTherapy GetById(int id)
@@ -38,7 +38,19 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(InpatientTreatmentTherapy inpatientTreatmentTherapy)
         {
-            throw new NotImplementedException();
+                _inpatientTreatmentTherapyRepository.Update(inpatientTreatmentTherapy);
+        }
+
+        public InpatientTreatmentTherapy GetInpatientTreatmentTherapy(int id)
+        {
+            foreach (var inpatientTreatmentTherapy in GetAll())
+            {
+                if (inpatientTreatmentTherapy.InpatientTreatmentId == id)
+                {
+                    return inpatientTreatmentTherapy;
+                }
+            }
+            return null;
         }
     }
 }

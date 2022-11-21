@@ -23,7 +23,7 @@ namespace IntegrationAPI.BBConnections
                 await mailService.SendEmail(mailContent);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

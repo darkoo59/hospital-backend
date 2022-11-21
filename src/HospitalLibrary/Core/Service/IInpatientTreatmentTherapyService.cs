@@ -14,5 +14,6 @@ namespace HospitalLibrary.Core.Service
         void Create(InpatientTreatmentTherapy inpatientTreatmentTherapy);
         void Update(InpatientTreatmentTherapy inpatientTreatmentTherapy);
         void Delete(InpatientTreatmentTherapy inpatientTreatmentTherapy);
+        InpatientTreatmentTherapy GetInpatientTreatmentTherapy(int id);
     }
 }

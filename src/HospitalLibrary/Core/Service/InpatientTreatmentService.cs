@@ -41,5 +41,17 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }
+
+        public InpatientTreatment GetInpatientTreatment(int patientId)
+        {
+            foreach (var inpatientTreatment in GetAll())
+            {
+                if (inpatientTreatment.PatientId == patientId)
+                {
+                    return inpatientTreatment;
+                }
+            }
+            return null;
+        }
     }
 }

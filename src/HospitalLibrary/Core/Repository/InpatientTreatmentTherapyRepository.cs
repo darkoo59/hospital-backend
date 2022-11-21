@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,9 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<InpatientTreatmentTherapy> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.InpatientTreatmentTherapies.Include(i => i.InpatientTreatment).Include(i => i.InpatientTreatment.Patient)
+                .Include(i => i.InpatientTreatment.Room).Include(i => i.InpatientTreatment.Room.Beds).Include(i => i.InpatientTreatment.Bed)
+                .Include(i => i.MedicineTherapies).Include(i => i.BloodTherapies).ToList();
         }
 
         public InpatientTreatmentTherapy GetById(int id)
@@ -39,7 +42,17 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(InpatientTreatmentTherapy inpatientTreatmentTherapy)
         {
-            throw new NotImplementedException();
+            _context.Entry(inpatientTreatmentTherapy).State = EntityState.Modified;
+
+            try
+            {
+                _context.Update(inpatientTreatmentTherapy);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }

@@ -16,11 +16,16 @@ namespace HospitalAPI.Controllers
     public class InpatientTreatmentsController : ControllerBase
     {
         private readonly IInpatientTreatmentService _inpatientTreatmentService;
+        private readonly IInpatientTreatmentTherapyService _inpatientTreatmentTherapyService;
         private readonly IGenericMapper<InpatientTreatment, InpatientTreatmentDTO> _inpatientTreatmentMapper;
-
-        public InpatientTreatmentsController(IInpatientTreatmentService inpatientTreatmentService, IGenericMapper<InpatientTreatment, InpatientTreatmentDTO> inpatientTreatmentMapper) {
+        private readonly IGenericMapper<InpatientTreatmentTherapy, InpatientTreatmentTherapyDTO> _inpatientTreatmentTherapyMapper;
+        private readonly IBedService _bedService;
+        public InpatientTreatmentsController(IInpatientTreatmentService inpatientTreatmentService, IBedService bedService, IInpatientTreatmentTherapyService inpatientTreatmentTherapyService, IGenericMapper<InpatientTreatment, InpatientTreatmentDTO> inpatientTreatmentMapper, IGenericMapper<InpatientTreatmentTherapy, InpatientTreatmentTherapyDTO> inpatientTreatmentTherapyMapper) {
             _inpatientTreatmentService = inpatientTreatmentService;
+            _inpatientTreatmentTherapyService = inpatientTreatmentTherapyService;
+            _bedService = bedService;
             _inpatientTreatmentMapper = inpatientTreatmentMapper;
+            _inpatientTreatmentTherapyMapper = inpatientTreatmentTherapyMapper;
         }
 
         [HttpGet]
@@ -39,6 +44,14 @@ namespace HospitalAPI.Controllers
 
             InpatientTreatment inpatientTreatment = _inpatientTreatmentMapper.ToModel(inpatientTreatmentDTO);
             _inpatientTreatmentService.Create(inpatientTreatment);
+
+            _bedService.SetIsNotAvailable(inpatientTreatment.BedId);
+
+            InpatientTreatmentTherapyDTO inpatientTreatmentTherapyDTO = new InpatientTreatmentTherapyDTO();
+            inpatientTreatmentTherapyDTO.InpatientTreatmentId = _inpatientTreatmentService.GetInpatientTreatment(inpatientTreatmentDTO.PatientId).InpatientTreatmentId;
+            inpatientTreatmentTherapyDTO.MedicineTherapies = new List<MedicineTherapyDTO>();
+            inpatientTreatmentTherapyDTO.BloodTherapies = new List<BloodTherapyDTO>();
+            _inpatientTreatmentTherapyService.Create(_inpatientTreatmentTherapyMapper.ToModel(inpatientTreatmentTherapyDTO));
             return CreatedAtAction("GetById", new { id = inpatientTreatment.InpatientTreatmentId }, inpatientTreatment);
         }
 

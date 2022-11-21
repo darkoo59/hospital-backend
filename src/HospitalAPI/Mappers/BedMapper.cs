@@ -11,7 +11,7 @@ namespace HospitalAPI.Mappers
             BedDTO bedDTO = new BedDTO();
             bedDTO.BedId = bed.BedId;
             bedDTO.Label = bed.Label;
-
+            bedDTO.IsAvailable = bed.IsAvailable;
             return bedDTO;
         }
 
@@ -22,6 +22,7 @@ namespace HospitalAPI.Mappers
                 BedDTO bedDTO = new BedDTO();
                 bedDTO.BedId = bed.BedId;
                 bedDTO.Label = bed.Label;
+                bedDTO.IsAvailable = bed.IsAvailable;
                 bedDTOs.Add(bedDTO);
             }
 
@@ -33,7 +34,7 @@ namespace HospitalAPI.Mappers
             Bed bed = new Bed();
             bed.BedId = bedDTO.BedId;
             bed.Label = bedDTO.Label;
-
+            bed.IsAvailable = bedDTO.IsAvailable;
             return bed;
         }
 
@@ -44,6 +45,7 @@ namespace HospitalAPI.Mappers
                 Bed bed = new Bed();
                 bed.BedId = bedDTO.BedId;
                 bed.Label = bedDTO.Label;
+                bed.IsAvailable = bedDTO.IsAvailable;
                 beds.Add(bed);
             }
 

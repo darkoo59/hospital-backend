@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                             AppointmentId = 1,
                             DoctorId = 1,
                             PatientId = 1,
-                            Start = new DateTime(2022, 11, 20, 1, 23, 13, 702, DateTimeKind.Local).AddTicks(4438)
+                            Start = new DateTime(2022, 11, 20, 20, 36, 18, 546, DateTimeKind.Local).AddTicks(2505)
                         });
                 });
 
@@ -283,6 +283,51 @@ namespace HospitalLibrary.Migrations
                             DateOfUsage = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorId = 1,
                             QuantityUsedInMililiters = 200.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 2,
+                            BloodType = 3,
+                            DateOfUsage = new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 300.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 3,
+                            BloodType = 6,
+                            DateOfUsage = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 450.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 4,
+                            BloodType = 0,
+                            DateOfUsage = new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 700.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 5,
+                            BloodType = 3,
+                            DateOfUsage = new DateTime(2022, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 180.0,
+                            ReasonForUsage = "Hearth surgery"
+                        },
+                        new
+                        {
+                            BloodUsageEvidencyId = 6,
+                            BloodType = 5,
+                            DateOfUsage = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            QuantityUsedInMililiters = 1100.0,
                             ReasonForUsage = "Hearth surgery"
                         });
                 });
