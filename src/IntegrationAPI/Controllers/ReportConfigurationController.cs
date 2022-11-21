@@ -29,5 +29,11 @@ namespace IntegrationAPI.Controllers
             _configurationService.CreateOrUpdateReportConfiguration(configuration);
             return Ok();
         }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            return Ok(_configurationService.GetConfigurationById(id));
+        }
     }
 }
