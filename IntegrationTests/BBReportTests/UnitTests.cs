@@ -15,12 +15,12 @@ namespace IntegrationTests.BBReportTests
     public class UnitTests
     {
        [Fact]
-       public async void Get_All_Blood_Usage_Evidencies()
+       public void Get_All_Blood_Usage_Evidencies()
        {
             List<BloodUsageEvidency> data = GetBloodUsageEvidencyData();
             BBReportsService service = new(CreateHospitalRepository(data));
 
-            List<BloodUsageEvidency> ret = await service.GetEvidencies(1000);
+            List<BloodUsageEvidency> ret = service.GetEvidencies(1000);
 
             Assert.Equal(ret, data);
        }

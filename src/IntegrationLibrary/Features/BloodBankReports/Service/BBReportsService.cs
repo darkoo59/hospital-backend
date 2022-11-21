@@ -118,7 +118,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             await _httpClient.PostAsync(url,requestContent);
         }
 
-        public async Task<List<BloodUsageEvidency>> GetEvidencies(int days)
+        public List<BloodUsageEvidency> GetEvidencies(int days)
         {
             List<BloodUsageEvidency> allEvidency = _hospitalRepository.GetAllEvidency().Result;
             List<BloodUsageEvidency> ret = new List<BloodUsageEvidency>();
@@ -136,7 +136,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
 
         public  void SendReport(int days)
         {
-            List<BloodUsageEvidency> desiredEvidency = GetEvidencies(days).Result;
+            List<BloodUsageEvidency> desiredEvidency = GetEvidencies(days);
             GenerateReport(desiredEvidency, days);
 
             //TO DO: Dodati da se generisani pdf-ovi salju

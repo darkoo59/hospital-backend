@@ -14,13 +14,10 @@ namespace IntegrationAPI.Controllers
     public class BloodTypeController : ControllerBase
     {
         private readonly IBloodService _bloodTypeService;
-        //ZA OBRISATI:
-        private readonly IBBReportsService _bbReportsService;
 
-        public BloodTypeController(IBloodService bloodTypeService, IBBReportsService bbReportsService)
+        public BloodTypeController(IBloodService bloodTypeService)
         {
             _bloodTypeService = bloodTypeService;
-            _bbReportsService = bbReportsService;
         }
 
         [HttpGet]
@@ -36,15 +33,6 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ModelState);
             }
             bool data = await _bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity, email);
-            return Ok(data);
-        }
-
-        //ZA OBRISATI:
-        [HttpGet("test")]
-        public async Task<IActionResult> GetTestValues()
-        {
-            List<BloodUsageEvidency> data = await _bbReportsService.GetEvidencies(20);
-            _bbReportsService.GenerateReport(data, 20);
             return Ok(data);
         }
 
