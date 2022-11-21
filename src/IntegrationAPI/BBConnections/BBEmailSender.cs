@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using IntegrationLibrary.BloodBanks;
+using IntegrationLibrary.Features.BloodBank;
 
 namespace IntegrationAPI.BBConnections
 {
@@ -10,8 +10,8 @@ namespace IntegrationAPI.BBConnections
     [ApiController]
     public class BBEmailSender : ControllerBase
     {
-        private readonly IEmailSender mailService;
-        public BBEmailSender(IEmailSender mailService)
+        private readonly IBloodBankService mailService;
+        public BBEmailSender(IBloodBankService mailService)
         {
             this.mailService = mailService;
         }
@@ -23,7 +23,7 @@ namespace IntegrationAPI.BBConnections
                 await mailService.SendEmail(mailContent);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

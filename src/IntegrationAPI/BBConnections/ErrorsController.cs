@@ -8,6 +8,8 @@ using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using static IntegrationLibrary.Features.BloodBankNews.Model.BankNews;
+using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.Blood.Enums;
 
 namespace IntegrationAPI.BBConnections
 {
@@ -26,6 +28,7 @@ namespace IntegrationAPI.BBConnections
             else if (exception is UnauthorizedAccessException) code = HttpStatusCode.Unauthorized;
             else if (exception is User.DuplicateEMailException) code = HttpStatusCode.MultipleChoices;
             else if (exception is User.BadPasswordException) code = HttpStatusCode.Unauthorized;
+            else if (exception is InvalidBloodTypeException) code = HttpStatusCode.BadRequest;
             else if (exception is FileNotFoundException) code = HttpStatusCode.NotFound;
             else if (exception is NotImplementedException) code = HttpStatusCode.NotImplemented;
             else if (exception is BadHttpRequestException) code = HttpStatusCode.BadRequest;

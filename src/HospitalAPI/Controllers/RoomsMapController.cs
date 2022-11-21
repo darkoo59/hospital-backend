@@ -1,5 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.HospitalMap.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

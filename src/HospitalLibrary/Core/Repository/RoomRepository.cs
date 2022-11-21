@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.HospitalMap.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -103,7 +104,17 @@ namespace HospitalLibrary.Core.Repository
             return equipmentList;
         }
 
-        public IEnumerable<Room> SearchForEquipment(string query)
+		public IEnumerable<Equipment> GetAllEquipment()
+		{
+			List<Equipment> equipmentList = new List<Equipment>();
+			foreach (Equipment equipment in _context.Equipment)
+			{
+			    equipmentList.Add(equipment);
+			}
+            return equipmentList;
+		}
+
+		public IEnumerable<Room> SearchForEquipment(string query)
         {
             List<Room> rooms = new List<Room>();
             List<Equipment> equipmentList = new List<Equipment>();

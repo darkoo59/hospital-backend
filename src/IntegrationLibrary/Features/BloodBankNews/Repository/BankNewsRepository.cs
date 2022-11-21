@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodBankNews.Model;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,12 @@ namespace IntegrationLibrary.Features.BloodBankNews.Repository
         public BankNewsRepository(IntegrationDbContext context)
         {
             _context = context;
+        }
+
+        public void Add(BankNews bankNews)
+        {
+            _context.BankNews.Add(bankNews);
+            _context.SaveChanges();
         }
 
         public IEnumerable<BankNews> GetAll()

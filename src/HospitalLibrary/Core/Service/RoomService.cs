@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.HospitalMap.Model;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -54,7 +55,12 @@ namespace HospitalLibrary.Core.Service
             return _roomRepository.GetEquipment(id);
         }
 
-        public IEnumerable<Room> SearchForEquipment(string query)
+		public IEnumerable<Equipment> GetAllEquipment()
+		{
+			return _roomRepository.GetAllEquipment();
+		}
+
+		public IEnumerable<Room> SearchForEquipment(string query)
         {
             return _roomRepository.SearchForEquipment(query);
         }

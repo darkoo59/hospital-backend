@@ -1,17 +1,20 @@
 using System.Text;
-using System.Text.Json;
-using IntegrationLibrary.BloodBanks;
-using IntegrationLibrary.Core.Repository;
-using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Utility;
+using IntegrationLibrary.Features.Blood.Service;
+using IntegrationLibrary.Features.BloodBank.Repository;
+using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.BloodBankNews.Repository;
 using IntegrationLibrary.Features.BloodBankNews.Service;
+using IntegrationLibrary.Features.BloodBank;
+using IntegrationLibrary.Features.BloodBankReports.Service;
+using IntegrationLibrary.Features.BloodRequests.Repository;
+using IntegrationLibrary.Features.BloodRequests.Service;
+using IntegrationLibrary.Features.ReportConfigurations.Repository;
+using IntegrationLibrary.Features.ReportConfigurations.Service;
+using IntegrationLibrary.HospitalRepository;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing.Matching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,7 +52,8 @@ namespace IntegrationAPI
                 });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient<IEmailSender, BloodBankService>();
+            services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
+            services.AddTransient<IBloodBankService, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
 
@@ -64,6 +68,16 @@ namespace IntegrationAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBankNewsService, BankNewsService>();
             services.AddScoped<IBankNewsRepository, BankNewsRepository>();
+            services.AddHostedService<RabbitMQService>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+
+            services.AddScoped<IHospitalRepository, HospitalRepository>();
+
+            services.AddScoped<IBBReportsService, BBReportsService>();
+            services.AddScoped<IReportConfigurationService, ReportConfigurationService>();
+            services.AddScoped<IReportConfigurationRepository, ReportConfigurationRepository>();
+
 
         }
 
@@ -77,6 +91,9 @@ namespace IntegrationAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
+
+
+ 
 
             if (env.IsDevelopment())
             {

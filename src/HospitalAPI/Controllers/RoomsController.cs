@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.HospitalMap.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -20,6 +21,11 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+            List<Room> rooms = (List<Room>)_roomService.GetAll();
+            foreach (var room in rooms)
+            {
+                System.Console.WriteLine(room.Beds);
+            }
             return Ok(_roomService.GetAll());
         }
 
@@ -69,7 +75,19 @@ namespace HospitalAPI.Controllers
             return Ok(_roomService.GetEquipment(id));
         }
 
-        [HttpGet("equipmentSearch/{query}")]
+		// GET api/rooms/equipment
+		[HttpGet("equipment")]
+		public ActionResult GetAllEquipment()
+		{
+			List<Equipment> equipmentList = (List<Equipment>)_roomService.GetAllEquipment();
+			if (equipmentList.Count == 0)
+			{
+				return NotFound();
+			}
+			return Ok(_roomService.GetAllEquipment());
+		}
+
+		[HttpGet("equipmentSearch/{query}")]
         public ActionResult SearchForEquipment(string query)
         {
             List<Room> roomList = (List<Room>)_roomService.SearchForEquipment(query);
