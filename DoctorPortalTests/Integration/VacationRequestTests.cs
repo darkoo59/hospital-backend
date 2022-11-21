@@ -9,6 +9,7 @@ using HospitalTests.setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -24,7 +25,7 @@ namespace HospitalTests.Integration
             return new VacationRequestController(scope.ServiceProvider.GetRequiredService<IVacationRequestService>(), scope.ServiceProvider.GetRequiredService<IGenericMapper<VacationRequest, VacationRequestDTO>>());
         }
 
-        [Fact,Priority(2)]
+        [Fact]
         public void Create_correct_vacation_request()
         {
             using var scope = Factory.Services.CreateScope();
@@ -33,7 +34,21 @@ namespace HospitalTests.Integration
 
             var result = ((CreatedAtActionResult)controller.Create(vacationRequestDTO))?.Value as VacationRequest;
 
-            Assert.NotNull(result);
+            Xunit.Assert.Equal(result.Urgency, "NoUrgent");
         }
+
+        [Fact]
+        public void Create_bad_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            VacationRequestDTO vacationRequestDTO = new VacationRequestDTO(4, DateTime.Now.AddDays(4), DateTime.Now.AddDays(15), 2, "Approved", "NoUrgent", "NoReason");
+
+            var result = ((BadRequestResult)controller.Create(vacationRequestDTO))?.ShouldBeOfType<BadRequestResult>();
+
+            result.ShouldBeOfType<BadRequestResult>();
+        }
+
+
     }
 }
