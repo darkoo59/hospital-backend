@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HospitalAPI.Dtos
+namespace HospitalAPI.Registration.Dtos
 {
     public class UserDTO
     {

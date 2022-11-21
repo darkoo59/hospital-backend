@@ -23,6 +23,12 @@ using HospitalLibrary.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Registration.Repository;
+using HospitalLibrary.Registration.Service;
+using HospitalAPI.Registration.Mappers;
+using HospitalAPI.Registration.Dtos;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 
 namespace HospitalAPI
 {

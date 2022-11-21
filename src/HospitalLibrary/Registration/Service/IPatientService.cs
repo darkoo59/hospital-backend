@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Registration.Service
 {
     public interface IPatientService
     {

@@ -1,12 +1,12 @@
-﻿using HospitalAPI.Dtos;
-using HospitalAPI.Mappers;
+﻿using HospitalAPI.Mappers;
+using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+using HospitalLibrary.Registration.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Registration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,7 +29,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("getById/{id}")]
-        public ActionResult GetById(int id) 
+        public ActionResult GetById(int id)
         {
             return Ok(_patientMapper.ToDTO(_patientService.GetById(id)));
         }

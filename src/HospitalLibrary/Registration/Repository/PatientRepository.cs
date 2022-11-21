@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Registration.Repository
 {
     public class PatientRepository : IPatientRepository
     {
