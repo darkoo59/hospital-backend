@@ -23,10 +23,10 @@ namespace HospitalAPI.Controllers
             _doctorMapper = doctorMapper;
         }
         
-        public DoctorController(IDoctorService doctorService)
+        /*public DoctorController(IDoctorService doctorService)
         {
             _doctorService = doctorService;
-        }
+        }*/
 
         [HttpGet]
         public ActionResult GetAll()
