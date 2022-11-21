@@ -43,7 +43,7 @@ namespace HospitalAPI.Registration.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _patientService.Register(patient, _patientMapper);
+            await _patientService.Register(patient);
             return CreatedAtAction("GetById", new { id = patient.PatientId }, patient);
         }
 
