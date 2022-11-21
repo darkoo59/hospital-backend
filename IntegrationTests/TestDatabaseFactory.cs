@@ -1,5 +1,5 @@
 ﻿using IntegrationAPI;
-using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;

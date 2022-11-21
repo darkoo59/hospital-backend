@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221119150453_new")]
-    partial class @new
+    [Migration("20221121090248_latest")]
+    partial class latest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -278,6 +278,39 @@ namespace IntegrationLibrary.Migrations
                             ReasonForAdjustment = "Ne moze 2",
                             ReasonForRequest = "treba 8",
                             State = 3
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.ReportConfigurations.Model.ReportConfiguration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ReportFrequency")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ReportPeriod")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId")
+                        .IsUnique();
+
+                    b.ToTable("ReportConfigurations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BloodBankId = 2,
+                            ReportFrequency = "* * * * *",
+                            ReportPeriod = 3
                         });
                 });
 #pragma warning restore 612, 618

@@ -1,6 +1,6 @@
 ﻿using Gehtsoft.PDFFlow.Builder;
 using Gehtsoft.PDFFlow.Models.Enumerations;
-using IntegrationLibrary.Core.Enums;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankReports.DTO;
 using IntegrationLibrary.Features.BloodBankReports.Mapper;
 using IntegrationLibrary.Features.BloodBankReports.Model;
