@@ -111,5 +111,10 @@ namespace IntegrationLibrary.Features.BloodBank.Service
         {
             return _userRepository.GetBy(email);
         }
+
+        public User GetById(long id)
+        {
+            return _userRepository.GetById(id);
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Gehtsoft.PDFFlow.Builder;
 using Gehtsoft.PDFFlow.Models.Enumerations;
 using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.BloodBankReports.DTO;
 using IntegrationLibrary.Features.BloodBankReports.Mapper;
 using IntegrationLibrary.Features.BloodBankReports.Model;
@@ -21,20 +23,23 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
     public class BBReportsService : IBBReportsService
     {
         private static readonly HttpClient _httpClient = new HttpClient();
+        private readonly IUserService _userService;
 
         private readonly IHospitalRepository _hospitalRepository;
 
 
-        public BBReportsService(IHospitalRepository hospitalRepository)
+        public BBReportsService(IHospitalRepository hospitalRepository, IUserService userService)
         {
             this._hospitalRepository = hospitalRepository;
+            this._userService = userService;
         }
 
-        public String GenerateReport(List<BloodUsageEvidency> evidencies, int days)
+        public String GenerateReport(int bankId,List<BloodUsageEvidency> evidencies, int days)
         {
+            User bloodBank = _userService.GetById(bankId);
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
             var folderPath = Environment.CurrentDirectory + "/PDFs";
-            var filePath = Path.Combine(folderPath, "Report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
+            var filePath = Path.Combine(folderPath, "Report-"+bankId+ "-" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
                 + "-" + DateTime.Now.Year.ToString() + "-" +
                 DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".pdf");
 
@@ -42,7 +47,7 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
 
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
-            section.AddParagraph("Report for the past " + days.ToString() + " days").SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
+            section.AddParagraph("Report for the past " + days.ToString() + " days for "+ bloodBank.AppName).SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
 
             foreach (BloodUsageEvidency evidency in evidencies)
             {
@@ -107,14 +112,18 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             return filePath;
         }
 
-        public async void SendReportInRequest(String filePath)
+        public async void SendReportInRequest(int bankId,String filePath)
         {
-            var url = "http://localhost:6555/api/blood-use-report";
+            User bloodBank = _userService.GetById(bankId);
+            if (bloodBank.Server.Equals("localhost:6555"))
+            {
+                var url = "http://" + bloodBank.Server + "/api/blood-use-report";
 
-            using var requestContent = new MultipartFormDataContent();
-            using var fileStream = File.OpenRead(filePath);
-            requestContent.Add(new StreamContent(fileStream), "file", filePath);
-            await _httpClient.PostAsync(url,requestContent);
+                using var requestContent = new MultipartFormDataContent();
+                using var fileStream = File.OpenRead(filePath);
+                requestContent.Add(new StreamContent(fileStream), "file", filePath);
+                await _httpClient.PostAsync(url, requestContent);
+            }
         }
 
         public List<BloodUsageEvidency> GetEvidencies(int days)
@@ -133,12 +142,11 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
             return ret;
         }
 
-        public  void SendReport(int days)
+        public  void SendReport(int bankId,int days)
         {
             List<BloodUsageEvidency> desiredEvidency = GetEvidencies(days);
-            String filePath = GenerateReport(desiredEvidency, days);
-            SendReportInRequest(filePath);
-            //TO DO: Dodati da se generisani pdf-ovi salju
+            String filePath = GenerateReport(bankId,desiredEvidency, days);
+            SendReportInRequest(bankId,filePath);
         }
     }
 }

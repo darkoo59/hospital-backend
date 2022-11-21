@@ -35,5 +35,10 @@ namespace IntegrationLibrary.Features.BloodBank.Repository
             user.Password = password;
             _context.SaveChanges();
         }
+
+        public User GetById(long id)
+        {
+            return GetAll().FirstOrDefault(user => user.Id == id);
+        }
     }
 }

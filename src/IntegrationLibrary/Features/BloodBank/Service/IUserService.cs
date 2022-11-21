@@ -13,5 +13,6 @@ namespace IntegrationLibrary.Features.BloodBank.Service
         IEnumerable<User> GetAll();
         User GetBy(string email);
         void ChangePassword(string email, ChangePasswordDTO dto);
+        User GetById(long id);
     }
 }
