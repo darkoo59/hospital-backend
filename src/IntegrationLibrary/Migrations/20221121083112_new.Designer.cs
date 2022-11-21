@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221111161351_blood-requests")]
-    partial class bloodrequests
+    [Migration("20221121083112_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,6 +186,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("ReasonForRequest")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
@@ -198,25 +201,111 @@ namespace IntegrationLibrary.Migrations
                             DoctorId = 1,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 1.0,
-                            ReasonForRequest = "treba 1"
+                            ReasonForRequest = "treba 1",
+                            State = 0
                         },
                         new
                         {
                             Id = 2,
-                            BloodType = 3,
+                            BloodType = 2,
                             DoctorId = 1,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 4.0,
-                            ReasonForRequest = "treba 2"
+                            ReasonForRequest = "treba 2",
+                            State = 1
                         },
                         new
                         {
                             Id = 3,
-                            BloodType = 5,
+                            BloodType = 7,
                             DoctorId = 2,
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
-                            ReasonForRequest = "treba 3"
+                            ReasonForRequest = "treba 3",
+                            State = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BloodType = 7,
+                            DoctorId = 3,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 12.0,
+                            ReasonForRequest = "treba 4",
+                            State = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BloodType = 0,
+                            DoctorId = 1,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 1.0,
+                            ReasonForRequest = "treba 5",
+                            State = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BloodType = 2,
+                            DoctorId = 1,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 4.0,
+                            ReasonForRequest = "treba 6",
+                            State = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BloodType = 7,
+                            DoctorId = 2,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 9.0,
+                            ReasonForRequest = "treba 7",
+                            State = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            BloodType = 7,
+                            DoctorId = 3,
+                            FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            QuantityInLiters = 12.0,
+                            ReasonForRequest = "treba 8",
+                            State = 3
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.ReportConfigurations.Model.ReportConfiguration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ReportFrequency")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ReportPeriod")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId")
+                        .IsUnique();
+
+                    b.ToTable("ReportConfigurations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BloodBankId = 2,
+                            ReportFrequency = "* * * * *",
+                            ReportPeriod = 3
                         });
                 });
 #pragma warning restore 612, 618

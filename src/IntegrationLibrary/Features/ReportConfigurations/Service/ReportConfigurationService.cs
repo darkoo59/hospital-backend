@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.ReportConfigurations.Model;
+﻿using System;
+using IntegrationLibrary.Features.ReportConfigurations.Model;
 using System.Collections.Generic;
 using IntegrationLibrary.Features.ReportConfigurations.Repository;
 
@@ -15,27 +16,53 @@ namespace IntegrationLibrary.Features.ReportConfigurations.Service
 
         public void CreateConfiguration(ReportConfiguration configuration)
         {
-            throw new System.NotImplementedException();
+            _reportConfigurationRepository.Create(configuration);
         }
 
         public void DeleteConfiguration(int id)
         {
-            throw new System.NotImplementedException();
+            _reportConfigurationRepository.Delete(id);
         }
 
         public ReportConfiguration GetConfigurationById(int id)
         {
-            throw new System.NotImplementedException();
+            return _reportConfigurationRepository.GetById(id);
         }
 
         public IEnumerable<ReportConfiguration> GetReportConfigurations()
         {
-            throw new System.NotImplementedException();
+            return _reportConfigurationRepository.GetAll();
         }
 
         public void UpdateConfiguration(ReportConfiguration configuration)
         {
-            throw new System.NotImplementedException();
+            foreach (var cfg in GetReportConfigurations())
+            {
+                if (configuration.BloodBankId == cfg.BloodBankId)
+                {
+                    _reportConfigurationRepository.Update(configuration);
+                }
+            }
+        }
+        public void CreateOrUpdateReportConfiguration(ReportConfiguration configuration)
+        {
+            
+
+
+            foreach (var cfg in GetReportConfigurations())
+            {
+                if (configuration.BloodBankId == cfg.BloodBankId)
+                {
+                    cfg.ReportPeriod = configuration.ReportPeriod;
+                    cfg.ReportFrequency = configuration.ReportFrequency;
+
+                    _reportConfigurationRepository.Update(cfg);
+                    return;
+                    //UpdateConfiguration(configuration);
+                }
+            }
+
+            CreateConfiguration(configuration);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace IntegrationLibrary.Features.ReportConfigurations.Service
         void CreateConfiguration(ReportConfiguration configuration);
         void UpdateConfiguration(ReportConfiguration configuration);
         void DeleteConfiguration(int id);
+        void CreateOrUpdateReportConfiguration(ReportConfiguration configuration);
     }
 }

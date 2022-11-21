@@ -1,6 +1,7 @@
 ﻿using IntegrationAPI;
 using IntegrationAPI.Controllers;
 using IntegrationLibrary.Features.BloodBankNews.Service;
+using IntegrationLibrary.Features.ReportConfigurations.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -20,7 +21,7 @@ namespace IntegrationTests.ReportConfigurationTests
 
         private static ReportConfigurationController SetupController(IServiceScope scope)
         {
-            return new BankNewsController(scope.ServiceProvider.GetRequiredService<IBankNewsService>());
+            return new ReportConfigurationController(scope.ServiceProvider.GetRequiredService<IReportConfigurationService>());
         }
 
     }

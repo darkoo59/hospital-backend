@@ -51,28 +51,14 @@ namespace IntegrationLibrary.Settings
                 new BloodRequest() { Id = 7, BloodType = BloodType.O_MINUS, QuantityInLiters = 9, ReasonForRequest = "treba 7", FinalDate = new System.DateTime(), DoctorId = 2, State = BloodRequestState.DECLINED },
                 new BloodRequest() { Id = 8, BloodType = BloodType.O_MINUS, QuantityInLiters = 12, ReasonForRequest = "treba 8", FinalDate = new System.DateTime(), DoctorId = 3, State = BloodRequestState.UPDATE }
             );
+            modelBuilder.Entity<ReportConfiguration>().HasIndex(r => r.BloodBankId).IsUnique();
             modelBuilder.Entity<ReportConfiguration>().HasData(
                 new ReportConfiguration()
                 {
                     Id = 1, 
-                    ReportFrequency = 7, 
-                    ReportRange = new DateRange(
-                        new DateTime(2022, 11, 3, 0, 0, 0), 
-                        new DateTime(2022, 11, 10, 0, 0, 0))
-                },
-                new ReportConfiguration() { 
-                    Id = 2, 
-                    ReportFrequency = 30, 
-                    ReportRange = new DateRange(
-                        new DateTime(2022, 10, 1, 0, 0, 0), 
-                        new DateTime(2022, 11, 1, 0, 0, 0))
-                },
-                new ReportConfiguration() { 
-                    Id = 3, 
-                    ReportFrequency = 14, 
-                    ReportRange = new DateRange(
-                        new DateTime(2022, 10, 16, 0, 0, 0), 
-                        new DateTime(2022, 11, 30, 0, 0, 0))
+                    ReportFrequency = "* * * * *", 
+                    ReportPeriod = 3,
+                    BloodBankId = 2
                 }
             );
             base.OnModelCreating(modelBuilder);
