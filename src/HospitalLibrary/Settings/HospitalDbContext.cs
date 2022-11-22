@@ -234,7 +234,8 @@ namespace HospitalLibrary.Settings
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
+                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient},
+                new User() { UserId = 2, Username = "milutinovicn21@gmail.com", Password = "123", Role = UserRole.patient }
             );
 
 
