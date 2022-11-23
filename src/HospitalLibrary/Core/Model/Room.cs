@@ -25,7 +25,7 @@ namespace HospitalLibrary.Core.Model
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public ICollection<Bed> Beds { get; set; }
+        public List<Bed> Beds { get; set; }
 
     }
 }

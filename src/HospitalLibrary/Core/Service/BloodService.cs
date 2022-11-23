@@ -52,7 +52,7 @@ namespace HospitalLibrary.Core.Service
             return blood.QuantityInLiters >= (usedQuantityInMililitersLiters/1000);
         }
 
-        public void ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
         {
 
             Blood blood = _bloodRepository.GetByBloodType(bloodUsageEvidency.BloodType);
@@ -60,13 +60,15 @@ namespace HospitalLibrary.Core.Service
             {
                  blood.QuantityInLiters = Math.Round(blood.QuantityInLiters - bloodUsageEvidency.QuantityUsedInMililiters/1000 , 3);
                 _bloodRepository.Update(blood);
+                return true;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Blood amount is out of range.");
+                return false;
 
             }
-
+        
+        
 
 
         }
@@ -75,6 +77,63 @@ namespace HospitalLibrary.Core.Service
         {
             return _bloodRepository.GetByBloodType(bloodType);
         }
+
+        public bool IsThereEnoughBlood(BloodTherapy bloodTherapy)
+        {
+            foreach (var blood in GetAll())
+            {
+                if (bloodTherapy.BloodType == blood.BloodType && bloodTherapy.QuantityInLiters < blood.QuantityInLiters)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        IEnumerable<Blood> IBloodService.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        Blood IBloodService.GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Blood IBloodService.GetByBloodType(BloodType bloodType)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.Create(Blood blood)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.Update(Blood blood)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.Delete(Blood blood)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IBloodService.IsThereEnoughBlood(BloodTherapy bloodTherapy)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*bool IBloodService.ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        {
+            throw new NotImplementedException();
+        }*/
     }
 
 }

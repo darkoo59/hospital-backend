@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace HospitalTests.Unit
     public class BloodUsageEvidencyTests
     {
 
+
         [Fact]
         public void Get_all_blood_usage_evidency()
         {
@@ -22,8 +24,9 @@ namespace HospitalTests.Unit
 
             IEnumerable<BloodUsageEvidency> ret = service.GetAll();
 
-            Assert.Equal(ret, requests);
+            Xunit.Assert.Equal(ret, requests);
         }
+
 
         [Fact]
         public void Get_blood_usage_evidency_by_id()
@@ -33,7 +36,7 @@ namespace HospitalTests.Unit
 
             BloodUsageEvidency bloodUsageEvidency = service.GetById(1);
 
-            Assert.Equal(bloodUsageEvidency, requests[0]);
+            Xunit.Assert.Equal(bloodUsageEvidency, requests[0]);
         }
 
 
@@ -59,6 +62,6 @@ namespace HospitalTests.Unit
         }
 
         #endregion
-
+        
     }
 }

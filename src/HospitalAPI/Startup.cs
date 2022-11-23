@@ -78,6 +78,13 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
             services.AddScoped<IGenericMapper<Appointment, AppointmentDTO>, AppointmentMapper>();
+            services.AddScoped<IGenericMapper<Bed, BedDTO>, BedMapper>();
+            services.AddScoped<IGenericMapper<Room, RoomDTO>, RoomMapper>();
+            services.AddScoped<IGenericMapper<InpatientTreatment, InpatientTreatmentDTO>, InpatientTreatmentMapper>();
+            services.AddScoped<IGenericMapper<Medicine, MedicineDTO>, MedicineMapper>();
+            services.AddScoped<IGenericMapper<MedicineTherapy, MedicineTherapyDTO>, MedicineTherapyMapper>();
+            services.AddScoped<IGenericMapper<BloodTherapy, BloodTherapyDTO>, BloodTherapyMapper>();
+            services.AddScoped<IGenericMapper<InpatientTreatmentTherapy, InpatientTreatmentTherapyDTO>, InpatientTreatmentTherapyMapper>();
 
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
@@ -113,6 +120,18 @@ namespace HospitalAPI
             services.AddScoped<IBloodUsageEvidencyService, BloodUsageEvidencyService>();
             services.AddScoped<IBloodUsageEvidencyRepository, BloodUsageEvidencyRepository>();
             services.AddScoped<IGenericMapper<BloodUsageEvidency, BloodUsageEvidencyDTO>, BloodUsageEvidencyMapper>();
+
+            services.AddScoped<IInpatientTreatmentService, InpatientTreatmentService>();
+            services.AddScoped<IInpatientTreatmentRepository, InpatientTreatmentRepository>();
+
+            services.AddScoped<IInpatientTreatmentTherapyService, InpatientTreatmentTherapyService>();
+            services.AddScoped<IInpatientTreatmentTherapyRepository, InpatientTreatmentTherapyRepository>();
+
+            services.AddScoped<IBedRepository, BedRepository>();
+            services.AddScoped<IBedService, BedService>();
+
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<IMedicineService, MedicineService>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();

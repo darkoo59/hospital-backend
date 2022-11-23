@@ -1,8 +1,11 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalAPI.Dtos;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.HospitalMap.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalAPI.Controllers
 {
@@ -11,22 +14,19 @@ namespace HospitalAPI.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly IRoomService _roomService;
+        private readonly IGenericMapper<Room, RoomDTO> _roomMapper;
 
-        public RoomsController(IRoomService roomService)
+        public RoomsController(IRoomService roomService, IGenericMapper<Room, RoomDTO> roomMapper)
         {
             _roomService = roomService;
+            _roomMapper = roomMapper;
         }
 
         // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {
-            List<Room> rooms = (List<Room>)_roomService.GetAll();
-            foreach (var room in rooms)
-            {
-                System.Console.WriteLine(room.Beds);
-            }
-            return Ok(_roomService.GetAll());
+            return Ok(_roomMapper.ToDTO(_roomService.GetAll().ToList()));
         }
 
         // GET api/rooms/2
@@ -113,6 +113,19 @@ namespace HospitalAPI.Controllers
             _roomService.Create(room);
             return CreatedAtAction("GetById", new { id = room.Id }, room);
         }
+        
+        [HttpPatch]
+        public ActionResult MoveEquipment(MoveRequest moveRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _roomService.MoveEquipment(moveRequest);
+            return Ok(moveRequest);
+        }
+      
+        
 
         // PUT api/rooms/2
         [HttpPut("{id}")]
@@ -139,6 +152,9 @@ namespace HospitalAPI.Controllers
 
             return Ok(room);
         }
+       
+ 
+
 
         // DELETE api/rooms/2
         [HttpDelete("{id}")]

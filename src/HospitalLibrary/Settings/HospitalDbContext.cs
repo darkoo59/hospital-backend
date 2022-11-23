@@ -30,6 +30,11 @@ namespace HospitalLibrary.Settings
         public DbSet<User> Users { get; set; }
         public DbSet<Blood> Bloods { get; set; }
         public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<BloodTherapy> BloodTherapies { get; set; }
+        public DbSet<MedicineTherapy> MedicineTherapies { get; set; }
+        public DbSet<InpatientTreatment> InpatientTreatments { get; set; }
+        public DbSet<InpatientTreatmentTherapy> InpatientTreatmentTherapies { get; set; }
 
 
 
@@ -195,9 +200,9 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<Bed>().HasData(
 
-                new Bed() { BedId = 1, Label = "201B1" },
-                new Bed() { BedId = 2, Label = "201B2" },
-                new Bed() { BedId = 3, Label = "201B3" }
+                new Bed() { BedId = 1, Label = "201B1", IsAvailable = false },
+                new Bed() { BedId = 2, Label = "201B2", IsAvailable = true },
+                new Bed() { BedId = 3, Label = "201B3", IsAvailable = true }
 
             );
 
@@ -233,6 +238,23 @@ namespace HospitalLibrary.Settings
                new BloodUsageEvidency() { BloodUsageEvidencyId = 6, BloodType = BloodType.AB_MINUS, QuantityUsedInMililiters = 1100, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 }
             );
 
+            modelBuilder.Entity<Medicine>().HasData(
+
+                new Medicine() { MedicineId = 1, Name = "Aspirin", Manufacturer = "Galenika" },
+                new Medicine() { MedicineId = 2, Name = "Bromazepam", Manufacturer = "Hemofarm" },
+                new Medicine() { MedicineId = 3, Name = "Caffetin", Manufacturer = "Hemofarm" }
+
+            );
+
+            modelBuilder.Entity<InpatientTreatment>().HasData(
+
+               new InpatientTreatment() { InpatientTreatmentId = 1, PatientId = 1, ReasonForAdmission = "Headache", RoomId = 21, BedId = 1, DateOfAdmission = new System.DateTime(2022, 11, 18) }
+           );
+
+            modelBuilder.Entity<InpatientTreatmentTherapy>().HasData(
+
+               new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
+           );
             modelBuilder.Entity<User>().HasData(
                 new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient},
                 new User() { UserId = 2, Username = "milutinovicn21@gmail.com", Password = "123", Role = UserRole.patient }
@@ -240,7 +262,7 @@ namespace HospitalLibrary.Settings
 
 
 
-           base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

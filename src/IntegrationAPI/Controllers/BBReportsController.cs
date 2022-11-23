@@ -17,11 +17,9 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost("send-report")]
-        public IActionResult SendReport([FromForm] long bankId, [FromForm] int daysIncluded)
+        public ActionResult SendReport([FromForm] int bloodBankId, [FromForm] int reportPeriod)
         {
-            Console.WriteLine("Okinuto u " + DateTime.Now.Hour + " : " + DateTime.Now.Minute);
-            Console.WriteLine("ID Banke: " + bankId.ToString() + " //// Dani:" +  daysIncluded.ToString());
-            _bbReportsService.SendReport(daysIncluded);
+            _bbReportsService.SendReport(bloodBankId,reportPeriod);
 
             return Ok();
         }

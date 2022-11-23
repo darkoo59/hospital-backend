@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace HospitalLibrary.Core.Repository
         public VacationRequest GetById(int id);
         public void Create(VacationRequest vacationRequest);
         public void Delete(VacationRequest vacationRequest);
+        public void approveVacationRequest(int vacationRequestId);
+        public void NotapproveVacationRequest(int vacationRequestId);
     }
 }

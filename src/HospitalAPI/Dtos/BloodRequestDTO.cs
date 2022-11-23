@@ -27,5 +27,19 @@ namespace HospitalAPI.Dtos
             FinalDate = finalDate;
             DoctorId = doctorId;
         }
+        public BloodRequestDTO(string bloodType, double quantityInLiters, string reasonForRequest, DateTime finalDate, int doctorId)
+        {
+            BloodType = bloodType;
+            QuantityInLiters = quantityInLiters;
+            ReasonForRequest = reasonForRequest;
+            FinalDate = finalDate;
+            DoctorId = doctorId;
+        }
+
+
+
+
+
+
     }
 }

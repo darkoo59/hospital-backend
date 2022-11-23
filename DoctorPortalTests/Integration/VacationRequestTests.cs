@@ -30,7 +30,7 @@ namespace HospitalTests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            VacationRequestDTO vacationRequestDTO = new VacationRequestDTO(13,DateTime.Now.AddDays(10),DateTime.Now.AddDays(15),1,"Approved","NoUrgent","NoReason");
+            VacationRequestDTO vacationRequestDTO = new VacationRequestDTO(13, DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), 1, "Approved", "NoUrgent", "NoReason");
 
             var result = ((CreatedAtActionResult)controller.Create(vacationRequestDTO))?.Value as VacationRequest;
 
@@ -48,6 +48,31 @@ namespace HospitalTests.Integration
 
             result.ShouldBeOfType<BadRequestResult>();
         }
+
+
+        [Fact]
+        public void ApproveRequest()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int VacationRequestId = 2;
+            var result = controller.ApproveRequest(VacationRequestId);
+
+            Xunit.Assert.NotNull(result);
+
+        }
+        [Fact]
+        public void NotApproveRequest()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int VacationRequestId = 2;
+            var result = controller.NotApproveRequest(VacationRequestId);
+
+            Xunit.Assert.NotNull(result);
+
+        }
+
 
 
     }

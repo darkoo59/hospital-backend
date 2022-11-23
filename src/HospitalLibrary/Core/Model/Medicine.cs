@@ -11,7 +11,6 @@ namespace HospitalLibrary.Core.Model
         public int MedicineId { get; set; }
         public string Name { get; set; }
         public string Manufacturer { get; set; } 
-        public string RecommendedDose { get; set; }
 
     }
 }

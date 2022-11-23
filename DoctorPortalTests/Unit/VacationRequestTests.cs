@@ -21,7 +21,7 @@ namespace HospitalTests.Unit
 
             Assert.False(IsValid);
         }
-        
+
         [Fact]
         public void Check_vacation_request_valid_start_date()
         {
@@ -33,7 +33,7 @@ namespace HospitalTests.Unit
 
             Assert.True(IsValid);
         }
-        
+
         [Fact]
         public void Check_busy_doctor_on_vacation_date()
         {
@@ -44,7 +44,7 @@ namespace HospitalTests.Unit
             Appointment appointment = appointmentService.GetById(1);
             VacationRequest vacationRequest = vacationRequestService.GetById(3);
 
-            bool isBusy = appointmentService.IsDoctorScheduledInVacationDateRange((int)appointment.DoctorId, vacationRequest.StartDate,vacationRequest.EndDate);
+            bool isBusy = appointmentService.IsDoctorScheduledInVacationDateRange((int)appointment.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate);
 
             Assert.True(isBusy);
         }
@@ -76,12 +76,12 @@ namespace HospitalTests.Unit
             Appointment appointment = appointmentService1.GetById(3);
             appointmentsForTransfer.Add(appointment);
             AppointmentService appointmentService2 = new(doctorService, CreateDoctorRepository(doctors), CreateWorkTimeRepository(workTimes), CreateAppointmentRepository(appointments));
-            
+
             bool isSuccessful = appointmentService2.ChangeAppointmentDoctor(appointmentsForTransfer);
 
             Assert.Equal(appointment.DoctorId, 2);
         }
-        
+
         [Fact]
         public void Check_unsuccessful_transfer()
         {
@@ -99,6 +99,7 @@ namespace HospitalTests.Unit
 
             Assert.Equal(appointment.DoctorId, 3);
         }
+       
 
         #region private
 
@@ -154,7 +155,7 @@ namespace HospitalTests.Unit
             stubRepo.Setup(m => m.GetAll()).Returns(workTimes);
             stubRepo.Setup(m => m.GetById(1)).Returns(workTimes[0]);
             stubRepo.Setup(m => m.GetById(2)).Returns(workTimes[1]);
-           
+
             return stubRepo.Object;
         }
 
@@ -188,6 +189,13 @@ namespace HospitalTests.Unit
                 new Doctor() { DoctorId = 3, Name = "Mirko", Surname = "Marjanovic", SpecializationId = 3, RoomId = 3 },
             };
         }
+
+
+
+
+
+
+
         #endregion
     }
 }

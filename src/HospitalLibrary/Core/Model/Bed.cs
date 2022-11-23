@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Model
     {
         public int BedId { get; set; }
         public string Label { get; set; }
+        public bool IsAvailable { get; set; }
 
     }
 }
