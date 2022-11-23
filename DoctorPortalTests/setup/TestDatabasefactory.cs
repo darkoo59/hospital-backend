@@ -40,11 +40,7 @@ namespace HospitalTests.setup
 
         private static string CreateConnectionStringForTest()
         {
-<<<<<<< HEAD
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=andjela;";
-=======
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=grandprime061200;";
->>>>>>> dev
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)

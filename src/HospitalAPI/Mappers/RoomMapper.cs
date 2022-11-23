@@ -23,15 +23,15 @@ namespace HospitalAPI.Mappers
             roomDTO.FloorId = room.FloorId;
             roomDTO.BuildingId = room.BuildingId;
             roomDTO.Description = room.Description;
-            if (room.Type == HospitalLibrary.Core.Enums.RoomType.AppointmentRoom)
+            if (room.Type == HospitalLibrary.HospitalMap.Enums.RoomType.AppointmentRoom)
             {
                 roomDTO.Type = "Appointment room";
             }
-            else if (room.Type == HospitalLibrary.Core.Enums.RoomType.OperationRoom)
+            else if (room.Type == HospitalLibrary.HospitalMap.Enums.RoomType.OperationRoom)
             {
                 roomDTO.Type = "Operation room";
             }
-            else if (room.Type == HospitalLibrary.Core.Enums.RoomType.StorageRoom) {
+            else if (room.Type == HospitalLibrary.HospitalMap.Enums.RoomType.StorageRoom) {
                 roomDTO.Type = "Storage room";
             }
             roomDTO.X = room.X;
@@ -54,15 +54,15 @@ namespace HospitalAPI.Mappers
                 roomDTO.FloorId = room.FloorId;
                 roomDTO.BuildingId = room.BuildingId;
                 roomDTO.Description = room.Description;
-                if (room.Type == HospitalLibrary.Core.Enums.RoomType.AppointmentRoom)
+                if (room.Type == HospitalLibrary.HospitalMap.Enums.RoomType.AppointmentRoom)
                 {
                     roomDTO.Type = "Appointment room";
                 }
-                else if (room.Type == HospitalLibrary.Core.Enums.RoomType.OperationRoom)
+                else if (room.Type == HospitalLibrary.HospitalMap.Enums.RoomType.OperationRoom)
                 {
                     roomDTO.Type = "Operation room";
                 }
-                else if (room.Type == HospitalLibrary.Core.Enums.RoomType.StorageRoom)
+                else if (room.Type == HospitalLibrary.HospitalMap.Enums.RoomType.StorageRoom)
                 {
                     roomDTO.Type = "Storage room";
                 }
@@ -88,15 +88,15 @@ namespace HospitalAPI.Mappers
             room.Description = roomDTO.Description;
             if (roomDTO.Type.Equals("Appointment room"))
             { 
-                room.Type = HospitalLibrary.Core.Enums.RoomType.AppointmentRoom;
+                room.Type = HospitalLibrary.HospitalMap.Enums.RoomType.AppointmentRoom;
             }
             else if (roomDTO.Type.Equals("Operation room"))
             {
-                room.Type = HospitalLibrary.Core.Enums.RoomType.OperationRoom;
+                room.Type = HospitalLibrary.HospitalMap.Enums.RoomType.OperationRoom;
             }
             else if (roomDTO.Type.Equals("Storage room"))
             {
-                room.Type = HospitalLibrary.Core.Enums.RoomType.StorageRoom;
+                room.Type = HospitalLibrary.HospitalMap.Enums.RoomType.StorageRoom;
             }
             room.X = roomDTO.X;
             room.Y = roomDTO.Y;
@@ -119,15 +119,15 @@ namespace HospitalAPI.Mappers
                 room.Description = roomDTO.Description;
                 if (roomDTO.Type.Equals("Appointment room"))
                 {
-                    room.Type = HospitalLibrary.Core.Enums.RoomType.AppointmentRoom;
+                    room.Type = HospitalLibrary.HospitalMap.Enums.RoomType.AppointmentRoom;
                 }
                 else if (roomDTO.Type.Equals("Operation room"))
                 {
-                    room.Type = HospitalLibrary.Core.Enums.RoomType.OperationRoom;
+                    room.Type = HospitalLibrary.HospitalMap.Enums.RoomType.OperationRoom;
                 }
                 else if (roomDTO.Type.Equals("Storage room"))
                 {
-                    room.Type = HospitalLibrary.Core.Enums.RoomType.StorageRoom;
+                    room.Type = HospitalLibrary.HospitalMap.Enums.RoomType.StorageRoom;
                 }
                 room.X = roomDTO.X;
                 room.Y = roomDTO.Y;

@@ -1,4 +1,5 @@
 ﻿using HospitalAPI.Dtos;
+using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
 using System;
 using System.Collections.Generic;

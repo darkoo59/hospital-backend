@@ -28,24 +28,11 @@ namespace HospitalAPI.Registration.Controllers
             return Ok(_patientMapper.ToDTO(_patientService.GetAll().ToList()));
         }
 
-        [HttpGet("getById/{id}")]
+        [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
             return Ok(_patientMapper.ToDTO(_patientService.GetById(id)));
         }
-
-        /*// POST api/patients/register
-        [HttpPost, Route("register")]
-        public ActionResult Create(Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _patientService.Register(patient);
-            return CreatedAtAction("GetById", new { id = patient.PatientId }, patient);
-        }*/
 
         // POST api/patients
         [HttpPost]
