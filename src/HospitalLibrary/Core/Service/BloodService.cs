@@ -89,6 +89,51 @@ namespace HospitalLibrary.Core.Service
             }
             return false;
         }
+
+        IEnumerable<Blood> IBloodService.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        Blood IBloodService.GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Blood IBloodService.GetByBloodType(BloodType bloodType)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.Create(Blood blood)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.Update(Blood blood)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.Delete(Blood blood)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBloodService.ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IBloodService.IsThereEnoughBlood(BloodTherapy bloodTherapy)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*bool IBloodService.ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        {
+            throw new NotImplementedException();
+        }*/
     }
 
 }

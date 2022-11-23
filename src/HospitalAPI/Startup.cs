@@ -121,7 +121,6 @@ namespace HospitalAPI
             services.AddScoped<IBloodUsageEvidencyRepository, BloodUsageEvidencyRepository>();
             services.AddScoped<IGenericMapper<BloodUsageEvidency, BloodUsageEvidencyDTO>, BloodUsageEvidencyMapper>();
 
-<<<<<<< HEAD
             services.AddScoped<IInpatientTreatmentService, InpatientTreatmentService>();
             services.AddScoped<IInpatientTreatmentRepository, InpatientTreatmentRepository>();
 
@@ -134,11 +133,9 @@ namespace HospitalAPI
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
 
-=======
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGenericMapper<User, UserDTO>, UserMapper>();
->>>>>>> dev
 
             SetupAuth(services);
         }

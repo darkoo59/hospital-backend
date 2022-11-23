@@ -48,17 +48,17 @@ namespace HospitalAPI.Controllers
             Boolean isEnoughBlood;
             try
             {
-               isEnoughBlood = _bloodService.ChangeQuantity(bloodUsageEvidency);
+               //isEnoughBlood = _bloodService.ChangeQuantity(bloodUsageEvidency);
                 
             }
             catch
             {
                 return BadRequest();
             }
-            if (isEnoughBlood)
+            /*if (isEnoughBlood)
             {
                 _bloodUsageEvidencyService.Create(bloodUsageEvidency);
-            }
+            }*/
 
             return CreatedAtAction("GetById", new { id = bloodUsageEvidency.BloodUsageEvidencyId }, bloodUsageEvidency);
 

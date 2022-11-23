@@ -26,11 +26,8 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
-<<<<<<< HEAD
-=======
         public DbSet<VacationRequest> VacationRequests {get;set;}
         public DbSet<User> Users { get; set; }
->>>>>>> dev
         public DbSet<Blood> Bloods { get; set; }
         public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
@@ -241,7 +238,6 @@ namespace HospitalLibrary.Settings
                new BloodUsageEvidency() { BloodUsageEvidencyId = 6, BloodType = BloodType.AB_MINUS, QuantityUsedInMililiters = 1100, DateOfUsage = new System.DateTime(2022, 12, 13), ReasonForUsage = "Hearth surgery", DoctorId = 1 }
             );
 
-<<<<<<< HEAD
             modelBuilder.Entity<Medicine>().HasData(
 
                 new Medicine() { MedicineId = 1, Name = "Aspirin", Manufacturer = "Galenika" },
@@ -249,22 +245,6 @@ namespace HospitalLibrary.Settings
                 new Medicine() { MedicineId = 3, Name = "Caffetin", Manufacturer = "Hemofarm" }
 
             );
-
-           // modelBuilder.Entity<BloodTherapy>().HasData(
-
-           //     new BloodTherapy() { BloodTherapyId = 1, BloodType = BloodType.AB_PLUS, QuantityInLiters = 5, Start = new System.DateTime(2022, 11, 19), End = new System.DateTime(2022, 11, 25) },
-           //     new BloodTherapy() { BloodTherapyId = 2, BloodType = BloodType.B_MINUS, QuantityInLiters = 3, Start = new System.DateTime(2022, 11, 24), End = new System.DateTime(2022, 11, 27) },
-           //     new BloodTherapy() { BloodTherapyId = 3, BloodType = BloodType.O_MINUS, QuantityInLiters = 2, Start = new System.DateTime(2022, 11, 20), End = new System.DateTime(2022, 11, 28) }
-
-           // );
-
-           // modelBuilder.Entity<MedicineTherapy>().HasData(
-
-           //    new MedicineTherapy() { MedicineTherapyId = 1, MedicineId = 1, Dosage = "Once per day", Start = new System.DateTime(2022, 11, 18), End = new System.DateTime(2022, 12, 5) },
-           //    new MedicineTherapy() { MedicineTherapyId = 2, MedicineId = 2, Dosage = "Three times per day", Start = new System.DateTime(2022, 11, 17), End = new System.DateTime(2022, 12, 1) },
-           //    new MedicineTherapy() { MedicineTherapyId = 3, MedicineId = 3, Dosage = "Two times per day", Start = new System.DateTime(2022, 11, 15), End = new System.DateTime(2022, 12, 7) }
-
-           //);
 
             modelBuilder.Entity<InpatientTreatment>().HasData(
 
@@ -275,11 +255,9 @@ namespace HospitalLibrary.Settings
 
                new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
            );
-=======
             modelBuilder.Entity<User>().HasData(
                 new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
             );
->>>>>>> dev
 
 
 

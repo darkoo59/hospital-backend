@@ -18,6 +18,6 @@ namespace HospitalLibrary.Core.Service
         void Delete(Blood blood);
         public void ChangeQuantity(BloodUsageEvidency bloodUsageEvidency);
         bool IsThereEnoughBlood(BloodTherapy bloodTherapy);
-        public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency);
+        //public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency);
     }
 }
