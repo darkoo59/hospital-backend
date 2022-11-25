@@ -16,7 +16,6 @@ namespace HospitalLibrary.Core.Model
         }*/
 
         public int Id { get; set; }
-        public int DoctorsId { get; set; }
         public BloodType BloodType { get; set; }
         public ICollection<Allergen> Allergens { get; set; }
 

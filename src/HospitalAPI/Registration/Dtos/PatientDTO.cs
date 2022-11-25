@@ -9,8 +9,8 @@
         public string Password { get; set; }
         public bool IsAccountActivated { get; set; }
         public string BloodType { get; set; }
-        public int DoctorsId { get; set; }
         public int[] Allergens { get; set; }
+        public int DoctorsId { get; set; }
 
 
     }

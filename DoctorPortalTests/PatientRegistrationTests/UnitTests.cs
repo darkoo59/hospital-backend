@@ -18,7 +18,7 @@ namespace HospitalTests.PatientRegistrationTests
         {
             List<Patient> data = GetPatientsData();
 
-            PatientService service = new(CreatePatientsRepository(data), null);
+            PatientService service = new(CreatePatientsRepository(data), null, null, null);
 
             IEnumerable<Patient> ret = service.GetAll();
 
@@ -29,7 +29,7 @@ namespace HospitalTests.PatientRegistrationTests
         public void Activate_account()
         {
             List<Patient> data = GetPatientsData();
-            PatientService service = new(CreatePatientsRepository(data), null);
+            PatientService service = new(CreatePatientsRepository(data), null, null, null);
 
             service.ActivateAccount(data[1]);
 
@@ -40,7 +40,7 @@ namespace HospitalTests.PatientRegistrationTests
         public void Get_Patient_By_Id()
         {
             List<Patient> data = GetPatientsData();
-            PatientService service = new(CreatePatientsRepository(data), null);
+            PatientService service = new(CreatePatientsRepository(data), null, null, null);
 
             Patient pat = service.GetById(1);
 
@@ -68,9 +68,9 @@ namespace HospitalTests.PatientRegistrationTests
         {
             return new()
             {
-                new Patient() { Email = "pera@gmail.com", IsAccountActivated = false, Name = "Pera", Password = "123", PatientId = 1, Surname = "Peric"},
-                new Patient() { Email = "pera2@gmail.com", IsAccountActivated = false, Name = "Pera2", Password = "123", PatientId = 2, Surname = "Peric2"},
-                new Patient() { Email = "pera3@gmail.com", IsAccountActivated = false, Name = "Pera3", Password = "123", PatientId = 3, Surname = "Peric3" }
+                new Patient() {IsAccountActivated = false, Name = "Pera", PatientId = 1, Surname = "Peric"},
+                new Patient() { IsAccountActivated = false, Name = "Pera2", PatientId = 2, Surname = "Peric2"},
+                new Patient() { IsAccountActivated = false, Name = "Pera3", PatientId = 3, Surname = "Peric3" }
             };
         }
 

@@ -59,27 +59,29 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IGenericMapper<Room, RoomDTO>, RoomMapper>();
 
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
             services.AddScoped<IRoomMapService, RoomMapService>();
 
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
+            services.AddScoped<IGenericMapper<User,PatientDTO>, UserPatientMapper>();
 
             services.AddScoped<IAllergenService, AllergenService>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<IGenericMapper<Allergen, AllergenDTO>, AllergenMapper>();
 
-            //services.AddScoped<IMedicalRecordService, MedicalRecordService>();
-            //services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
-            //services.AddScoped<IGenericMapper<MedicalRecord, MedicalRecordDTO>, MedicalRecordMapper>();
+            services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+            services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
+            services.AddScoped<IGenericMapper<MedicalRecord, PatientDTO>, MedicalRecordMapper>();
+            
 
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
             services.AddScoped<IGenericMapper<Appointment, AppointmentDTO>, AppointmentMapper>();
             services.AddScoped<IGenericMapper<Bed, BedDTO>, BedMapper>();
-            services.AddScoped<IGenericMapper<Room, RoomDTO>, RoomMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatment, InpatientTreatmentDTO>, InpatientTreatmentMapper>();
             services.AddScoped<IGenericMapper<Medicine, MedicineDTO>, MedicineMapper>();
             services.AddScoped<IGenericMapper<MedicineTherapy, MedicineTherapyDTO>, MedicineTherapyMapper>();

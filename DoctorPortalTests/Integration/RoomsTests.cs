@@ -21,7 +21,8 @@ namespace HospitalTests.Integration
 
         private static RoomsController SetupController(IServiceScope scope)
         {
-            return new RoomsController(scope.ServiceProvider.GetRequiredService<IRoomService>());
+            //return new RoomsController(scope.ServiceProvider.GetRequiredService<IRoomService>());
+            return null;
         }
 
         [Fact]

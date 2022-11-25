@@ -24,7 +24,7 @@ namespace HospitalAPI.Registration.Controllers
                 await mailService.SendEmail(request);
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
