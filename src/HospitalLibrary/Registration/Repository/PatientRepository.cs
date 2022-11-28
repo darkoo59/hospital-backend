@@ -17,7 +17,6 @@ namespace HospitalLibrary.Registration.Repository
 
         public void Register(Patient patient)
         {
-            //Console.WriteLine(patient);
             _context.Patients.Add(patient);
             _context.SaveChanges();
         }

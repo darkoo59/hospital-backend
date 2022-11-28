@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HospitalLibrary.SharedModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,30 +8,27 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HospitalLibrary.Core.Model
 {
-    [Index(nameof(Email), IsUnique = true)]
     public class Patient
     {
+
         public int PatientId { get; set; }
         [Required, NotNull]
         public string Name { get; set; }
         [Required, NotNull]
         public string Surname { get; set; }
-        [Required, NotNull, EmailAddress]
-        public string Email { get; set; }
-        [Required, NotNull, MinLength(3, ErrorMessage = "Password needs to be atleast 3 characters or more")]
-        public string Password { get; set; }
         public bool IsAccountActivated { get; set; }
         public int MedicalRecord { get; set; }
         public ICollection<Doctor> Doctors { get; set; }
+        public int UserId { get; set; }
 
-
-        public class DuplicateEMailException : Exception
-        {
-            public DuplicateEMailException(string message) : base(message) { }
+        public Patient() {
         }
-        public class BadPasswordException : Exception
+
+        public Patient(string name, string surname, bool isAccountActivated)
         {
-            public BadPasswordException(string message) : base(message) { }
+            Name = name;
+            Surname = surname;
+            IsAccountActivated = isAccountActivated;
         }
 
 

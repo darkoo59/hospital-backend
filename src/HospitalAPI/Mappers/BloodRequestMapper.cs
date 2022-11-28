@@ -1,5 +1,7 @@
 ﻿using HospitalAPI.Dtos;
+using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.SharedModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -198,6 +200,11 @@ namespace HospitalAPI.Mappers
             }
 
             return bloodRequests;
+        }
+
+        public (Patient patient, User user, MedicalRecord medicalRecord) ToModels(PatientDTO patientDTO)
+        {
+            throw new NotImplementedException();
         }
     }
 }
