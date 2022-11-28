@@ -4,9 +4,15 @@ using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 
 namespace IntegrationLibrary.Settings
 {
@@ -16,6 +22,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<BankNews> BankNews { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
+        public DbSet<EquipmentTender> EquipmentTenders { get; set; }
 
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
@@ -59,6 +66,20 @@ namespace IntegrationLibrary.Settings
                     BloodBankId = 2
                 }
             );
+
+            modelBuilder.Entity<EquipmentTender>().Property(e => e.Requirements).HasConversion(
+                r => JsonSerializer.Serialize(r, null),
+                r => JsonSerializer.Deserialize<List<TenderRequirement>>(r, null),
+                    new ValueComparer<List<int>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, r) => HashCode.Combine(a, r.GetHashCode())),
+                        c => c.ToList()));
+            modelBuilder.Entity<EquipmentTender>().HasData(
+                new EquipmentTender(1, "Tender 1"),
+                new EquipmentTender(2, "Tender 2"),
+                new EquipmentTender(3, "Tender 3")
+            );
+            
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221121090248_latest")]
-    partial class latest
+    [Migration("20221128201639_proba")]
+    partial class proba
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.User", b =>
+            modelBuilder.Entity("IntegrationLibrary.Features.BloodBank.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -281,6 +281,64 @@ namespace IntegrationLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.EquipmentTender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Requirements")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EquipmentTenders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "Tender 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Title = "Tender 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Title = "Tender 3"
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Email")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("EquipmentTenderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Notes")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentTenderId");
+
+                    b.ToTable("TenderApplication");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Features.ReportConfigurations.Model.ReportConfiguration", b =>
                 {
                     b.Property<int>("Id")
@@ -312,6 +370,18 @@ namespace IntegrationLibrary.Migrations
                             ReportFrequency = "* * * * *",
                             ReportPeriod = 3
                         });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderApplication", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Features.EquipmentTenders.Domain.EquipmentTender", null)
+                        .WithMany("TenderApplications")
+                        .HasForeignKey("EquipmentTenderId");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.EquipmentTender", b =>
+                {
+                    b.Navigation("TenderApplications");
                 });
 #pragma warning restore 612, 618
         }
