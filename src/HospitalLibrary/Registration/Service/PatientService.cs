@@ -75,7 +75,7 @@ namespace HospitalLibrary.Registration.Service
             MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../HospitalLibrary/Resources/mailTemplate.json"));
 
             mailContent.ToEmail = user.Email;
-            mailContent.Body += user.UserId;
+            mailContent.Body += patient.PatientId;
 
             await _mailService.SendEmail(mailContent);
 
