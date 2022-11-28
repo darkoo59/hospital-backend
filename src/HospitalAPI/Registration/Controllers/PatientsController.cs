@@ -6,6 +6,8 @@ using HospitalLibrary.Registration.Service;
 using HospitalLibrary.Security;
 using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +26,7 @@ namespace HospitalAPI.Registration.Controllers
         private Patient patient;
         private User user;
         private MedicalRecord medicalRecord;
+        private ICollection<Allergen> allergens;
 
         public PatientsController(
             IPatientService patientService, 
@@ -75,6 +78,10 @@ namespace HospitalAPI.Registration.Controllers
             //    medicalRecord.Allergens.Add(_allergenService.GetById(aid));
             //}
 
+            //foreach(int aid in patientDTO.Allergens)
+            //{
+            //    allergens.Add(_allergenService.GetById(aid));
+            //}
 
             await _patientService.Register(user, patient, medicalRecord);
 
