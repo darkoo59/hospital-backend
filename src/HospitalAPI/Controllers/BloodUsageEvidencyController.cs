@@ -45,7 +45,7 @@ namespace HospitalAPI.Controllers
             }
 
             BloodUsageEvidency bloodUsageEvidency = _bloodUsageEvidencyMapper.ToModel(bloodUsageEvidencyDTO);
-            Boolean isEnoughBlood;
+            //Boolean isEnoughBlood;
             try
             {
                //isEnoughBlood = _bloodService.ChangeQuantity(bloodUsageEvidency);

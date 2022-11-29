@@ -1,6 +1,8 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Registration.Model;
 using HospitalLibrary.Registration.Repository;
+using HospitalLibrary.Security;
+using HospitalLibrary.SharedModel;
 using MailKit;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -16,13 +18,18 @@ namespace HospitalLibrary.Registration.Service
     public class PatientService : IPatientService
     {
 
+
+        private readonly IMedicalRecordRepository _medicalRecordRepository;
         private readonly IPatientRepository _patientRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailSender _mailService;
 
-        public PatientService(IPatientRepository patientRepository, IEmailSender mailService)
+        public PatientService(IPatientRepository patientRepository, IMedicalRecordRepository medicalRecordRepository, IUserRepository userRepository, IEmailSender mailService)
         {
             _patientRepository = patientRepository;
             _mailService = mailService;
+            _medicalRecordRepository = medicalRecordRepository;
+            _userRepository = userRepository;
         }
 
         public void Delete(Patient patient)
@@ -46,18 +53,28 @@ namespace HospitalLibrary.Registration.Service
             return _patientRepository.GetById(id);
         }
 
-        public async Task<bool> Register(Patient patient)
+        public async Task<bool> Register(User user, Patient patient, MedicalRecord medicalRecord)
         {
-            if (_patientRepository.GetAll().Any(u => u.Email.Equals(patient.Email)))
+            if (_userRepository.GetAll().Any(u => u.Email.Equals(user.Email)))
             {
-                throw new Patient.DuplicateEMailException("User with given email already exists.");
+                throw new User.DuplicateEMailException("User with given email already exists.");
             }
+
+            //TODO: logika za registraciju
+
+            _medicalRecordRepository.Register(medicalRecord);
+
+            _userRepository.Register(user);
+
+            //User u = _userRepository.GetByEmail(user.Email);
+
+            patient.UserId = user.UserId;
 
             _patientRepository.Register(patient);
 
             MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../HospitalLibrary/Resources/mailTemplate.json"));
 
-            mailContent.ToEmail = patient.Email;
+            mailContent.ToEmail = user.Email;
             mailContent.Body += patient.PatientId;
 
             await _mailService.SendEmail(mailContent);

@@ -19,7 +19,7 @@ namespace HospitalTests.Unit
         public void Get_patient_by_id()
         {
             List<Patient> patients = GetPatients();
-            PatientService service = new(CreatePatientRepository(patients), null);
+            PatientService service = new(CreatePatientRepository(patients), null, null, null);
 
             Patient patient = service.GetById(1);
 
