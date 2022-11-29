@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class latest : Migration
+    public partial class eqtender : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,6 +43,21 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EquipmentTenders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Requirements = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EquipmentTenders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReportConfigurations",
                 columns: table => new
                 {
@@ -73,17 +88,38 @@ namespace IntegrationLibrary.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TenderApplication",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Notes = table.Column<int>(type: "integer", nullable: false),
+                    Email = table.Column<int>(type: "integer", nullable: false),
+                    EquipmentTenderId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderApplication", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenderApplication_EquipmentTenders_EquipmentTenderId",
+                        column: x => x.EquipmentTenderId,
+                        principalTable: "EquipmentTenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "BankNews",
                 columns: new[] { "Id", "Content", "State", "Title" },
                 values: new object[,]
                 {
-                    { 8, "sadrzaj vijesti 8", 0, "vijest 8" },
                     { 9, "sadrzaj vijesti 9", 1, "vijest 9" },
-                    { 7, "sadrzaj vijesti 7", 0, "vijest 7" },
+                    { 8, "sadrzaj vijesti 8", 0, "vijest 8" },
+                    { 6, "sadrzaj vijesti 6", 0, "vijest 6" },
                     { 5, "sadrzaj vijesti 5", 2, "vijest 5" },
                     { 4, "sadrzaj vijesti 4", 0, "vijest 4" },
-                    { 6, "sadrzaj vijesti 6", 0, "vijest 6" },
+                    { 7, "sadrzaj vijesti 7", 0, "vijest 7" },
                     { 2, "sadrzaj vijesti 2", 2, "vijest 2" },
                     { 1, "sadrzaj vijesti 1", 0, "vijest 1" },
                     { 3, "sadrzaj vijesti 3", 1, "vijest 3" }
@@ -94,14 +130,24 @@ namespace IntegrationLibrary.Migrations
                 columns: new[] { "Id", "BloodType", "DoctorId", "FinalDate", "QuantityInLiters", "ReasonForAdjustment", "ReasonForRequest", "State" },
                 values: new object[,]
                 {
-                    { 4, 7, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12.0, "Ne moze", "treba 4", 3 },
-                    { 6, 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4.0, null, "treba 6", 1 },
-                    { 8, 7, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12.0, "Ne moze 2", "treba 8", 3 },
                     { 7, 7, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 9.0, null, "treba 7", 2 },
                     { 1, 0, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1.0, null, "treba 1", 0 },
                     { 2, 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4.0, null, "treba 2", 1 },
                     { 3, 7, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 9.0, null, "treba 3", 2 },
-                    { 5, 0, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1.0, null, "treba 5", 0 }
+                    { 4, 7, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12.0, "Ne moze", "treba 4", 3 },
+                    { 5, 0, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1.0, null, "treba 5", 0 },
+                    { 6, 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4.0, null, "treba 6", 1 },
+                    { 8, 7, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12.0, "Ne moze 2", "treba 8", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EquipmentTenders",
+                columns: new[] { "Id", "Description", "Requirements", "Title" },
+                values: new object[,]
+                {
+                    { 1, null, null, "Tender 1" },
+                    { 2, null, null, "Tender 2" },
+                    { 3, null, null, "Tender 3" }
                 });
 
             migrationBuilder.InsertData(
@@ -126,6 +172,11 @@ namespace IntegrationLibrary.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_TenderApplication_EquipmentTenderId",
+                table: "TenderApplication",
+                column: "EquipmentTenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
@@ -144,7 +195,13 @@ namespace IntegrationLibrary.Migrations
                 name: "ReportConfigurations");
 
             migrationBuilder.DropTable(
+                name: "TenderApplication");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "EquipmentTenders");
         }
     }
 }
