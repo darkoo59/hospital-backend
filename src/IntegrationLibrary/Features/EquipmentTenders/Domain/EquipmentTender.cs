@@ -8,7 +8,9 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public ICollection<TenderRequirement> Requirements;
+        public DateTime ExpiresOn { get; set; }
+        public string Description { get; set; }
+        public ICollection<TenderRequirement> Requirements { get; set; }
         public ICollection<TenderApplication> TenderApplications { get; set; }
         public EquipmentTender() { }
         public EquipmentTender(string title)
@@ -17,10 +19,23 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
 
             ValidateFields();
         }
-        public EquipmentTender(int id, string title)
+        public EquipmentTender(int id, string title, DateTime expiresOn, string description, ICollection<TenderRequirement> requirements)
         {
             Id = id;
             Title = title;
+            ExpiresOn = expiresOn;
+            Description = description;
+            Requirements = requirements;
+
+            ValidateFields();
+        }
+
+        public EquipmentTender(string title, DateTime expiresOn, string description, ICollection<TenderRequirement> requirements)
+        {
+            Title = title;
+            ExpiresOn = expiresOn;
+            Description = description;
+            Requirements = requirements;
 
             ValidateFields();
         }

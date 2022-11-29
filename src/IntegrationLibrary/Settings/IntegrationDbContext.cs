@@ -9,7 +9,6 @@ using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -74,10 +73,27 @@ namespace IntegrationLibrary.Settings
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, r) => HashCode.Combine(a, r.GetHashCode())),
                         c => c.ToList()));
+
+
+            List<TenderRequirement> trs1 = new()
+            {
+                new TenderRequirement("item1", 150),
+                new TenderRequirement("item2", 100)
+            };
+            List<TenderRequirement> trs2 = new()
+            {
+                new TenderRequirement("item3", 250),
+                new TenderRequirement("item4", 350)
+            };
+            List<TenderRequirement> trs3 = new()
+            {
+                new TenderRequirement("item5", 120),
+                new TenderRequirement("item6", 230)
+            };
             modelBuilder.Entity<EquipmentTender>().HasData(
-                new EquipmentTender(1, "Tender 1"),
-                new EquipmentTender(2, "Tender 2"),
-                new EquipmentTender(3, "Tender 3")
+                new EquipmentTender(1, "Tender 1", DateTime.Now.AddDays(1), "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", trs1),
+                new EquipmentTender(2, "Tender 2", DateTime.Now.AddDays(1), "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.", trs2),
+                new EquipmentTender(3, "Tender 3", DateTime.Now.AddDays(1), "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", trs3)
             );
             
             base.OnModelCreating(modelBuilder);

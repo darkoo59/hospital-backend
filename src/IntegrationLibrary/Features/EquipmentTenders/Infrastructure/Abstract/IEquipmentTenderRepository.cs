@@ -1,12 +1,11 @@
-﻿using System;
+﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
 {
     public interface IEquipmentTenderRepository
     {
+        void Create(EquipmentTender tender);
+        ICollection<EquipmentTender> GetAll();
     }
 }

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class proba : Migration
+    public partial class eqtender : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,6 +49,7 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     Requirements = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -141,12 +142,12 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "EquipmentTenders",
-                columns: new[] { "Id", "Requirements", "Title" },
+                columns: new[] { "Id", "Description", "Requirements", "Title" },
                 values: new object[,]
                 {
-                    { 1, null, "Tender 1" },
-                    { 2, null, "Tender 2" },
-                    { 3, null, "Tender 3" }
+                    { 1, null, null, "Tender 1" },
+                    { 2, null, null, "Tender 2" },
+                    { 3, null, null, "Tender 3" }
                 });
 
             migrationBuilder.InsertData(
