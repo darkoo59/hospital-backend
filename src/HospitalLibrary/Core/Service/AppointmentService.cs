@@ -116,7 +116,7 @@ namespace HospitalLibrary.Core.Service
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {  
-            return appointment.Start >= workTime.StartDate && appointment.Start <= workTime.EndDate && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
+            return appointment.Start >= workTime.DateRange.Start && appointment.Start <= workTime.DateRange.End && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
         }
 
 
@@ -191,47 +191,52 @@ namespace HospitalLibrary.Core.Service
 
         public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
         {
-            WorkTime doctorWorkTime = new WorkTime();
-            List<Doctor> doctors = _doctorService.GetAll().ToList();
-            List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
-            int counter = 0;
+            throw new NotImplementedException();
+        }
 
-            foreach (Doctor doctor in doctors)
-            {
-                foreach(WorkTime workTime in workTimes)
-                {
-                    if (workTime.DoctorId.Equals(doctor.DoctorId))
-                    {
-                        doctorWorkTime = workTime;
-                    }
-                }
-                
-                foreach (Appointment appointment in appointmentsInVacationDate)
-                {
-                    
-                    Doctor originalAppointmentDoctor = _doctorRepository.GetById((int)appointment.DoctorId);
-                    
-                    if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && originalAppointmentDoctor.SpecializationId == doctor.SpecializationId && IsDoctorWorking(appointment,doctorWorkTime) == true)
-                    {
-                        counter++;
-                    }
-                    if (counter == appointmentsInVacationDate.Count())
-                    {
-                        foreach (Appointment app in appointmentsInVacationDate)
-                        {
-                            MakeTransfer(app, doctor.DoctorId);
-                            counter = counter - 1;
-                            if (counter == 0)
-                            {
-                                return true;
-                            }
-                        }
+        //public bool ChangeAppointmentDoctor(List<Appointment> appointmentsInVacationDate)
+        //{
+        //    WorkTime doctorWorkTime = new WorkTime();
+        //    List<Doctor> doctors = _doctorService.GetAll().ToList();
+        //    List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
+        //    int counter = 0;
 
-                    }
-                }
-            }
-            return false;
-        } 
+        //    foreach (Doctor doctor in doctors)
+        //    {
+        //        foreach(WorkTime workTime in workTimes)
+        //        {
+        //            if (workTime.DoctorId.Equals(doctor.DoctorId))
+        //            {
+        //                doctorWorkTime = workTime;
+        //            }
+        //        }
+
+        //        foreach (Appointment appointment in appointmentsInVacationDate)
+        //        {
+
+        //            Doctor originalAppointmentDoctor = _doctorRepository.GetById((int)appointment.DoctorId);
+
+        //            if (IsDoctorScheduled(appointment, doctor.DoctorId) == false && originalAppointmentDoctor.SpecializationId == doctor.SpecializationId && IsDoctorWorking(appointment,doctorWorkTime) == true)
+        //            {
+        //                counter++;
+        //            }
+        //            if (counter == appointmentsInVacationDate.Count())
+        //            {
+        //                foreach (Appointment app in appointmentsInVacationDate)
+        //                {
+        //                    MakeTransfer(app, doctor.DoctorId);
+        //                    counter = counter - 1;
+        //                    if (counter == 0)
+        //                    {
+        //                        return true;
+        //                    }
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //} 
     }
 }
 
