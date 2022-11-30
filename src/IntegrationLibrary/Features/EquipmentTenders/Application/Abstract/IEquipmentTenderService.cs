@@ -8,5 +8,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application.Abstract
     {
         ICollection<EquipmentTender> GetAll();
         void Create(CreateEquipmentTenderDTO dto);
+        EquipmentTender GetById(int id);
     }
 }

@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Domain
 {
     public class TenderApplication
     {
-        public int Id { get; set; }
-        public int Notes { get; set; }
-        public int Email { get; set; }
+        public int Id { get; private set; }
+        public int Notes { get; private set; }
+        public EquipmentTender EquipmentTender { get; private set; }
+        public ICollection<TenderApplicationOffer> TenderApplicationOffers { get; private set; }
+        
         public TenderApplication() { }
-        public TenderApplication(int notes, int email)
+        public TenderApplication(int notes)
         {
             Notes = notes;
-            Email = email;
         }
     }
 

@@ -6,43 +6,35 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
 {
     public class EquipmentTender
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public DateTime ExpiresOn { get; set; }
-        public string Description { get; set; }
-        public ICollection<TenderRequirement> Requirements { get; set; }
-        public ICollection<TenderApplication> TenderApplications { get; set; }
+        public int Id { get; private set; }
+        public string Title { get; private set; }
+        public DateTime? ExpiresOn { get; private set; }
+        public string Description { get; private set; }
+        public ICollection<TenderRequirement> TenderRequirements { get; private set; }
+        public ICollection<TenderApplication> TenderApplications { get; private set; }
         public EquipmentTender() { }
-        public EquipmentTender(string title)
+        public EquipmentTender(string title, DateTime? expiresOn, string description, ICollection<TenderRequirement> tenderRequirements)
         {
             Title = title;
+            ExpiresOn = expiresOn;
+            Description = description;
+            TenderRequirements = tenderRequirements;
 
             ValidateFields();
         }
-        public EquipmentTender(int id, string title, DateTime expiresOn, string description, ICollection<TenderRequirement> requirements)
+        public EquipmentTender(int id, string title, DateTime expiresOn, string description)
         {
             Id = id;
             Title = title;
             ExpiresOn = expiresOn;
             Description = description;
-            Requirements = requirements;
-
-            ValidateFields();
-        }
-
-        public EquipmentTender(string title, DateTime expiresOn, string description, ICollection<TenderRequirement> requirements)
-        {
-            Title = title;
-            ExpiresOn = expiresOn;
-            Description = description;
-            Requirements = requirements;
 
             ValidateFields();
         }
 
         public ICollection<TenderRequirement> GetRequirements()
         {
-            return new List<TenderRequirement>(Requirements);
+            return new List<TenderRequirement>(TenderRequirements);
         }
 
         protected void ValidateFields()

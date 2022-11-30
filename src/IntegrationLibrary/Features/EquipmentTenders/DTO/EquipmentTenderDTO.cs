@@ -8,7 +8,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.DTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime ExpiresOn { get; set; }
+        public DateTime? ExpiresOn { get; set; }
         public string Description { get; set; }
         public ICollection<TenderRequirement> Requirements { get; set; }
         public EquipmentTenderDTO() { }
@@ -18,8 +18,8 @@ namespace IntegrationLibrary.Features.EquipmentTenders.DTO
             Title = tender.Title;
             ExpiresOn = tender.ExpiresOn;
             Description = tender.Description;
-            if(tender.Requirements != null)
-                Requirements = new List<TenderRequirement>(tender.Requirements);
+            if(tender.TenderRequirements != null)
+                Requirements = new List<TenderRequirement>(tender.TenderRequirements);
         }
 
         public static List<EquipmentTenderDTO> ToDTOList(ICollection<EquipmentTender> list)

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class eqtender : Migration
+    public partial class tenders : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,8 +49,8 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Requirements = table.Column<string>(type: "text", nullable: true)
+                    ExpiresOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,7 +95,6 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Notes = table.Column<int>(type: "integer", nullable: false),
-                    Email = table.Column<int>(type: "integer", nullable: false),
                     EquipmentTenderId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -105,6 +104,55 @@ namespace IntegrationLibrary.Migrations
                         name: "FK_TenderApplication_EquipmentTenders_EquipmentTenderId",
                         column: x => x.EquipmentTenderId,
                         principalTable: "EquipmentTenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenderRequirement",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Amount = table.Column<double>(type: "double precision", nullable: false),
+                    EquipmentTenderId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderRequirement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenderRequirement_EquipmentTenders_EquipmentTenderId",
+                        column: x => x.EquipmentTenderId,
+                        principalTable: "EquipmentTenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenderApplicationOffer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Money = table.Column<long>(type: "bigint", nullable: true),
+                    Note = table.Column<string>(type: "text", nullable: true),
+                    TenderRequirementId = table.Column<int>(type: "integer", nullable: true),
+                    TenderApplicationId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderApplicationOffer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenderApplicationOffer_TenderApplication_TenderApplicationId",
+                        column: x => x.TenderApplicationId,
+                        principalTable: "TenderApplication",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TenderApplicationOffer_TenderRequirement_TenderRequirementId",
+                        column: x => x.TenderRequirementId,
+                        principalTable: "TenderRequirement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -142,12 +190,12 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "EquipmentTenders",
-                columns: new[] { "Id", "Description", "Requirements", "Title" },
+                columns: new[] { "Id", "Description", "ExpiresOn", "Title" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Tender 1" },
-                    { 2, null, null, "Tender 2" },
-                    { 3, null, null, "Tender 3" }
+                    { 1, "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2022, 12, 1, 20, 37, 21, 282, DateTimeKind.Local).AddTicks(9414), "Tender 1" },
+                    { 2, "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.", new DateTime(2022, 12, 1, 20, 37, 21, 291, DateTimeKind.Local).AddTicks(3809), "Tender 2" },
+                    { 3, "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2022, 12, 1, 20, 37, 21, 291, DateTimeKind.Local).AddTicks(4301), "Tender 3" }
                 });
 
             migrationBuilder.InsertData(
@@ -165,6 +213,19 @@ namespace IntegrationLibrary.Migrations
                     { 1, "app1", "email1@gmail.com", "OLIfDWaYYunpFtiQ", "localhost:5555" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "TenderRequirement",
+                columns: new[] { "Id", "Amount", "EquipmentTenderId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 150.0, 1, "item1" },
+                    { 2, 100.0, 1, "item2" },
+                    { 3, 250.0, 2, "item3" },
+                    { 4, 350.0, 2, "item4" },
+                    { 5, 120.0, 3, "item5" },
+                    { 6, 230.0, 3, "item6" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ReportConfigurations_BloodBankId",
                 table: "ReportConfigurations",
@@ -174,6 +235,21 @@ namespace IntegrationLibrary.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TenderApplication_EquipmentTenderId",
                 table: "TenderApplication",
+                column: "EquipmentTenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderApplicationOffer_TenderApplicationId",
+                table: "TenderApplicationOffer",
+                column: "TenderApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderApplicationOffer_TenderRequirementId",
+                table: "TenderApplicationOffer",
+                column: "TenderRequirementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderRequirement_EquipmentTenderId",
+                table: "TenderRequirement",
                 column: "EquipmentTenderId");
 
             migrationBuilder.CreateIndex(
@@ -195,10 +271,16 @@ namespace IntegrationLibrary.Migrations
                 name: "ReportConfigurations");
 
             migrationBuilder.DropTable(
-                name: "TenderApplication");
+                name: "TenderApplicationOffer");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "TenderApplication");
+
+            migrationBuilder.DropTable(
+                name: "TenderRequirement");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTenders");

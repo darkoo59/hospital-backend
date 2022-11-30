@@ -7,5 +7,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
     {
         void Create(EquipmentTender tender);
         ICollection<EquipmentTender> GetAll();
+        EquipmentTender GetById(int id);
     }
 }

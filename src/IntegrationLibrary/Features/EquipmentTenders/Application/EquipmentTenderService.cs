@@ -16,13 +16,19 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
 
         public void Create(CreateEquipmentTenderDTO dto)
         {
-            EquipmentTender et = new(dto.Title, dto.ExpiresOn, dto.Description, TenderRequirementDTO.FromDTOList(dto.Requirements));
+            ICollection<TenderRequirement> temp = TenderRequirementDTO.FromDTOList(dto.Requirements);
+            EquipmentTender et = new(dto.Title, dto.ExpiresOn, dto.Description, temp);
             _repository.Create(et);
         }
 
         public ICollection<EquipmentTender> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public EquipmentTender GetById(int id)
+        {
+            return _repository.GetById(id);
         }
     }
 }
