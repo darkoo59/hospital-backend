@@ -18,7 +18,6 @@ namespace HospitalAPI.Mappers
             appointment.Start = appointment.Start.AddHours(Int32.Parse(hours));
             appointment.Start = appointment.Start.AddMinutes(Int32.Parse(minutes));
             appointment.PatientId = appointmentDTO.PatientId;
-            appointment.DoctorId = appointmentDTO.DoctorId;
 
             return appointment;
         }
@@ -35,7 +34,6 @@ namespace HospitalAPI.Mappers
                 appointment.Start.AddHours(Int32.Parse(hours));
                 appointment.Start.AddMinutes(Int32.Parse(minutes));
                 appointment.PatientId = appointmentDTO.PatientId;
-                appointment.DoctorId = appointmentDTO.DoctorId;
                 appointments.Add(appointment);
             }
 
@@ -47,7 +45,6 @@ namespace HospitalAPI.Mappers
             appointmentDTO.AppointmentId = appointment.AppointmentId;
             appointmentDTO.Date = appointment.Start.Date;
             appointmentDTO.Time = appointment.Start.Hour.ToString() + ":" + appointment.Start.Minute.ToString();
-            appointmentDTO.DoctorId = (int)appointment.DoctorId;
             appointmentDTO.PatientId = (int)appointment.PatientId;
 
             return appointmentDTO;
@@ -61,7 +58,6 @@ namespace HospitalAPI.Mappers
                 appointmentDTO.AppointmentId = appointment.AppointmentId;
                 appointmentDTO.Date = appointment.Start.Date;
                 appointmentDTO.Time = appointment.Start.Hour.ToString() + ":" + appointment.Start.Minute.ToString();
-                appointmentDTO.DoctorId = (int)appointment.DoctorId;
                 appointmentDTO.PatientId = (int)appointment.PatientId;
                 appointmentDTOs.Add(appointmentDTO);
             }

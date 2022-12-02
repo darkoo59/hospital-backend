@@ -15,19 +15,19 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class BloodRequestsController : ControllerBase
     {
-        private readonly IBloodRequestService _bloodRequestService;
-        private readonly IGenericMapper<BloodRequest, BloodRequestDTO> _bloodRequestMapper;
+        private readonly IBloodRequestService _service;
+        private readonly IGenericMapper<BloodRequest, BloodRequestDTO> _mapper;
 
         public BloodRequestsController(IBloodRequestService bloodRequestService, IGenericMapper<BloodRequest, BloodRequestDTO> bloodRequestMapper)
         {
-            _bloodRequestService = bloodRequestService;
-            _bloodRequestMapper = bloodRequestMapper;
+            _service = bloodRequestService;
+            _mapper = bloodRequestMapper;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_bloodRequestMapper.ToDTO(_bloodRequestService.GetAll().ToList()));
+            return Ok(_mapper.ToDTO(_service.GetAll().ToList()));
         }
 
         [HttpPost]
@@ -38,21 +38,21 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            BloodRequest bloodRequest = _bloodRequestMapper.ToModel(bloodRequestDTO);
-            await _bloodRequestService.Create(bloodRequest);
+            BloodRequest bloodRequest = _mapper.ToModel(bloodRequestDTO);
+            await _service.Create(bloodRequest);
             return CreatedAtAction("GetById", new { id = bloodRequest.BloodRequestId }, bloodRequest);
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var bloodRequest = _bloodRequestService.GetById(id);
+            var bloodRequest = _service.GetById(id);
             if (bloodRequest == null)
             {
                 return NotFound();
             }
 
-            return Ok(_bloodRequestMapper.ToDTO(bloodRequest));
+            return Ok(_mapper.ToDTO(bloodRequest));
         }
     }
 }
