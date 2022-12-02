@@ -89,27 +89,7 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TenderApplication",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Notes = table.Column<int>(type: "integer", nullable: false),
-                    EquipmentTenderId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TenderApplication", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TenderApplication_EquipmentTenders_EquipmentTenderId",
-                        column: x => x.EquipmentTenderId,
-                        principalTable: "EquipmentTenders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TenderRequirement",
+                name: "TenderRequirements",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -120,9 +100,9 @@ namespace IntegrationLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TenderRequirement", x => x.Id);
+                    table.PrimaryKey("PK_TenderRequirements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TenderRequirement_EquipmentTenders_EquipmentTenderId",
+                        name: "FK_TenderRequirements_EquipmentTenders_EquipmentTenderId",
                         column: x => x.EquipmentTenderId,
                         principalTable: "EquipmentTenders",
                         principalColumn: "Id",
@@ -130,31 +110,57 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TenderApplicationOffer",
+                name: "TenderApplications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Note = table.Column<string>(type: "text", nullable: true),
+                    EquipmentTenderId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenderApplications_EquipmentTenders_EquipmentTenderId",
+                        column: x => x.EquipmentTenderId,
+                        principalTable: "EquipmentTenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TenderApplications_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenderOffers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Money = table.Column<long>(type: "bigint", nullable: true),
-                    Note = table.Column<string>(type: "text", nullable: true),
-                    TenderRequirementId = table.Column<int>(type: "integer", nullable: true),
+                    TenderRequirementId = table.Column<int>(type: "integer", nullable: false),
                     TenderApplicationId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TenderApplicationOffer", x => x.Id);
+                    table.PrimaryKey("PK_TenderOffers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TenderApplicationOffer_TenderApplication_TenderApplicationId",
+                        name: "FK_TenderOffers_TenderApplications_TenderApplicationId",
                         column: x => x.TenderApplicationId,
-                        principalTable: "TenderApplication",
+                        principalTable: "TenderApplications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TenderApplicationOffer_TenderRequirement_TenderRequirementId",
+                        name: "FK_TenderOffers_TenderRequirements_TenderRequirementId",
                         column: x => x.TenderRequirementId,
-                        principalTable: "TenderRequirement",
+                        principalTable: "TenderRequirements",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -193,9 +199,9 @@ namespace IntegrationLibrary.Migrations
                 columns: new[] { "Id", "Description", "ExpiresOn", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2022, 12, 1, 20, 37, 21, 282, DateTimeKind.Local).AddTicks(9414), "Tender 1" },
-                    { 2, "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.", new DateTime(2022, 12, 1, 20, 37, 21, 291, DateTimeKind.Local).AddTicks(3809), "Tender 2" },
-                    { 3, "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2022, 12, 1, 20, 37, 21, 291, DateTimeKind.Local).AddTicks(4301), "Tender 3" }
+                    { 1, "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2022, 12, 17, 15, 55, 59, 180, DateTimeKind.Local).AddTicks(1321), "Tender 1" },
+                    { 2, "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.", new DateTime(2022, 12, 17, 15, 55, 59, 196, DateTimeKind.Local).AddTicks(7239), "Tender 2" },
+                    { 3, "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2022, 12, 17, 15, 55, 59, 196, DateTimeKind.Local).AddTicks(7655), "Tender 3" }
                 });
 
             migrationBuilder.InsertData(
@@ -208,13 +214,13 @@ namespace IntegrationLibrary.Migrations
                 columns: new[] { "Id", "AppName", "Email", "Password", "Server" },
                 values: new object[,]
                 {
-                    { 2, "app2", "email2@gmail.com", "UzX1V1A0FfLerVn5", "localhost:6555" },
+                    { 2, "app2", "email2@gmail.com", "123", "localhost:6555" },
                     { 3, "app3", "email3@gmail.com", "dd13xfCA5Jz9Y9ho", "localhost:7555" },
                     { 1, "app1", "email1@gmail.com", "OLIfDWaYYunpFtiQ", "localhost:5555" }
                 });
 
             migrationBuilder.InsertData(
-                table: "TenderRequirement",
+                table: "TenderRequirements",
                 columns: new[] { "Id", "Amount", "EquipmentTenderId", "Name" },
                 values: new object[,]
                 {
@@ -233,23 +239,28 @@ namespace IntegrationLibrary.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenderApplication_EquipmentTenderId",
-                table: "TenderApplication",
+                name: "IX_TenderApplications_EquipmentTenderId",
+                table: "TenderApplications",
                 column: "EquipmentTenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenderApplicationOffer_TenderApplicationId",
-                table: "TenderApplicationOffer",
+                name: "IX_TenderApplications_UserId",
+                table: "TenderApplications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderOffers_TenderApplicationId",
+                table: "TenderOffers",
                 column: "TenderApplicationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenderApplicationOffer_TenderRequirementId",
-                table: "TenderApplicationOffer",
+                name: "IX_TenderOffers_TenderRequirementId",
+                table: "TenderOffers",
                 column: "TenderRequirementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenderRequirement_EquipmentTenderId",
-                table: "TenderRequirement",
+                name: "IX_TenderRequirements_EquipmentTenderId",
+                table: "TenderRequirements",
                 column: "EquipmentTenderId");
 
             migrationBuilder.CreateIndex(
@@ -271,16 +282,16 @@ namespace IntegrationLibrary.Migrations
                 name: "ReportConfigurations");
 
             migrationBuilder.DropTable(
-                name: "TenderApplicationOffer");
+                name: "TenderOffers");
+
+            migrationBuilder.DropTable(
+                name: "TenderApplications");
+
+            migrationBuilder.DropTable(
+                name: "TenderRequirements");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "TenderApplication");
-
-            migrationBuilder.DropTable(
-                name: "TenderRequirement");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTenders");

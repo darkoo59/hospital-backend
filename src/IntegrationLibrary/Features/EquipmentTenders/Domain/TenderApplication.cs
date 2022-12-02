@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using IntegrationLibrary.Features.BloodBank.Model;
+using System;
 using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Domain
@@ -7,19 +7,32 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
     public class TenderApplication
     {
         public int Id { get; private set; }
-        public int Notes { get; private set; }
+        public string Note { get; private set; }
         public EquipmentTender EquipmentTender { get; private set; }
-        public ICollection<TenderApplicationOffer> TenderApplicationOffers { get; private set; }
+        public int EquipmentTenderId { get; private set; }
+        public ICollection<TenderOffer> TenderOffers { get; private set; }
+        public User User { get; private set; }
+        public int UserId { get; private set; }
         
         public TenderApplication() { }
-        public TenderApplication(int notes)
+        public TenderApplication(string note, int equipmentTenderId, int userId, ICollection<TenderOffer> tenderOffers)
         {
-            Notes = notes;
-        }
-    }
+            Note = note;
+            EquipmentTenderId = equipmentTenderId;
+            TenderOffers = tenderOffers;
+            UserId = userId;
 
-    public class InvalidDataException : Exception
-    {
-        public InvalidDataException() : base("Provided data was invalid") { }
+            ValidateFields();
+        }
+
+        protected void ValidateFields()
+        {
+            //validations...
+        }
+
+        public class InvalidDataException : Exception
+        {
+            public InvalidDataException() : base("Provided data was invalid") { }
+        }
     }
 }

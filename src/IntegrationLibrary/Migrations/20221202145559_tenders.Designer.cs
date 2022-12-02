@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221130193722_tenders")]
+    [Migration("20221202145559_tenders")]
     partial class tenders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace IntegrationLibrary.Migrations
                             Id = 2,
                             AppName = "app2",
                             Email = "email2@gmail.com",
-                            Password = "UzX1V1A0FfLerVn5",
+                            Password = "123",
                             Server = "localhost:6555"
                         },
                         new
@@ -306,21 +306,21 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Description = "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2022, 12, 1, 20, 37, 21, 282, DateTimeKind.Local).AddTicks(9414),
+                            ExpiresOn = new DateTime(2022, 12, 17, 15, 55, 59, 180, DateTimeKind.Local).AddTicks(1321),
                             Title = "Tender 1"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.",
-                            ExpiresOn = new DateTime(2022, 12, 1, 20, 37, 21, 291, DateTimeKind.Local).AddTicks(3809),
+                            ExpiresOn = new DateTime(2022, 12, 17, 15, 55, 59, 196, DateTimeKind.Local).AddTicks(7239),
                             Title = "Tender 2"
                         },
                         new
                         {
                             Id = 3,
                             Description = "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2022, 12, 1, 20, 37, 21, 291, DateTimeKind.Local).AddTicks(4301),
+                            ExpiresOn = new DateTime(2022, 12, 17, 15, 55, 59, 196, DateTimeKind.Local).AddTicks(7655),
                             Title = "Tender 3"
                         });
                 });
@@ -332,20 +332,25 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("EquipmentTenderId")
+                    b.Property<int>("EquipmentTenderId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Notes")
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EquipmentTenderId");
 
-                    b.ToTable("TenderApplication");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TenderApplications");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderApplicationOffer", b =>
+            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderOffer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -355,13 +360,10 @@ namespace IntegrationLibrary.Migrations
                     b.Property<long?>("Money")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
-
                     b.Property<int?>("TenderApplicationId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TenderRequirementId")
+                    b.Property<int>("TenderRequirementId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -370,7 +372,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("TenderRequirementId");
 
-                    b.ToTable("TenderApplicationOffer");
+                    b.ToTable("TenderOffers");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderRequirement", b =>
@@ -393,7 +395,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("EquipmentTenderId");
 
-                    b.ToTable("TenderRequirement");
+                    b.ToTable("TenderRequirements");
 
                     b.HasData(
                         new
@@ -477,20 +479,32 @@ namespace IntegrationLibrary.Migrations
                 {
                     b.HasOne("IntegrationLibrary.Features.EquipmentTenders.Domain.EquipmentTender", "EquipmentTender")
                         .WithMany("TenderApplications")
-                        .HasForeignKey("EquipmentTenderId");
+                        .HasForeignKey("EquipmentTenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IntegrationLibrary.Features.BloodBank.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EquipmentTender");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderApplicationOffer", b =>
+            modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderOffer", b =>
                 {
                     b.HasOne("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderApplication", null)
-                        .WithMany("TenderApplicationOffers")
+                        .WithMany("TenderOffers")
                         .HasForeignKey("TenderApplicationId");
 
                     b.HasOne("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderRequirement", "TenderRequirement")
                         .WithMany()
-                        .HasForeignKey("TenderRequirementId");
+                        .HasForeignKey("TenderRequirementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TenderRequirement");
                 });
@@ -513,7 +527,7 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.Features.EquipmentTenders.Domain.TenderApplication", b =>
                 {
-                    b.Navigation("TenderApplicationOffers");
+                    b.Navigation("TenderOffers");
                 });
 #pragma warning restore 612, 618
         }

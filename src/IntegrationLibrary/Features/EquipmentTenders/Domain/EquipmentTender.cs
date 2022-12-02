@@ -19,7 +19,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
             ExpiresOn = expiresOn;
             Description = description;
             TenderRequirements = tenderRequirements;
-
+            TenderApplications = new List<TenderApplication>();
             ValidateFields();
         }
         public EquipmentTender(int id, string title, DateTime expiresOn, string description)
@@ -28,7 +28,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
             Title = title;
             ExpiresOn = expiresOn;
             Description = description;
-
+            TenderApplications = new List<TenderApplication>();
             ValidateFields();
         }
 
@@ -43,6 +43,14 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
             {
                 throw new InvalidDataException();
             }
+        }
+
+        public void AddApplication(TenderApplication tenderApplication)
+        {
+            if(TenderApplications == null)
+                TenderApplications = new List<TenderApplication>();
+            
+            TenderApplications.Add(tenderApplication);
         }
 
         public class InvalidDataException : Exception { 

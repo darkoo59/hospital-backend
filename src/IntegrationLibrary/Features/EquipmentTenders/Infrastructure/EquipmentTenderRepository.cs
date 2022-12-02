@@ -30,8 +30,28 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
         public EquipmentTender GetById(int id)
         {
             return _context.EquipmentTenders.Include(e => e.TenderRequirements)
+                                            .FirstOrDefault(e => e.Id == id);
+        }
+
+        public EquipmentTender GetByIdWithOffers(int id)
+        {
+            return _context.EquipmentTenders.Include(e => e.TenderRequirements)
                                             .Include(e => e.TenderApplications)
                                             .FirstOrDefault(e => e.Id == id);
         }
+
+        public void Update(EquipmentTender tender)
+        {
+            _context.Entry(tender).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+        }
+
     }
 }

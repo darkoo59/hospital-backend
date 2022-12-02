@@ -4,6 +4,7 @@ using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace IntegrationAPI.Controllers
 {
@@ -35,6 +36,18 @@ namespace IntegrationAPI.Controllers
         {
             _equipmentTenderService.Create(dto);
             return Ok();
+        }
+
+        [HttpPost("application")]
+        public IActionResult CreateApplication([FromBody] CreateTenderApplicationDTO dto)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                _equipmentTenderService.CreateApplication(email, dto);
+                return Ok();
+            }
+            return Unauthorized();
         }
     }
 }
