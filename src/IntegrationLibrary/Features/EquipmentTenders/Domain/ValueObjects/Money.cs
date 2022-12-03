@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace IntegrationLibrary.Features.EquipmentTenders.Domain
+namespace IntegrationLibrary.Features.EquipmentTenders.Domain.ValueObjects
 {
     public class Money : ValueObject
     {
-        public long Amount { get; private set; }
-        public Money(long amount)
+        public double Amount { get; private set; }
+        public Money(double amount)
         {
             Amount = amount;
 

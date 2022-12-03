@@ -5,6 +5,7 @@ using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
+using IntegrationLibrary.Features.EquipmentTenders.Domain.ValueObjects;
 using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,9 +30,9 @@ namespace IntegrationLibrary.Settings
         {
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<User>().HasData(
-                new User() { Id = 1, Email = "email1@gmail.com", AppName = "app1", Password = "OLIfDWaYYunpFtiQ", Server = "localhost:5555" },
+                new User() { Id = 1, Email = "email1@gmail.com", AppName = "app1", Password = "123", Server = "localhost:5555" },
                 new User() { Id = 2, Email = "email2@gmail.com", AppName = "app2", Password = "123", Server = "localhost:6555" },
-                new User() { Id = 3, Email = "email3@gmail.com", AppName = "app3", Password = "dd13xfCA5Jz9Y9ho", Server = "localhost:7555" }
+                new User() { Id = 3, Email = "email3@gmail.com", AppName = "app3", Password = "123", Server = "localhost:7555" }
             );
             modelBuilder.Entity<BankNews>().HasData(
                 new BankNews() { Id = 1, Title = "vijest 1", Content = "sadrzaj vijesti 1", State = NewsState.NEW },

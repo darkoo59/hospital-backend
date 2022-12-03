@@ -33,6 +33,14 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
                                             .FirstOrDefault(e => e.Id == id);
         }
 
+        public EquipmentTender GetByIdAndUser(int id, int userId)
+        {
+            return _context.EquipmentTenders.Include(e => e.TenderRequirements)
+                                            .Include(e => e.TenderApplications)
+                                            .Where(t => t.TenderApplications.Where(e => e.UserId == userId).FirstOrDefault() == null)
+                                            .FirstOrDefault(e => e.Id == id);
+        }
+
         public EquipmentTender GetByIdWithOffers(int id)
         {
             return _context.EquipmentTenders.Include(e => e.TenderRequirements)
@@ -53,5 +61,39 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             }
         }
 
+        public ICollection<TenderApplication> GetTenderApplicationsByUser(int userId)
+        {
+            return _context.TenderApplications.Where(a => a.UserId == userId)
+                                              .Include(a => a.EquipmentTender)
+                                              .Include(a => a.TenderOffers)
+                                              .ThenInclude(o => o.TenderRequirement)
+                                              .ToList();
+        }
+
+        public ICollection<EquipmentTender> GetAllByUser(int userId)
+        {
+            return _context.EquipmentTenders.Include(t => t.TenderApplications)
+                                            .Include(e => e.TenderRequirements)
+                                            .Where(t => t.TenderApplications.Where(e=>e.UserId==userId).FirstOrDefault() == null)
+                                            .ToList();
+        }
+
+        public void DeleteApplicationByIdAndUser(int id, int userId)
+        {
+            TenderApplication ta = _context.TenderApplications.Include(e => e.TenderOffers)
+                                                              .Where(a => a.Id == id && a.UserId == userId).FirstOrDefault();
+            if(ta != null)
+            {
+                _context.TenderApplications.Remove(ta);
+                _context.SaveChanges();
+            }
+        }
+
+        public TenderApplication GetApplicationById(int id)
+        {
+            return _context.TenderApplications.Include(a => a.EquipmentTender)
+                                              .Include(a => a.TenderOffers)
+                                              .FirstOrDefault(e => e.Id == id);
+        }
     }
 }

@@ -8,6 +8,11 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         void Create(EquipmentTender tender);
         ICollection<EquipmentTender> GetAll();
         EquipmentTender GetById(int id);
+        EquipmentTender GetByIdAndUser(int id, int userId);
         void Update(EquipmentTender tender);
+        ICollection<TenderApplication> GetTenderApplicationsByUser(int userId);
+        ICollection<EquipmentTender> GetAllByUser(int userId);
+        void DeleteApplicationByIdAndUser(int id, int userId);
+        TenderApplication GetApplicationById(int id);
     }
 }

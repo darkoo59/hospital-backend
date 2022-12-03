@@ -2,7 +2,7 @@
 {
     public class CreateTenderOfferDTO
     {
-        public int Cost { get; set; }
+        public double Cost { get; set; }
         public int TenderRequirementId { get; set; }
         public CreateTenderOfferDTO() { }
     }

@@ -9,6 +9,11 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application.Abstract
         ICollection<EquipmentTender> GetAll();
         void Create(CreateEquipmentTenderDTO dto);
         EquipmentTender GetById(int id);
+        EquipmentTender GetByIdAndUser(int id, string email);
         void CreateApplication(string email, CreateTenderApplicationDTO dto);
+        ICollection<TenderApplication> GetApplicationsByUser(string email);
+        ICollection<EquipmentTender> GetAllByUser(string email);
+        void DeleteApplicationByIdAndUser(int id, string email);
+        TenderApplication GetApplicationById(int id);
     }
 }
