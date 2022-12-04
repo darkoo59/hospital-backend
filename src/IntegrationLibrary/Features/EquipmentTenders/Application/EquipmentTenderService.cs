@@ -3,6 +3,7 @@ using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,11 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
         public TenderApplication GetApplicationById(int id)
         {
             return _repository.GetApplicationById(id);
+        }
+
+        public EquipmentTender GetTenderWithApplicationsById(int id)
+        {
+            return _repository.GetTenderWithApplicationsById(id);
         }
     }
 }

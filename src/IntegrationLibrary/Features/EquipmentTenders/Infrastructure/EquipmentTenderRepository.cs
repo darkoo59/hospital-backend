@@ -95,5 +95,12 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
                                               .Include(a => a.TenderOffers)
                                               .FirstOrDefault(e => e.Id == id);
         }
+
+        public EquipmentTender GetTenderWithApplicationsById(int id)
+        {
+            return _context.EquipmentTenders.Include(a => a.TenderApplications).ThenInclude(a => a.User)
+                                            .Include(a => a.TenderApplications).ThenInclude(a => a.TenderOffers)
+                                            .ThenInclude(a => a.TenderRequirement).FirstOrDefault(e => e.Id == id);
+        }
     }
 }

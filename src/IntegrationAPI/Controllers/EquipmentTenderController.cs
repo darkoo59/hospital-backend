@@ -1,6 +1,8 @@
 ﻿using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -82,6 +84,14 @@ namespace IntegrationAPI.Controllers
                 return Ok(UserTenderApplicationDTO.ToDTOList(_equipmentTenderService.GetApplicationsByUser(email)));
             }
             return Unauthorized();
+        }
+
+        [HttpGet("application/tender/{id}")]
+        public IActionResult GetAllApplicationsByTenderId(int id)
+        {
+            EquipmentTender et = _equipmentTenderService.GetTenderWithApplicationsById(id);
+            if (et == null) throw new Exception("Tender with the given ID has not been found.");
+            return Ok(new TenderWithApplicationsDTO(et));
         }
 
         [HttpGet("application/{id}")]

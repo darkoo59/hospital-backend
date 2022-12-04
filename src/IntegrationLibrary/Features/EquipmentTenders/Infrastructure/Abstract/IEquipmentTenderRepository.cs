@@ -14,5 +14,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         ICollection<EquipmentTender> GetAllByUser(int userId);
         void DeleteApplicationByIdAndUser(int id, int userId);
         TenderApplication GetApplicationById(int id);
+        EquipmentTender GetTenderWithApplicationsById(int id);
     }
 }

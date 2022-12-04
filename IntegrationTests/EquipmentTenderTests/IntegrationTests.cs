@@ -19,6 +19,8 @@ using System.CodeDom;
 using System.Linq;
 using System.Net.Http;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.Create;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.User;
 
 namespace IntegrationTests.EquipmentTenderTests
 {
