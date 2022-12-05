@@ -81,7 +81,9 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
         public void DeleteApplicationByIdAndUser(int id, int userId)
         {
             TenderApplication ta = _context.TenderApplications.Include(e => e.TenderOffers)
-                                                              .Where(a => a.Id == id && a.UserId == userId).FirstOrDefault();
+                                                              .Include(e => e.EquipmentTender)
+                                                              .Where(a => a.Id == id && a.UserId == userId && a.EquipmentTender.State != Enums.TenderState.CLOSED)
+                                                              .FirstOrDefault();
             if(ta != null)
             {
                 _context.TenderApplications.Remove(ta);
@@ -93,6 +95,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
         {
             return _context.TenderApplications.Include(a => a.EquipmentTender)
                                               .Include(a => a.TenderOffers)
+                                              .Include(a => a.User)
                                               .FirstOrDefault(e => e.Id == id);
         }
 
@@ -101,6 +104,19 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             return _context.EquipmentTenders.Include(a => a.TenderApplications).ThenInclude(a => a.User)
                                             .Include(a => a.TenderApplications).ThenInclude(a => a.TenderOffers)
                                             .ThenInclude(a => a.TenderRequirement).FirstOrDefault(e => e.Id == id);
+        }
+
+        public void Update(TenderApplication application)
+        {
+            _context.Entry(application).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }

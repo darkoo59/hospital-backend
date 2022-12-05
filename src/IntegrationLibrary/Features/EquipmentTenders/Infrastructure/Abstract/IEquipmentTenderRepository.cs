@@ -10,6 +10,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         EquipmentTender GetById(int id);
         EquipmentTender GetByIdAndUser(int id, int userId);
         void Update(EquipmentTender tender);
+        void Update(TenderApplication application);
         ICollection<TenderApplication> GetTenderApplicationsByUser(int userId);
         ICollection<EquipmentTender> GetAllByUser(int userId);
         void DeleteApplicationByIdAndUser(int id, int userId);

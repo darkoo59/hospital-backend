@@ -4,6 +4,7 @@ using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
+using IntegrationLibrary.Features.EquipmentTenders.Enums;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             User user = _userService.GetBy(email);
             EquipmentTender et = _repository.GetByIdAndUser(dto.EquipmentTenderId, user.Id);
             if (et == null) throw new Exception("Blood bank has already made application for requested tender.");
+            if (et.State == TenderState.CLOSED) throw new Exception("Tender has already been concluded.");
 
             List<TenderOffer> temp = new();
             foreach (CreateTenderOfferDTO offerDTO in dto.TenderOffers)
@@ -96,6 +98,44 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
         public EquipmentTender GetTenderWithApplicationsById(int id)
         {
             return _repository.GetTenderWithApplicationsById(id);
+        }
+
+        public void SetWinner(int applicationId)
+        {
+            TenderApplication ta = _repository.GetApplicationById(applicationId);
+            if (ta.EquipmentTender.State != TenderState.OPEN) throw new Exception("Tender is not open");
+
+            ta.EquipmentTender.SetState(TenderState.PENDING);
+            ta.SetHasWon(true);
+
+            _repository.Update(ta);
+        }
+
+        public void ConfirmWinner(int applicationId, string email)
+        {
+            User user = _userService.GetBy(email);
+
+            TenderApplication ta = _repository.GetApplicationById(applicationId);
+            if (ta.User.Id != user.Id) throw new Exception("Invalid access");
+            if (!ta.HasWon) throw new Exception("Some error has occurred");
+
+            ta.EquipmentTender.SetState(TenderState.CLOSED);
+
+            _repository.Update(ta);
+        }
+
+        public void DeclineWinner(int applicationId, string email)
+        {
+            User user = _userService.GetBy(email);
+
+            TenderApplication ta = _repository.GetApplicationById(applicationId);
+            if (ta.User.Id != user.Id) throw new Exception("Invalid access");
+            if (!ta.HasWon) throw new Exception("Some error has occurred");
+
+            ta.EquipmentTender.SetState(TenderState.OPEN);
+            ta.SetHasWon(false);
+
+            _repository.Update(ta);
         }
     }
 }

@@ -16,5 +16,8 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application.Abstract
         void DeleteApplicationByIdAndUser(int id, string email);
         TenderApplication GetApplicationById(int id);
         EquipmentTender GetTenderWithApplicationsById(int id);
+        void SetWinner(int applicationId);
+        void ConfirmWinner(int applicationId, string email);
+        void DeclineWinner(int applicationId, string email);
     }
 }

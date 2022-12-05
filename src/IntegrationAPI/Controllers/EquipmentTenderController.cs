@@ -113,5 +113,37 @@ namespace IntegrationAPI.Controllers
             }
             return Unauthorized();
         }
+
+        [HttpPatch("winner")]
+        public IActionResult SetWinner([FromBody] int id)
+        {
+            _equipmentTenderService.SetWinner(id);
+            return Ok();
+        }
+
+        [HttpPatch("winner/confirm")]
+        public IActionResult ConfirmWinner([FromBody] int id)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                _equipmentTenderService.ConfirmWinner(id, email);
+                return Ok();
+            }
+            return Unauthorized();
+
+        }
+
+        [HttpPatch("winner/decline")]
+        public IActionResult DeclineWinner([FromBody] int id)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                _equipmentTenderService.DeclineWinner(id, email);
+                return Ok();
+            }
+            return Unauthorized();
+        }
     }
 }

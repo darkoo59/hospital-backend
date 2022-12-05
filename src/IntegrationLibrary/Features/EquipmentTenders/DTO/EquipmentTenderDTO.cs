@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
+using IntegrationLibrary.Features.EquipmentTenders.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.DTO
         public DateTime? ExpiresOn { get; set; }
         public string Description { get; set; }
         public ICollection<TenderRequirement> Requirements { get; set; }
+        public TenderState State { get; set; }
         public EquipmentTenderDTO() { }
         public EquipmentTenderDTO(EquipmentTender tender)
         {
@@ -18,6 +20,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.DTO
             Title = tender.Title;
             ExpiresOn = tender.ExpiresOn;
             Description = tender.Description;
+            State = tender.State;
             if(tender.TenderRequirements != null)
                 Requirements = new List<TenderRequirement>(tender.TenderRequirements);
         }

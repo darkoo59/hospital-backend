@@ -10,6 +10,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO
         public double TotalCost { get; set; }
         public UserEquipmentTenderDTO EquipmentTender { get; set; }
         public ICollection<TenderOfferDTO> TenderOffers { get; set; }
+        public bool HasWon { get; set; }
 
         public UserTenderApplicationDTO(TenderApplication ta)
         {
@@ -17,6 +18,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO
             Note = ta.Note;
             EquipmentTender = new UserEquipmentTenderDTO(ta.EquipmentTender);
             TenderOffers = TenderOfferDTO.ToDTOList(ta.TenderOffers);
+            HasWon = ta.HasWon;
 
             foreach (TenderOfferDTO tod in TenderOffers)
                 TotalCost += tod.Cost;

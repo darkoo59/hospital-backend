@@ -13,6 +13,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
         public ICollection<TenderOffer> TenderOffers { get; private set; }
         public User User { get; private set; }
         public int UserId { get; private set; }
+        public bool HasWon { get; private set; }
         
         public TenderApplication() { }
         public TenderApplication(string note, int equipmentTenderId, int userId, ICollection<TenderOffer> tenderOffers)
@@ -28,6 +29,11 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
         protected void ValidateFields()
         {
             //validations...
+        }
+
+        public void SetHasWon(bool hasWon)
+        {
+            HasWon = hasWon;
         }
 
         public class InvalidDataException : Exception
