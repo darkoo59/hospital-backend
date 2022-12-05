@@ -39,6 +39,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
 
 
 
@@ -272,8 +273,11 @@ namespace HospitalLibrary.Settings
                new Symptom() { SymptomId = 2, Name = "Sore throat" },
                new Symptom() { SymptomId = 3, Name = "Elevated body temperature" }
            );
-
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
+
+            modelBuilder.Entity<Consilium>()
+                .Property(b => b.DateRange)
+                .HasColumnType("jsonb");
 
 
             base.OnModelCreating(modelBuilder);

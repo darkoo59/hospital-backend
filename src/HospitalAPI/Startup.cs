@@ -29,6 +29,7 @@ using HospitalAPI.Registration.Mappers;
 using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
 
 namespace HospitalAPI
 {
@@ -100,6 +101,11 @@ namespace HospitalAPI
             services.AddScoped<IVacationRequestService, VacationRequestService>();
             services.AddScoped<IVacationRequestRepository, VacationRequestRepository>();
             services.AddScoped<IGenericMapper<VacationRequest, VacationRequestDTO>, VacationRequestMapper>();
+
+            services.AddScoped<IConsiliumService, ConsiliumService>();
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IGenericMapper<Consilium, ConsiliumDTO>, ConsiliumMapper>();
+
 
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
