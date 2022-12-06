@@ -139,6 +139,9 @@ namespace HospitalAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGenericMapper<User, UserDTO>, UserMapper>();
 
+            services.AddScoped<IPhysicianScheduleRepository, PhysicianScheduleRepository>();
+            services.AddScoped<IPhysicianScheduleService, PhysicianScheduleService>();
+
             SetupAuth(services);
         }
 

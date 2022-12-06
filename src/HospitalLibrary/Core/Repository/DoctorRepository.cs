@@ -23,5 +23,10 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Doctors.Find(id);
         }
+
+        public List<Doctor> GetAllDoctorsBySpecialization(int specialization)
+        {
+            return _context.Doctors.Where(d => d.SpecializationId == specialization).ToList();
+        }
     }
 }

@@ -8,38 +8,38 @@ namespace HospitalLibrary.Core.Model
     public class WorkTime : ValueObject
     {
         public DateRange DateRange { get; }
-        public TimeSpan StartTime { get; }
-        public TimeSpan EndTime { get; }
+        public TimeRange TimeRange { get; }
         //[Required]
         //public int? DoctorId { get; }
         //[ForeignKey("DoctorId")]
         //public virtual Doctor Doctor { get; }
 
-        public WorkTime(DateRange dateRange, TimeSpan startTime, TimeSpan endTime) 
+        public WorkTime(DateRange dateRange, TimeRange timeRange) 
         {
-            if (Validate(startTime, endTime))
-            {
-                DateRange = dateRange;
-                StartTime = startTime;
-                EndTime = endTime;
-            }
-            else 
-            {
-                throw new Exception("Passed arguments are not valid!");
-            }
+            DateRange = dateRange;
+            TimeRange = timeRange;
         }
 
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return DateRange;
-            yield return StartTime;
-            yield return EndTime;
+            yield return TimeRange;
         }
-
-        private bool Validate(TimeSpan startTime, TimeSpan endTime)
+        public List<DateRange> SeparateDateRange()
         {
-            return  startTime < endTime;
+            List<DateRange> dates = new List<DateRange>();
+            for (DateTime dateTime = this.DateRange.Start; dateTime <= this.DateRange.End; dateTime = dateTime.AddDays(1))
+            {
+                for (int i = this.TimeRange.Start.Hours; i < this.TimeRange.End.Hours; i++)
+                {
+                    DateTime start = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
+                    DateTime end = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
+                    dates.Add(new DateRange(start.AddHours(i), end.AddHours(i).AddMinutes(30)));
+                    dates.Add(new DateRange(start.AddHours(i).AddMinutes(30), end.AddHours(i+1)));
+                }
+            }
+            return dates;
         }
     }
 }

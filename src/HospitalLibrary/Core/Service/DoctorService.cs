@@ -29,7 +29,7 @@ namespace HospitalLibrary.Core.Service
             return _doctorRepository.GetById(id);
         }
 
-        public Doctor GetDoctorFromWorkTime(int id)
+        /*public Doctor GetDoctorFromWorkTime(int id)
         {
             List<WorkTime> workTimes = _workTimeRepository.GetAll().ToList();
             foreach(WorkTime workTime in workTimes)
@@ -40,6 +40,6 @@ namespace HospitalLibrary.Core.Service
                 }
             }
             return doctor;
-        }
+        }*/
     }
 }

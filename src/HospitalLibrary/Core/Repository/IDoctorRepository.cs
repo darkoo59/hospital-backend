@@ -12,5 +12,6 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Doctor> GetAll();
         public Doctor GetById(int id);
+        List<Doctor> GetAllDoctorsBySpecialization(int specialization);
     }
 }

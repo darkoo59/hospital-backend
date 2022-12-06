@@ -54,7 +54,7 @@ namespace HospitalLibrary.Core.Service
 
         private bool IsAppointmentValid(Appointment appointment)
         {
-            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.Start);
+            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.ScheduledDate.Start);
         }
 
         public void Delete(Appointment appointment)
@@ -77,7 +77,7 @@ namespace HospitalLibrary.Core.Service
             bool isAvailable = true;
             foreach (var a in _appointmentRepository.GetAll().ToList())
             {
-                if (a.Start == appointment.Start)
+                if (a.ScheduledDate.Start == appointment.ScheduledDate.Start)
                 {
                     isAvailable = false;
                     break;
@@ -91,7 +91,7 @@ namespace HospitalLibrary.Core.Service
             bool isAvailable = true;
             foreach (var vacation in _vacationRepository.GetAll().ToList())
             {
-                if (appointment.Start >= vacation.StartDate && appointment.Start <= vacation.EndDate)
+                if (appointment.ScheduledDate.Start >= vacation.StartDate && appointment.ScheduledDate.Start <= vacation.EndDate)
                 {
                     isAvailable = false;
                     break;
@@ -116,7 +116,7 @@ namespace HospitalLibrary.Core.Service
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {  
-            return appointment.Start >= workTime.DateRange.Start && appointment.Start <= workTime.DateRange.End && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
+            return appointment.ScheduledDate.Start >= workTime.DateRange.Start && appointment.ScheduledDate.Start <= workTime.DateRange.End && appointment.ScheduledDate.Start.TimeOfDay >= workTime.TimeRange.Start && appointment.ScheduledDate.Start.TimeOfDay <= workTime.TimeRange.End;
         }
 
 
@@ -147,7 +147,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Appointment appointment in doctorAppointments)
             {
-                if (appointment.Start > startDate && appointment.Start < endDate)
+                if (appointment.ScheduledDate.Start > startDate && appointment.ScheduledDate.Start < endDate)
                 {
                     doctorAppointmentsInVacationDate.Add(appointment);
                 }
@@ -161,7 +161,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach(Appointment appointment in appointments)
             {
-                if(appointment.Start >= dateStart && appointment.Start <= dateEnd)
+                if(appointment.ScheduledDate.Start >= dateStart && appointment.ScheduledDate.Start <= dateEnd)
                 {
                     return true;
                 }
@@ -175,7 +175,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Appointment app in appointments)
             {
-                if (app.Start == appointment.Start)
+                if (app.ScheduledDate.Start == appointment.ScheduledDate.Start)
                 {
                     return true;
                 }

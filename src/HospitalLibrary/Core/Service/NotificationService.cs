@@ -21,7 +21,7 @@ namespace HospitalLibrary.Core.Service
                 DoctorId = (int)appointment.DoctorId
             };
             Doctor doctor = _doctorRepository.GetById(notification.DoctorId);
-            notification.Message = "Doctor " + doctor.Name + " " + doctor.Surname + " rescheduled your appointment for " + appointment.Start.ToString() + ".";
+            notification.Message = "Doctor " + doctor.Name + " " + doctor.Surname + " rescheduled your appointment for " + appointment.ScheduledDate.Start.ToString() + ".";
             _notificationRepository.Create(notification);
         }
 
@@ -33,7 +33,7 @@ namespace HospitalLibrary.Core.Service
                 DoctorId = (int)appointment.DoctorId
             };
             Doctor doctor = _doctorRepository.GetById(notification.DoctorId);
-            notification.Message = "Doctor " + doctor.Name + " " + doctor.Surname + " canceled your appointment that was scheduled for " + appointment.Start.ToString() + ".";
+            notification.Message = "Doctor " + doctor.Name + " " + doctor.Surname + " canceled your appointment that was scheduled for " + appointment.ScheduledDate.Start.ToString() + ".";
             _notificationRepository.Create(notification);
         }
     }

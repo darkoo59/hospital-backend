@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Service
     public interface IPhysicianScheduleService
     {
         List<Appointment> GetAvailableAppointments(int doctorId, DateTime date);
+        List<Appointment> GetRecommendedAppointments(DateRange dateRange, int doctorId, string priority);
     }
 }

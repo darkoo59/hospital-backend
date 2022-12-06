@@ -36,8 +36,8 @@ namespace HospitalLibrary.Settings
         public DbSet<InpatientTreatment> InpatientTreatments { get; set; }
         public DbSet<InpatientTreatmentTherapy> InpatientTreatmentTherapies { get; set; }
 
-
-
+        public DbSet<PhysicianSchedule> PhysicianSchedules { get; set; }
+ 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -171,16 +171,16 @@ namespace HospitalLibrary.Settings
            );
 
             modelBuilder.Entity<Appointment>().HasData(
-               new Appointment() { AppointmentId = 1, Start = System.DateTime.Now, DoctorId = 1, PatientId = 1 }
+               new Appointment() { AppointmentId = 1, ScheduledDate = new DateRange(System.DateTime.Now, System.DateTime.Now.AddMinutes(30)), PatientId = 1 }
            );
 
-            modelBuilder.Entity<WorkTime>().HasData(
-               new WorkTime() { WorkTimeId = 1, StartDate = new System.DateTime(2022, 10, 15), EndDate = new System.DateTime(2022, 11, 15), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
-           );
+           // modelBuilder.Entity<WorkTime>().HasData(
+           //    new WorkTime() { DateRange = new DateRange(new System.DateTime(2022, 10, 15), new System.DateTime(2022, 11, 15)), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
+           //);
 
-            modelBuilder.Entity<Vacation>().HasData(
-              new Vacation() { VacationId = 1, StartDate = new System.DateTime(2022, 11, 17), EndDate = new System.DateTime(2022, 12, 2), DoctorId = 1 }
-          );
+           //modelBuilder.Entity<Vacation>().HasData(
+           //  new Vacation() { VacationId = 1, StartDate = new System.DateTime(2022, 11, 17), EndDate = new System.DateTime(2022, 12, 2), DoctorId = 1 }
+           //);
 
             modelBuilder.Entity<Feedback>().HasData(
 

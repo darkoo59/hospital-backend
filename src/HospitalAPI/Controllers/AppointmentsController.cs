@@ -15,13 +15,14 @@ namespace HospitalAPI.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IGenericMapper<Appointment, AppointmentDTO> _appointmentMapper;
         private readonly INotificationService _notificationService;
+        private readonly IPhysicianScheduleService _physicianScheduleService;
 
-
-        public AppointmentsController(IAppointmentService appointmentService, IGenericMapper<Appointment, AppointmentDTO> appointmentMapper, INotificationService notificationService)
+        public AppointmentsController(IAppointmentService appointmentService, IGenericMapper<Appointment, AppointmentDTO> appointmentMapper, INotificationService notificationService, IPhysicianScheduleService physicianScheduleService)
         {
             _appointmentService = appointmentService;
             _appointmentMapper = appointmentMapper;
             _notificationService = notificationService;
+            _physicianScheduleService = physicianScheduleService;
         }
 
         [HttpGet]
@@ -118,6 +119,12 @@ namespace HospitalAPI.Controllers
             return Ok(_appointmentMapper.ToDTO(_appointmentService.GetAppointmentInVacationDateRange(doctorId, startDate, endDate)));
         }
 
+        [HttpPost("getRecommendedAppointments")]
+        public ActionResult GetRecommendedAppointments(RecommendedAppointmentsDTO recommendedAppointmentsDTO)
+        {
+            return Ok(_appointmentMapper.ToDTO(_physicianScheduleService.GetRecommendedAppointments(new DateRange(recommendedAppointmentsDTO.From,
+                recommendedAppointmentsDTO.To), recommendedAppointmentsDTO.DoctorId, recommendedAppointmentsDTO.Priority)));
+        }
 
     }
 }

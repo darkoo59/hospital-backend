@@ -22,6 +22,5 @@ namespace HospitalLibrary.Core.Model
             Appointments = appointments;
             Vacations = vacations;
         }
-
     }
 }
