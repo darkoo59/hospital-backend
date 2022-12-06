@@ -103,6 +103,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
         public void SetWinner(int applicationId)
         {
             TenderApplication ta = _repository.GetApplicationById(applicationId);
+            if (ta == null) throw new Exception("Application has not been found.");
             if (ta.EquipmentTender.State != TenderState.OPEN) throw new Exception("Tender is not open");
 
             ta.EquipmentTender.SetState(TenderState.PENDING);
@@ -116,6 +117,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             User user = _userService.GetBy(email);
 
             TenderApplication ta = _repository.GetApplicationById(applicationId);
+            if (ta == null) throw new Exception("Application has not been found.");
             if (ta.User.Id != user.Id) throw new Exception("Invalid access");
             if (!ta.HasWon) throw new Exception("Some error has occurred");
 
@@ -129,6 +131,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             User user = _userService.GetBy(email);
 
             TenderApplication ta = _repository.GetApplicationById(applicationId);
+            if (ta == null) throw new Exception("Application has not been found.");
             if (ta.User.Id != user.Id) throw new Exception("Invalid access");
             if (!ta.HasWon) throw new Exception("Some error has occurred");
 
