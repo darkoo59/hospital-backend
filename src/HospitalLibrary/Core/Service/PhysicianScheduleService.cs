@@ -17,9 +17,51 @@ namespace HospitalLibrary.Core.Service
             this._physicianScheduleRepository = physicianScheduleRepository;
             this._doctorRepository = doctorRepository;
         }
+        public void Create(PhysicianSchedule physicianSchedule)
+        {
+            _physicianScheduleRepository.Create(physicianSchedule);
+        }
+
+        public void Delete(PhysicianSchedule physicianSchedule)
+        {
+            _physicianScheduleRepository.Delete(physicianSchedule);
+        }
+
+        public IEnumerable<PhysicianSchedule> GetAll()
+        {
+            return _physicianScheduleRepository.GetAll();
+        }
+
         public List<Appointment> GetAvailableAppointments(int doctorId, DateTime date)
         {
             throw new NotImplementedException();
+        }
+
+        public PhysicianSchedule GetById(int id)
+        {
+            return _physicianScheduleRepository.GetById(id);
+        }
+
+        public void Schedule(int doctorId, Appointment appointment)
+        {
+            PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
+            if (physicianSchedule.IsAppointmentValid(appointment))
+            {
+                physicianSchedule.Appointments.Add(appointment);
+                _physicianScheduleRepository.Update(physicianSchedule);
+            }
+        }
+
+        public void TransferAppointment(int doctorId, Appointment appointment)
+        {
+            PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
+            physicianSchedule.Appointments.Add(appointment);
+            _physicianScheduleRepository.Update(physicianSchedule);
+        }
+
+        public void Update(PhysicianSchedule physicianSchedule)
+        {
+            _physicianScheduleRepository.Update(physicianSchedule);
         }
         public List<Appointment> GetRecommendedAppointments(DateRange dateRange, int doctorId, string priority)
         {

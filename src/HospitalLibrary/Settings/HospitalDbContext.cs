@@ -23,7 +23,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
-        public DbSet<WorkTime> WorkTimes { get; set; }
+        //public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<VacationRequest> VacationRequests {get;set;}
@@ -35,9 +35,10 @@ namespace HospitalLibrary.Settings
         public DbSet<MedicineTherapy> MedicineTherapies { get; set; }
         public DbSet<InpatientTreatment> InpatientTreatments { get; set; }
         public DbSet<InpatientTreatmentTherapy> InpatientTreatmentTherapies { get; set; }
-
         public DbSet<PhysicianSchedule> PhysicianSchedules { get; set; }
- 
+        public DbSet<Symptom> Symptoms { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<ExaminationReport> ExaminationReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -170,17 +171,17 @@ namespace HospitalLibrary.Settings
                new Specialization() { SpecializationId = 3, Name = "Family medicine" }
            );
 
-            modelBuilder.Entity<Appointment>().HasData(
-               new Appointment() { AppointmentId = 1, ScheduledDate = new DateRange(System.DateTime.Now, System.DateTime.Now.AddMinutes(30)), PatientId = 1 }
-           );
-
-           // modelBuilder.Entity<WorkTime>().HasData(
-           //    new WorkTime() { DateRange = new DateRange(new System.DateTime(2022, 10, 15), new System.DateTime(2022, 11, 15)), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
+           // modelBuilder.Entity<Appointment>().HasData(
+           //    new Appointment() { AppointmentId = 1, Start = System.DateTime.Now, DoctorId = 1, PatientId = 1 }
            //);
 
-           //modelBuilder.Entity<Vacation>().HasData(
-           //  new Vacation() { VacationId = 1, StartDate = new System.DateTime(2022, 11, 17), EndDate = new System.DateTime(2022, 12, 2), DoctorId = 1 }
-           //);
+          //  modelBuilder.Entity<WorkTime>().HasData(
+          //     new WorkTime() { WorkTimeId = 1, StartDate = new System.DateTime(2022, 10, 15), EndDate = new System.DateTime(2022, 11, 15), StartTime = new System.TimeSpan(8, 0, 0), EndTime = new System.TimeSpan(16, 0, 0), DoctorId = 1 }
+          // );
+
+          //  modelBuilder.Entity<Vacation>().HasData(
+          //    new Vacation() { VacationId = 1, StartDate = new System.DateTime(2022, 11, 17), EndDate = new System.DateTime(2022, 12, 2), DoctorId = 1 }
+          //);
 
             modelBuilder.Entity<Feedback>().HasData(
 
@@ -259,6 +260,17 @@ namespace HospitalLibrary.Settings
                 new User() { UserId = 1, Email = "email", Password = "password", Role = UserRole.patient}
             );
 
+            modelBuilder.Entity<PhysicianSchedule>()
+                .Property(b => b.WorkTimes)
+                .HasColumnType("jsonb");
+
+            modelBuilder.Entity<Symptom>().HasData(
+               new Symptom() { SymptomId = 1, Name = "High blood presure" },
+               new Symptom() { SymptomId = 2, Name = "Sore throat" },
+               new Symptom() { SymptomId = 3, Name = "Elevated body temperature" }
+           );
+
+            modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
 
 
             base.OnModelCreating(modelBuilder);

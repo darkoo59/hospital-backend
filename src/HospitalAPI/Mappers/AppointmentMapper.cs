@@ -17,7 +17,6 @@ namespace HospitalAPI.Mappers
             DateTime date = appointmentDTO.Date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
             appointment.ScheduledDate = new DateRange(date, date.AddMinutes(30));
             appointment.PatientId = appointmentDTO.PatientId;
-            appointment.DoctorId = appointmentDTO.DoctorId;
 
             return appointment;
         }
@@ -34,7 +33,6 @@ namespace HospitalAPI.Mappers
                 DateTime end = appointmentDTO.Date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
                 //appointment.ScheduledDate = new DateRange(start, end.AddMinutes(30));
                 appointment.PatientId = appointmentDTO.PatientId;
-                appointment.DoctorId = appointmentDTO.DoctorId;
                 appointments.Add(appointment);
             }
 

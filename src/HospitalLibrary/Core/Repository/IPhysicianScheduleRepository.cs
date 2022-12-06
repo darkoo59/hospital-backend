@@ -9,6 +9,12 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IPhysicianScheduleRepository
     {
+        IEnumerable<PhysicianSchedule> GetAll();
+        PhysicianSchedule GetById(int id);
+        void Create(PhysicianSchedule physicianSchedule);
+        void Update(PhysicianSchedule physicianSchedule);
+        void Delete(PhysicianSchedule physicianSchedule);
+        PhysicianSchedule Get(int doctorId);
         public PhysicianSchedule FindByDoctor(int doctorId);
         public List<Appointment> FindAppointmentsByDoctor(int doctorId);
     }

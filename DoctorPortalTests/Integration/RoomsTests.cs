@@ -19,6 +19,7 @@ namespace HospitalTests.Integration
     {
         public RoomsTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
+<<<<<<< HEAD
         private static RoomsController SetupController(IServiceScope scope)
         {
             //return new RoomsController(scope.ServiceProvider.GetRequiredService<IRoomService>());
@@ -55,5 +56,42 @@ namespace HospitalTests.Integration
             Assert.NotNull(result);
             //Assert.Equal(allEquipment[1],result);
         }
+=======
+        //private static RoomsController SetupController(IServiceScope scope)
+        //{
+        //    return new RoomsController(scope.ServiceProvider.GetRequiredService<IRoomService>());
+        //}
+
+        //[Fact]
+        //public void Get_all_equipment()
+        //{
+        //    using var scope = Factory.Services.CreateScope();
+        //    var controller = SetupController(scope);
+
+        //    /*List<Equipment> allEquipment = new List<Equipment>() { new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 1, RoomId = 1, Name = "Syringe", Quantity = 50 },
+        //                                                                        new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 },
+        //                                                                        new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 3, RoomId = 2, Name = "Gloves", Quantity = 50 }};*/
+
+        //    //var result = controller.GetAllEquipment() as IEnumerable<Equipment>;
+        //    var result = controller.GetAllEquipment();
+
+        //    Assert.NotNull(result);
+        //    //Assert.Equal(allEquipment, result);
+        //}
+        //[Fact]
+        //public void Get_by_id()
+        //{
+        //    using var scope = Factory.Services.CreateScope();
+        //    var controller = SetupController(scope);
+        //    /*List<Equipment> allEquipment = new List<Equipment>() { new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 1, RoomId = 1, Name = "Syringe", Quantity = 50 },
+        //                                                                        new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 },
+        //                                                                        new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 3, RoomId = 2, Name = "Gloves", Quantity = 50 }};*/
+
+        //    var result = controller.GetById(1);
+
+        //    Assert.NotNull(result);
+        //    //Assert.Equal(allEquipment[1],result);
+        //}
+>>>>>>> 99b5c7aab53a7747b0bc1d8c106cbd3c39c2266c
     }
 }

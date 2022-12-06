@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,55 @@ namespace HospitalLibrary.Core.Repository
         public PhysicianSchedule FindByDoctor(int doctorId) 
         {
             return this._context.PhysicianSchedules.Where(p => p.DoctorId == doctorId).First();
+        }
+
+        public void Create(PhysicianSchedule physicianSchedule)
+        {
+            _context.PhysicianSchedules.Add(physicianSchedule);
+            _context.SaveChanges();
+        }
+
+        public void Delete(PhysicianSchedule physicianSchedule)
+        {
+            _context.PhysicianSchedules.Remove(physicianSchedule);
+            _context.SaveChanges();
+        }
+
+        public PhysicianSchedule Get(int doctorId)
+        {
+            foreach (var physicianSchedule in GetAll().ToList())
+            {
+                if (physicianSchedule.DoctorId == doctorId)
+                {
+                    return physicianSchedule;
+                }
+            }
+
+            return null;
+        }
+
+        public IEnumerable<PhysicianSchedule> GetAll()
+        {
+            return _context.PhysicianSchedules.Include(r => r.WorkTimes).Include(r => r.Appointments).Include(r => r.Vacations).ToList();
+        }
+
+        public PhysicianSchedule GetById(int id)
+        {
+            return _context.PhysicianSchedules.Find(id);
+        }
+
+        public void Update(PhysicianSchedule physicianSchedule)
+        {
+            _context.Entry(physicianSchedule).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }
