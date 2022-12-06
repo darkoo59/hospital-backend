@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.Features.EquipmentTenders.DTO
+﻿namespace IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO
 {
     public class CreateTenderOfferDTO
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IntegrationLibrary.Features.EquipmentTenders.DTO
+namespace IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO
 {
     public class CreateTenderApplicationDTO
     {

@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205182141_tender-model-expanded")]
+    partial class tendermodelexpanded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,8 +294,8 @@ namespace IntegrationLibrary.Migrations
                     b.Property<DateTime?>("ExpiresOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("State")
-                        .HasColumnType("integer");
+                    b.Property<bool>("Finished")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -307,24 +309,24 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Description = "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2022, 12, 20, 20, 11, 35, 785, DateTimeKind.Local).AddTicks(669),
-                            State = 0,
+                            ExpiresOn = new DateTime(2022, 12, 20, 19, 21, 40, 455, DateTimeKind.Local).AddTicks(5668),
+                            Finished = false,
                             Title = "Tender 1"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.",
-                            ExpiresOn = new DateTime(2022, 12, 20, 20, 11, 35, 803, DateTimeKind.Local).AddTicks(3599),
-                            State = 0,
+                            ExpiresOn = new DateTime(2022, 12, 20, 19, 21, 40, 470, DateTimeKind.Local).AddTicks(6827),
+                            Finished = false,
                             Title = "Tender 2"
                         },
                         new
                         {
                             Id = 3,
                             Description = "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2022, 12, 20, 20, 11, 35, 803, DateTimeKind.Local).AddTicks(3925),
-                            State = 0,
+                            ExpiresOn = new DateTime(2022, 12, 20, 19, 21, 40, 470, DateTimeKind.Local).AddTicks(7427),
+                            Finished = false,
                             Title = "Tender 3"
                         });
                 });

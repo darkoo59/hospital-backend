@@ -1,6 +1,8 @@
 ﻿using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -84,6 +86,14 @@ namespace IntegrationAPI.Controllers
             return Unauthorized();
         }
 
+        [HttpGet("application/tender/{id}")]
+        public IActionResult GetAllApplicationsByTenderId(int id)
+        {
+            EquipmentTender et = _equipmentTenderService.GetTenderWithApplicationsById(id);
+            if (et == null) throw new Exception("Tender with the given ID has not been found.");
+            return Ok(new TenderWithApplicationsDTO(et));
+        }
+
         [HttpGet("application/{id}")]
         public IActionResult GetApplicationById(int id)
         {
@@ -99,6 +109,38 @@ namespace IntegrationAPI.Controllers
             {
                 string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
                 _equipmentTenderService.DeleteApplicationByIdAndUser(id, email);
+                return Ok();
+            }
+            return Unauthorized();
+        }
+
+        [HttpPatch("winner")]
+        public IActionResult SetWinner([FromBody] int id)
+        {
+            _equipmentTenderService.SetWinner(id);
+            return Ok();
+        }
+
+        [HttpPatch("winner/confirm")]
+        public IActionResult ConfirmWinner([FromBody] int id)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                _equipmentTenderService.ConfirmWinner(id, email);
+                return Ok();
+            }
+            return Unauthorized();
+
+        }
+
+        [HttpPatch("winner/decline")]
+        public IActionResult DeclineWinner([FromBody] int id)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                _equipmentTenderService.DeclineWinner(id, email);
                 return Ok();
             }
             return Unauthorized();

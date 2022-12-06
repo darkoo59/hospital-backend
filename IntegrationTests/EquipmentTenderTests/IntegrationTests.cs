@@ -1,6 +1,5 @@
 ﻿using Xunit.Priority;
 using Xunit;
-using System.Security.Principal;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Features;
@@ -13,12 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
-using Shouldly;
-using Moq;
-using System.CodeDom;
-using System.Linq;
-using System.Net.Http;
-using IntegrationLibrary.Features.EquipmentTenders.Domain;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
+using IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO;
 
 namespace IntegrationTests.EquipmentTenderTests
 {
