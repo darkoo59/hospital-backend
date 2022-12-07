@@ -66,5 +66,19 @@ namespace HospitalLibrary.Core.Repository
                 throw;
             }
         }
+
+        public PhysicianSchedule GetByDoctorId(int id)
+        {
+            List<PhysicianSchedule> physicianSchedules = GetAll().ToList();
+            
+            foreach(PhysicianSchedule physicianSchedule in physicianSchedules)
+            {
+                if(physicianSchedule.DoctorId == id)
+                {
+                    return physicianSchedule;
+                }
+            }
+            return null;
+        }
     }
 }

@@ -11,15 +11,94 @@ namespace HospitalLibrary.Core.Service
     public class ConsiliumService : IConsiliumService
     {
         private readonly IConsiliumRepository _consiliumRepository;
+        private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IPhysicianScheduleService _physicianScheduleService;
 
-        public ConsiliumService(IConsiliumRepository consiliumRepository)
+        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository)
         {
             _consiliumRepository = consiliumRepository;
+            _doctorRepository = doctorRepository;
         }
 
         public void Create(Consilium consilium)
         {
             _consiliumRepository.Create(consilium);
+        }
+
+        public void AddDoctorIdToList(int DoctorId, List<int> DoctorIds)
+        {
+            DoctorIds.Add(DoctorId);
+        }
+
+        public void AddSpecializationIdToList(int SpecializationId, List<int> SpecializationIds)
+        {
+            SpecializationIds.Add(SpecializationId);
+        }
+
+        public void CreateConsiliumWithSpecializations(Consilium consilium, List<int> SpecializationIds)
+        {
+
+        }
+
+        public bool IsDoctorsAvailableOnConsiliumDate(List<Doctor> doctors, DateTime dateTime)
+        {
+            int counter = 0;
+            PhysicianSchedule physicianSchedule = new PhysicianSchedule();
+            Appointment appointment = new Appointment();
+            appointment.Start = dateTime;
+
+            foreach (Doctor doctor in doctors)
+            {
+                physicianSchedule = _physicianScheduleRepository.Get(doctor.DoctorId);
+
+                if(physicianSchedule.IsAppointmentValid(appointment) == true)
+                {
+                    counter++;
+                }
+            }
+
+            if(counter == doctors.Count)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void CreateConsiliumWithDoctors(Consilium consilium,List<int> DoctorIds)
+        {
+            List<Doctor> doctors = _doctorRepository.GetAll().ToList();
+            List<Doctor> requiredDoctors = new List<Doctor>();
+            Appointment appointment = new Appointment();
+            appointment.Start = consilium.StartTime;
+            int counter = 0;
+
+            foreach (int doctorId in DoctorIds)
+            {
+                foreach (Doctor d in doctors)
+                {
+                    if (d.DoctorId == doctorId)
+                    {
+                        requiredDoctors.Add(d);
+                    }
+                }
+            }
+
+            ifPetlja: 
+            {
+                if (appointment.Start.Hour > 10 && appointment.Start.Hour < 20)
+                {
+                    if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.Start) == true)
+                    {
+                        _consiliumRepository.Create(consilium);
+                    }
+                    else
+                    {
+                        appointment.Start.AddHours(1);
+                        goto ifPetlja;
+                    }
+                }
+            }    
         }
     }
 }
