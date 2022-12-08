@@ -3,8 +3,7 @@ using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace HospitalLibrary.Core.Service
 {
@@ -13,13 +12,17 @@ namespace HospitalLibrary.Core.Service
         private readonly IConsiliumRepository _consiliumRepository;
         private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
         private readonly IDoctorRepository _doctorRepository;
-        private readonly IPhysicianScheduleService _physicianScheduleService;
+        private readonly ISpecializationRepository _specializationRepository;
+        List<List<int>> requiredDoctorsIdList = new List<List<int>>();
 
-        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository)
+
+        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository,ISpecializationRepository specializationRepository)
         {
             _consiliumRepository = consiliumRepository;
             _doctorRepository = doctorRepository;
             _physicianScheduleRepository = physicianScheduleRepository;
+            _specializationRepository = specializationRepository;
+            
         }
 
         public void Create(Consilium consilium)
@@ -35,11 +38,6 @@ namespace HospitalLibrary.Core.Service
         public void AddSpecializationIdToList(int SpecializationId, List<int> SpecializationIds)
         {
             SpecializationIds.Add(SpecializationId);
-        }
-
-        public void CreateConsiliumWithSpecializations(Consilium consilium, List<int> SpecializationIds)
-        {
-
         }
 
         public bool IsDoctorsAvailableOnConsiliumDate(List<Doctor> doctors, DateTime dateTime)
@@ -72,7 +70,7 @@ namespace HospitalLibrary.Core.Service
             List<Doctor> doctors = _doctorRepository.GetAll().ToList();
             List<Doctor> requiredDoctors = new List<Doctor>();
             Appointment appointment = new Appointment();
-            consilium.StartTime = new DateTime(consilium.StartTime.Year, consilium.StartTime.Month, consilium.StartTime.Day, consilium.StartTime.Hour, 0, 0);
+            consilium.StartTime = new DateTime(consilium.StartTime.Year, consilium.StartTime.Month, consilium.StartTime.Day,10, 0, 0);
             appointment.Start = consilium.StartTime;
             int counter = 0;
 
@@ -104,11 +102,60 @@ namespace HospitalLibrary.Core.Service
                 }
             }
             ifPetlja1:
-                appointment.Start = appointment.Start.AddHours(1);
+                appointment.Start = appointment.Start.AddMinutes(30);
                 goto ifPetlja;
         }
-    
-    
-    
+
+        public void CreateConsiliumWithSpecializations(Consilium consilium, List<int> SpecializationIds)
+        {
+            List<Doctor> doctors = _doctorRepository.GetAll().ToList();
+            List<Doctor> requiredDoctors = new List<Doctor>();
+            List<int> freeRequiredDoctorsId = new List<int>();
+            Appointment appointment = new Appointment();
+            consilium.StartTime = new DateTime(consilium.StartTime.Year, consilium.StartTime.Month, consilium.StartTime.Day,10, 0, 0);
+            appointment.Start = consilium.StartTime;
+            List<int> NumberOfFreeDoctorsByTerm = new List<int>();
+            int counter = 0;
+
+            foreach (int specializationId in SpecializationIds)
+            {
+                foreach (Doctor d in doctors)
+                {
+                    if (d.SpecializationId == specializationId)
+                    {
+                        requiredDoctors.Add(d);
+                    }
+                }
+            }
+
+            ifPetlja:
+
+            if (appointment.Start.Hour >= 10 && appointment.Start.Hour <= 20) 
+            {
+                foreach (Doctor doctor in requiredDoctors)
+                {
+                    PhysicianSchedule physicianSchedule = new PhysicianSchedule();
+                    physicianSchedule = _physicianScheduleRepository.Get(doctor.DoctorId);
+
+                    if (physicianSchedule.IsAppointmentAvailable(appointment) == true)
+                    {
+                        counter++;
+                        freeRequiredDoctorsId.Add(doctor.DoctorId);
+                        if(freeRequiredDoctorsId.Count == requiredDoctors.Count)
+                        {
+                            consilium.DoctorIds = freeRequiredDoctorsId;
+                            return;
+                        }
+                    }
+                }
+
+                //ako ne udje nijednom u ovaj gore if a dodje do 22 smanjujem za 1 pa proveravam
+                NumberOfFreeDoctorsByTerm.Add(counter);
+                counter = 0;
+                appointment.Start = appointment.Start.AddMinutes(30);
+                requiredDoctorsIdList.Add(freeRequiredDoctorsId);
+                freeRequiredDoctorsId.Clear();
+            } 
+        }
     }
 }

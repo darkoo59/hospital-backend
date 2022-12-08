@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Service
     {
         public void Create(Consilium consilium);
         public void CreateConsiliumWithDoctors(Consilium consilium, List<int> DoctorIds);
+        public void CreateConsiliumWithSpecializations(Consilium consilium, List<int> SpecializationIds);
     }
 }
