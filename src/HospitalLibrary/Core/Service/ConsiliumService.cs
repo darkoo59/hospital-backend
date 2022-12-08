@@ -70,7 +70,7 @@ namespace HospitalLibrary.Core.Service
             List<Doctor> doctors = _doctorRepository.GetAll().ToList();
             List<Doctor> requiredDoctors = new List<Doctor>();
             Appointment appointment = new Appointment();
-            consilium.StartTime = new DateTime(consilium.StartTime.Year, consilium.StartTime.Month, consilium.StartTime.Day,10, 0, 0);
+            consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
             appointment.Start = consilium.StartTime;
             int counter = 0;
 
@@ -109,12 +109,12 @@ namespace HospitalLibrary.Core.Service
         public void CreateConsiliumWithSpecializations(Consilium consilium, List<int> SpecializationIds)
         {
             List<Doctor> doctors = _doctorRepository.GetAll().ToList();
-            List<Doctor> requiredDoctors = new List<Doctor>();
-            List<int> freeRequiredDoctorsId = new List<int>();
+            List<Doctor> potentialDoctors = new List<Doctor>();
+            List<int> freeDoctorsId = new List<int>();
+            List<int> freeDoctorsSpecializationId = new List<int>();
             Appointment appointment = new Appointment();
-            consilium.StartTime = new DateTime(consilium.StartTime.Year, consilium.StartTime.Month, consilium.StartTime.Day,10, 0, 0);
+            consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
             appointment.Start = consilium.StartTime;
-            List<int> NumberOfFreeDoctorsByTerm = new List<int>();
             int counter = 0;
 
             foreach (int specializationId in SpecializationIds)
@@ -123,38 +123,46 @@ namespace HospitalLibrary.Core.Service
                 {
                     if (d.SpecializationId == specializationId)
                     {
-                        requiredDoctors.Add(d);
+                        potentialDoctors.Add(d);
                     }
                 }
             }
-
             ifPetlja:
 
             if (appointment.Start.Hour >= 10 && appointment.Start.Hour <= 20) 
             {
-                foreach (Doctor doctor in requiredDoctors)
+                foreach (Doctor doctor in potentialDoctors)
                 {
                     PhysicianSchedule physicianSchedule = new PhysicianSchedule();
                     physicianSchedule = _physicianScheduleRepository.Get(doctor.DoctorId);
+                    counter = counter + 1;
 
                     if (physicianSchedule.IsAppointmentAvailable(appointment) == true)
                     {
-                        counter++;
-                        freeRequiredDoctorsId.Add(doctor.DoctorId);
-                        if(freeRequiredDoctorsId.Count == requiredDoctors.Count)
-                        {
-                            consilium.DoctorIds = freeRequiredDoctorsId;
-                            return;
-                        }
+                        freeDoctorsId.Add(doctor.DoctorId);
+                        freeDoctorsSpecializationId.Add(doctor.SpecializationId);
+                    }
+
+                    List<int> common = freeDoctorsSpecializationId.Intersect(SpecializationIds).ToList();
+
+                    if (freeDoctorsId.Count == potentialDoctors.Count() && common.SequenceEqual(SpecializationIds))
+                    {
+                        consilium.DoctorIds = freeDoctorsId;
+                        consilium.StartTime = appointment.Start;
+                        _consiliumRepository.Create(consilium);
+                        return;
+                    }
+                    if(counter == potentialDoctors.Count())
+                    {
+                        appointment.Start = appointment.Start.AddMinutes(30);
+                        freeDoctorsId.Clear();
+                        freeDoctorsSpecializationId.Clear();
+                        counter = 0;
+                        goto ifPetlja;
                     }
                 }
-
-                //ako ne udje nijednom u ovaj gore if a dodje do 22 smanjujem za 1 pa proveravam
-                NumberOfFreeDoctorsByTerm.Add(counter);
-                counter = 0;
                 appointment.Start = appointment.Start.AddMinutes(30);
-                requiredDoctorsIdList.Add(freeRequiredDoctorsId);
-                freeRequiredDoctorsId.Clear();
+                goto ifPetlja;
             } 
         }
     }
