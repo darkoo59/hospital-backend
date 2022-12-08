@@ -15,7 +15,7 @@ namespace HospitalLibrary.Core.Service
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPhysicianScheduleService _physicianScheduleService;
 
-        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository,IPhysicianScheduleRepository physicianScheduleRepository)
+        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository)
         {
             _consiliumRepository = consiliumRepository;
             _doctorRepository = doctorRepository;
@@ -51,27 +51,28 @@ namespace HospitalLibrary.Core.Service
             foreach (Doctor doctor in doctors)
             {
                 PhysicianSchedule physicianSchedule = new PhysicianSchedule();
-                
+
                 physicianSchedule = _physicianScheduleRepository.Get(doctor.DoctorId);
 
-                if(physicianSchedule.IsAppointmentValid(appointment) == true)
+                if (physicianSchedule.IsAppointmentAvailable(appointment) == true)
                 {
                     counter++;
                 }
             }
 
-            if(counter == doctors.Count)
+            if (counter == doctors.Count)
             {
                 return true;
             }
             return false;
         }
 
-        public void CreateConsiliumWithDoctors(Consilium consilium,List<int> DoctorIds)
+        public void CreateConsiliumWithDoctors(Consilium consilium, List<int> DoctorIds)
         {
             List<Doctor> doctors = _doctorRepository.GetAll().ToList();
             List<Doctor> requiredDoctors = new List<Doctor>();
             Appointment appointment = new Appointment();
+            consilium.StartTime = new DateTime(consilium.StartTime.Year, consilium.StartTime.Month, consilium.StartTime.Day, consilium.StartTime.Hour, 0, 0);
             appointment.Start = consilium.StartTime;
             int counter = 0;
 
@@ -86,21 +87,28 @@ namespace HospitalLibrary.Core.Service
                 }
             }
 
-            ifPetlja: 
+            ifPetlja:
             {
                 if (appointment.Start.Hour > 10 && appointment.Start.Hour < 20)
                 {
                     if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.Start) == true)
                     {
+                        consilium.StartTime = new DateTime(appointment.Start.Year,appointment.Start.Month,appointment.Start.Day,appointment.Start.Hour,appointment.Start.Minute,appointment.Start.Second);
                         _consiliumRepository.Create(consilium);
+                        return;
                     }
                     else
                     {
-                        appointment.Start.AddHours(1);
-                        goto ifPetlja;
+                        goto ifPetlja1;
                     }
                 }
-            }    
+            }
+            ifPetlja1:
+                appointment.Start = appointment.Start.AddHours(1);
+                goto ifPetlja;
         }
+    
+    
+    
     }
 }

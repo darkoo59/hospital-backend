@@ -24,7 +24,7 @@ namespace HospitalLibrary.Core.Model
         {
             foreach (var a in Appointments)
             {
-                if (a.Start == appointment.Start)
+                if (a.Start.Hour == appointment.Start.Hour && a.Start.Minute == appointment.Start.Minute)
                 {
                     return false;
                 }
