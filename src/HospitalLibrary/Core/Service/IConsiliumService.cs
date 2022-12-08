@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Service
     public interface IConsiliumService
     {
         public void Create(Consilium consilium);
+        public void CreateConsiliumWithDoctors(Consilium consilium, List<int> DoctorIds);
     }
 }

@@ -7,14 +7,19 @@ namespace HospitalLibrary.Core.Model
 {
     public class WorkTime : ValueObject
     {
-        public DateRange DateRange { get; }
-        public TimeSpan StartTime { get; }
-        public TimeSpan EndTime { get; }
+        public DateRange DateRange { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         //[Required]
         //public int? DoctorId { get; }
         //[ForeignKey("DoctorId")]
         //public virtual Doctor Doctor { get; }
 
+        public WorkTime()
+        {
+
+        }
+        
         public WorkTime(DateRange dateRange, TimeSpan startTime, TimeSpan endTime) 
         {
             if (Validate(startTime, endTime))

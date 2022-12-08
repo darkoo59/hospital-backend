@@ -15,10 +15,11 @@ namespace HospitalLibrary.Core.Service
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPhysicianScheduleService _physicianScheduleService;
 
-        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository)
+        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository,IPhysicianScheduleRepository physicianScheduleRepository)
         {
             _consiliumRepository = consiliumRepository;
             _doctorRepository = doctorRepository;
+            _physicianScheduleRepository = physicianScheduleRepository;
         }
 
         public void Create(Consilium consilium)
@@ -44,12 +45,13 @@ namespace HospitalLibrary.Core.Service
         public bool IsDoctorsAvailableOnConsiliumDate(List<Doctor> doctors, DateTime dateTime)
         {
             int counter = 0;
-            PhysicianSchedule physicianSchedule = new PhysicianSchedule();
             Appointment appointment = new Appointment();
             appointment.Start = dateTime;
 
             foreach (Doctor doctor in doctors)
             {
+                PhysicianSchedule physicianSchedule = new PhysicianSchedule();
+                
                 physicianSchedule = _physicianScheduleRepository.Get(doctor.DoctorId);
 
                 if(physicianSchedule.IsAppointmentValid(appointment) == true)
