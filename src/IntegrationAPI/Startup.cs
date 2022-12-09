@@ -21,6 +21,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
+using IntegrationLibrary.Features.EquipmentTenders.Application;
+using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
+using IntegrationLibrary.Features.EquipmentTenders.Infrastructure;
 
 namespace IntegrationAPI
 {
@@ -78,7 +82,8 @@ namespace IntegrationAPI
             services.AddScoped<IReportConfigurationService, ReportConfigurationService>();
             services.AddScoped<IReportConfigurationRepository, ReportConfigurationRepository>();
 
-
+            services.AddScoped<IEquipmentTenderService, EquipmentTenderService>();
+            services.AddScoped<IEquipmentTenderRepository, EquipmentTenderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

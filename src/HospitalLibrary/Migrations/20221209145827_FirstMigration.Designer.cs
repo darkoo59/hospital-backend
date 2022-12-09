@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221202114918_AddPhysicianScheduleTable")]
-    partial class AddPhysicianScheduleTable
+    [Migration("20221209145827_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,16 +122,22 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("PhysicianScheduleId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateRange>("ScheduledDate")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
 
                     b.HasKey("AppointmentId");
+
+                    b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
@@ -483,6 +489,21 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>
+                {
+                    b.Property<int>("ExaminationReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Report")
+                        .HasColumnType("text");
+
+                    b.HasKey("ExaminationReportId");
+
+                    b.ToTable("ExaminationReports");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.InpatientTreatment", b =>
                 {
                     b.Property<int>("InpatientTreatmentId")
@@ -626,7 +647,12 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("integer");
+
                     b.HasKey("MedicineId");
+
+                    b.HasIndex("RecipeId");
 
                     b.ToTable("Medicines");
 
@@ -710,10 +736,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsAccountActivated")
                         .HasColumnType("boolean");
 
@@ -724,18 +746,14 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("PatientId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.HasKey("PatientId");
 
                     b.ToTable("Patients");
 
@@ -743,92 +761,83 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             PatientId = 1,
-                            Email = "proba@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 1,
                             Name = "Pera",
-                            Password = "123",
-                            Surname = "Peric"
+                            Surname = "Peric",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 2,
-                            Email = "proba1@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 2,
                             Name = "Marko",
-                            Password = "123",
-                            Surname = "Markovic"
+                            Surname = "Markovic",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 3,
-                            Email = "proba2@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 3,
                             Name = "Aleksa",
-                            Password = "123",
-                            Surname = "Aleksic"
+                            Surname = "Aleksic",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 4,
-                            Email = "proba3@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 4,
                             Name = "Pera",
-                            Password = "123",
-                            Surname = "Peric"
+                            Surname = "Peric",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 5,
-                            Email = "proba4@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 5,
                             Name = "Marko",
-                            Password = "123",
-                            Surname = "Markovic"
+                            Surname = "Markovic",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 6,
-                            Email = "proba5@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 6,
                             Name = "Aleksa",
-                            Password = "123",
-                            Surname = "Aleksic"
+                            Surname = "Aleksic",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 7,
-                            Email = "proba6@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 7,
                             Name = "Pera",
-                            Password = "123",
-                            Surname = "Peric"
+                            Surname = "Peric",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 8,
-                            Email = "proba7@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 8,
                             Name = "Marko",
-                            Password = "123",
-                            Surname = "Markovic"
+                            Surname = "Markovic",
+                            UserId = 0
                         },
                         new
                         {
                             PatientId = 9,
-                            Email = "proba8@gmail.com",
                             IsAccountActivated = false,
                             MedicalRecord = 9,
                             Name = "Aleksa",
-                            Password = "123",
-                            Surname = "Aleksic"
+                            Surname = "Aleksic",
+                            UserId = 0
                         });
                 });
 
@@ -850,6 +859,29 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("PhysicianSchedules");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Recipe", b =>
+                {
+                    b.Property<int>("RecipeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateOfIssue")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ExaminationReportId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("WayOfUse")
+                        .HasColumnType("text");
+
+                    b.HasKey("RecipeId");
+
+                    b.HasIndex("ExaminationReportId");
+
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -1441,10 +1473,15 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("ExaminationReportId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("SymptomId");
+
+                    b.HasIndex("ExaminationReportId");
 
                     b.ToTable("Symptoms");
 
@@ -1523,9 +1560,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 17, 12, 49, 16, 847, DateTimeKind.Local).AddTicks(4189),
+                            EndDate = new DateTime(2022, 12, 24, 15, 58, 24, 516, DateTimeKind.Local).AddTicks(3834),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 12, 12, 49, 16, 841, DateTimeKind.Local).AddTicks(1098),
+                            StartDate = new DateTime(2022, 12, 19, 15, 58, 24, 511, DateTimeKind.Local).AddTicks(4319),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1533,9 +1570,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 22, 12, 49, 16, 847, DateTimeKind.Local).AddTicks(6733),
+                            EndDate = new DateTime(2022, 12, 29, 15, 58, 24, 516, DateTimeKind.Local).AddTicks(6911),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 17, 12, 49, 16, 847, DateTimeKind.Local).AddTicks(6710),
+                            StartDate = new DateTime(2022, 12, 24, 15, 58, 24, 516, DateTimeKind.Local).AddTicks(6877),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1543,9 +1580,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 27, 12, 49, 16, 847, DateTimeKind.Local).AddTicks(6744),
+                            EndDate = new DateTime(2023, 1, 3, 15, 58, 24, 516, DateTimeKind.Local).AddTicks(6925),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 22, 12, 49, 16, 847, DateTimeKind.Local).AddTicks(6739),
+                            StartDate = new DateTime(2022, 12, 29, 15, 58, 24, 516, DateTimeKind.Local).AddTicks(6919),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1720,6 +1757,10 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
@@ -1727,11 +1768,10 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
 
@@ -1739,9 +1779,9 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             UserId = 1,
+                            Email = "email",
                             Password = "password",
-                            Role = 0,
-                            Username = "username"
+                            Role = 0
                         });
                 });
 
@@ -1777,6 +1817,10 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
                     b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId");
@@ -1784,6 +1828,8 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.PhysicianSchedule", null)
                         .WithMany("Appointments")
                         .HasForeignKey("PhysicianScheduleId");
+
+                    b.Navigation("Doctor");
 
                     b.Navigation("Patient");
                 });
@@ -1859,6 +1905,13 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("InpatientTreatment");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Medicine", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Recipe", null)
+                        .WithMany("Medicines")
+                        .HasForeignKey("RecipeId");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicineTherapy", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.InpatientTreatmentTherapy", null)
@@ -1885,11 +1938,32 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Doctor");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Recipe", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.ExaminationReport", null)
+                        .WithMany("Recipes")
+                        .HasForeignKey("ExaminationReportId");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Symptom", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.ExaminationReport", null)
+                        .WithMany("Symptoms")
+                        .HasForeignKey("ExaminationReportId");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Vacation", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.PhysicianSchedule", null)
                         .WithMany("Vacations")
                         .HasForeignKey("PhysicianScheduleId");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>
+                {
+                    b.Navigation("Recipes");
+
+                    b.Navigation("Symptoms");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.InpatientTreatmentTherapy", b =>
@@ -1904,6 +1978,11 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("Vacations");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Recipe", b =>
+                {
+                    b.Navigation("Medicines");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
