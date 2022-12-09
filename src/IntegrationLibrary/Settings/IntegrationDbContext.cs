@@ -5,6 +5,7 @@ using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
+using IntegrationLibrary.Features.MonthlyBloodSubscription.Model;
 using IntegrationLibrary.Features.EquipmentTenders.Domain.ValueObjects;
 using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<EquipmentTender> EquipmentTenders { get; set; }
+        public DbSet<BloodSubscription> BloodSubscription { get; set; }
         public DbSet<TenderApplication> TenderApplications { get; set; }
         public DbSet<TenderRequirement> TenderRequirements { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
@@ -44,6 +46,9 @@ namespace IntegrationLibrary.Settings
                 new BankNews() { Id = 7, Title = "vijest 7", Content = "sadrzaj vijesti 7", State = NewsState.NEW },
                 new BankNews() { Id = 8, Title = "vijest 8", Content = "sadrzaj vijesti 8", State = NewsState.NEW },
                 new BankNews() { Id = 9, Title = "vijest 9", Content = "sadrzaj vijesti 9", State = NewsState.APPROVED }
+            );
+            modelBuilder.Entity<BloodSubscription>().HasData(
+                new BloodSubscription() { Id = 1, BloodBankId = 1, StartDate = new System.DateTime(), BloodType = BloodType.A_PLUS, QuantityInLiters = 1 }
             );
             modelBuilder.Entity<BloodRequest>().HasData(
                 new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.NEW },
