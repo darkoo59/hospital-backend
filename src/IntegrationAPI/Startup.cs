@@ -25,6 +25,7 @@ using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure;
+using IntegrationLibrary.Features.UrgentBloodOrder.Service;
 
 namespace IntegrationAPI
 {
@@ -76,6 +77,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
 
+            services.AddScoped<IUrgentOrderService, UrgentOrderService>();
+
             services.AddScoped<IHospitalRepository, HospitalRepository>();
 
             services.AddScoped<IBBReportsService, BBReportsService>();
@@ -84,6 +87,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IEquipmentTenderService, EquipmentTenderService>();
             services.AddScoped<IEquipmentTenderRepository, EquipmentTenderRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
