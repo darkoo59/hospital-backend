@@ -41,9 +41,6 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
 
-
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                .EnableSensitiveDataLogging();

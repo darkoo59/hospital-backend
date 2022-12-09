@@ -71,6 +71,10 @@ namespace HospitalAPI
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<IGenericMapper<Allergen, AllergenDTO>, AllergenMapper>();
 
+            services.AddScoped<ISpecializationService, SpecializationService>();
+            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+            services.AddScoped<IGenericMapper<Specialization, SpecializationDTO>, SpecializationMapper>();
+
             //services.AddScoped<IMedicalRecordService, MedicalRecordService>();
             //services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
             //services.AddScoped<IGenericMapper<MedicalRecord, MedicalRecordDTO>, MedicalRecordMapper>();

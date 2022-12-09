@@ -28,10 +28,8 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
             Consilium consilium = _consiliumMapper.ToModel(consiliumDTO);
-            if(consilium.SpecializationIds.Count == 0)
+            if(consilium.SpecializationIds.Count != 0)
             {
-                consilium.SpecializationIds.Add(1);
-                consilium.SpecializationIds.Add(2);
                 _consiliumService.CreateConsiliumWithSpecializations(consilium,consilium.SpecializationIds);
             }
             else
