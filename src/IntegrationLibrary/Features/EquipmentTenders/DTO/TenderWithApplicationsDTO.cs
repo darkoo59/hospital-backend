@@ -5,34 +5,24 @@ using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.DTO
 {
-    public class EquipmentTenderDTO
+    public class TenderWithApplicationsDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime? ExpiresOn { get; set; }
         public string Description { get; set; }
-        public ICollection<TenderRequirement> Requirements { get; set; }
         public TenderState State { get; set; }
-        public EquipmentTenderDTO() { }
-        public EquipmentTenderDTO(EquipmentTender tender)
+        public ICollection<TenderApplicationDTO> TenderApplications { get; private set; }
+
+        public TenderWithApplicationsDTO(EquipmentTender tender)
         {
             Id = tender.Id;
             Title = tender.Title;
             ExpiresOn = tender.ExpiresOn;
             Description = tender.Description;
             State = tender.State;
-            if(tender.TenderRequirements != null)
-                Requirements = new List<TenderRequirement>(tender.TenderRequirements);
-        }
 
-        public static List<EquipmentTenderDTO> ToDTOList(ICollection<EquipmentTender> list)
-        {
-            List<EquipmentTenderDTO> temp = new();
-            foreach (EquipmentTender tender in list)
-            {
-                temp.Add(new EquipmentTenderDTO(tender));
-            }
-            return temp;
+            TenderApplications = TenderApplicationDTO.ToDTOList(tender.TenderApplications);
         }
     }
 }
