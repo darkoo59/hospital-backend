@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace HospitalLibrary.Core.Service
 {
     public class ConsiliumService : IConsiliumService
@@ -12,17 +11,13 @@ namespace HospitalLibrary.Core.Service
         private readonly IConsiliumRepository _consiliumRepository;
         private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
         private readonly IDoctorRepository _doctorRepository;
-        private readonly ISpecializationRepository _specializationRepository;
         List<List<int>> requiredDoctorsIdList = new List<List<int>>();
 
-
-        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository,ISpecializationRepository specializationRepository)
+        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository)
         {
             _consiliumRepository = consiliumRepository;
             _doctorRepository = doctorRepository;
-            _physicianScheduleRepository = physicianScheduleRepository;
-            _specializationRepository = specializationRepository;
-            
+            _physicianScheduleRepository = physicianScheduleRepository;          
         }
 
         public void Create(Consilium consilium)
@@ -72,7 +67,6 @@ namespace HospitalLibrary.Core.Service
             Appointment appointment = new Appointment();
             consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
             appointment.Start = consilium.StartTime;
-            int counter = 0;
 
             foreach (int doctorId in DoctorIds)
             {
