@@ -144,15 +144,15 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<MedicalRecord>().HasMany(mr => mr.Allergens).WithMany(a => a.MedicalRecords);
 
             modelBuilder.Entity<Patient>().HasData(
-                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric", Email = "proba@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 1},
-                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic", Email = "proba1@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 2},
-                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic", Email = "proba2@gmail.com", Password = "123", IsAccountActivated = false , MedicalRecord = 3},
-                new Patient() { PatientId = 4, Name = "Pera", Surname = "Peric", Email = "proba3@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 4 },
-                new Patient() { PatientId = 5, Name = "Marko", Surname = "Markovic", Email = "proba4@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 5 },
-                new Patient() { PatientId = 6, Name = "Aleksa", Surname = "Aleksic", Email = "proba5@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 6 },
-                new Patient() { PatientId = 7, Name = "Pera", Surname = "Peric", Email = "proba6@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 7 },
-                new Patient() { PatientId = 8, Name = "Marko", Surname = "Markovic", Email = "proba7@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 8 },
-                new Patient() { PatientId = 9, Name = "Aleksa", Surname = "Aleksic", Email = "proba8@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 9 }
+                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric", IsAccountActivated = false, MedicalRecord = 1},
+                new Patient() {PatientId = 2, Name = "Marko", Surname = "Markovic", IsAccountActivated = false, MedicalRecord = 2 },
+                new Patient() {PatientId = 3, Name = "Aleksa", Surname = "Aleksic", IsAccountActivated = false, MedicalRecord = 3 },
+                new Patient() {PatientId = 4, Name = "Pera", Surname = "Peric", IsAccountActivated = false, MedicalRecord = 4 },
+                new Patient() {PatientId = 5, Name = "Marko", Surname = "Markovic", IsAccountActivated = false, MedicalRecord = 5 },
+                new Patient() {PatientId = 6, Name = "Aleksa", Surname = "Aleksic", IsAccountActivated = false, MedicalRecord = 6 },
+                new Patient() {PatientId = 7, Name = "Pera", Surname = "Peric", IsAccountActivated = false, MedicalRecord = 7 },
+                new Patient() {PatientId = 8, Name = "Marko", Surname = "Markovic", IsAccountActivated = false, MedicalRecord = 8 },
+                new Patient() {PatientId = 9, Name = "Aleksa", Surname = "Aleksic", IsAccountActivated = false, MedicalRecord = 9 }
             );
 
             modelBuilder.Entity<Patient>().HasMany(p => p.Doctors).WithMany(dr => dr.Patients);
@@ -258,7 +258,7 @@ namespace HospitalLibrary.Settings
                new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
            );
             modelBuilder.Entity<User>().HasData(
-                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
+                new User() { UserId = 1, Email = "email", Password = "password", Role = UserRole.patient}
             );
 
             modelBuilder.Entity<PhysicianSchedule>()

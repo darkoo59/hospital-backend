@@ -35,6 +35,7 @@ namespace HospitalAPI.Registration.Mappers
             Allergen allergen = new Allergen();
             allergen.AllergenId = allergenDTO.AllergenId;
             allergen.Name = allergenDTO.Name;
+            
 
             return allergen;
         }

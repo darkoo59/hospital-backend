@@ -24,7 +24,7 @@ namespace HospitalLibrary.Security
         {
             foreach (User user in GetAll()) 
             {
-                if (user.Username.Equals(username)&&user.Password.Equals(password)) 
+                if (user.Email.Equals(username)&&user.Password.Equals(password)) 
                 {
                     return user;
                 }
@@ -41,6 +41,40 @@ namespace HospitalLibrary.Security
                 }
             }
             return null;
+        }
+
+        public void Register(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        public void Delete(User user)
+        {
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+        }
+
+        public User GetByEmail(string email)
+        {
+            //return _context.Users.Find(email);
+
+
+            foreach (User user in GetAll())
+            {
+                if (user.Email.Equals(email))
+                {
+                    return user;
+                }
+            }
+            return null;
+
         }
     }
 }

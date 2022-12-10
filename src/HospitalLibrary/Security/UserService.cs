@@ -36,5 +36,12 @@ namespace HospitalLibrary.Security
         {
             return _userRepository.GetById(id);
         }
+
+        /*public User GetByEmail(string email)
+        {
+            return _userRepository.GetByEmail(email);
+        }*/
+
+        
     }
 }
