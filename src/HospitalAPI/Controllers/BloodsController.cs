@@ -29,5 +29,13 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_bloodMapper.ToDTO(_bloodService.GetAll().ToList()));
         }
+
+        [HttpPatch("tender")]
+        public IActionResult PatchAfterTender([FromBody]ICollection<TenderBloodDTO> dtos)
+        {
+            
+            _bloodService.UpdateAfterTender(TenderBloodDTO.FromDTOList(dtos));
+            return Ok();
+        }
     }
 }

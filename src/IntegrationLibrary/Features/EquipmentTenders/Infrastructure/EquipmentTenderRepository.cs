@@ -95,6 +95,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
         {
             return _context.TenderApplications.Include(a => a.EquipmentTender)
                                               .Include(a => a.TenderOffers)
+                                              .ThenInclude(a => a.TenderRequirement)
                                               .Include(a => a.User)
                                               .FirstOrDefault(e => e.Id == id);
         }

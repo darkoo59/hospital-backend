@@ -1,4 +1,6 @@
-﻿using IntegrationLibrary.Features.BloodBank.Model;
+﻿using IntegrationLibrary.Features.Blood.DTO;
+using IntegrationLibrary.Features.BloodBank;
+using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
@@ -6,6 +8,7 @@ using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using IntegrationLibrary.Features.EquipmentTenders.Enums;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
+using IntegrationLibrary.HospitalService;
 using System;
 using System.Collections.Generic;
 
@@ -15,10 +18,14 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
     {
         private readonly IEquipmentTenderRepository _repository;
         private readonly IUserService _userService;
-        public EquipmentTenderService(IEquipmentTenderRepository repository, IUserService userService)
+        private readonly IHospitalService _hospitalService;
+        private readonly IBloodBankService _bloodBankService;
+        public EquipmentTenderService(IEquipmentTenderRepository repository, IUserService userService, IHospitalService hospitalService, IBloodBankService bloodBankService)
         {
             _repository = repository;
             _userService = userService;
+            _hospitalService = hospitalService;
+            _bloodBankService = bloodBankService;
         }
 
         public void Create(CreateEquipmentTenderDTO dto)
@@ -26,7 +33,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             List<TenderRequirement> temp = new();
             foreach (TenderRequirementDTO req in dto.Requirements)
             {
-                temp.Add(new TenderRequirement(req.Name, req.Amount));
+                temp.Add(new TenderRequirement(req.Type, req.Amount));
             }
             
             EquipmentTender et = new(dto.Title, dto.ExpiresOn, dto.Description, temp);
@@ -122,6 +129,20 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             if (!ta.HasWon) throw new Exception("Some error has occurred");
 
             ta.EquipmentTender.SetState(TenderState.CLOSED);
+
+            List<BloodDTO> bloodDTOs = new();
+            foreach (TenderOffer offer in ta.TenderOffers)
+            {
+                BloodDTO dto = new()
+                {
+                    Type = offer.TenderRequirement.BloodType,
+                    Amount = offer.TenderRequirement.Amount
+                };
+                bloodDTOs.Add(dto);
+            }
+
+            _ = _bloodBankService.ConfirmTender(user, bloodDTOs).Result;
+            _ = _hospitalService.UpdateBlood(bloodDTOs).Result;
 
             _repository.Update(ta);
         }
