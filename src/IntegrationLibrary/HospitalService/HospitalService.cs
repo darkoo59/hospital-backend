@@ -1,17 +1,20 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.Blood.DTO;
 using IntegrationLibrary.Features.BloodBankReports.DTO;
 using IntegrationLibrary.Features.BloodBankReports.Mapper;
 using IntegrationLibrary.Features.BloodBankReports.Model;
 using IntegrationLibrary.Settings;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.HospitalRepository
+namespace IntegrationLibrary.HospitalService
 {
-    public class HospitalRepository : IHospitalRepository
+    public class HospitalService : IHospitalService
     {
         public async Task<IEnumerable<Doctor>> GetAllDoctors()
         {
@@ -42,6 +45,21 @@ namespace IntegrationLibrary.HospitalRepository
             BloodUsageEvidencyMapper mapper = new BloodUsageEvidencyMapper();
             
             return mapper.ToModel(list);
+        }
+
+        public async Task<string> UpdateBlood(ICollection<BloodDTO> data)
+        {
+            using var httpClient = AppSettings.AddApiKey(new HttpClient());
+
+            HttpContent content = new StringContent(System.Text.Json.JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+            string url = AppSettings.HospitalApiUrl + "/api/Bloods/tender";
+            HttpResponseMessage response = await httpClient.PatchAsync(url, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Error while communicating with Hospital server");
+            }
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
