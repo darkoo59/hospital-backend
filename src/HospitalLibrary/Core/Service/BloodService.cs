@@ -57,7 +57,8 @@ namespace HospitalLibrary.Core.Service
         {
             Blood blood = _bloodRepository.GetByBloodType(ParseIntToBloodType(type));
             blood.QuantityInLiters = blood.QuantityInLiters + quantity;
-            _bloodRepository.Update(blood);            
+            _bloodRepository.Update(blood);
+            Console.WriteLine("Dodao krv");
         }
 
         public BloodType ParseIntToBloodType(int number)

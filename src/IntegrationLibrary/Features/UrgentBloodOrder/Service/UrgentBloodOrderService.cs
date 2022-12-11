@@ -1,6 +1,6 @@
 ﻿using Grpc.Core;
 using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
-using IntegrationLibrary.HospitalRepository;
+using IntegrationLibrary.HospitalService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +12,11 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
 {
     public class UrgentBloodOrderService : IUrgentBloodOrderService
     {
-        private readonly IHospitalRepository _hospitalRepository;
+        private readonly IHospitalService _hospitalService;
         private Channel _channel { get; set; }
-        public UrgentBloodOrderService(IHospitalRepository hospitalRepository)
+        public UrgentBloodOrderService(IHospitalService hospitalRepository)
         {
-            this._hospitalRepository = hospitalRepository;
+            this._hospitalService = hospitalRepository;
         }
 
         public UrgentResponse InvokeUrgentOrder(int bloodType, float quantity, string server)
@@ -35,7 +35,7 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
             
             if (response.HasEnough)
             {
-                _hospitalRepository.UpdateBloodQuantity(bloodType, quantity);
+                _hospitalService.UpdateBloodQuantity(bloodType, quantity);
                 Console.WriteLine("New blood has arrived.");
             } else
             {
