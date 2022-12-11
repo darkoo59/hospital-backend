@@ -65,14 +65,6 @@ namespace IntegrationAPI.Controllers
             return Ok(_userService.GetAll());
         }
 
-        //Test method
-        [Authorize]
-        [HttpGet("test")]
-        public IActionResult Public()
-        {
-            return Ok("Authenticated");
-        }
-
         [Authorize]
         [HttpGet("data")]
         public ActionResult GetUserData()
