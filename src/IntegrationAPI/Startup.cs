@@ -1,3 +1,5 @@
+using System;
+using System.Net;
 using System.Text;
 using IntegrationLibrary.Features.Blood.Service;
 using IntegrationLibrary.Features.BloodBank.Repository;
@@ -25,6 +27,8 @@ using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace IntegrationAPI
 {
@@ -54,6 +58,21 @@ namespace IntegrationAPI
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AuthorizationPolicy", policy => policy.RequireAssertion(async httpCtx =>
+            //    {
+            //        var httpClient = new HttpClient();
+            //        var token = httpCtx.User.Identity;
+            //        Console.WriteLine("tokencina", token?.Name);
+            //        //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //        var url = AppSettings.HospitalApiUrl + "/api/authorization/manager";
+                    
+            //        var response = await httpClient.GetAsync(url);
+            //        return response.StatusCode == HttpStatusCode.OK;
+            //    }));
+            //});
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
