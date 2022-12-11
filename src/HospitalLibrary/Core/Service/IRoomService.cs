@@ -17,6 +17,8 @@ namespace HospitalLibrary.Core.Service
         void Update(Room room);
         void Delete(Room room);
         void MoveEquipment(MoveRequest moveRequest);
-        
+        void AddMoveRequest(MoveRequest moveRequest);
+        bool CheckMoveRequests();
+
     }
 }

@@ -162,5 +162,32 @@ namespace HospitalLibrary.Core.Repository
                 }
             }
         }
+
+        public void AddMoveRequest(MoveRequest moveRequest)
+        {
+            _context.MoveRequests.Add(moveRequest);
+            _context.SaveChanges();
+        }
+
+        public bool CheckMoveRequests()
+        {
+            bool res = false;
+            List<MoveRequest> moveRequests = _context.MoveRequests.ToList();
+            foreach(MoveRequest mvr in moveRequests)
+            {
+                if(mvr.chosenStartTime < DateTime.Now)
+                {
+                    //trebace posle verovatno da bi zauzeo tu sobu kao
+                }
+                if(mvr.chosenStartTime + mvr.duration < DateTime.Now)
+                {
+                    MoveEquipment(mvr);
+                    _context.MoveRequests.Remove(mvr);
+                    _context.SaveChanges();
+                    res = true;
+                }
+            }
+            return res;
+        }
     }
 }

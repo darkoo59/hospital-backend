@@ -1,13 +1,11 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
-<<<<<<< HEAD
+
 using HospitalLibrary.Registration.Service;
 using HospitalLibrary.Registration.Repository;
-=======
-using HospitalLibrary.Registration.Repository;
-using HospitalLibrary.Registration.Service;
->>>>>>> dev
+
+
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -20,19 +18,17 @@ namespace HospitalTests.Unit
 {
     public class PatientProfileTests
     {
-<<<<<<< HEAD
+
         //[Fact]
         //public void Get_patient_by_id()
         //{
         //    List<Patient> patients = GetPatients();
         //    PatientService service = new(CreatePatientRepository(patients));
-=======
-        [Fact]
-        public void Get_patient_by_id()
-        {
-            List<Patient> patients = GetPatients();
-            PatientService service = new(CreatePatientRepository(patients), null, null, null);
->>>>>>> dev
+        //[Fact]
+        //public void Get_patient_by_id()
+        //{
+        //    List<Patient> patients = GetPatients();
+        //    PatientService service = new(CreatePatientRepository(patients), null, null, null);
 
         //    Patient patient = service.GetById(1);
 

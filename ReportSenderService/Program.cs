@@ -18,12 +18,14 @@ namespace ReportSenderService
             //HttpClient _httpClient = new HttpClient();
 
             ReportService reportService = new ReportService();
+            EquipmentMoveService equipmentMoveService = new EquipmentMoveService();
 
             //reportService.ManualStart();
 
             ServiceBase.Run(new ServiceBase[]
             {
-                reportService
+                reportService,
+                equipmentMoveService
             });
 
             //while (true) ;

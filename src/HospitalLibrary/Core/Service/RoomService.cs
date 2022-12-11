@@ -67,8 +67,14 @@ namespace HospitalLibrary.Core.Service
         public void MoveEquipment(MoveRequest moveRequest)
         {
             _roomRepository.MoveEquipment(moveRequest);
-        
-        
+        }
+        public void AddMoveRequest(MoveRequest moveRequest)
+        {
+            _roomRepository.AddMoveRequest(moveRequest);
+        }
+        public bool CheckMoveRequests()
+        {
+            return _roomRepository.CheckMoveRequests();
         }
     }
 }

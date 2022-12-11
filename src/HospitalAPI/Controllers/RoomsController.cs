@@ -113,8 +113,25 @@ namespace HospitalAPI.Controllers
             _roomService.Create(room);
             return CreatedAtAction("GetById", new { id = room.Id }, room);
         }
+
+        [HttpPost("moveRequests")]
+        public ActionResult AddMoveRequest(MoveRequest moveRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _roomService.AddMoveRequest(moveRequest);
+            return Ok(moveRequest);
+        }
         
-        [HttpPatch]
+        [HttpGet("moveRequests/check")]
+        public ActionResult CheckMoveRequests()
+        {
+            return Ok(_roomService.CheckMoveRequests());
+        }
+
+/*        [HttpPatch]
         public ActionResult MoveEquipment(MoveRequest moveRequest)
         {
             if (!ModelState.IsValid)
@@ -123,7 +140,7 @@ namespace HospitalAPI.Controllers
             }
             _roomService.MoveEquipment(moveRequest);
             return Ok(moveRequest);
-        }
+        }*/
       
         
 

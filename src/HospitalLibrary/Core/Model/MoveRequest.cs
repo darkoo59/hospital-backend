@@ -10,15 +10,15 @@ namespace HospitalLibrary.Core.Model
 {
     public class MoveRequest
     {
-        [Required]
+        [Required][Key]
+        public int id { get; set; }
         public int fromRoomId { get; set; }
         public int toRoomId { get; set; }
         public string equipment { get; set; }
         public int quantity { get; set; }
-        
-
-
-
-
+        public DateTime wantedStartTime { get; set; }
+        public DateTime wantedEndTime { get; set; }
+        public DateTime chosenStartTime { get; set; }
+        public TimeSpan duration { get; set; }
     }
 }
