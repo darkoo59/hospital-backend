@@ -56,7 +56,7 @@ namespace HospitalLibrary.Core.Service
         public void AddBloodAfterUrgentRequest(int type, double quantity)
         {
             Blood blood = _bloodRepository.GetByBloodType(ParseIntToBloodType(type));
-            blood.QuantityInLiters += quantity;
+            blood.QuantityInLiters = blood.QuantityInLiters + quantity;
             _bloodRepository.Update(blood);            
         }
 

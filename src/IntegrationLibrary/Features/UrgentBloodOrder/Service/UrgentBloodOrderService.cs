@@ -17,11 +17,15 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
         public UrgentBloodOrderService(IHospitalRepository hospitalRepository)
         {
             this._hospitalRepository = hospitalRepository;
-            _channel = new Channel("localhost", 6565, ChannelCredentials.Insecure);
         }
 
         public UrgentResponse InvokeUrgentOrder(int bloodType, float quantity, string server)
         {
+            //Int32 port = Int32.Parse(server.Substring(server.Length - 4)); Kada bude integrisano i za ostale isa projekte
+
+            _channel = new Channel("localhost", 6565, ChannelCredentials.Insecure);
+
+
             UrgentOrderServiceClient client = new UrgentOrderServiceClient(_channel);
             UrgentRequest request = new UrgentRequest();
             request.BloodType = bloodType;
