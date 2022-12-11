@@ -3,7 +3,7 @@ using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Linq;
 
 namespace HospitalAPI.Controllers
 {
@@ -37,6 +37,22 @@ namespace HospitalAPI.Controllers
                 _consiliumService.CreateConsiliumWithDoctors(consilium,consilium.DoctorIds);
             }
             return CreatedAtAction("Create", new { id = consilium.ConsiliumId }, consilium);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_consiliumMapper.ToDTO(_consiliumService.GetAll().ToList()));
+        }
+
+
+
+        [HttpGet("{id}")]
+        public ActionResult GetAllConsiliumsOfDoctor(int id)
+        {
+            return Ok(_consiliumMapper.ToDTO(_consiliumService.GetAllConsiliumsOfDoctor(id).ToList()));
         }
     }
 }
