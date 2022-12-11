@@ -97,5 +97,9 @@ namespace HospitalLibrary.Core.Service
         {
             _roomRepository.RenovationMergeTwoRooms(renovationRequest);
         }
+        public IEnumerable<MoveRequest> GetRequestsForRoom(int roomId)
+        {
+            return _roomRepository.GetRequestsForRoom(roomId);
+        }
     }
 }

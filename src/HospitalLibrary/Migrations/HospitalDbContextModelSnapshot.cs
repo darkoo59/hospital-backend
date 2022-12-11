@@ -1636,9 +1636,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 25, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(3942),
+                            EndDate = new DateTime(2022, 12, 26, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(4227),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 20, 17, 37, 32, 577, DateTimeKind.Local).AddTicks(4376),
+                            StartDate = new DateTime(2022, 12, 21, 23, 35, 28, 12, DateTimeKind.Local).AddTicks(9685),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1646,9 +1646,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 30, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6160),
+                            EndDate = new DateTime(2022, 12, 31, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7064),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 25, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6134),
+                            StartDate = new DateTime(2022, 12, 26, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7039),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1656,9 +1656,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 4, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6173),
+                            EndDate = new DateTime(2023, 1, 5, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7078),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 30, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6169),
+                            StartDate = new DateTime(2022, 12, 31, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7073),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });

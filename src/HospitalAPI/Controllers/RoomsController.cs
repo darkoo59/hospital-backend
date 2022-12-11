@@ -147,6 +147,13 @@ namespace HospitalAPI.Controllers
 			return Ok(_roomService.CheckMoveRequests());
 		}
 
+		[HttpGet("viewRequests/{roomId}")]
+		public ActionResult GetRequestsForRoom(int roomId)
+        {
+			return Ok(_roomService.GetRequestsForRoom(roomId));
+        }
+
+
 		/*        [HttpPatch]
 				public ActionResult MoveEquipment(MoveRequest moveRequest)
 				{

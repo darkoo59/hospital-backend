@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class migration : Migration
+    public partial class ovaJeNajjaca : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -146,6 +146,27 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MedicalRecords", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MoveRequests",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    type = table.Column<string>(type: "text", nullable: true),
+                    fromRoomId = table.Column<int>(type: "integer", nullable: false),
+                    toRoomId = table.Column<int>(type: "integer", nullable: false),
+                    equipment = table.Column<string>(type: "text", nullable: true),
+                    quantity = table.Column<int>(type: "integer", nullable: false),
+                    wantedStartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    wantedEndTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    chosenStartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    duration = table.Column<TimeSpan>(type: "interval", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MoveRequests", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -601,9 +622,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "BedId", "IsAvailable", "Label", "RoomId" },
                 values: new object[,]
                 {
+                    { 3, true, "201B3", null },
                     { 1, false, "201B1", null },
-                    { 2, true, "201B2", null },
-                    { 3, true, "201B3", null }
+                    { 2, true, "201B2", null }
                 });
 
             migrationBuilder.InsertData(
@@ -611,8 +632,8 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "BloodRequestId", "BloodType", "DoctorId", "FinalDate", "QuantityInLiters", "ReasonForRequest" },
                 values: new object[,]
                 {
-                    { 3, 7, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 3.5, "Heart surgery" },
                     { 2, 0, 1, new DateTime(2022, 11, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 3.0, "Heart surgery" },
+                    { 3, 7, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 3.5, "Heart surgery" },
                     { 1, 5, 1, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 2.5, "Heart surgery" }
                 });
 
@@ -624,9 +645,9 @@ namespace HospitalLibrary.Migrations
                     { 6, 5, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1100.0, "Hearth surgery" },
                     { 5, 3, new DateTime(2022, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 180.0, "Hearth surgery" },
                     { 4, 0, new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 700.0, "Hearth surgery" },
-                    { 3, 6, new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 450.0, "Hearth surgery" },
                     { 2, 3, new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 300.0, "Hearth surgery" },
-                    { 1, 0, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 200.0, "Hearth surgery" }
+                    { 1, 0, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 200.0, "Hearth surgery" },
+                    { 3, 6, new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 450.0, "Hearth surgery" }
                 });
 
             migrationBuilder.InsertData(
@@ -634,14 +655,14 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "BloodId", "BloodType", "QuantityInLiters" },
                 values: new object[,]
                 {
-                    { 3, 2, 4.0 },
-                    { 4, 4, 4.0 },
-                    { 2, 0, 4.0 },
-                    { 8, 5, 4.0 },
                     { 7, 3, 4.0 },
                     { 6, 1, 4.0 },
                     { 5, 7, 4.0 },
-                    { 1, 6, 4.0 }
+                    { 4, 4, 4.0 },
+                    { 3, 2, 4.0 },
+                    { 2, 0, 4.0 },
+                    { 1, 6, 4.0 },
+                    { 8, 5, 4.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -654,11 +675,11 @@ namespace HospitalLibrary.Migrations
                     { 5, 1, "Wheelchairs", 2, 2 },
                     { 10, 1, "Tounge depressor", 12, 5 },
                     { 4, 1, "Scissors", 10, 2 },
-                    { 1, 1, "Syringe", 50, 1 },
-                    { 2, 1, "Tounge depressor", 32, 1 },
-                    { 8, 1, "Ultrasound ", 1, 4 },
                     { 3, 1, "Gloves", 50, 2 },
-                    { 9, 1, "CT scanner", 2, 4 }
+                    { 2, 1, "Tounge depressor", 32, 1 },
+                    { 1, 1, "Syringe", 50, 1 },
+                    { 9, 1, "CT scanner", 2, 4 },
+                    { 8, 1, "Ultrasound ", 1, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -666,9 +687,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Date", "IsDisplayedPublic", "Privatisation", "Textt", "User" },
                 values: new object[,]
                 {
-                    { 3, "25.10.2022", false, false, "Awful.", "Огњен" },
+                    { 1, "25.10.2022", false, false, "Awesome clinic!", "Милош" },
                     { 2, "25.10.2022", false, false, "It's okay... I guess.", "Немања" },
-                    { 1, "25.10.2022", false, false, "Awesome clinic!", "Милош" }
+                    { 3, "25.10.2022", false, false, "Awful.", "Огњен" }
                 });
 
             migrationBuilder.InsertData(
@@ -676,15 +697,15 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "BloodType" },
                 values: new object[,]
                 {
-                    { 9, 3 },
-                    { 4, 2 },
-                    { 1, 0 },
-                    { 2, 6 },
-                    { 3, 5 },
-                    { 5, 7 },
+                    { 8, 7 },
                     { 6, 1 },
-                    { 7, 4 },
-                    { 8, 7 }
+                    { 5, 7 },
+                    { 4, 2 },
+                    { 3, 5 },
+                    { 2, 6 },
+                    { 1, 0 },
+                    { 9, 3 },
+                    { 7, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -692,25 +713,30 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "MedicineId", "Manufacturer", "Name", "RecipeId" },
                 values: new object[,]
                 {
-                    { 3, "Hemofarm", "Caffetin", null },
+                    { 1, "Galenika", "Aspirin", null },
                     { 2, "Hemofarm", "Bromazepam", null },
-                    { 1, "Galenika", "Aspirin", null }
+                    { 3, "Hemofarm", "Caffetin", null }
                 });
+
+            migrationBuilder.InsertData(
+                table: "MoveRequests",
+                columns: new[] { "id", "chosenStartTime", "duration", "equipment", "fromRoomId", "quantity", "toRoomId", "type", "wantedEndTime", "wantedStartTime" },
+                values: new object[] { 1, new DateTime(2022, 12, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 30, 0, 0), "Syringe", 1, 2, 2, "EquipmentMove", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Patients",
                 columns: new[] { "PatientId", "IsAccountActivated", "MedicalRecord", "Name", "Surname", "UserId" },
                 values: new object[,]
                 {
-                    { 2, false, 2, "Marko", "Markovic", 0 },
-                    { 3, false, 3, "Aleksa", "Aleksic", 0 },
-                    { 1, false, 1, "Pera", "Peric", 0 },
                     { 9, false, 9, "Aleksa", "Aleksic", 0 },
+                    { 1, false, 1, "Pera", "Peric", 0 },
+                    { 2, false, 2, "Marko", "Markovic", 0 },
                     { 8, false, 8, "Marko", "Markovic", 0 },
-                    { 7, false, 7, "Pera", "Peric", 0 },
-                    { 6, false, 6, "Aleksa", "Aleksic", 0 },
+                    { 4, false, 4, "Pera", "Peric", 0 },
                     { 5, false, 5, "Marko", "Markovic", 0 },
-                    { 4, false, 4, "Pera", "Peric", 0 }
+                    { 6, false, 6, "Aleksa", "Aleksic", 0 },
+                    { 7, false, 7, "Pera", "Peric", 0 },
+                    { 3, false, 3, "Aleksa", "Aleksic", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -718,17 +744,17 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "BuildingId", "Description", "FloorId", "Height", "Number", "Type", "Width", "X", "Y" },
                 values: new object[,]
                 {
+                    { 32, "B", "neki opis", 2, 250, "301B", 0, 485, 10, 10 },
                     { 29, "B", "neki opis2", 1, 250, "206B", 0, 283, 358, 530 },
                     { 30, "B", "neki opis1", 1, 250, "207B", 0, 282, 706, 270 },
                     { 31, "B", "neki opis2", 1, 250, "208B", 0, 282, 706, 530 },
-                    { 32, "B", "neki opis", 2, 250, "301B", 0, 485, 10, 10 },
                     { 33, "B", "neki opis1", 2, 250, "302B", 0, 480, 505, 10 },
-                    { 37, "B", "neki opis2", 2, 250, "306B", 0, 283, 358, 530 },
+                    { 39, "B", "neki opis2", 2, 250, "308B", 0, 282, 706, 530 },
                     { 35, "B", "neki opis", 2, 250, "304B", 0, 283, 10, 530 },
                     { 36, "B", "neki opis1", 2, 250, "305B", 0, 283, 358, 270 },
-                    { 28, "B", "neki opis1", 1, 250, "205B", 0, 283, 358, 270 },
+                    { 37, "B", "neki opis2", 2, 250, "306B", 0, 283, 358, 530 },
                     { 38, "B", "neki opis1", 2, 250, "307B", 0, 282, 706, 270 },
-                    { 39, "B", "neki opis2", 2, 250, "308B", 0, 282, 706, 530 },
+                    { 28, "B", "neki opis1", 1, 250, "205B", 0, 283, 358, 270 },
                     { 34, "B", "neki opis2", 2, 250, "303B", 0, 283, 10, 270 },
                     { 27, "B", "neki opis", 1, 250, "204B", 0, 283, 10, 530 },
                     { 6, "A", "neki opis3", 1, 250, "201A", 0, 380, 10, 10 },
@@ -789,9 +815,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 2, 4, new DateTime(2022, 12, 30, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6160), "Tired", new DateTime(2022, 12, 25, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6134), 2, "Urgent" },
-                    { 1, 4, new DateTime(2022, 12, 25, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(3942), "Tired", new DateTime(2022, 12, 20, 17, 37, 32, 577, DateTimeKind.Local).AddTicks(4376), 1, "NoUrgent" },
-                    { 3, 4, new DateTime(2023, 1, 4, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6173), "Tired", new DateTime(2022, 12, 30, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6169), 0, "NoUrgent" }
+                    { 2, 4, new DateTime(2022, 12, 31, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7064), "Tired", new DateTime(2022, 12, 26, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7039), 2, "Urgent" },
+                    { 1, 4, new DateTime(2022, 12, 26, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(4227), "Tired", new DateTime(2022, 12, 21, 23, 35, 28, 12, DateTimeKind.Local).AddTicks(9685), 1, "NoUrgent" },
+                    { 3, 4, new DateTime(2023, 1, 5, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7078), "Tired", new DateTime(2022, 12, 31, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7073), 0, "NoUrgent" }
                 });
 
             migrationBuilder.InsertData(
@@ -951,6 +977,9 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "MedicineTherapies");
+
+            migrationBuilder.DropTable(
+                name: "MoveRequests");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
