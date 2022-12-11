@@ -7,7 +7,7 @@ using Xunit.Priority;
 using Xunit;
 using IntegrationAPI;
 using Microsoft.Extensions.DependencyInjection;
-using IntegrationLibrary.HospitalRepository;
+using IntegrationLibrary.HospitalService;
 using IntegrationLibrary.Features.BloodBankReports.Service;
 using IntegrationAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;

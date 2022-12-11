@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Enums;
-using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,18 +9,15 @@ namespace HospitalLibrary.Core.Service
     public class VacationRequestService : IVacationRequestService
     {
         private readonly IVacationRequestRepository _vacationRequestRepository;
-        private readonly IAppointmentService _appointmentService;
+        //private readonly IAppointmentService _appointmentService;
    
-        public VacationRequestService(IVacationRequestRepository vacationRequestRepository,IAppointmentService appointmentService)
+        public VacationRequestService(IVacationRequestRepository vacationRequestRepository/*IAppointmentService appointmentService*/)
         {
             _vacationRequestRepository = vacationRequestRepository;
-            _appointmentService = appointmentService;
+           // _appointmentService = appointmentService;
         }
 
-        public VacationRequestService(IVacationRequestRepository vacationRequestRepository)
-        {
-            _vacationRequestRepository = vacationRequestRepository;
-        }
+        
 
         public IEnumerable<VacationRequest> GetAll()
         {
@@ -78,18 +74,18 @@ namespace HospitalLibrary.Core.Service
     
         public void CreateUrgentVacation(int doctorId, DateTime start, DateTime end, VacationRequest vacationRequest)
         {
-            List<Appointment> appointmentInDataRange = _appointmentService.GetAppointmentInVacationDateRange(doctorId, start, end);
+            ////List<Appointment> appointmentInDataRange = _appointmentService.Get(doctorId, start, end);
 
-            if (appointmentInDataRange == null)
-            {
-                vacationRequest.Status = VacationRequestStatus.OnHold;
-                _vacationRequestRepository.Create(vacationRequest);
-            }
+            //if (appointmentInDataRange == null)
+            //{
+            //    vacationRequest.Status = VacationRequestStatus.OnHold;
+            //    _vacationRequestRepository.Create(vacationRequest);
+            //}
 
-            if(_appointmentService.ChangeAppointmentDoctor(appointmentInDataRange) == true)
-            {
-                _vacationRequestRepository.Create(vacationRequest);
-            }
+            //if(_appointmentService.ChangeAppointmentDoctor(appointmentInDataRange) == true)
+            //{
+            //    _vacationRequestRepository.Create(vacationRequest);
+            //}
         }
         public void approveVacationRequest(int vacationRequestId)
         {

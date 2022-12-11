@@ -3,20 +3,12 @@ using Gehtsoft.PDFFlow.Models.Enumerations;
 using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
-using IntegrationLibrary.Features.BloodBankReports.DTO;
-using IntegrationLibrary.Features.BloodBankReports.Mapper;
 using IntegrationLibrary.Features.BloodBankReports.Model;
-using IntegrationLibrary.Features.BloodRequests.Model;
-using IntegrationLibrary.HospitalRepository;
-using Newtonsoft.Json;
+using IntegrationLibrary.HospitalService;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Features.BloodBankReports.Service
 {
@@ -25,10 +17,10 @@ namespace IntegrationLibrary.Features.BloodBankReports.Service
         private static readonly HttpClient _httpClient = new HttpClient();
         private readonly IUserService _userService;
 
-        private readonly IHospitalRepository _hospitalRepository;
+        private readonly IHospitalService _hospitalRepository;
 
 
-        public BBReportsService(IHospitalRepository hospitalRepository, IUserService userService)
+        public BBReportsService(IHospitalService hospitalRepository, IUserService userService)
         {
             this._hospitalRepository = hospitalRepository;
             this._userService = userService;
