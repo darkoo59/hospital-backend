@@ -37,16 +37,7 @@ namespace HospitalLibrary.Core.Repository
 
         public Blood GetByBloodType(BloodType bloodType)
         {
-            IEnumerable<Blood>  bloods= GetAll();
-            foreach (Blood blood in bloods)
-            {
-                if(blood.BloodType == bloodType)
-                {
-                    return blood;
-                }
-            }
-
-            return null;
+            return _context.Bloods.FirstOrDefault(b => b.BloodType == bloodType);
             
         }
 

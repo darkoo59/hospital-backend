@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using IntegrationLibrary.Features.Blood.Enums;
+using Microsoft.IdentityModel.Tokens;
 using System;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Domain
@@ -6,25 +7,25 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
     public class TenderRequirement
     {
         public int Id { get; private set; }
-        public string Name { get; private set; }
+        public BloodType BloodType { get; private set; }
         public double Amount { get; private set; }
         public int EquipmentTenderId { get; private set; }
         public TenderRequirement() { }
 
-        public TenderRequirement(string name, double amount)
+        public TenderRequirement(BloodType type, double amount)
         {
-            if (amount <= 0 || name.IsNullOrEmpty()) throw new InvalidDataException();
+            if (amount <= 0) throw new InvalidDataException();
 
-            Name = name;
+            BloodType = type;
             Amount = amount;
         }
 
-        public TenderRequirement(int id, string name, double amount, int tenderId)
+        public TenderRequirement(int id, BloodType type, double amount, int tenderId)
         {
-            if (amount <= 0 || name.IsNullOrEmpty()) throw new InvalidDataException();
+            if (amount <= 0) throw new InvalidDataException();
 
             Id = id;
-            Name = name;
+            BloodType = type;
             Amount = amount;
             EquipmentTenderId = tenderId;
         }

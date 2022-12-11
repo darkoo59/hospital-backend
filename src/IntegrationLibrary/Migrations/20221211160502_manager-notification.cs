@@ -4,78 +4,76 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class bloodsubscription : Migration
+    public partial class managernotification : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BloodSubscription",
+                name: "ManagerNotification",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BloodBankId = table.Column<int>(type: "integer", nullable: false),
-                    BloodType = table.Column<int>(type: "integer", nullable: false),
-                    QuantityInLiters = table.Column<double>(type: "double precision", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BloodSubscription", x => x.Id);
+                    table.PrimaryKey("PK_ManagerNotification", x => x.Id);
                 });
-
-            migrationBuilder.InsertData(
-                table: "BloodSubscription",
-                columns: new[] { "Id", "BloodBankId", "BloodType", "QuantityInLiters", "StartDate" },
-                values: new object[] { 1, 1, 0, 1.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.UpdateData(
                 table: "EquipmentTenders",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "ExpiresOn",
-                value: new DateTime(2022, 12, 10, 16, 10, 21, 595, DateTimeKind.Local).AddTicks(1179));
+                value: new DateTime(2022, 12, 26, 17, 5, 1, 205, DateTimeKind.Local).AddTicks(2190));
 
             migrationBuilder.UpdateData(
                 table: "EquipmentTenders",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "ExpiresOn",
-                value: new DateTime(2022, 12, 10, 16, 10, 21, 602, DateTimeKind.Local).AddTicks(4405));
+                value: new DateTime(2022, 12, 26, 17, 5, 1, 212, DateTimeKind.Local).AddTicks(4283));
 
             migrationBuilder.UpdateData(
                 table: "EquipmentTenders",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "ExpiresOn",
-                value: new DateTime(2022, 12, 10, 16, 10, 21, 602, DateTimeKind.Local).AddTicks(4575));
+                value: new DateTime(2022, 12, 26, 17, 5, 1, 212, DateTimeKind.Local).AddTicks(4858));
+
+            migrationBuilder.InsertData(
+                table: "ManagerNotification",
+                columns: new[] { "Id", "Content", "Title" },
+                values: new object[] { 1, "This is test notification", "Test notification" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BloodSubscription");
+                name: "ManagerNotification");
 
             migrationBuilder.UpdateData(
                 table: "EquipmentTenders",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "ExpiresOn",
-                value: new DateTime(2022, 12, 6, 12, 28, 51, 83, DateTimeKind.Local).AddTicks(7454));
+                value: new DateTime(2022, 12, 20, 20, 11, 35, 785, DateTimeKind.Local).AddTicks(669));
 
             migrationBuilder.UpdateData(
                 table: "EquipmentTenders",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "ExpiresOn",
-                value: new DateTime(2022, 12, 6, 12, 28, 51, 90, DateTimeKind.Local).AddTicks(6631));
+                value: new DateTime(2022, 12, 20, 20, 11, 35, 803, DateTimeKind.Local).AddTicks(3599));
 
             migrationBuilder.UpdateData(
                 table: "EquipmentTenders",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "ExpiresOn",
-                value: new DateTime(2022, 12, 6, 12, 28, 51, 90, DateTimeKind.Local).AddTicks(6731));
+                value: new DateTime(2022, 12, 20, 20, 11, 35, 803, DateTimeKind.Local).AddTicks(3925));
         }
     }
 }

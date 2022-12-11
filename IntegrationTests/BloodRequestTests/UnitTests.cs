@@ -5,7 +5,7 @@ using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
-using IntegrationLibrary.HospitalRepository;
+using IntegrationLibrary.HospitalService;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -110,9 +110,9 @@ namespace IntegrationTests.BloodRequestTests
             return studRepo.Object;
         }
 
-        private static IHospitalRepository CreateHospitalRepository(IEnumerable<Doctor> data)
+        private static IHospitalService CreateHospitalRepository(IEnumerable<Doctor> data)
         {
-            Mock<IHospitalRepository> studRepo = new();
+            Mock<IHospitalService> studRepo = new();
 
             studRepo.Setup(m => m.GetAllDoctors()).Returns(Task.FromResult(data));
 

@@ -29,7 +29,7 @@ namespace IntegrationTests.EquipmentTenderTests
 
         private static EquipmentTenderController SetupController(IServiceScope scope, HttpContext httpContext)
         {
-            EquipmentTenderController controller = new EquipmentTenderController(scope.ServiceProvider.GetRequiredService<IEquipmentTenderService>())
+            EquipmentTenderController controller = new(scope.ServiceProvider.GetRequiredService<IEquipmentTenderService>())
             {
                 ControllerContext = new ControllerContext()
                 {
@@ -88,6 +88,20 @@ namespace IntegrationTests.EquipmentTenderTests
         }
 
         [Fact, Priority(11)]
+        public void Set_Winner()
+        {
+            IServiceScope scope = Factory.Services.CreateScope();
+
+            MockHttpContext httpContext = new("email2@gmail.com");
+            EquipmentTenderController controller = SetupController(scope, httpContext);
+
+            controller.SetWinner(1);
+            UserTenderApplicationDTO result = ((OkObjectResult)controller.GetApplicationById(1)).Value as UserTenderApplicationDTO;
+
+            Assert.True(result.HasWon);
+        }
+
+        [Fact, Priority(12)]
         public void Delete_Tender_ApplicatioN()
         {
             IServiceScope scope = Factory.Services.CreateScope();

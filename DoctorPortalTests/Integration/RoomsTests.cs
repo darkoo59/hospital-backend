@@ -19,18 +19,11 @@ namespace HospitalTests.Integration
     {
         public RoomsTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-
-        //private static RoomsController SetupController(IServiceScope scope)
-        //{
-        //    return new RoomsController(scope.ServiceProvider.GetRequiredService<IRoomService>());
-        //}
-
         private static RoomsController SetupController(IServiceScope scope)
         {
             //return new RoomsController(scope.ServiceProvider.GetRequiredService<IRoomService>());
             return null;
         }
-
 
         //[Fact]
         //public void Get_all_equipment()

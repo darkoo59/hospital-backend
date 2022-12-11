@@ -27,11 +27,11 @@ namespace IntegrationLibrary.Features.Blood.Service
             string url;
             if (bloodQuantity == 0)
             {
-                url = "http://" + user.Server + "/api/blood/type?bloodType=" + bloodType;
+                url = "http://" + user.Server + "/api/blood/type?email=" + email + "&bloodType=" + bloodType;
             }
             else
             {
-                url = "http://" + user.Server + "/api/blood/type/quantity?bloodType=" + bloodType + "&quantity=" + bloodQuantity;
+                url = "http://" + user.Server + "/api/blood/type/quantity?email=" + email + "&bloodType=" + bloodType + "&quantity=" + bloodQuantity;
             }
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
@@ -51,20 +51,5 @@ namespace IntegrationLibrary.Features.Blood.Service
 
             return JsonSerializer.Deserialize<bool>(ret);
         }
-
-        public static async Task<string> GenerateApiKey(User user)
-        {
-            HttpContent content = new StringContent(user.Email);
-            HttpResponseMessage response = await _httpClient.PostAsync("http://" + user.Server + "/api/key/create", content);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception("Error while communicating with ISA server");
-            }
-
-            string ret = await response.Content.ReadAsStringAsync();
-            return ret;
-        }
-
     }
 }
