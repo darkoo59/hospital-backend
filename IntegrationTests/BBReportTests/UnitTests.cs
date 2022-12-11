@@ -1,7 +1,7 @@
 ﻿using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankReports.Model;
 using IntegrationLibrary.Features.BloodBankReports.Service;
-using IntegrationLibrary.HospitalRepository;
+using IntegrationLibrary.HospitalService;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -67,9 +67,9 @@ namespace IntegrationTests.BBReportTests
             };
         }
 
-        private static IHospitalRepository CreateHospitalRepository(List<BloodUsageEvidency> data)
+        private static IHospitalService CreateHospitalRepository(List<BloodUsageEvidency> data)
         {
-            Mock<IHospitalRepository> studRepo = new();
+            Mock<IHospitalService> studRepo = new();
 
             studRepo.Setup(m => m.GetAllEvidency()).Returns(Task.FromResult(data));
 

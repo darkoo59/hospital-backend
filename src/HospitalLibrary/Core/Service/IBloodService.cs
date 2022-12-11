@@ -21,5 +21,7 @@ namespace HospitalLibrary.Core.Service
         //public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency);
 
         public void AddBloodAfterUrgentRequest(int type, double quantity);
+        void ReceiveNewBlood(Blood blood);
+        void UpdateAfterTender(ICollection<Blood> blood);
     }
 }

@@ -36,5 +36,20 @@ namespace HospitalAPI.Controllers
             _bloodService.AddBloodAfterUrgentRequest(dto.BloodType, dto.Quantity);
             return Ok();
         }
+        
+        [HttpPost("receive-blood")]
+        public ActionResult ReceiveNewBlood(BloodDTO dto)
+        {
+            _bloodService.ReceiveNewBlood(_bloodMapper.ToModel(dto));
+            return Ok();
+        }
+        
+        [HttpPatch("tender")]
+        public IActionResult PatchAfterTender([FromBody]ICollection<TenderBloodDTO> dtos)
+        {
+            
+            _bloodService.UpdateAfterTender(TenderBloodDTO.FromDTOList(dtos));
+            return Ok();
+        }
     }
 }
