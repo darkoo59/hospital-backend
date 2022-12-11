@@ -130,6 +130,21 @@ namespace HospitalLibrary.Core.Service
             throw new NotImplementedException();
         }
 
+        public void ReceiveNewBlood(Blood blood)
+        {
+            List<Blood> allBlood = (List<Blood>)_bloodRepository.GetAll();
+            foreach(Blood bloodIte in allBlood)
+            {
+                if((int)bloodIte.BloodType == (int)blood.BloodType)
+                {
+                    bloodIte.QuantityInLiters = bloodIte.QuantityInLiters + blood.QuantityInLiters;
+                    _bloodRepository.Update(bloodIte);
+                    return;
+                }
+            }
+            _bloodRepository.Create(blood);
+        }
+
         /*bool IBloodService.ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
         {
             throw new NotImplementedException();

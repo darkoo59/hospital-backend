@@ -10,6 +10,7 @@ using IntegrationLibrary.Features.EquipmentTenders.Domain.ValueObjects;
 using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
+using IntegrationLibrary.Features.ManagerNotification.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -21,6 +22,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<EquipmentTender> EquipmentTenders { get; set; }
         public DbSet<BloodSubscription> BloodSubscription { get; set; }
+        public DbSet<ManagersNotification> ManagerNotification { get; set; }
         public DbSet<TenderApplication> TenderApplications { get; set; }
         public DbSet<TenderRequirement> TenderRequirements { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
@@ -50,6 +52,9 @@ namespace IntegrationLibrary.Settings
             modelBuilder.Entity<BloodSubscription>().HasData(
                 new BloodSubscription() { Id = 1, BloodBankId = 1, StartDate = new System.DateTime(), BloodType = BloodType.A_PLUS, QuantityInLiters = 1 }
             );
+            modelBuilder.Entity<ManagersNotification>().HasData(
+                new ManagersNotification() { Id = 1, Title="Test notification", Content="This is test notification"}
+                );
             modelBuilder.Entity<BloodRequest>().HasData(
                 new BloodRequest() { Id = 1, BloodType = BloodType.A_PLUS, QuantityInLiters = 1, ReasonForRequest = "treba 1", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.NEW },
                 new BloodRequest() { Id = 2, BloodType = BloodType.B_PLUS, QuantityInLiters = 4, ReasonForRequest = "treba 2", FinalDate = new System.DateTime(), DoctorId = 1, State = BloodRequestState.APPROVED },

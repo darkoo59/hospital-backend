@@ -1,9 +1,11 @@
 ﻿using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.Blood.Service;
 using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.DTO;
+using IntegrationLibrary.Features.MonthlyBloodSubscription.Mapper;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Model;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Repository;
 using Microsoft.Extensions.Options;
@@ -23,10 +25,12 @@ namespace IntegrationLibrary.Features.MonthlyBloodSubscription.Service
         private static readonly HttpClient _httpClient = new HttpClient();
         private readonly IBloodSubscriptionRepository _bloodSubscriptionRepository;
         private readonly IUserService _userService;
+        private readonly ReceivedBloodTypeMapper _bloodTypeMapper;
         public BloodSubscriptionService(IBloodSubscriptionRepository subscriptionRepository, IUserService userService)
         {
             _bloodSubscriptionRepository = subscriptionRepository;
             _userService = userService;
+            _bloodTypeMapper = new ReceivedBloodTypeMapper();
         }
         public IEnumerable<BloodSubscription> GetAll()
         {
@@ -83,7 +87,7 @@ namespace IntegrationLibrary.Features.MonthlyBloodSubscription.Service
             SendSubscriptionToBloodBank(newBloodSubscription);
         }
 
-        public void Unsubscribe(int bloodBankId)
+        public async void Unsubscribe(int bloodBankId)
         {
             List<BloodSubscription> allSubscribed = _bloodSubscriptionRepository.GetAll().ToList();
             foreach (BloodSubscription subscription in allSubscribed)
@@ -91,6 +95,9 @@ namespace IntegrationLibrary.Features.MonthlyBloodSubscription.Service
                 if (subscription.BloodBankId == bloodBankId)
                 {
                     _bloodSubscriptionRepository.Remove(subscription);
+                    User bloodBank = _userService.GetById(bloodBankId);
+                    var url = "http://"+bloodBank.Server+"/api/subscribed-hospital/unsubscribe";
+                    await _httpClient.PostAsJsonAsync(url, bloodBank.Email);
                     break;
                 }
             }
@@ -137,6 +144,17 @@ namespace IntegrationLibrary.Features.MonthlyBloodSubscription.Service
                 default:
                     return "";
             }
+        }
+
+        public async void ReceiveBlood(ReceivedBloodDTO bloodDTO)
+        {
+            SendBloodToHospitalDTO bloodToSend = new SendBloodToHospitalDTO()
+            {
+                BloodType = _bloodTypeMapper.ReceivedTypeToBloodType(bloodDTO.BloodType),
+                QuantityInLiters = bloodDTO.quantity
+            };
+                var url = "http://localhost:16177/api/Bloods/receive-blood";
+                await _httpClient.PostAsJsonAsync(url, bloodToSend);
         }
     }
 }
