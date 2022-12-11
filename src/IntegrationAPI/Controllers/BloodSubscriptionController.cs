@@ -44,5 +44,12 @@ namespace IntegrationAPI.Controllers
             _bloodSubscriptionService.Unsubscribe(bloodBankId);
             return Ok();
         }
+
+        [HttpPost("receive-blood")]
+        public IActionResult ReceiveBlood([FromBody] ReceivedBloodDTO dto)
+        {
+            _bloodSubscriptionService.ReceiveBlood(dto);
+            return Ok();
+        }
     }
 }

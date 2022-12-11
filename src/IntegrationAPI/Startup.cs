@@ -31,6 +31,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Service;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Repository;
+using IntegrationLibrary.Features.ManagerNotification.Service;
+using IntegrationLibrary.Features.ManagerNotification.Repository;
 
 namespace IntegrationAPI
 {
@@ -78,6 +80,8 @@ namespace IntegrationAPI
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
+            services.Configure<RabbitMQBloodSettings>(Configuration.GetSection("RabbitMQBloodSettings"));
+            services.Configure<RabbitMQNotificationSettings>(Configuration.GetSection("RabbitMQNotificationsSettings"));
             services.AddTransient<IBloodBankService, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
@@ -94,6 +98,8 @@ namespace IntegrationAPI
             services.AddScoped<IBankNewsService, BankNewsService>();
             services.AddScoped<IBankNewsRepository, BankNewsRepository>();
             services.AddHostedService<RabbitMQService>();
+            services.AddHostedService<RabbitMQBloodService>();
+            services.AddHostedService<RabbitMQNotificationService>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
 
@@ -108,6 +114,9 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();
+
+            services.AddScoped<IManagerNotificationService, ManagerNotificationService>();
+            services.AddScoped<IManagerNotificationRepository, ManagerNotificationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
