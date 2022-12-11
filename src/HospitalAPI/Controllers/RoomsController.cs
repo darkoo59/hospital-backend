@@ -197,5 +197,16 @@ namespace HospitalAPI.Controllers
 
 			return Ok(_roomService.FindFreeTimeSlots(freeAppointmentRequest));
 		}
+
+		[HttpPost("renovationSplit")]
+		public void RenovationSplitOneRoom(MoveRequest renovationRequest)
+        {
+			_roomService.RenovationSplitOneRoom(renovationRequest);
+        }
+		[HttpPost("renovationMerge")]
+		public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
+		{
+			_roomService.RenovationMergeTwoRooms(renovationRequest);
+		}
 	}
 }

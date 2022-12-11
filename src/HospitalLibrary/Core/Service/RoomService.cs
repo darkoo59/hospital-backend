@@ -81,5 +81,13 @@ namespace HospitalLibrary.Core.Service
         {
             return _roomRepository.FindFreeTimeSlots(freeAppointmentRequest);
         }
+        public void RenovationSplitOneRoom(MoveRequest renovationRequest)
+        {
+            _roomRepository.RenovationSplitOneRoom(renovationRequest);
+        }
+        public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
+        {
+            _roomRepository.RenovationMergeTwoRooms(renovationRequest);
+        }
     }
 }

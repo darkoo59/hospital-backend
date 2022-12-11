@@ -21,6 +21,8 @@ namespace HospitalLibrary.Core.Service
         void AddMoveRequest(MoveRequest moveRequest);
         bool CheckMoveRequests();
         IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest);
+        void RenovationSplitOneRoom(MoveRequest renovationRequest);
+        void RenovationMergeTwoRooms(MoveRequest renovationRequest);
 
     }
 }
