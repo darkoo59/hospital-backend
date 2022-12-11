@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
 using System.ComponentModel.DataAnnotations;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -12,6 +13,7 @@ namespace HospitalLibrary.Core.Model
     {
         [Required][Key]
         public int id { get; set; }
+        public string type { get; set; } //EquipmentMove, RenovationSplit, RenovationMerge
         public int fromRoomId { get; set; }
         public int toRoomId { get; set; }
         public string equipment { get; set; }

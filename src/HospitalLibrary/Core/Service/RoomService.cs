@@ -73,6 +73,14 @@ namespace HospitalLibrary.Core.Service
         {
             _roomRepository.AddMoveRequest(moveRequest);
         }
+        public void AddRenovationSplitRequest(MoveRequest renovationRequest)
+        {
+            _roomRepository.AddRenovationSplitRequest(renovationRequest);
+        }
+        public void AddRenovationMergeRequest(MoveRequest renovationRequest)
+        {
+            _roomRepository.AddRenovationMergeRequest(renovationRequest);
+        }
         public bool CheckMoveRequests()
         {
             return _roomRepository.CheckMoveRequests();

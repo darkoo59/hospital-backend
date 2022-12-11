@@ -67,11 +67,6 @@ namespace HospitalAPI.Controllers
 		[HttpGet("equipment/{id}")]
 		public ActionResult GetEquipmentById(int id)
 		{
-			List<Equipment> equipmentList = (List<Equipment>)_roomService.GetEquipment(id);
-			if (equipmentList.Count == 0)
-			{
-				return NotFound();
-			}
 			return Ok(_roomService.GetEquipment(id));
 		}
 
@@ -124,8 +119,29 @@ namespace HospitalAPI.Controllers
 			_roomService.AddMoveRequest(moveRequest);
 			return Ok(moveRequest);
 		}
+		[HttpPost("renovationSplit")]
+		public ActionResult AddRenovationSplitRequest(MoveRequest renovationRequest)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			_roomService.AddRenovationSplitRequest(renovationRequest);
+			return Ok(renovationRequest);
+		}
 
-		[HttpGet("moveRequests/check")]
+        [HttpPost("renovationMerge")]
+        public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _roomService.AddRenovationMergeRequest(renovationRequest);
+            return Ok(renovationRequest);
+        }
+
+        [HttpGet("moveRequests/check")]
 		public ActionResult CheckMoveRequests()
 		{
 			return Ok(_roomService.CheckMoveRequests());
@@ -198,12 +214,12 @@ namespace HospitalAPI.Controllers
 			return Ok(_roomService.FindFreeTimeSlots(freeAppointmentRequest));
 		}
 
-		[HttpPost("renovationSplit")]
+		[HttpPost("renovationSplitInstant")]
 		public void RenovationSplitOneRoom(MoveRequest renovationRequest)
         {
 			_roomService.RenovationSplitOneRoom(renovationRequest);
         }
-		[HttpPost("renovationMerge")]
+		[HttpPost("renovationMergeInstant")]
 		public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
 		{
 			_roomService.RenovationMergeTwoRooms(renovationRequest);

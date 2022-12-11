@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class bezvezezeze : Migration
+    public partial class najnovijaa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -154,6 +154,7 @@ namespace HospitalLibrary.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    type = table.Column<string>(type: "text", nullable: true),
                     fromRoomId = table.Column<int>(type: "integer", nullable: false),
                     toRoomId = table.Column<int>(type: "integer", nullable: false),
                     equipment = table.Column<string>(type: "text", nullable: true),
@@ -719,8 +720,8 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "MoveRequests",
-                columns: new[] { "id", "chosenStartTime", "duration", "equipment", "fromRoomId", "quantity", "toRoomId", "wantedEndTime", "wantedStartTime" },
-                values: new object[] { 1, new DateTime(2022, 12, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 30, 0, 0), "Syringe", 1, 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "id", "chosenStartTime", "duration", "equipment", "fromRoomId", "quantity", "toRoomId", "type", "wantedEndTime", "wantedStartTime" },
+                values: new object[] { 1, new DateTime(2022, 12, 10, 15, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 30, 0, 0), "Syringe", 1, 2, 2, "EquipmentMove", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Patients",
@@ -814,9 +815,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 2, 4, new DateTime(2022, 12, 30, 18, 41, 48, 563, DateTimeKind.Local).AddTicks(2746), "Tired", new DateTime(2022, 12, 25, 18, 41, 48, 563, DateTimeKind.Local).AddTicks(2720), 2, "Urgent" },
-                    { 1, 4, new DateTime(2022, 12, 25, 18, 41, 48, 562, DateTimeKind.Local).AddTicks(9461), "Tired", new DateTime(2022, 12, 20, 18, 41, 48, 559, DateTimeKind.Local).AddTicks(748), 1, "NoUrgent" },
-                    { 3, 4, new DateTime(2023, 1, 4, 18, 41, 48, 563, DateTimeKind.Local).AddTicks(2754), "Tired", new DateTime(2022, 12, 30, 18, 41, 48, 563, DateTimeKind.Local).AddTicks(2750), 0, "NoUrgent" }
+                    { 2, 4, new DateTime(2022, 12, 31, 21, 12, 14, 500, DateTimeKind.Local).AddTicks(8757), "Tired", new DateTime(2022, 12, 26, 21, 12, 14, 500, DateTimeKind.Local).AddTicks(8743), 2, "Urgent" },
+                    { 1, 4, new DateTime(2022, 12, 26, 21, 12, 14, 500, DateTimeKind.Local).AddTicks(7078), "Tired", new DateTime(2022, 12, 21, 21, 12, 14, 498, DateTimeKind.Local).AddTicks(710), 1, "NoUrgent" },
+                    { 3, 4, new DateTime(2023, 1, 5, 21, 12, 14, 500, DateTimeKind.Local).AddTicks(8765), "Tired", new DateTime(2022, 12, 31, 21, 12, 14, 500, DateTimeKind.Local).AddTicks(8762), 0, "NoUrgent" }
                 });
 
             migrationBuilder.InsertData(

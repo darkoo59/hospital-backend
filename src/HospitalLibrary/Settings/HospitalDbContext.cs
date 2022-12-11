@@ -281,7 +281,7 @@ namespace HospitalLibrary.Settings
 
             //modelBuilder.Entity<MoveRequest>().HasKey(m => m.fromRoomId);
             modelBuilder.Entity<MoveRequest>().HasData(
-                new MoveRequest() {id = 1, fromRoomId = 1, toRoomId = 2, chosenStartTime = new System.DateTime(2022,12,10,15,0,0), duration = new System.TimeSpan(0, 30, 0), equipment = "Syringe", quantity = 2 }
+                new MoveRequest() {id = 1, type="EquipmentMove", fromRoomId = 1, toRoomId = 2, chosenStartTime = new System.DateTime(2022,12,10,15,0,0), duration = new System.TimeSpan(0, 30, 0), equipment = "Syringe", quantity = 2 }
             );
 
 

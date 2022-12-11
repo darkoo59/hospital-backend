@@ -19,6 +19,8 @@ namespace HospitalLibrary.Core.Service
         void Delete(Room room);
         void MoveEquipment(MoveRequest moveRequest);
         void AddMoveRequest(MoveRequest moveRequest);
+        void AddRenovationSplitRequest(MoveRequest renovationRequest);
+        void AddRenovationMergeRequest(MoveRequest renovationRequest);
         bool CheckMoveRequests();
         IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest);
         void RenovationSplitOneRoom(MoveRequest renovationRequest);

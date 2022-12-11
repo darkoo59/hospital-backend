@@ -133,6 +133,13 @@ namespace HospitalLibrary.Core.Repository
             _context.Update(eqToBeUpdated);
             _context.SaveChanges();
         }
+        public void ChangeEquipmentRoom(Equipment equipment, int newRoomId)
+        {
+            Equipment eqToBeUpdated = _context.Equipment.Find(equipment.Id);
+            eqToBeUpdated.RoomId = newRoomId;
+            _context.Update(eqToBeUpdated);
+            _context.SaveChanges();
+        }
 
         public void AddEquipment(MoveRequest moveRequest,Equipment equipment) 
         {
@@ -165,7 +172,20 @@ namespace HospitalLibrary.Core.Repository
 
         public void AddMoveRequest(MoveRequest moveRequest)
         {
+            moveRequest.type = "MoveRequest";
             _context.MoveRequests.Add(moveRequest);
+            _context.SaveChanges();
+        }
+        public void AddRenovationSplitRequest(MoveRequest renovationRequest)
+        {
+            renovationRequest.type = "RenovationSplit";
+            _context.MoveRequests.Add(renovationRequest);
+            _context.SaveChanges();
+        }
+        public void AddRenovationMergeRequest(MoveRequest renovationRequest)
+        {
+            renovationRequest.type = "RenovationMerge";
+            _context.MoveRequests.Add(renovationRequest);
             _context.SaveChanges();
         }
 
@@ -181,7 +201,18 @@ namespace HospitalLibrary.Core.Repository
                 }
                 if(mvr.chosenStartTime + mvr.duration < DateTime.Now)
                 {
-                    MoveEquipment(mvr);
+                    if (mvr.type == "MoveEquipment")
+                    {
+                        MoveEquipment(mvr);   
+                    }
+                    else if(mvr.type == "RenovationSplit")
+                    {
+                        RenovationSplitOneRoom(mvr);
+                    }
+                    else if(mvr.type == "RenovationMerge")
+                    {
+                        RenovationMergeTwoRooms(mvr);
+                    }
                     _context.MoveRequests.Remove(mvr);
                     _context.SaveChanges();
                     res = true;
@@ -236,6 +267,11 @@ namespace HospitalLibrary.Core.Repository
             else if(room1.X != room2.X)
             {
                 room1.Width += room2.Width;
+            }
+            List<Equipment> eqToMove = _context.Equipment.Where(e => e.RoomId == room2.Id).ToList();
+            foreach(Equipment eq in eqToMove)
+            {
+                ChangeEquipmentRoom(eq, room1.Id);
             }
             Update(room1);
             Delete(room2);
