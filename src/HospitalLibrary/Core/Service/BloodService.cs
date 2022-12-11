@@ -52,6 +52,29 @@ namespace HospitalLibrary.Core.Service
             return blood.QuantityInLiters >= (usedQuantityInMililitersLiters/1000);
         }
 
+
+        public void AddBloodAfterUrgentRequest(int type, double quantity)
+        {
+            Blood blood = _bloodRepository.GetByBloodType(ParseIntToBloodType(type));
+            blood.QuantityInLiters += quantity;
+            _bloodRepository.Update(blood);            
+        }
+
+        public BloodType ParseIntToBloodType(int number)
+        {
+            switch(number)
+            {
+                case 0: return BloodType.A_PLUS;
+                case 1: return BloodType.A_MINUS;
+                case 2: return BloodType.B_PLUS;
+                case 3: return BloodType.B_MINUS;
+                case 4: return BloodType.O_PLUS;
+                case 5: return BloodType.O_MINUS;
+                case 6: return BloodType.AB_PLUS;
+                default: return BloodType.AB_MINUS;
+            }
+        }
+
         public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
         {
 

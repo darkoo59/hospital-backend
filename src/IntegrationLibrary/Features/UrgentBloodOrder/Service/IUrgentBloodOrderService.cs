@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
 {
-    public interface IUrgentOrderService
+    public interface IUrgentBloodOrderService
     {
-        StudentResponse InvokeUrgentOrder();
+        UrgentResponse InvokeUrgentOrder(int bloodType, float quantity, string server);
     }
 }

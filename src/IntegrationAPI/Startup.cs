@@ -77,7 +77,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
 
-            services.AddScoped<IUrgentOrderService, UrgentOrderService>();
+            services.AddScoped<IUrgentBloodOrderService, UrgentBloodOrderService>();
 
             services.AddScoped<IHospitalRepository, HospitalRepository>();
 

@@ -1,5 +1,8 @@
-﻿using IntegrationLibrary.Features.UrgentBloodOrder.Service;
+﻿using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
+using IntegrationLibrary.Features.UrgentBloodOrder.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace IntegrationAPI.Controllers
 {
@@ -7,19 +10,23 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class UrgentOrderController : ControllerBase
     {
-        private readonly IUrgentOrderService _service;
+        private readonly IUrgentBloodOrderService _service;
 
-        public UrgentOrderController(IUrgentOrderService service)
+        public UrgentOrderController(IUrgentBloodOrderService service)
         {
             _service = service;
         }
 
-        [HttpGet]
-        public ActionResult InvokeUrgentOrder()
+        [HttpPatch]
+        public ActionResult InvokeUrgentOrder([FromBody] UrgentOrderDTO dto)
         {
-            StudentResponse result = _service.InvokeUrgentOrder();
+            UrgentResponse result = _service.InvokeUrgentOrder(dto.BloodType, dto.Quantity, dto.Server);
+            
+            Console.WriteLine("Type: " + dto.BloodType + " Quantity: " + dto.Quantity + " server: " + dto.Server);
+            
+            Console.WriteLine("Response: " + result.HasEnough);
 
-            return Ok(result.ToString());
+            return Ok(result.HasEnough);
         }
     }
 }

@@ -29,5 +29,12 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_bloodMapper.ToDTO(_bloodService.GetAll().ToList()));
         }
+
+        [HttpPatch("add")]
+        public ActionResult AddBloodAfterUrgentRequest([FromBody] UrgentBloodRequestDTO dto)
+        {
+            _bloodService.AddBloodAfterUrgentRequest(dto.BloodType, dto.Quantity);
+            return Ok();
+        }
     }
 }
