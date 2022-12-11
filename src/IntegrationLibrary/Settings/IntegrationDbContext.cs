@@ -82,12 +82,12 @@ namespace IntegrationLibrary.Settings
                 new EquipmentTender(3, "Tender 3", DateTime.Now.AddDays(15), "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.")
             );
             modelBuilder.Entity<TenderRequirement>().HasData(
-                new TenderRequirement(1, "item1", 150, 1),
-                new TenderRequirement(2, "item2", 100, 1),
-                new TenderRequirement(3, "item3", 250, 2),
-                new TenderRequirement(4, "item4", 350, 2),
-                new TenderRequirement(5, "item5", 120, 3),
-                new TenderRequirement(6, "item6", 230, 3)
+                new TenderRequirement(1, BloodType.A_PLUS, 150, 1),
+                new TenderRequirement(2, BloodType.B_PLUS, 100, 1),
+                new TenderRequirement(3, BloodType.A_MINUS, 250, 2),
+                new TenderRequirement(4, BloodType.O_PLUS, 350, 2),
+                new TenderRequirement(5, BloodType.AB_PLUS, 120, 3),
+                new TenderRequirement(6, BloodType.AB_MINUS, 230, 3)
             );
             modelBuilder.Entity<TenderOffer>().Property(t => t.Money).HasConversion(
                 m => m.Amount,

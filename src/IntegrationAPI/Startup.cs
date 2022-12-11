@@ -10,7 +10,7 @@ using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.Features.BloodRequests.Service;
 using IntegrationLibrary.Features.ReportConfigurations.Repository;
 using IntegrationLibrary.Features.ReportConfigurations.Service;
-using IntegrationLibrary.HospitalRepository;
+using IntegrationLibrary.HospitalService;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -84,7 +84,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
 
-            services.AddScoped<IHospitalRepository, HospitalRepository>();
+            services.AddScoped<IHospitalService, HospitalService>();
 
             services.AddScoped<IBBReportsService, BBReportsService>();
             services.AddScoped<IReportConfigurationService, ReportConfigurationService>();

@@ -20,5 +20,6 @@ namespace HospitalLibrary.Core.Service
         bool IsThereEnoughBlood(BloodTherapy bloodTherapy);
         //public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency);
         void ReceiveNewBlood(Blood blood);
+        void UpdateAfterTender(ICollection<Blood> blood);
     }
 }

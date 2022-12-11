@@ -149,6 +149,17 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }*/
+
+        public void UpdateAfterTender(ICollection<Blood> list)
+        {
+            foreach (Blood tender_blood in list)
+            {
+                Blood blood = _bloodRepository.GetByBloodType(tender_blood.BloodType);
+                blood.QuantityInLiters += tender_blood.QuantityInLiters;
+                _bloodRepository.Update(blood);
+            }
+            
+        }
     }
 
 }

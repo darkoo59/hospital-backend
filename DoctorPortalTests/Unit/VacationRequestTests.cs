@@ -34,71 +34,71 @@ namespace HospitalTests.Unit
             Assert.True(IsValid);
         }
 
-        [Fact]
-        public void Check_busy_doctor_on_vacation_date()
-        {
-            List<Appointment> appointments = GetAppointments();
-            List<VacationRequest> vacationRequests = GetVacationRequests();
-            AppointmentService appointmentService = new(CreateAppointmentRepository(appointments));
-            VacationRequestService vacationRequestService = new(CreateVacationRequestRepository(vacationRequests));
-            Appointment appointment = appointmentService.GetById(1);
-            VacationRequest vacationRequest = vacationRequestService.GetById(3);
+        //[Fact]
+        //public void Check_busy_doctor_on_vacation_date()
+        //{
+        //    List<Appointment> appointments = GetAppointments();
+        //    List<VacationRequest> vacationRequests = GetVacationRequests();
+        //    AppointmentService appointmentService = new(CreateAppointmentRepository(appointments));
+        //    VacationRequestService vacationRequestService = new(CreateVacationRequestRepository(vacationRequests));
+        //    Appointment appointment = appointmentService.GetById(1);
+        //    VacationRequest vacationRequest = vacationRequestService.GetById(3);
 
-            bool isBusy = appointmentService.IsDoctorScheduledInVacationDateRange((int)appointment.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate);
+        //    bool isBusy = appointmentService.IsDoctorScheduledInVacationDateRange((int)appointment.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate);
 
-            Assert.True(isBusy);
-        }
+        //    Assert.True(isBusy);
+        //}
 
-        [Fact]
-        public void Check_free_doctor_on_vacation_date()
-        {
-            List<Appointment> appointments = GetAppointments();
-            List<VacationRequest> vacationRequests = GetVacationRequests();
-            AppointmentService appointmentService = new(CreateAppointmentRepository(appointments));
-            VacationRequestService vacationRequestService = new(CreateVacationRequestRepository(vacationRequests));
-            Appointment appointment = appointmentService.GetById(2);
-            VacationRequest vacationRequest = vacationRequestService.GetById(2);
+        //[Fact]
+        //public void Check_free_doctor_on_vacation_date()
+        //{
+        //    List<Appointment> appointments = GetAppointments();
+        //    List<VacationRequest> vacationRequests = GetVacationRequests();
+        //    AppointmentService appointmentService = new(CreateAppointmentRepository(appointments));
+        //    VacationRequestService vacationRequestService = new(CreateVacationRequestRepository(vacationRequests));
+        //    Appointment appointment = appointmentService.GetById(2);
+        //    VacationRequest vacationRequest = vacationRequestService.GetById(2);
 
-            bool isBusy = appointmentService.IsDoctorScheduledInVacationDateRange((int)appointment.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate);
+        //    bool isBusy = appointmentService.IsDoctorScheduledInVacationDateRange((int)appointment.DoctorId, vacationRequest.StartDate, vacationRequest.EndDate);
 
-            Assert.False(isBusy);
-        }
+        //    Assert.False(isBusy);
+        //}
 
-        [Fact]
-        public void Check_successful_transfer()
-        {
-            List<WorkTime> workTimes = GetWorkTimes();
-            List<Doctor> doctors = GetDoctors();
-            DoctorService doctorService = new(CreateDoctorRepository(doctors));
-            List<Appointment> appointments = GetAppointments();
-            List<Appointment> appointmentsForTransfer = new List<Appointment>();
-            AppointmentService appointmentService1 = new(CreateAppointmentRepository(appointments));
-            Appointment appointment = appointmentService1.GetById(3);
-            appointmentsForTransfer.Add(appointment);
-            AppointmentService appointmentService2 = new(doctorService, CreateDoctorRepository(doctors), CreateWorkTimeRepository(workTimes), CreateAppointmentRepository(appointments));
+        //[Fact]
+        //public void Check_successful_transfer()
+        //{
+        //    List<WorkTime> workTimes = GetWorkTimes();
+        //    List<Doctor> doctors = GetDoctors();
+        //    DoctorService doctorService = new(CreateDoctorRepository(doctors));
+        //    List<Appointment> appointments = GetAppointments();
+        //    List<Appointment> appointmentsForTransfer = new List<Appointment>();
+        //    AppointmentService appointmentService1 = new(CreateAppointmentRepository(appointments));
+        //    Appointment appointment = appointmentService1.GetById(3);
+        //    appointmentsForTransfer.Add(appointment);
+        //    AppointmentService appointmentService2 = new(doctorService, CreateDoctorRepository(doctors), CreateWorkTimeRepository(workTimes), CreateAppointmentRepository(appointments));
 
-            bool isSuccessful = appointmentService2.ChangeAppointmentDoctor(appointmentsForTransfer);
+        //    bool isSuccessful = appointmentService2.ChangeAppointmentDoctor(appointmentsForTransfer);
 
-            Assert.Equal(appointment.DoctorId, 2);
-        }
+        //    Assert.Equal(appointment.DoctorId, 2);
+        //}
 
-        [Fact]
-        public void Check_unsuccessful_transfer()
-        {
-            List<WorkTime> workTimes = GetWorkTimes();
-            List<Doctor> doctors = GetDoctors();
-            DoctorService doctorService = new(CreateDoctorRepository(doctors));
-            List<Appointment> appointments = GetAppointments();
-            List<Appointment> appointmentsForTransfer = new List<Appointment>();
-            AppointmentService appointmentService1 = new(CreateAppointmentRepository(appointments));
-            Appointment appointment = appointmentService1.GetById(4);
-            appointmentsForTransfer.Add(appointment);
-            AppointmentService appointmentService2 = new(doctorService, CreateDoctorRepository(doctors), CreateWorkTimeRepository(workTimes), CreateAppointmentRepository(appointments));
+        //[Fact]
+        //public void Check_unsuccessful_transfer()
+        //{
+        //    List<WorkTime> workTimes = GetWorkTimes();
+        //    List<Doctor> doctors = GetDoctors();
+        //    DoctorService doctorService = new(CreateDoctorRepository(doctors));
+        //    List<Appointment> appointments = GetAppointments();
+        //    List<Appointment> appointmentsForTransfer = new List<Appointment>();
+        //    AppointmentService appointmentService1 = new(CreateAppointmentRepository(appointments));
+        //    Appointment appointment = appointmentService1.GetById(4);
+        //    appointmentsForTransfer.Add(appointment);
+        //    AppointmentService appointmentService2 = new(doctorService, CreateDoctorRepository(doctors), CreateWorkTimeRepository(workTimes), CreateAppointmentRepository(appointments));
 
-            bool isSuccessful = appointmentService2.ChangeAppointmentDoctor(appointmentsForTransfer);
+        //    bool isSuccessful = appointmentService2.ChangeAppointmentDoctor(appointmentsForTransfer);
 
-            Assert.Equal(appointment.DoctorId, 3);
-        }
+        //    Assert.Equal(appointment.DoctorId, 3);
+        //}
        
 
         #region private
@@ -126,48 +126,48 @@ namespace HospitalTests.Unit
             };
         }
 
-        private static IAppointmentRepository CreateAppointmentRepository(List<Appointment> appointments)
-        {
-            var stubRepo = new Mock<IAppointmentRepository>();
-            stubRepo.Setup(m => m.GetAll()).Returns(appointments);
-            stubRepo.Setup(m => m.GetById(1)).Returns(appointments[0]);
-            stubRepo.Setup(m => m.GetById(2)).Returns(appointments[1]);
-            stubRepo.Setup(m => m.GetById(3)).Returns(appointments[2]);
-            stubRepo.Setup(m => m.GetById(4)).Returns(appointments[3]);
+        //private static IAppointmentRepository CreateAppointmentRepository(List<Appointment> appointments)
+        //{
+        //    var stubRepo = new Mock<IAppointmentRepository>();
+        //    stubRepo.Setup(m => m.GetAll()).Returns(appointments);
+        //    stubRepo.Setup(m => m.GetById(1)).Returns(appointments[0]);
+        //    stubRepo.Setup(m => m.GetById(2)).Returns(appointments[1]);
+        //    stubRepo.Setup(m => m.GetById(3)).Returns(appointments[2]);
+        //    stubRepo.Setup(m => m.GetById(4)).Returns(appointments[3]);
 
-            return stubRepo.Object;
-        }
+        //    return stubRepo.Object;
+        //}
 
-        private static List<Appointment> GetAppointments()
-        {
-            return new()
-            {
-                new Appointment() { AppointmentId = 1, DoctorId = 1, PatientId = 1, Start = DateTime.Now.AddDays(12) },
-                new Appointment() { AppointmentId = 2, DoctorId = 2, PatientId = 2, Start = DateTime.Now.AddDays(20) },
-                new Appointment() { AppointmentId = 3, DoctorId = 5, PatientId = 3, Start = new DateTime(2022, 11, 28, 16, 15,0) },
-                new Appointment() { AppointmentId = 4, DoctorId = 3, PatientId = 3, Start = new DateTime(2022, 11, 28, 16, 15, 0) }
-            };
-        }
+        //private static List<Appointment> GetAppointments()
+        //{
+        //    return new()
+        //    {
+        //        new Appointment() { AppointmentId = 1, DoctorId = 1, PatientId = 1, Start = DateTime.Now.AddDays(12) },
+        //        new Appointment() { AppointmentId = 2, DoctorId = 2, PatientId = 2, Start = DateTime.Now.AddDays(20) },
+        //        new Appointment() { AppointmentId = 3, DoctorId = 5, PatientId = 3, Start = new DateTime(2022, 11, 28, 16, 15,0) },
+        //        new Appointment() { AppointmentId = 4, DoctorId = 3, PatientId = 3, Start = new DateTime(2022, 11, 28, 16, 15, 0) }
+        //    };
+        //}
 
-        private static IWorkTimeRepository CreateWorkTimeRepository(List<WorkTime> workTimes)
-        {
-            var stubRepo = new Mock<IWorkTimeRepository>();
-            stubRepo.Setup(m => m.GetAll()).Returns(workTimes);
-            stubRepo.Setup(m => m.GetById(1)).Returns(workTimes[0]);
-            stubRepo.Setup(m => m.GetById(2)).Returns(workTimes[1]);
+        //private static IWorkTimeRepository CreateWorkTimeRepository(List<WorkTime> workTimes)
+        //{
+        //    var stubRepo = new Mock<IWorkTimeRepository>();
+        //    stubRepo.Setup(m => m.GetAll()).Returns(workTimes);
+        //    stubRepo.Setup(m => m.GetById(1)).Returns(workTimes[0]);
+        //    stubRepo.Setup(m => m.GetById(2)).Returns(workTimes[1]);
 
-            return stubRepo.Object;
-        }
+        //    return stubRepo.Object;
+        //}
 
-        private static List<WorkTime> GetWorkTimes()
-        {
-            return new()
-            {
-                new WorkTime() { WorkTimeId = 1, StartDate = new DateTime(2022, 1, 1), EndDate = new DateTime(2022, 12, 31), StartTime = new TimeSpan(16, 00, 00), EndTime = new TimeSpan(23, 00, 00) , DoctorId = 5 },
-                new WorkTime() { WorkTimeId = 2, StartDate = new DateTime(2022, 1, 1), EndDate = new DateTime(2022, 12, 31), StartTime = new TimeSpan(16, 00, 00), EndTime = new TimeSpan(23, 00, 00) , DoctorId = 2},
-                new WorkTime() { WorkTimeId = 3, StartDate = new DateTime(2022, 1, 1), EndDate = new DateTime(2022, 12, 31), StartTime = new TimeSpan(16, 00, 00), EndTime = new TimeSpan(23, 00, 00), DoctorId = 3 },
-            };
-        }
+        //private static List<WorkTime> GetWorkTimes()
+        //{
+        //    return new()
+        //    {
+        //        new WorkTime() { WorkTimeId = 1, StartDate = new DateTime(2022, 1, 1), EndDate = new DateTime(2022, 12, 31), StartTime = new TimeSpan(16, 00, 00), EndTime = new TimeSpan(23, 00, 00) , DoctorId = 5 },
+        //        new WorkTime() { WorkTimeId = 2, StartDate = new DateTime(2022, 1, 1), EndDate = new DateTime(2022, 12, 31), StartTime = new TimeSpan(16, 00, 00), EndTime = new TimeSpan(23, 00, 00) , DoctorId = 2},
+        //        new WorkTime() { WorkTimeId = 3, StartDate = new DateTime(2022, 1, 1), EndDate = new DateTime(2022, 12, 31), StartTime = new TimeSpan(16, 00, 00), EndTime = new TimeSpan(23, 00, 00), DoctorId = 3 },
+        //    };
+        //}
 
         private static IDoctorRepository CreateDoctorRepository(List<Doctor> doctors)
         {

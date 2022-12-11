@@ -3,7 +3,7 @@ using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Repository;
-using IntegrationLibrary.HospitalRepository;
+using IntegrationLibrary.HospitalService;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +13,8 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
     public class BloodRequestService : IBloodRequestService
     {
         private readonly IBloodRequestRepository _bloodRequestRepository;
-        private readonly IHospitalRepository _hospitalRepository;
-        public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IHospitalRepository hospitalRepository)
+        private readonly IHospitalService _hospitalRepository;
+        public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IHospitalService hospitalRepository)
         {
             _bloodRequestRepository = bloodRequestRepository;
             _hospitalRepository = hospitalRepository;
