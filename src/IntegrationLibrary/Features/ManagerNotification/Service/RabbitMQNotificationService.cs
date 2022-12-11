@@ -1,31 +1,30 @@
-﻿using IntegrationLibrary.Features.BloodBankNews.Enums;
-using IntegrationLibrary.Features.BloodBankNews.Model;
+﻿using IntegrationLibrary.Features.MonthlyBloodSubscription.DTO;
+using IntegrationLibrary.Features.MonthlyBloodSubscription.Service;
 using IntegrationLibrary.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Utilities;
-using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationLibrary.Features.ManagerNotification.DTO;
 
-namespace IntegrationLibrary.Features.BloodBankNews.Service
+namespace IntegrationLibrary.Features.ManagerNotification.Service
 {
-    public class RabbitMQService : BackgroundService
+    public class RabbitMQNotificationService : BackgroundService
     {
         private IConnection _connection;
         private IModel _channel;
         IServiceScopeFactory _serviceProvider;
-        private readonly RabbitMQSettings _rabbitMQSettings;
+        private readonly RabbitMQNotificationSettings _rabbitMQSettings;
 
-        public RabbitMQService(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> rabbitSettings)
+        public RabbitMQNotificationService(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQNotificationSettings> rabbitSettings)
         {
             this._serviceProvider = serviceScopeFactory;
             this._rabbitMQSettings = rabbitSettings.Value;
@@ -34,7 +33,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
 
         private void InitRabbitMQ()
         {
-
+            string hostname = _rabbitMQSettings.HostName;
             var factory = new ConnectionFactory { HostName = _rabbitMQSettings.HostName };
 
             // create connection  
@@ -66,8 +65,8 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
                 // handle the received message 
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetRequiredService<IBankNewsService>();
-                    HandleMessage(jsonMessage,context);
+                    var context = scope.ServiceProvider.GetRequiredService<IManagerNotificationService>();
+                    HandleMessage(jsonMessage, context);
                 }
             };
 
@@ -82,11 +81,10 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             return Task.CompletedTask;
         }
 
-        private void HandleMessage(string content, IBankNewsService _bankNewsService)
-        {  
-            BankNews message = JsonConvert.DeserializeObject<BankNews>(content);
-            message.State = NewsState.NEW;
-            _bankNewsService.AddNews(message);
+        private void HandleMessage(string content, IManagerNotificationService _notificationService)
+        {
+            ReceivedNotificationDTO receivedNotification = JsonConvert.DeserializeObject<ReceivedNotificationDTO>(content);
+            _notificationService.ReceiveNotification(receivedNotification);
         }
 
         private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
@@ -101,7 +99,5 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
             _connection.Close();
             base.Dispose();
         }
-
-
     }
 }

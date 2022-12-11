@@ -155,6 +155,7 @@ namespace HospitalAPI
             services.AddScoped<IExaminationReportService, ExaminationReportService>();
             services.AddScoped<IGenericMapper<ExaminationReport, ExaminationReportDTO>, ExaminationReportMapper>();
 
+
             SetupAuth(services);
         }
 
