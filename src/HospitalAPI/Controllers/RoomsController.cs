@@ -195,8 +195,7 @@ namespace HospitalAPI.Controllers
 			FreeAppointmentRequest freeAppointmentRequest = new FreeAppointmentRequest(freeAppointmentRequestDTO.FirstRoomId, freeAppointmentRequestDTO.SecondRoomId,
 				freeAppointmentRequestDTO.WantedStartDate, freeAppointmentRequestDTO.WantedEndDate, freeAppointmentRequestDTO.Duration, freeAppointmentRequestDTO.DurationTimeUnit);
 
-
-			return Ok();
+			return Ok(_roomService.FindFreeTimeSlots(freeAppointmentRequest));
 		}
 	}
 }

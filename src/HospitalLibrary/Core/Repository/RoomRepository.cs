@@ -189,5 +189,20 @@ namespace HospitalLibrary.Core.Repository
             }
             return res;
         }
+
+        public IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest)
+        {
+            List<DateTime> freeTimeSlots = new List<DateTime>();
+            DateTime wantedStart = freeAppointmentRequest.WantedStartDate;
+            DateTime wantedEnd = freeAppointmentRequest.WantedEndDate;
+            TimeSpan duration = freeAppointmentRequest.Duration;
+            DateTime klizno = wantedStart;
+            for(klizno = wantedStart; klizno + duration <= wantedEnd; klizno += duration)
+            {
+                //if(room1 and room2 are free)
+                freeTimeSlots.Add(klizno);
+            }
+            return freeTimeSlots;
+        }
     }
 }

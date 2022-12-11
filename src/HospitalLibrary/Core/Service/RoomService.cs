@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.HospitalMap.Model;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -75,6 +76,10 @@ namespace HospitalLibrary.Core.Service
         public bool CheckMoveRequests()
         {
             return _roomRepository.CheckMoveRequests();
+        }
+        public IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest)
+        {
+            return _roomRepository.FindFreeTimeSlots(freeAppointmentRequest);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.HospitalMap.Model;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Repository
@@ -19,5 +20,6 @@ namespace HospitalLibrary.Core.Repository
         void MoveEquipment(MoveRequest moveRequest);
         void AddMoveRequest(MoveRequest moveRequest);
         bool CheckMoveRequests();
+        IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest);
     }
 }
