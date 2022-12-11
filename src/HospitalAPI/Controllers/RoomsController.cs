@@ -1,79 +1,79 @@
-﻿using HospitalAPI.Dtos;
+﻿using System.Collections.Generic;
+using System.Linq;
+using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.HospitalMap.Model;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RoomsController : ControllerBase
-    {
-        private readonly IRoomService _roomService;
-        private readonly IGenericMapper<Room, RoomDTO> _roomMapper;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class RoomsController : ControllerBase
+	{
+		private readonly IRoomService _roomService;
+		private readonly IGenericMapper<Room, RoomDTO> _roomMapper;
 
-        public RoomsController(IRoomService roomService, IGenericMapper<Room, RoomDTO> roomMapper)
-        {
-            _roomService = roomService;
-            _roomMapper = roomMapper;
-        }
+		public RoomsController(IRoomService roomService, IGenericMapper<Room, RoomDTO> roomMapper)
+		{
+			_roomService = roomService;
+			_roomMapper = roomMapper;
+		}
 
-        // GET: api/rooms
-        [HttpGet]
-        public ActionResult GetAll()
-        {
-            return Ok(_roomMapper.ToDTO(_roomService.GetAll().ToList()));
-        }
+		// GET: api/rooms
+		[HttpGet]
+		public ActionResult GetAll()
+		{
+			return Ok(_roomMapper.ToDTO(_roomService.GetAll().ToList()));
+		}
 
-        // GET api/rooms/2
-        [HttpGet("id/{id}")]
-        public ActionResult GetById(int id)
-        {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-            return Ok(room);
-        }
+		// GET api/rooms/2
+		[HttpGet("id/{id}")]
+		public ActionResult GetById(int id)
+		{
+			var room = _roomService.GetById(id);
+			if (room == null)
+			{
+				return NotFound();
+			}
+			return Ok(room);
+		}
 
-        [HttpGet("number/{number}")]
-        public ActionResult GetByNumber(string number)
-        {
-            var room1 = _roomService.GetByNumber(number);
-            if (room1 == null)
-            {
-                return NotFound();
-            }
-            return Ok(room1);       
-        }
+		[HttpGet("number/{number}")]
+		public ActionResult GetByNumber(string number)
+		{
+			var room1 = _roomService.GetByNumber(number);
+			if (room1 == null)
+			{
+				return NotFound();
+			}
+			return Ok(room1);
+		}
 
-        [HttpGet("{buildingId}/{floorId}")]
-        public ActionResult GetRoomsByBuildingFloor(string buildingId, int floorId)
-        {
-            List<Room> rooms = (List<Room>)_roomService.GetRooms(buildingId, floorId);
-            if (rooms.Count == 0) 
-            {
-                return NotFound();           
-            }
-            return Ok(_roomService.GetRooms(buildingId, floorId));
-        }
+		[HttpGet("{buildingId}/{floorId}")]
+		public ActionResult GetRoomsByBuildingFloor(string buildingId, int floorId)
+		{
+			List<Room> rooms = (List<Room>)_roomService.GetRooms(buildingId, floorId);
+			if (rooms.Count == 0)
+			{
+				return NotFound();
+			}
+			return Ok(_roomService.GetRooms(buildingId, floorId));
+		}
 
-        // GET api/rooms/equipment/2
-        [HttpGet("equipment/{id}")]
-        public ActionResult GetEquipmentById(int id)
-        {
-            List<Equipment> equipmentList = (List<Equipment>)_roomService.GetEquipment(id);
-            if (equipmentList.Count == 0)
-            {
-                return NotFound();
-            }
-            return Ok(_roomService.GetEquipment(id));
-        }
+		// GET api/rooms/equipment/2
+		[HttpGet("equipment/{id}")]
+		public ActionResult GetEquipmentById(int id)
+		{
+			List<Equipment> equipmentList = (List<Equipment>)_roomService.GetEquipment(id);
+			if (equipmentList.Count == 0)
+			{
+				return NotFound();
+			}
+			return Ok(_roomService.GetEquipment(id));
+		}
 
 		// GET api/rooms/equipment
 		[HttpGet("equipment")]
@@ -88,103 +88,115 @@ namespace HospitalAPI.Controllers
 		}
 
 		[HttpGet("equipmentSearch/{query}")]
-        public ActionResult SearchForEquipment(string query)
-        {
-            List<Room> roomList = (List<Room>)_roomService.SearchForEquipment(query);
-            if (roomList.Count == 0)
-            {
-                return NotFound();
-            }
-            return Ok(_roomService.SearchForEquipment(query));
-        }
-        
+		public ActionResult SearchForEquipment(string query)
+		{
+			List<Room> roomList = (List<Room>)_roomService.SearchForEquipment(query);
+			if (roomList.Count == 0)
+			{
+				return NotFound();
+			}
+			return Ok(_roomService.SearchForEquipment(query));
+		}
 
 
 
-        // POST api/rooms
-        [HttpPost]
-        public ActionResult Create(Room room)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            _roomService.Create(room);
-            return CreatedAtAction("GetById", new { id = room.Id }, room);
-        }
+		// POST api/rooms
+		[HttpPost]
+		public ActionResult Create(Room room)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-        [HttpPost("moveRequests")]
-        public ActionResult AddMoveRequest(MoveRequest moveRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _roomService.AddMoveRequest(moveRequest);
-            return Ok(moveRequest);
-        }
-        
-        [HttpGet("moveRequests/check")]
-        public ActionResult CheckMoveRequests()
-        {
-            return Ok(_roomService.CheckMoveRequests());
-        }
+			_roomService.Create(room);
+			return CreatedAtAction("GetById", new { id = room.Id }, room);
+		}
 
-/*        [HttpPatch]
-        public ActionResult MoveEquipment(MoveRequest moveRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _roomService.MoveEquipment(moveRequest);
-            return Ok(moveRequest);
-        }*/
-      
-        
+		[HttpPost("moveRequests")]
+		public ActionResult AddMoveRequest(MoveRequest moveRequest)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			_roomService.AddMoveRequest(moveRequest);
+			return Ok(moveRequest);
+		}
 
-        // PUT api/rooms/2
-        [HttpPut("{id}")]
-        public ActionResult Update(int id, Room room)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+		[HttpGet("moveRequests/check")]
+		public ActionResult CheckMoveRequests()
+		{
+			return Ok(_roomService.CheckMoveRequests());
+		}
 
-            if (id != room.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                _roomService.Update(room);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return Ok(room);
-        }
-       
- 
+		/*        [HttpPatch]
+				public ActionResult MoveEquipment(MoveRequest moveRequest)
+				{
+					if (!ModelState.IsValid)
+					{
+						return BadRequest(ModelState);
+					}
+					_roomService.MoveEquipment(moveRequest);
+					return Ok(moveRequest);
+				}*/
 
 
-        // DELETE api/rooms/2
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
-        {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
 
-            _roomService.Delete(room);
-            return NoContent();
-        }
-    }
+		// PUT api/rooms/2
+		[HttpPut("{id}")]
+		public ActionResult Update(int id, Room room)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			if (id != room.Id)
+			{
+				return BadRequest();
+			}
+
+			try
+			{
+				_roomService.Update(room);
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return Ok(room);
+		}
+
+
+
+
+		// DELETE api/rooms/2
+		[HttpDelete("{id}")]
+		public ActionResult Delete(int id)
+		{
+			var room = _roomService.GetById(id);
+			if (room == null)
+			{
+				return NotFound();
+			}
+
+			_roomService.Delete(room);
+			return NoContent();
+		}
+
+
+
+		[HttpPost("freeAppointments")]
+		public ActionResult GetFreeAppointments(FreeAppointmentRequestDTO freeAppointmentRequestDTO)
+		{
+			FreeAppointmentRequest freeAppointmentRequest = new FreeAppointmentRequest(freeAppointmentRequestDTO.FirstRoomId, freeAppointmentRequestDTO.SecondRoomId,
+				freeAppointmentRequestDTO.WantedStartDate, freeAppointmentRequestDTO.WantedEndDate, freeAppointmentRequestDTO.Duration, freeAppointmentRequestDTO.DurationTimeUnit);
+
+
+			return Ok();
+		}
+	}
 }
