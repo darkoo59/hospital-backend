@@ -27,6 +27,7 @@ using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure;
+using IntegrationLibrary.Features.UrgentBloodOrder.Service;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Service;
@@ -102,6 +103,8 @@ namespace IntegrationAPI
             services.AddHostedService<RabbitMQNotificationService>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+
+            services.AddScoped<IUrgentBloodOrderService, UrgentBloodOrderService>();
 
             services.AddScoped<IHospitalService, HospitalService>();
 
