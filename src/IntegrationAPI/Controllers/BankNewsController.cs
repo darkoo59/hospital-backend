@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Features.BloodBankNews.Service;
 using IntegrationLibrary.Features.BloodBankNews.Enums;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using IntegrationLibrary.Settings;
+using IntegrationAPI.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
@@ -26,7 +23,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
                 {
                     return Ok(_bankNewsService.GetAll());
                 }
@@ -44,7 +41,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
                 {
                     return Ok(_bankNewsService.GetAllByState(NewsState.NEW));
                 }
@@ -62,7 +59,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
                 {
                     return Ok(_bankNewsService.GetAllByState(NewsState.APPROVED));
                 }
@@ -80,7 +77,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
                 {
                     return Ok(_bankNewsService.GetAllByState(NewsState.DECLINED));
                 }
@@ -98,7 +95,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
                 {
                     _bankNewsService.ApproveNews(id);
                     return Ok();
@@ -117,7 +114,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
                 {
                     _bankNewsService.DeclineNews(id);
                     return Ok();
@@ -129,24 +126,6 @@ namespace IntegrationAPI.Controllers
             }
 
             return Unauthorized();
-        }
-
-
-        private static async Task<bool> Authorize(string token)
-        {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var url = AppSettings.HospitalApiUrl + "/api/users/authorization/manager";
-
-            var response = await httpClient.GetAsync(url);
-            return response.StatusCode == HttpStatusCode.OK;
-        }
-        
-
-        private bool IsAuthorized(AuthenticationHeaderValue header)
-        {
-            var credentials = header.Parameter;
-            return Authorize(credentials).Result;
         }
     }
 }
