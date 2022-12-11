@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.HospitalMap.Model;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -67,8 +68,34 @@ namespace HospitalLibrary.Core.Service
         public void MoveEquipment(MoveRequest moveRequest)
         {
             _roomRepository.MoveEquipment(moveRequest);
-        
-        
+        }
+        public void AddMoveRequest(MoveRequest moveRequest)
+        {
+            _roomRepository.AddMoveRequest(moveRequest);
+        }
+        public void AddRenovationSplitRequest(MoveRequest renovationRequest)
+        {
+            _roomRepository.AddRenovationSplitRequest(renovationRequest);
+        }
+        public void AddRenovationMergeRequest(MoveRequest renovationRequest)
+        {
+            _roomRepository.AddRenovationMergeRequest(renovationRequest);
+        }
+        public bool CheckMoveRequests()
+        {
+            return _roomRepository.CheckMoveRequests();
+        }
+        public IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest)
+        {
+            return _roomRepository.FindFreeTimeSlots(freeAppointmentRequest);
+        }
+        public void RenovationSplitOneRoom(MoveRequest renovationRequest)
+        {
+            _roomRepository.RenovationSplitOneRoom(renovationRequest);
+        }
+        public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
+        {
+            _roomRepository.RenovationMergeTwoRooms(renovationRequest);
         }
     }
 }
