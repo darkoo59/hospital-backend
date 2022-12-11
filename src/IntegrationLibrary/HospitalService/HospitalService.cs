@@ -3,6 +3,7 @@ using IntegrationLibrary.Features.Blood.DTO;
 using IntegrationLibrary.Features.BloodBankReports.DTO;
 using IntegrationLibrary.Features.BloodBankReports.Mapper;
 using IntegrationLibrary.Features.BloodBankReports.Model;
+using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using IntegrationLibrary.Settings;
 using Newtonsoft.Json;
 using System;
@@ -47,6 +48,22 @@ namespace IntegrationLibrary.HospitalService
             return mapper.ToModel(list);
         }
 
+        public async void UpdateBloodQuantity(int bloodType, float quantity)
+        {
+            using var httpClient = AppSettings.AddApiKey(new HttpClient());
+
+            UrgentOrderDTO dto = new UrgentOrderDTO();
+            dto.BloodType = bloodType;
+            dto.Quantity = quantity;
+
+            string url = AppSettings.HospitalApiUrl + "/api/Bloods/add";
+            var content = JsonConvert.SerializeObject(dto);
+
+            var stringContent = new StringContent(content, UnicodeEncoding.UTF8, "application/json");
+
+            httpClient.PatchAsync(url, stringContent);
+        }
+        
         public async Task<string> UpdateBlood(ICollection<BloodDTO> data)
         {
             using var httpClient = AppSettings.AddApiKey(new HttpClient());
