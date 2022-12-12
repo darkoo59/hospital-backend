@@ -14,5 +14,6 @@ namespace IntegrationLibrary.Features.BloodRequests.Model
         public int DoctorId { get; set; }
         public string ReasonForAdjustment { get; set; }
         public BloodRequestState State { get; set; }
+        public bool Urgent { get; set; }
     }
 }
