@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class migration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,6 +81,7 @@ namespace HospitalLibrary.Migrations
                     DateRange = table.Column<DateRange>(type: "jsonb", nullable: true),
                     StartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Duration = table.Column<int>(type: "integer", nullable: false),
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
                     DoctorIds = table.Column<List<int>>(type: "integer[]", nullable: true),
                     SpecializationIds = table.Column<List<int>>(type: "integer[]", nullable: true)
                 },
@@ -789,9 +790,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 2, 4, new DateTime(2022, 12, 30, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6160), "Tired", new DateTime(2022, 12, 25, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6134), 2, "Urgent" },
-                    { 1, 4, new DateTime(2022, 12, 25, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(3942), "Tired", new DateTime(2022, 12, 20, 17, 37, 32, 577, DateTimeKind.Local).AddTicks(4376), 1, "NoUrgent" },
-                    { 3, 4, new DateTime(2023, 1, 4, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6173), "Tired", new DateTime(2022, 12, 30, 17, 37, 32, 584, DateTimeKind.Local).AddTicks(6169), 0, "NoUrgent" }
+                    { 2, 4, new DateTime(2022, 12, 31, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(384), "Tired", new DateTime(2022, 12, 26, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(371), 2, "Urgent" },
+                    { 1, 4, new DateTime(2022, 12, 26, 21, 58, 10, 371, DateTimeKind.Local).AddTicks(8821), "Tired", new DateTime(2022, 12, 21, 21, 58, 10, 369, DateTimeKind.Local).AddTicks(3947), 1, "NoUrgent" },
+                    { 3, 4, new DateTime(2023, 1, 5, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(391), "Tired", new DateTime(2022, 12, 31, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(388), 0, "NoUrgent" }
                 });
 
             migrationBuilder.InsertData(

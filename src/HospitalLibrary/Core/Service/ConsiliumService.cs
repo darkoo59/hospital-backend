@@ -12,12 +12,25 @@ namespace HospitalLibrary.Core.Service
         private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
         private readonly IDoctorRepository _doctorRepository;
         List<List<int>> requiredDoctorsIdList = new List<List<int>>();
+        private IConsiliumRepository consiliumRepository;
 
         public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository)
         {
             _consiliumRepository = consiliumRepository;
             _doctorRepository = doctorRepository;
             _physicianScheduleRepository = physicianScheduleRepository;          
+        }
+
+        public ConsiliumService(IConsiliumRepository consiliumRepository,IDoctorRepository doctorRepository, PhysicianScheduleRepository physicianScheduleRepository)
+        {
+            _consiliumRepository = consiliumRepository;
+            _doctorRepository = doctorRepository;
+            _physicianScheduleRepository = physicianScheduleRepository;
+        }
+
+        public ConsiliumService(IConsiliumRepository consiliumRepository)
+        {
+            _consiliumRepository = consiliumRepository;
         }
 
         public void Create(Consilium consilium)
@@ -86,6 +99,8 @@ namespace HospitalLibrary.Core.Service
                     if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.Start) == true)
                     {
                         consilium.StartTime = new DateTime(appointment.Start.Year,appointment.Start.Month,appointment.Start.Day,appointment.Start.Hour,appointment.Start.Minute,appointment.Start.Second);
+                        consilium.RoomId = requiredDoctors[0].RoomId;
+
                         _consiliumRepository.Create(consilium);
                         return;
                     }
@@ -142,6 +157,8 @@ namespace HospitalLibrary.Core.Service
                     if (freeDoctorsId.Count == potentialDoctors.Count() && common.SequenceEqual(SpecializationIds))
                     {
                         consilium.DoctorIds = freeDoctorsId;
+                        consilium.RoomId = doctor.RoomId;
+
                         consilium.StartTime = appointment.Start;
                         _consiliumRepository.Create(consilium);
                         return;
@@ -158,6 +175,32 @@ namespace HospitalLibrary.Core.Service
                 appointment.Start = appointment.Start.AddMinutes(30);
                 goto ifPetlja;
             } 
+        }
+
+        public IEnumerable<Consilium> GetAll()
+        {
+            return _consiliumRepository.GetAll();
+        }
+
+        public IEnumerable<Consilium> GetAllConsiliumsOfDoctor(int id)
+        {
+            List<Consilium> consiliums = _consiliumRepository.GetAll().ToList();
+
+            List<Consilium> doctorsConsilium = new List<Consilium>();
+            foreach(Consilium c in consiliums)
+            {
+                List<int> doctors = c.DoctorIds;
+                foreach (int doctor in doctors)
+                {
+                    if(doctor == id)
+                    {
+                        doctorsConsilium.Add(c);
+                        break;
+                    }
+                }
+            }
+            return doctorsConsilium;
+
         }
     }
 }

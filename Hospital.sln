@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32328.378
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32929.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D598A8FD-AF65-4E98-A73B-1BE4D96774C6}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AB2DCFAD-D449-4B16-9080-E57923C405FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSenderService", "ReportSenderService\ReportSenderService.csproj", "{A4F9D5C2-D0EE-432F-9A41-A1DA54D3B258}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalE2ETests", "HospitalE2ETests\HospitalE2ETests.csproj", "{36B5A070-5BB0-4E95-8D51-21881C2DD7D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{A4F9D5C2-D0EE-432F-9A41-A1DA54D3B258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4F9D5C2-D0EE-432F-9A41-A1DA54D3B258}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4F9D5C2-D0EE-432F-9A41-A1DA54D3B258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B5A070-5BB0-4E95-8D51-21881C2DD7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B5A070-5BB0-4E95-8D51-21881C2DD7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B5A070-5BB0-4E95-8D51-21881C2DD7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B5A070-5BB0-4E95-8D51-21881C2DD7D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
