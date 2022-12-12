@@ -93,9 +93,6 @@ namespace HospitalAPI.Controllers
 			return Ok(_roomService.SearchForEquipment(query));
 		}
 
-
-
-
 		// POST api/rooms
 		[HttpPost]
 		public ActionResult Create(Room room)
@@ -120,8 +117,13 @@ namespace HospitalAPI.Controllers
 			return Ok(moveRequest);
 		}
 		[HttpPost("renovationSplit")]
-		public ActionResult AddRenovationSplitRequest(MoveRequest renovationRequest)
+		public ActionResult AddRenovationSplitRequest(MoveRequestDTO renovationRequestDTO)
 		{
+
+			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
+				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
+				renovationRequestDTO.DurationTimeUnit);
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
@@ -131,8 +133,12 @@ namespace HospitalAPI.Controllers
 		}
 
 		[HttpPost("renovationMerge")]
-		public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
+		public ActionResult AddRenovationMergeRequest(MoveRequestDTO renovationRequestDTO)
 		{
+			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
+				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
+				renovationRequestDTO.DurationTimeUnit);
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
@@ -149,9 +155,9 @@ namespace HospitalAPI.Controllers
 
 		[HttpGet("viewRequests/{roomId}")]
 		public ActionResult GetRequestsForRoom(int roomId)
-        {
+		{
 			return Ok(_roomService.GetRequestsForRoom(roomId));
-        }
+		}
 
 
 		/*        [HttpPatch]
@@ -222,21 +228,13 @@ namespace HospitalAPI.Controllers
 		}
 
 		[HttpPost("renovationSplitInstant")]
-		public void RenovationSplitOneRoom(MoveRequestDTO renovationRequestDTO)
+		public void RenovationSplitOneRoom(MoveRequest renovationRequest)
 		{
-			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
-				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
-				renovationRequestDTO.DurationTimeUnit);
-
 			_roomService.RenovationSplitOneRoom(renovationRequest);
 		}
 		[HttpPost("renovationMergeInstant")]
-		public void RenovationMergeTwoRooms(MoveRequestDTO renovationRequestDTO)
+		public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
 		{
-			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
-				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
-				renovationRequestDTO.DurationTimeUnit);
-
 			_roomService.RenovationMergeTwoRooms(renovationRequest);
 		}
 	}
