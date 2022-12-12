@@ -733,6 +733,60 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("MedicineTherapies");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.MoveRequest", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("chosenStartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<TimeSpan>("duration")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("equipment")
+                        .HasColumnType("text");
+
+                    b.Property<int>("fromRoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("toRoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("type")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("wantedEndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("wantedStartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("id");
+
+                    b.ToTable("MoveRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            chosenStartTime = new DateTime(2022, 12, 10, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            duration = new TimeSpan(0, 0, 30, 0, 0),
+                            equipment = "Syringe",
+                            fromRoomId = 1,
+                            quantity = 2,
+                            toRoomId = 2,
+                            type = "EquipmentMove",
+                            wantedEndTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            wantedStartTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Notification", b =>
                 {
                     b.Property<int>("NotificationId")

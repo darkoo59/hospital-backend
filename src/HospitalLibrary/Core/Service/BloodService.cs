@@ -52,6 +52,30 @@ namespace HospitalLibrary.Core.Service
             return blood.QuantityInLiters >= (usedQuantityInMililitersLiters/1000);
         }
 
+
+        public void AddBloodAfterUrgentRequest(int type, double quantity)
+        {
+            Blood blood = _bloodRepository.GetByBloodType(ParseIntToBloodType(type));
+            blood.QuantityInLiters = blood.QuantityInLiters + quantity;
+            _bloodRepository.Update(blood);
+            Console.WriteLine("Dodao krv");
+        }
+
+        public BloodType ParseIntToBloodType(int number)
+        {
+            switch(number)
+            {
+                case 0: return BloodType.A_PLUS;
+                case 1: return BloodType.A_MINUS;
+                case 2: return BloodType.B_PLUS;
+                case 3: return BloodType.B_MINUS;
+                case 4: return BloodType.O_PLUS;
+                case 5: return BloodType.O_MINUS;
+                case 6: return BloodType.AB_PLUS;
+                default: return BloodType.AB_MINUS;
+            }
+        }
+
         public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
         {
 
@@ -128,6 +152,21 @@ namespace HospitalLibrary.Core.Service
         bool IBloodService.IsThereEnoughBlood(BloodTherapy bloodTherapy)
         {
             throw new NotImplementedException();
+        }
+
+        public void ReceiveNewBlood(Blood blood)
+        {
+            List<Blood> allBlood = (List<Blood>)_bloodRepository.GetAll();
+            foreach(Blood bloodIte in allBlood)
+            {
+                if((int)bloodIte.BloodType == (int)blood.BloodType)
+                {
+                    bloodIte.QuantityInLiters = bloodIte.QuantityInLiters + blood.QuantityInLiters;
+                    _bloodRepository.Update(bloodIte);
+                    return;
+                }
+            }
+            _bloodRepository.Create(blood);
         }
 
         /*bool IBloodService.ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)

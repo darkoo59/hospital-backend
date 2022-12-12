@@ -15,5 +15,6 @@ namespace IntegrationLibrary.Features.MonthlyBloodSubscription.Service
         IEnumerable<SubscribedBbDTO> GetAllSubscribed();
         void Subscribe(CreateSubscriptionDTO newSubscriptionDTO);
         void Unsubscribe(int bloodBankId);
+        void ReceiveBlood(ReceivedBloodDTO bloodDTO);
     }
 }

@@ -6,6 +6,8 @@ using IntegrationLibrary.Features.BloodRequests.Repository;
 using IntegrationLibrary.HospitalService;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Features.BloodRequests.Service
@@ -14,6 +16,7 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
     {
         private readonly IBloodRequestRepository _bloodRequestRepository;
         private readonly IHospitalService _hospitalRepository;
+        private static readonly HttpClient _httpClient = new HttpClient();
         public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IHospitalService hospitalRepository)
         {
             _bloodRequestRepository = bloodRequestRepository;
@@ -75,6 +78,7 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
                 throw new System.Exception("Invalid action");
 
             br.State = newState;
+            GetBloodSupply(br);
             _bloodRequestRepository.Update(br);
         }
 
@@ -130,6 +134,12 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
             br.ReasonForAdjustment = null;
 
             _bloodRequestRepository.Update(br);
+        }
+
+        public async void GetBloodSupply(BloodRequest br)
+        {
+            var url = "http://localhost:6555/api/blood-request";
+            await _httpClient.PostAsJsonAsync(url, br);
         }
     }
 }

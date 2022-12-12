@@ -190,6 +190,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("Urgent")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
@@ -203,7 +206,8 @@ namespace IntegrationLibrary.Migrations
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 1.0,
                             ReasonForRequest = "treba 1",
-                            State = 0
+                            State = 0,
+                            Urgent = false
                         },
                         new
                         {
@@ -213,7 +217,8 @@ namespace IntegrationLibrary.Migrations
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 4.0,
                             ReasonForRequest = "treba 2",
-                            State = 1
+                            State = 1,
+                            Urgent = false
                         },
                         new
                         {
@@ -223,7 +228,8 @@ namespace IntegrationLibrary.Migrations
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
                             ReasonForRequest = "treba 3",
-                            State = 2
+                            State = 2,
+                            Urgent = false
                         },
                         new
                         {
@@ -234,7 +240,8 @@ namespace IntegrationLibrary.Migrations
                             QuantityInLiters = 12.0,
                             ReasonForAdjustment = "Ne moze",
                             ReasonForRequest = "treba 4",
-                            State = 3
+                            State = 3,
+                            Urgent = false
                         },
                         new
                         {
@@ -244,7 +251,8 @@ namespace IntegrationLibrary.Migrations
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 1.0,
                             ReasonForRequest = "treba 5",
-                            State = 0
+                            State = 0,
+                            Urgent = false
                         },
                         new
                         {
@@ -254,7 +262,8 @@ namespace IntegrationLibrary.Migrations
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 4.0,
                             ReasonForRequest = "treba 6",
-                            State = 1
+                            State = 1,
+                            Urgent = false
                         },
                         new
                         {
@@ -264,7 +273,8 @@ namespace IntegrationLibrary.Migrations
                             FinalDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuantityInLiters = 9.0,
                             ReasonForRequest = "treba 7",
-                            State = 2
+                            State = 2,
+                            Urgent = false
                         },
                         new
                         {
@@ -275,7 +285,8 @@ namespace IntegrationLibrary.Migrations
                             QuantityInLiters = 12.0,
                             ReasonForAdjustment = "Ne moze 2",
                             ReasonForRequest = "treba 8",
-                            State = 3
+                            State = 3,
+                            Urgent = false
                         });
                 });
 
@@ -307,7 +318,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Description = "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2022, 12, 25, 18, 34, 52, 90, DateTimeKind.Local).AddTicks(9925),
+                            ExpiresOn = new DateTime(2022, 12, 27, 8, 59, 56, 137, DateTimeKind.Local).AddTicks(5481),
                             State = 0,
                             Title = "Tender 1"
                         },
@@ -315,7 +326,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 2,
                             Description = "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.",
-                            ExpiresOn = new DateTime(2022, 12, 25, 18, 34, 52, 114, DateTimeKind.Local).AddTicks(1112),
+                            ExpiresOn = new DateTime(2022, 12, 27, 8, 59, 56, 150, DateTimeKind.Local).AddTicks(4343),
                             State = 0,
                             Title = "Tender 2"
                         },
@@ -323,7 +334,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 3,
                             Description = "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2022, 12, 25, 18, 34, 52, 114, DateTimeKind.Local).AddTicks(1702),
+                            ExpiresOn = new DateTime(2022, 12, 27, 8, 59, 56, 150, DateTimeKind.Local).AddTicks(4832),
                             State = 0,
                             Title = "Tender 3"
                         });
@@ -446,6 +457,32 @@ namespace IntegrationLibrary.Migrations
                             Amount = 230.0,
                             BloodType = 5,
                             EquipmentTenderId = 3
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.ManagerNotification.Model.ManagersNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ManagerNotification");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "This is test notification",
+                            Title = "Test notification"
                         });
                 });
 

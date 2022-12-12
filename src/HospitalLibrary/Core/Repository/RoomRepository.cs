@@ -133,6 +133,13 @@ namespace HospitalLibrary.Core.Repository
             _context.Update(eqToBeUpdated);
             _context.SaveChanges();
         }
+        public void ChangeEquipmentRoom(Equipment equipment, int newRoomId)
+        {
+            Equipment eqToBeUpdated = _context.Equipment.Find(equipment.Id);
+            eqToBeUpdated.RoomId = newRoomId;
+            _context.Update(eqToBeUpdated);
+            _context.SaveChanges();
+        }
 
         public void AddEquipment(MoveRequest moveRequest,Equipment equipment) 
         {
@@ -161,6 +168,113 @@ namespace HospitalLibrary.Core.Repository
                     AddEquipment(moveRequest, EqToBeAdded);
                 }
             }
+        }
+
+        public void AddMoveRequest(MoveRequest moveRequest)
+        {
+            moveRequest.type = "MoveRequest";
+            _context.MoveRequests.Add(moveRequest);
+            _context.SaveChanges();
+        }
+        public void AddRenovationSplitRequest(MoveRequest renovationRequest)
+        {
+            renovationRequest.type = "RenovationSplit";
+            _context.MoveRequests.Add(renovationRequest);
+            _context.SaveChanges();
+        }
+        public void AddRenovationMergeRequest(MoveRequest renovationRequest)
+        {
+            renovationRequest.type = "RenovationMerge";
+            _context.MoveRequests.Add(renovationRequest);
+            _context.SaveChanges();
+        }
+
+        public bool CheckMoveRequests()
+        {
+            bool res = false;
+            List<MoveRequest> moveRequests = _context.MoveRequests.ToList();
+            foreach(MoveRequest mvr in moveRequests)
+            {
+                if(mvr.chosenStartTime < DateTime.Now)
+                {
+                    //trebace posle verovatno da bi zauzeo tu sobu kao
+                }
+                if(mvr.chosenStartTime + mvr.duration < DateTime.Now)
+                {
+                    if (mvr.type == "MoveEquipment")
+                    {
+                        MoveEquipment(mvr);   
+                    }
+                    else if(mvr.type == "RenovationSplit")
+                    {
+                        RenovationSplitOneRoom(mvr);
+                    }
+                    else if(mvr.type == "RenovationMerge")
+                    {
+                        RenovationMergeTwoRooms(mvr);
+                    }
+                    _context.MoveRequests.Remove(mvr);
+                    _context.SaveChanges();
+                    res = true;
+                }
+            }
+            return res;
+        }
+
+        public IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest)
+        {
+            List<DateTime> freeTimeSlots = new List<DateTime>();
+            //List<DateTime> takenTimeSlots = new List<DateTime>();
+            DateTime wantedStart = freeAppointmentRequest.WantedStartDate;
+            DateTime wantedEnd = freeAppointmentRequest.WantedEndDate;
+            TimeSpan duration = freeAppointmentRequest.Duration;
+            DateTime klizno = wantedStart;
+/*            List <MoveRequest> moveRequests = _context.MoveRequests.ToList();
+            foreach(MoveRequest mvr in moveRequests)
+            {
+                if(mvr.fromRoomId == freeAppointmentRequest.FirstRoomId || mvr.fromRoomId == freeAppointmentRequest.SecondRoomId || mvr.toRoomId == freeAppointmentRequest.FirstRoomId || mvr.toRoomId == freeAppointmentRequest.SecondRoomId)
+                {
+                    takenTimeSlots.Add(mvr.chosenStartTime);
+                }
+            }*/
+            for(klizno = wantedStart; klizno + duration <= wantedEnd; klizno += duration)
+            {
+                freeTimeSlots.Add(klizno);
+            }
+            return freeTimeSlots;
+        }
+
+        public void RenovationSplitOneRoom(MoveRequest renovationRequest)
+        {
+            Room roomToSplit = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.fromRoomId);
+            int newId = _context.Rooms.OrderBy(r => r.Id).Last().Id + 1;
+            string newNumber = roomToSplit.Number + "/2";
+            Room newRoom = new Room() { Id = newId, FloorId = roomToSplit.FloorId, Number = newNumber, BuildingId = roomToSplit.BuildingId, Width = roomToSplit.Width / 2, Height = roomToSplit.Height, X = roomToSplit.X + roomToSplit.Width / 2, Y = roomToSplit.Y };
+            Create(newRoom);
+            roomToSplit.Width = roomToSplit.Width / 2;
+            Update(roomToSplit);
+        }
+
+        public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
+        {
+            Room room1 = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.fromRoomId);
+            Room room2 = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.toRoomId);
+            room1.Number = room1.Number + "+" + room2.Number;
+            if(room1.Y != room2.Y)
+            {
+                room1.Height += room2.Height;
+            }
+            else if(room1.X != room2.X)
+            {
+                room1.Width += room2.Width;
+            }
+            List<Equipment> eqToMove = _context.Equipment.Where(e => e.RoomId == room2.Id).ToList();
+            foreach(Equipment eq in eqToMove)
+            {
+                ChangeEquipmentRoom(eq, room1.Id);
+            }
+            Update(room1);
+            Delete(room2);
         }
     }
 }
