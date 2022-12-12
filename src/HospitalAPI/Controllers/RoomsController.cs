@@ -130,18 +130,18 @@ namespace HospitalAPI.Controllers
 			return Ok(renovationRequest);
 		}
 
-        [HttpPost("renovationMerge")]
-        public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _roomService.AddRenovationMergeRequest(renovationRequest);
-            return Ok(renovationRequest);
-        }
+		[HttpPost("renovationMerge")]
+		public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			_roomService.AddRenovationMergeRequest(renovationRequest);
+			return Ok(renovationRequest);
+		}
 
-        [HttpGet("moveRequests/check")]
+		[HttpGet("moveRequests/check")]
 		public ActionResult CheckMoveRequests()
 		{
 			return Ok(_roomService.CheckMoveRequests());
@@ -222,13 +222,21 @@ namespace HospitalAPI.Controllers
 		}
 
 		[HttpPost("renovationSplitInstant")]
-		public void RenovationSplitOneRoom(MoveRequest renovationRequest)
-        {
-			_roomService.RenovationSplitOneRoom(renovationRequest);
-        }
-		[HttpPost("renovationMergeInstant")]
-		public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
+		public void RenovationSplitOneRoom(MoveRequestDTO renovationRequestDTO)
 		{
+			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
+				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
+				renovationRequestDTO.DurationTimeUnit);
+
+			_roomService.RenovationSplitOneRoom(renovationRequest);
+		}
+		[HttpPost("renovationMergeInstant")]
+		public void RenovationMergeTwoRooms(MoveRequestDTO renovationRequestDTO)
+		{
+			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
+				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
+				renovationRequestDTO.DurationTimeUnit);
+
 			_roomService.RenovationMergeTwoRooms(renovationRequest);
 		}
 	}
