@@ -1,5 +1,4 @@
 ﻿using IntegrationAPI;
-using IntegrationAPI.Authorization;
 using IntegrationAPI.Controllers;
 using IntegrationLibrary.Features.BloodBankNews.Model;
 using IntegrationLibrary.Features.BloodBankNews.Service;

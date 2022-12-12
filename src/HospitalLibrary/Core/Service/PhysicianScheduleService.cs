@@ -41,39 +41,6 @@ namespace HospitalLibrary.Core.Service
             return _physicianScheduleRepository.GetById(id);
         }
 
-        public PhysicianSchedule Get(int doctorId)
-        {
-            foreach (var physicianSchedule in _physicianScheduleRepository.GetAll())
-            {
-                if (physicianSchedule.DoctorId == doctorId)
-                {
-                    return physicianSchedule;
-                }
-            }
-
-            return null;
-        }
-
-        public List<Appointment> GetAppointments(int doctorId)
-        {
-            List<Appointment> appointments = new List<Appointment>();
-            foreach (var physicianSchedule in _physicianScheduleRepository.GetAll())
-            {
-                if (physicianSchedule.DoctorId == doctorId)
-                {
-                    foreach (var appointment in physicianSchedule.Appointments)
-                    {
-                        if (!appointment.IsFinished)
-                        {
-                            appointments.Add(appointment);
-                        }
-                    }
-                }
-            }
-
-            return appointments;
-        }
-
         public void Schedule(int doctorId, Appointment appointment)
         {
             PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);

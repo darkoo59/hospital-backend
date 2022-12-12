@@ -1,4 +1,4 @@
-﻿using IntegrationAPI;
+﻿    using IntegrationAPI;
 using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.BloodBankNews.Model;
@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using IntegrationAPI.Authorization;
+using System.Reflection.Emit;
 
-    namespace IntegrationTests
+namespace IntegrationTests
 {
     public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
     {
@@ -46,7 +46,6 @@ using IntegrationAPI.Authorization;
 
         private static void InitializeDatabase(IntegrationDbContext context)
         {
-            AuthorizationUtil.AUTHORIZATION = AuthorizationUtil.DISABLED;
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 

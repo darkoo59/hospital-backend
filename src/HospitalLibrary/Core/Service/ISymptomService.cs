@@ -14,6 +14,5 @@ namespace HospitalLibrary.Core.Service
         void Create(Symptom symptom);
         void Update(Symptom symptom);
         void Delete(Symptom symptom);
-        List<Symptom> GetAll(List<int> ids);
     }
 }

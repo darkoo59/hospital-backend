@@ -22,6 +22,11 @@ namespace HospitalLibrary.Core.Repository
             return _context.Rooms.Include(r => r.Beds).ToList();
         }
 
+        public IEnumerable<MoveRequest> GetRequestsForRoom(int roomId)
+        {
+            return _context.MoveRequests.Where(m => m.fromRoomId == roomId || m.toRoomId == roomId);
+        }
+
         public Room GetById(int id)
         {
             return _context.Rooms.Find(id);
@@ -89,6 +94,17 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Rooms.Remove(room);
             _context.SaveChanges();
+        }
+
+        public void DeleteRequest(MoveRequest request)
+        {
+            _context.MoveRequests.Remove(request);
+            _context.SaveChanges();
+        }
+
+        public MoveRequest GetRequestById(int id)
+        {
+            return _context.MoveRequests.Find(id);          
         }
 
         public IEnumerable<Equipment> GetEquipment(int id)

@@ -1,7 +1,11 @@
-﻿using IntegrationAPI.Authorization;
+﻿using IntegrationLibrary.Features.EquipmentTenders.Application;
+using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
+using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.DTO;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace IntegrationAPI.Controllers
 {
@@ -18,21 +22,18 @@ namespace IntegrationAPI.Controllers
         [HttpGet("subscribed")]
         public IActionResult GetAllSubscribed()
         {
-            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             return Ok(_bloodSubscriptionService.GetAllSubscribed());
         }
 
         [HttpGet("unsubscribed")]
         public IActionResult GetAllUnsubscribed()
         {
-            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             return Ok(_bloodSubscriptionService.GetAllUnsubscribed());
         }
 
         [HttpPost("subscribe")]
         public IActionResult Subscribe([FromBody] CreateSubscriptionDTO dto)
         {
-            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _bloodSubscriptionService.Subscribe(dto);
             return Ok();
         }
@@ -40,7 +41,6 @@ namespace IntegrationAPI.Controllers
         [HttpDelete("unsubscribe/{bloodBankId:int}")]
         public IActionResult Unsubscribe(int bloodBankId)
         {
-            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _bloodSubscriptionService.Unsubscribe(bloodBankId);
             return Ok();
         }
@@ -48,7 +48,6 @@ namespace IntegrationAPI.Controllers
         [HttpPost("receive-blood")]
         public IActionResult ReceiveBlood([FromBody] ReceivedBloodDTO dto)
         {
-            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _bloodSubscriptionService.ReceiveBlood(dto);
             return Ok();
         }

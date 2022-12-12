@@ -45,7 +45,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<PhysicianSchedule> GetAll()
         {
-            return _context.PhysicianSchedules.Include(r => r.Appointments).ThenInclude(y => y.Patient).Include(r => r.Vacations).ToList();
+            return _context.PhysicianSchedules.Include(r => r.Appointments).Include(r => r.Vacations).ToList();
         }
 
         public PhysicianSchedule GetById(int id)

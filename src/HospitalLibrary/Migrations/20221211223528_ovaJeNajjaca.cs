@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Migrate : Migration
+    public partial class ovaJeNajjaca : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,7 +81,6 @@ namespace HospitalLibrary.Migrations
                     DateRange = table.Column<DateRange>(type: "jsonb", nullable: true),
                     StartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Duration = table.Column<int>(type: "integer", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
                     DoctorIds = table.Column<List<int>>(type: "integer[]", nullable: true),
                     SpecializationIds = table.Column<List<int>>(type: "integer[]", nullable: true)
                 },
@@ -110,14 +109,13 @@ namespace HospitalLibrary.Migrations
                 name: "ExaminationReports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    ExaminationReportId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    SymptomIds = table.Column<List<int>>(type: "integer[]", nullable: true),
                     Report = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExaminationReports", x => x.Id);
+                    table.PrimaryKey("PK_ExaminationReports", x => x.ExaminationReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -276,7 +274,6 @@ namespace HospitalLibrary.Migrations
                 {
                     RecipeId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MedicineIds = table.Column<List<int>>(type: "integer[]", nullable: true),
                     WayOfUse = table.Column<string>(type: "text", nullable: true),
                     DateOfIssue = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ExaminationReportId = table.Column<int>(type: "integer", nullable: true)
@@ -288,7 +285,7 @@ namespace HospitalLibrary.Migrations
                         name: "FK_Recipes_ExaminationReports_ExaminationReportId",
                         column: x => x.ExaminationReportId,
                         principalTable: "ExaminationReports",
-                        principalColumn: "Id",
+                        principalColumn: "ExaminationReportId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -308,7 +305,7 @@ namespace HospitalLibrary.Migrations
                         name: "FK_Symptoms_ExaminationReports_ExaminationReportId",
                         column: x => x.ExaminationReportId,
                         principalTable: "ExaminationReports",
-                        principalColumn: "Id",
+                        principalColumn: "ExaminationReportId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -508,23 +505,15 @@ namespace HospitalLibrary.Migrations
                 name: "Appointments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    AppointmentId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ScheduledDate = table.Column<DateRange>(type: "jsonb", nullable: false),
-                    DoctorId = table.Column<int>(type: "integer", nullable: true),
+                    Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: true),
-                    IsFinished = table.Column<bool>(type: "boolean", nullable: false),
                     PhysicianScheduleId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "DoctorId",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Appointments", x => x.AppointmentId);
                     table.ForeignKey(
                         name: "FK_Appointments_Patients_PatientId",
                         column: x => x.PatientId,
@@ -826,9 +815,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 2, 4, new DateTime(2023, 1, 1, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(520), "Tired", new DateTime(2022, 12, 27, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(496), 2, "Urgent" },
-                    { 1, 4, new DateTime(2022, 12, 27, 14, 13, 51, 551, DateTimeKind.Local).AddTicks(5950), "Tired", new DateTime(2022, 12, 22, 14, 13, 51, 546, DateTimeKind.Local).AddTicks(8210), 1, "NoUrgent" },
-                    { 3, 4, new DateTime(2023, 1, 6, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(532), "Tired", new DateTime(2023, 1, 1, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(527), 0, "NoUrgent" }
+                    { 2, 4, new DateTime(2022, 12, 31, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7064), "Tired", new DateTime(2022, 12, 26, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7039), 2, "Urgent" },
+                    { 1, 4, new DateTime(2022, 12, 26, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(4227), "Tired", new DateTime(2022, 12, 21, 23, 35, 28, 12, DateTimeKind.Local).AddTicks(9685), 1, "NoUrgent" },
+                    { 3, 4, new DateTime(2023, 1, 5, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7078), "Tired", new DateTime(2022, 12, 31, 23, 35, 28, 16, DateTimeKind.Local).AddTicks(7073), 0, "NoUrgent" }
                 });
 
             migrationBuilder.InsertData(
@@ -856,11 +845,6 @@ namespace HospitalLibrary.Migrations
                 name: "IX_AllergenMedicalRecord_MedicalRecordsId",
                 table: "AllergenMedicalRecord",
                 column: "MedicalRecordsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_DoctorId",
-                table: "Appointments",
-                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PatientId",
