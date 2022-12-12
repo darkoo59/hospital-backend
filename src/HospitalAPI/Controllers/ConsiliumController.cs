@@ -3,6 +3,7 @@ using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HospitalAPI.Controllers
@@ -52,6 +53,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetAllConsiliumsOfDoctor(int id)
         {
+
             return Ok(_consiliumMapper.ToDTO(_consiliumService.GetAllConsiliumsOfDoctor(id).ToList()));
         }
     }

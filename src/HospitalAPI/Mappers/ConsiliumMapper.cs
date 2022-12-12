@@ -36,7 +36,7 @@ namespace HospitalAPI.Mappers
                 consiliumDTO.DateRangeEnd = consilium.DateRange.End;
                 consiliumDTO.StartTime = consilium.StartTime;
                 consiliumDTO.Duration = consilium.Duration;
-                consiliumDTO.RoomId = consiliumDTO.RoomId;
+                consiliumDTO.RoomId = consilium.RoomId;
                 consiliumDTO.DoctorIds = consilium.DoctorIds;
                 consiliumDTO.SpecializationIds = consilium.SpecializationIds;
                 consiliumDTOs.Add(consiliumDTO);

@@ -81,6 +81,7 @@ namespace HospitalLibrary.Migrations
                     DateRange = table.Column<DateRange>(type: "jsonb", nullable: true),
                     StartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Duration = table.Column<int>(type: "integer", nullable: false),
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
                     DoctorIds = table.Column<List<int>>(type: "integer[]", nullable: true),
                     SpecializationIds = table.Column<List<int>>(type: "integer[]", nullable: true)
                 },
@@ -789,9 +790,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 2, 4, new DateTime(2022, 12, 31, 17, 50, 46, 613, DateTimeKind.Local).AddTicks(5049), "Tired", new DateTime(2022, 12, 26, 17, 50, 46, 613, DateTimeKind.Local).AddTicks(5036), 2, "Urgent" },
-                    { 1, 4, new DateTime(2022, 12, 26, 17, 50, 46, 613, DateTimeKind.Local).AddTicks(3600), "Tired", new DateTime(2022, 12, 21, 17, 50, 46, 611, DateTimeKind.Local).AddTicks(49), 1, "NoUrgent" },
-                    { 3, 4, new DateTime(2023, 1, 5, 17, 50, 46, 613, DateTimeKind.Local).AddTicks(5055), "Tired", new DateTime(2022, 12, 31, 17, 50, 46, 613, DateTimeKind.Local).AddTicks(5053), 0, "NoUrgent" }
+                    { 2, 4, new DateTime(2022, 12, 31, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(384), "Tired", new DateTime(2022, 12, 26, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(371), 2, "Urgent" },
+                    { 1, 4, new DateTime(2022, 12, 26, 21, 58, 10, 371, DateTimeKind.Local).AddTicks(8821), "Tired", new DateTime(2022, 12, 21, 21, 58, 10, 369, DateTimeKind.Local).AddTicks(3947), 1, "NoUrgent" },
+                    { 3, 4, new DateTime(2023, 1, 5, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(391), "Tired", new DateTime(2022, 12, 31, 21, 58, 10, 372, DateTimeKind.Local).AddTicks(388), 0, "NoUrgent" }
                 });
 
             migrationBuilder.InsertData(
