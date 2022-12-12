@@ -121,7 +121,7 @@ namespace HospitalAPI.Controllers
 		{
 
 			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
-				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
+				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartTime, renovationRequestDTO.Duration,
 				renovationRequestDTO.DurationTimeUnit);
 
 			if (!ModelState.IsValid)
@@ -136,7 +136,7 @@ namespace HospitalAPI.Controllers
 		public ActionResult AddRenovationMergeRequest(MoveRequestDTO renovationRequestDTO)
 		{
 			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
-				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartDate, renovationRequestDTO.Duration,
+				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartTime, renovationRequestDTO.Duration,
 				renovationRequestDTO.DurationTimeUnit);
 
 			if (!ModelState.IsValid)
@@ -218,12 +218,12 @@ namespace HospitalAPI.Controllers
 
 		[HttpDelete("viewRequests/{id}")]
 		public ActionResult DeleteRequest(int id)
-        {
+		{
 			MoveRequest requestToDelete = _roomService.GetRequestById(id);
 			if (requestToDelete == null)
-            {
+			{
 				return NotFound();
-            }
+			}
 			_roomService.DeleteRequest(requestToDelete);
 			return NoContent();
 		}
