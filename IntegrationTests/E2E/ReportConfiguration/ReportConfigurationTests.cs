@@ -33,7 +33,7 @@ namespace IntegrationTests.E2E.ReportConfiguration
 
             _configurationPage = new ReportConfigurationPage(_driver);
             _configurationPage.Navigate();
-            js.ExecuteScript("window.localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5MzIwNTdjNy05YzkwLTQ5Y2QtOTk1ZC1jNGIwOGZlNzAyNjgiLCJpZCI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJtYW5hZ2VyIiwiZXhwIjoxNjcwODQ1OTE2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjE2MTc3LyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMC8ifQ.HEDk9-oY5wMEK8D1glDZ1HQciK0CjAIJVkZpw00a-wU');");
+            js.ExecuteScript("window.localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwYjA1MWM0YS04OWIxLTQzNmUtOGZiMS1lMTk2MjIzYjA2MjIiLCJpZCI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJtYW5hZ2VyIiwiZXhwIjoxNjcwODUxODU0LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjE2MTc3LyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMC8ifQ.H0WQJTdQawW2TSu_ZyXiEuuz72Xok85OETBPkrq-G0M');");
             _driver.Manage().Timeouts().PageLoad = new TimeSpan(0, 0, 2);
             _configurationPage.Navigate();
             _driver.Manage().Timeouts().PageLoad = new TimeSpan(0, 0, 1);
