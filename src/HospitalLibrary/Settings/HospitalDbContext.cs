@@ -274,6 +274,13 @@ namespace HospitalLibrary.Settings
            );
 
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
+            modelBuilder.Entity<Appointment>().HasKey(v => v.Id);
+            modelBuilder.Entity<ExaminationReport>().HasKey(v => v.Id);
+
+
+            modelBuilder.Entity<Appointment>()
+                .Property(b => b.ScheduledDate)
+                .HasColumnType("jsonb");
 
 
             base.OnModelCreating(modelBuilder);

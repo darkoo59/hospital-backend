@@ -8,14 +8,10 @@ namespace HospitalLibrary.Core.Model
     public class WorkTime : ValueObject
     {
         public DateRange DateRange { get; }
-        public TimeSpan StartTime { get; }
-        public TimeSpan EndTime { get; }
-        //[Required]
-        //public int? DoctorId { get; }
-        //[ForeignKey("DoctorId")]
-        //public virtual Doctor Doctor { get; }
+        public DateTime StartTime { get; }
+        public DateTime EndTime { get; }
 
-        public WorkTime(DateRange dateRange, TimeSpan startTime, TimeSpan endTime) 
+        public WorkTime(DateRange dateRange, DateTime startTime, DateTime endTime) 
         {
             if (Validate(startTime, endTime))
             {
@@ -25,7 +21,7 @@ namespace HospitalLibrary.Core.Model
             }
             else 
             {
-                throw new Exception("Passed arguments are not valid!");
+                throw new ArgumentException("Passed arguments are not valid!");
             }
         }
 
@@ -37,7 +33,7 @@ namespace HospitalLibrary.Core.Model
             yield return EndTime;
         }
 
-        private bool Validate(TimeSpan startTime, TimeSpan endTime)
+        private bool Validate(DateTime startTime, DateTime endTime)
         {
             return  startTime < endTime;
         }

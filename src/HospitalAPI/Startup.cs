@@ -142,6 +142,11 @@ namespace HospitalAPI
             services.AddScoped<IExaminationReportService, ExaminationReportService>();
             services.AddScoped<IGenericMapper<ExaminationReport, ExaminationReportDTO>, ExaminationReportMapper>();
 
+            services.AddScoped<IGenericMapper<DateRange, DateRangeDTO>, DateRangeMapper>();
+            services.AddScoped<IGenericMapper<WorkTime, WorkTimeDTO>, WorkTimeMapper>();
+            services.AddScoped<IGenericMapper<Vacation, VacationDTO>, VacationMapper>();
+            services.AddScoped<IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO>, PhysicianScheduleMapper>();
+
             SetupAuth(services);
         }
 

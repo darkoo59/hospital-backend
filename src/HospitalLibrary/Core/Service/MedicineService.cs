@@ -42,5 +42,19 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }
+
+        public List<Medicine> GetAll(List<int> ids)
+        {
+            List<Medicine> medicines = new List<Medicine>();
+            foreach (var medicine in _medicineRepository.GetAll())
+            {
+                if (ids.Contains(medicine.MedicineId))
+                {
+                    medicines.Add(medicine);
+                }
+            }
+
+            return medicines;
+        }
     }
 }

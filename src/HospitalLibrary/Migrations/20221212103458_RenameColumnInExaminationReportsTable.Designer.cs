@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221212103458_RenameColumnInExaminationReportsTable")]
+    partial class RenameColumnInExaminationReportsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -499,9 +501,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<string>("Report")
                         .HasColumnType("text");
-
-                    b.Property<List<int>>("SymptomIds")
-                        .HasColumnType("integer[]");
 
                     b.HasKey("Id");
 
@@ -1584,9 +1583,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 27, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(814),
+                            EndDate = new DateTime(2022, 12, 27, 11, 34, 56, 466, DateTimeKind.Local).AddTicks(158),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 22, 11, 42, 35, 573, DateTimeKind.Local).AddTicks(7645),
+                            StartDate = new DateTime(2022, 12, 22, 11, 34, 56, 460, DateTimeKind.Local).AddTicks(5573),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1594,9 +1593,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 1, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3231),
+                            EndDate = new DateTime(2023, 1, 1, 11, 34, 56, 466, DateTimeKind.Local).AddTicks(3224),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 27, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3210),
+                            StartDate = new DateTime(2022, 12, 27, 11, 34, 56, 466, DateTimeKind.Local).AddTicks(3197),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1604,9 +1603,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 6, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3243),
+                            EndDate = new DateTime(2023, 1, 6, 11, 34, 56, 466, DateTimeKind.Local).AddTicks(3238),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 1, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3238),
+                            StartDate = new DateTime(2023, 1, 1, 11, 34, 56, 466, DateTimeKind.Local).AddTicks(3231),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });

@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221210142220_AddColumnInExaminationReportTable")]
+    partial class AddColumnInExaminationReportTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,16 +117,10 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("PatientId")
                         .HasColumnType("integer");
@@ -132,13 +128,10 @@ namespace HospitalLibrary.Migrations
                     b.Property<int?>("PhysicianScheduleId")
                         .HasColumnType("integer");
 
-                    b.Property<DateRange>("ScheduledDate")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
+                    b.HasKey("AppointmentId");
 
                     b.HasIndex("PatientId");
 
@@ -492,7 +485,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ExaminationReportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -503,7 +496,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<List<int>>("SymptomIds")
                         .HasColumnType("integer[]");
 
-                    b.HasKey("Id");
+                    b.HasKey("ExaminationReportId");
 
                     b.ToTable("ExaminationReports");
                 });
@@ -1584,9 +1577,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2022, 12, 27, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(814),
+                            EndDate = new DateTime(2022, 12, 25, 15, 22, 19, 253, DateTimeKind.Local).AddTicks(7805),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 22, 11, 42, 35, 573, DateTimeKind.Local).AddTicks(7645),
+                            StartDate = new DateTime(2022, 12, 20, 15, 22, 19, 248, DateTimeKind.Local).AddTicks(5185),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1594,9 +1587,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 1, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3231),
+                            EndDate = new DateTime(2022, 12, 30, 15, 22, 19, 254, DateTimeKind.Local).AddTicks(420),
                             Reason = "Tired",
-                            StartDate = new DateTime(2022, 12, 27, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3210),
+                            StartDate = new DateTime(2022, 12, 25, 15, 22, 19, 254, DateTimeKind.Local).AddTicks(398),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1604,9 +1597,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 6, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3243),
+                            EndDate = new DateTime(2023, 1, 4, 15, 22, 19, 254, DateTimeKind.Local).AddTicks(432),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 1, 11, 42, 35, 578, DateTimeKind.Local).AddTicks(3238),
+                            StartDate = new DateTime(2022, 12, 30, 15, 22, 19, 254, DateTimeKind.Local).AddTicks(426),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1838,10 +1831,6 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-
                     b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId");
@@ -1849,8 +1838,6 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.PhysicianSchedule", null)
                         .WithMany("Appointments")
                         .HasForeignKey("PhysicianScheduleId");
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("Patient");
                 });
