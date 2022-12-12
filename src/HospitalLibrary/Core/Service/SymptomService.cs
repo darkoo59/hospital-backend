@@ -32,6 +32,20 @@ namespace HospitalLibrary.Core.Service
             return _symptomRepository.GetAll();
         }
 
+        public List<Symptom> GetAll(List<int> ids)
+        {
+            List<Symptom> symptoms = new List<Symptom>();
+            foreach (var symptom in _symptomRepository.GetAll())
+            {
+                if (ids.Contains(symptom.SymptomId))
+                {
+                    symptoms.Add(symptom);
+                }
+            }
+
+            return symptoms;
+        }
+
         public Symptom GetById(int id)
         {
             return _symptomRepository.GetById(id);

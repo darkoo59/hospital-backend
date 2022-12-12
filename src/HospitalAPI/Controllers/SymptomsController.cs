@@ -13,12 +13,12 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SymptomController : ControllerBase
+    public class SymptomsController : ControllerBase
     {
         private readonly ISymptomService _service;
         private readonly IGenericMapper<Symptom, SymptomDTO> _mapper;
 
-        public SymptomController(ISymptomService symptomService, IGenericMapper<Symptom, SymptomDTO> symptomMapper)
+        public SymptomsController(ISymptomService symptomService, IGenericMapper<Symptom, SymptomDTO> symptomMapper)
         {
             _service = symptomService;
             _mapper = symptomMapper;
@@ -28,6 +28,19 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_mapper.ToDTO(_service.GetAll().ToList()));
+        }
+
+        [HttpGet("{ids}")]
+        public ActionResult GetAll(string ids)
+        {
+            List<int> parameters = new List<int>();
+            string[] tokens = ids.Split(",");
+            foreach (var token in tokens)
+            {
+                parameters.Add(Int32.Parse(token));
+            }
+
+            return Ok(_mapper.ToDTO(_service.GetAll(parameters)));
         }
     }
 }
