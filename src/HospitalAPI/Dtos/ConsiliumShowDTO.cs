@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 
 namespace HospitalAPI.Dtos
 {
-    public class ConsiliumDTO
+    public class ConsiliumShowDTO
     {
+
         public int ConsiliumId { get; set; }
         public String Topic { get; set; }
         public DateTime DateRangeStart { get; set; }
         public DateTime DateRangeEnd { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
-        public int RoomId { get; set; }
+        public string RoomNumber { get; set; }
 
 
         public List<int> DoctorIds { get; set; }
