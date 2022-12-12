@@ -1,5 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -18,6 +20,11 @@ namespace HospitalLibrary.Core.Repository
             {
                 _context.Consiliums.Add(consilium);
                 _context.SaveChanges();
+            }
+
+            public IEnumerable<Consilium> GetAll()
+            {
+                return _context.Consiliums.ToList();
             }
         }
     }

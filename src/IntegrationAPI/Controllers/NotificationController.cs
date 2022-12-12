@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Features.BloodBankNews.Service;
+﻿using IntegrationAPI.Authorization;
 using IntegrationLibrary.Features.ManagerNotification.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,12 +17,14 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             return Ok(_notificationService.GetAll());
         }
 
         [HttpDelete("delete/{id:int}")]
         public IActionResult Unsubscribe(int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _notificationService.Remove(id);
             return Ok();
         }

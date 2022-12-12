@@ -16,8 +16,9 @@ namespace HospitalAPI.Mappers
             consiliumDTO.DateRangeEnd = consilium.DateRange.End;
             consiliumDTO.StartTime = consilium.StartTime;
             consiliumDTO.Duration = consilium.Duration;
-            consilium.DoctorIds = consilium.DoctorIds;
-            consilium.SpecializationIds = consilium.SpecializationIds;
+            consiliumDTO.RoomId = consilium.RoomId;
+            consiliumDTO.DoctorIds = consilium.DoctorIds;
+            consiliumDTO.SpecializationIds = consilium.SpecializationIds;
 
             return consiliumDTO;
         }
@@ -34,9 +35,10 @@ namespace HospitalAPI.Mappers
                 consiliumDTO.DateRangeStart = consilium.DateRange.Start;
                 consiliumDTO.DateRangeEnd = consilium.DateRange.End;
                 consiliumDTO.StartTime = consilium.StartTime;
-                consilium.Duration = consilium.Duration;
-                consilium.DoctorIds = consilium.DoctorIds;
-                consilium.SpecializationIds = consilium.SpecializationIds;
+                consiliumDTO.Duration = consilium.Duration;
+                consiliumDTO.RoomId = consilium.RoomId;
+                consiliumDTO.DoctorIds = consilium.DoctorIds;
+                consiliumDTO.SpecializationIds = consilium.SpecializationIds;
                 consiliumDTOs.Add(consiliumDTO);
             }
             return consiliumDTOs;
@@ -51,6 +53,7 @@ namespace HospitalAPI.Mappers
             consilium.DateRange = dateRange;
             consilium.StartTime = consiliumDTO.StartTime;
             consilium.Duration = consiliumDTO.Duration;
+            consilium.RoomId = consiliumDTO.RoomId;
             consilium.DoctorIds = consiliumDTO.DoctorIds;
             consilium.SpecializationIds = consiliumDTO.SpecializationIds;
 
@@ -71,6 +74,7 @@ namespace HospitalAPI.Mappers
                 consilium.DateRange.End = consiliumDTO.DateRangeEnd;
                 consilium.StartTime = consiliumDTO.StartTime;
                 consilium.Duration = consiliumDTO.Duration;
+                consilium.RoomId = consiliumDTO.RoomId;
                 consilium.DoctorIds = consiliumDTO.DoctorIds;
                 consilium.SpecializationIds = consiliumDTO.SpecializationIds;
                 consiliums.Add(consilium);

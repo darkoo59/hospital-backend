@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodRequests.DTO;
+﻿using IntegrationAPI.Authorization;
+using IntegrationLibrary.Features.BloodRequests.DTO;
 using IntegrationLibrary.Features.BloodRequests.Enums;
 using IntegrationLibrary.Features.BloodRequests.Model;
 using IntegrationLibrary.Features.BloodRequests.Service;
@@ -74,18 +75,21 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             return Ok(BloodRequestDTO.ToDTOList(_bloodRequestService.GetAll() as List<BloodRequest>));
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             return Ok(new BloodRequestDTO(_bloodRequestService.GetById(id)));
         }
 
         [HttpGet("new")]
         public async Task<IActionResult> GetNew()
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.NEW) as List<BloodRequestDTO>;
             return Ok(temp);
         }
@@ -93,6 +97,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet("approved")]
         public async Task<IActionResult> GetApproved()
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.APPROVED) as List<BloodRequestDTO>;
             return Ok(temp);
         }
@@ -100,12 +105,14 @@ namespace IntegrationAPI.Controllers
         [HttpGet("declined")]
         public async Task<IActionResult> GetDeclined()
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.DECLINED) as List<BloodRequestDTO>;
             return Ok(temp);
         }
         [HttpGet("update")]
         public async Task<IActionResult> GetBloodrequestsForUpdate()
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             List<BloodRequestDTO> temp = await _bloodRequestService.GetAllByState(BloodRequestState.UPDATE) as List<BloodRequestDTO>;
             return Ok(temp);
         }
@@ -113,6 +120,7 @@ namespace IntegrationAPI.Controllers
         [HttpPatch("approve")]
         public IActionResult ApproveRequest([FromBody] int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _bloodRequestService.ChangeState(id, BloodRequestState.APPROVED);
             return Ok();
         }
@@ -120,6 +128,7 @@ namespace IntegrationAPI.Controllers
         [HttpPatch("decline")]
         public IActionResult DeclineRequest([FromBody] int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _bloodRequestService.ChangeState(id, BloodRequestState.DECLINED);
             return Ok();
         }
@@ -127,6 +136,7 @@ namespace IntegrationAPI.Controllers
         [HttpPatch("adjustment")]
         public IActionResult RequestAdjustment([FromBody] RequestAdjustmentDTO dto)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _bloodRequestService.RequestAdjustment(dto);
             return Ok();
         }

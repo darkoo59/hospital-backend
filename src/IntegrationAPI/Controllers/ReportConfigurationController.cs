@@ -24,7 +24,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     return Ok(_configurationService.GetReportConfigurations());
                 }
@@ -42,7 +42,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     _configurationService.CreateOrUpdateReportConfiguration(configuration);
                     return Ok();
@@ -61,7 +61,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     return Ok(_configurationService.GetConfigurationById(id));
                 }
