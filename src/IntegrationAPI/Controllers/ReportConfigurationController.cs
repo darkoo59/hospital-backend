@@ -1,7 +1,10 @@
 ﻿using System;
+using IntegrationAPI.Authorization;
+using System.Net.Http.Headers;
 using IntegrationLibrary.Features.ReportConfigurations.Model;
 using IntegrationLibrary.Features.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace IntegrationAPI.Controllers
 {
@@ -19,21 +22,56 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_configurationService.GetReportConfigurations());
+            try
+            {
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                {
+                    return Ok(_configurationService.GetReportConfigurations());
+                }
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+
+            return Unauthorized();
         }
 
         [HttpPost]
         public ActionResult CreateOrUpdateReportConfiguration([FromBody] ReportConfiguration configuration)
         {
-            Console.WriteLine("uslo");
-            _configurationService.CreateOrUpdateReportConfiguration(configuration);
-            return Ok();
+            try
+            {
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                {
+                    _configurationService.CreateOrUpdateReportConfiguration(configuration);
+                    return Ok();
+                }
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            return Ok(_configurationService.GetConfigurationById(id));
+            try
+            {
+                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                {
+                    return Ok(_configurationService.GetConfigurationById(id));
+                }
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+
+            return Unauthorized();
         }
     }
 }

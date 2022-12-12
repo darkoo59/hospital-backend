@@ -17,5 +17,7 @@ namespace IntegrationLibrary.Features.BloodRequests.Service
         IEnumerable<BloodRequest> GetAllByDoctorId(int doctorId);
         IEnumerable<BloodRequest> GetAllForAdjustmentByDoctorId(int doctorId);
         void UpdateBloodRequestForAdjustment(UpdateBloodRequestDTO dto);
+        void GetBloodSupply(BloodRequest br);
+    
     }
 }

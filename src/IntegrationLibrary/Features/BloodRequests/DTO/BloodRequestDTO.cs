@@ -17,6 +17,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
         public Doctor Doctor { get; set; }
         public BloodRequestState State { get; set; }
         public string ReasonForAdjustment{ get; set; }
+        public bool Urgent { get; set; }
 
         public BloodRequestDTO() { }
 
@@ -29,6 +30,7 @@ namespace IntegrationLibrary.Features.BloodRequests.DTO
             FinalDate = br.FinalDate;
             State = br.State;
             ReasonForAdjustment = br.ReasonForAdjustment;
+            Urgent = false;
         }
 
         public static List<BloodRequestDTO> ToDTOList(List<BloodRequest> brs)

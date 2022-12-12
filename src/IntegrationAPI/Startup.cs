@@ -1,3 +1,5 @@
+using System;
+using System.Net;
 using System.Text;
 using IntegrationLibrary.Features.Blood.Service;
 using IntegrationLibrary.Features.BloodBank.Repository;
@@ -25,8 +27,13 @@ using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure;
+using IntegrationLibrary.Features.UrgentBloodOrder.Service;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Service;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Repository;
+using IntegrationLibrary.Features.ManagerNotification.Service;
+using IntegrationLibrary.Features.ManagerNotification.Repository;
 
 namespace IntegrationAPI
 {
@@ -57,8 +64,25 @@ namespace IntegrationAPI
                     };
                 });
 
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AuthorizationPolicy", policy => policy.RequireAssertion(async httpCtx =>
+            //    {
+            //        var httpClient = new HttpClient();
+            //        var token = httpCtx.User.Identity;
+            //        Console.WriteLine("tokencina", token?.Name);
+            //        //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //        var url = AppSettings.HospitalApiUrl + "/api/authorization/manager";
+                    
+            //        var response = await httpClient.GetAsync(url);
+            //        return response.StatusCode == HttpStatusCode.OK;
+            //    }));
+            //});
+
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<RabbitMQSettings>(Configuration.GetSection("RabbitMQSettings"));
+            services.Configure<RabbitMQBloodSettings>(Configuration.GetSection("RabbitMQBloodSettings"));
+            services.Configure<RabbitMQNotificationSettings>(Configuration.GetSection("RabbitMQNotificationsSettings"));
             services.AddTransient<IBloodBankService, BloodBankService>();
             services.AddDbContext<IntegrationDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
@@ -75,8 +99,12 @@ namespace IntegrationAPI
             services.AddScoped<IBankNewsService, BankNewsService>();
             services.AddScoped<IBankNewsRepository, BankNewsRepository>();
             services.AddHostedService<RabbitMQService>();
+            services.AddHostedService<RabbitMQBloodService>();
+            services.AddHostedService<RabbitMQNotificationService>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+
+            services.AddScoped<IUrgentBloodOrderService, UrgentBloodOrderService>();
 
             services.AddScoped<IHospitalService, HospitalService>();
 
@@ -89,6 +117,9 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();
+
+            services.AddScoped<IManagerNotificationService, ManagerNotificationService>();
+            services.AddScoped<IManagerNotificationRepository, ManagerNotificationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
