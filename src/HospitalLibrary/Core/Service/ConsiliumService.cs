@@ -94,7 +94,7 @@ namespace HospitalLibrary.Core.Service
 
             ifPetlja:
             {
-                if (appointment.Start.Hour > 10 && appointment.Start.Hour < 20)
+                if (appointment.Start.Hour >= 10 && appointment.Start.Hour <= 20)
                 {
                     if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.Start) == true)
                     {
