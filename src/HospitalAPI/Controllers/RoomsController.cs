@@ -216,7 +216,17 @@ namespace HospitalAPI.Controllers
 			return NoContent();
 		}
 
-
+		[HttpDelete("viewRequests/{id}")]
+		public ActionResult DeleteRequest(int id)
+        {
+			MoveRequest requestToDelete = _roomService.GetRequestById(id);
+			if (requestToDelete == null)
+            {
+				return NotFound();
+            }
+			_roomService.DeleteRequest(requestToDelete);
+			return NoContent();
+		}
 
 		[HttpPost("freeAppointments")]
 		public ActionResult GetFreeAppointments(FreeAppointmentRequestDTO freeAppointmentRequestDTO)
