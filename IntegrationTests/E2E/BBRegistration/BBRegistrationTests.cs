@@ -27,8 +27,11 @@ namespace IntegrationTests.E2E.BBRegistration
             options.AddArguments("--disable-notifications");    // disable notifications
 
             Driver = new ChromeDriver(options);
+            IJavaScriptExecutor js = Driver as IJavaScriptExecutor;
 
             RegisterPage = new Pages.RegisterPage(Driver);
+            RegisterPage.Navigate();
+            js.ExecuteScript("window.localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5MzIwNTdjNy05YzkwLTQ5Y2QtOTk1ZC1jNGIwOGZlNzAyNjgiLCJpZCI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJtYW5hZ2VyIiwiZXhwIjoxNjcwODQ1OTE2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjE2MTc3LyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMC8ifQ.HEDk9-oY5wMEK8D1glDZ1HQciK0CjAIJVkZpw00a-wU');");
             RegisterPage.Navigate();
             RegisterPage.EnsurePageIsDisplayed();
 

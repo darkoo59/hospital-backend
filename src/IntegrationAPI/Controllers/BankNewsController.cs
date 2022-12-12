@@ -23,7 +23,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     return Ok(_bankNewsService.GetAll());
                 }
@@ -41,7 +41,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     return Ok(_bankNewsService.GetAllByState(NewsState.NEW));
                 }
@@ -59,7 +59,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     return Ok(_bankNewsService.GetAllByState(NewsState.APPROVED));
                 }
@@ -77,7 +77,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     return Ok(_bankNewsService.GetAllByState(NewsState.DECLINED));
                 }
@@ -95,13 +95,13 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     _bankNewsService.ApproveNews(id);
                     return Ok();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Unauthorized();
             }
@@ -114,7 +114,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                if (AuthorizationUtil.IsAuthorized(AuthenticationHeaderValue.Parse(Request.Headers["Authorization"])))
+                if (AuthorizationUtil.IsAuthorized(Request))
                 {
                     _bankNewsService.DeclineNews(id);
                     return Ok();

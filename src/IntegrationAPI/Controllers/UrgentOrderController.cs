@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.Blood.Enums;
+﻿using IntegrationAPI.Authorization;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using IntegrationLibrary.Features.UrgentBloodOrder.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ namespace IntegrationAPI.Controllers
         [HttpPatch]
         public ActionResult InvokeUrgentOrder([FromBody] UrgentOrderDTO dto)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
+
             UrgentResponse result = _service.InvokeUrgentOrder(dto.BloodType, dto.Quantity, dto.Server);
             
             Console.WriteLine("Type: " + dto.BloodType + " Quantity: " + dto.Quantity + " server: " + dto.Server);

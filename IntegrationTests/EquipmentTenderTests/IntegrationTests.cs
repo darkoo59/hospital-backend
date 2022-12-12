@@ -128,7 +128,7 @@ namespace IntegrationTests.EquipmentTenderTests
 
         public override IFeatureCollection Features => throw new NotImplementedException();
 
-        public override HttpRequest Request => throw new NotImplementedException();
+        public override HttpRequest Request => null;
 
         public override HttpResponse Response => throw new NotImplementedException();
 
