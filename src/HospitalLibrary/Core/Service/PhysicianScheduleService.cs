@@ -44,12 +44,13 @@ namespace HospitalLibrary.Core.Service
 
         public void Schedule(int doctorId, Appointment appointment)
         {
-            PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
+            /*PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
             if (physicianSchedule.IsAppointmentValid(appointment))
             {
                 physicianSchedule.Appointments.Add(appointment);
                 _physicianScheduleRepository.Update(physicianSchedule);
-            }
+            }*/
+            _physicianScheduleRepository.Schedule(appointment);
         }
 
         public void TransferAppointment(int doctorId, Appointment appointment)
@@ -90,7 +91,8 @@ namespace HospitalLibrary.Core.Service
             {
                 Appointment app = new Appointment();
                 app.ScheduledDate = d;
-                app.DoctorId = 1;
+                app.DoctorId = 2;
+                app.Doctor = _doctorRepository.GetById(2);
                 app.PatientId = 1;
                 appointments.Add(app);
             }
@@ -108,6 +110,7 @@ namespace HospitalLibrary.Core.Service
                 Appointment app = new Appointment();
                 app.ScheduledDate = d;
                 app.DoctorId = doctorId;
+                app.Doctor = _doctorRepository.GetById(doctorId);
                 app.PatientId = 1;
                 appointments.Add(app);
             }

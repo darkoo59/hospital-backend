@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -12,13 +13,13 @@ namespace HospitalLibrary.Core.Model
         public List<Appointment> Appointments { get; set; }
         public List<Vacation> Vacations { get; set; }
 
-        //public PhysicianSchedule(int physicianScheduleId, int doctorId, List<WorkTime> workTimes, List<Appointment> appointments, List<Vacation> vacations)
-        //{
-        //    DoctorId = doctorId;
-        //    WorkTimes = workTimes;
-        //    Appointments = appointments;
-        //    Vacations = vacations;
-        //}
+        public PhysicianSchedule(int physicianScheduleId, int doctorId, List<WorkTime> workTimes, List<Appointment> appointments)
+        {
+            DoctorId = doctorId;
+            WorkTimes = workTimes;
+            Appointments = appointments;
+            WorkTimes = workTimes;
+        }
 
         public bool IsAppointmentAvailable(Appointment appointment)
         {

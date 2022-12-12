@@ -7,7 +7,7 @@ namespace HospitalAPI.Dtos
 {
     public class RecommendedAppointmentsDTO
     {
-        public int DoctorId { get; set; }
+        public int doctor { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public String Priority { get; set; }

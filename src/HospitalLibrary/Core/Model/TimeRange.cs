@@ -29,7 +29,7 @@ namespace HospitalLibrary.Core.Model
         }
         private bool Validate(TimeSpan start, TimeSpan end)
         {
-            return start < end;
+            return start <= end;
         }
     }
 }

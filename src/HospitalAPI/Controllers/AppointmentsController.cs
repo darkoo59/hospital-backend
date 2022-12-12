@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HospitalAPI.Controllers
@@ -29,20 +30,17 @@ namespace HospitalAPI.Controllers
     //        return Ok(_appointmentMapper.ToDTO(_appointmentService.GetAll().ToList()));
     //    }
 
-    //    [HttpPost]
-    //    public ActionResult Create(AppointmentDTO appointmentDTO)
-    //    {
-    //        if (!ModelState.IsValid)
-    //        {
-    //            return BadRequest(ModelState);
-    //        }
-
-    //        // zakucano trenutno
-    //        appointmentDTO.DoctorId = 1;
-    //        Appointment appointment = _appointmentMapper.ToModel(appointmentDTO);
-    //        _appointmentService.Create(appointment);
-    //        return CreatedAtAction("GetById", new { id = appointment.AppointmentId }, appointment);
-    //    }
+        [HttpPost("schedule")]
+        public ActionResult Create(AppointmentDTO appointmentDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Appointment appointment = _appointmentMapper.ToModel(appointmentDTO);
+            _physicianScheduleService.Schedule(2, appointment);
+            return Ok();
+        }
 
     //    [HttpGet("{id}")]
     //    public ActionResult GetById(int id)
@@ -121,8 +119,21 @@ namespace HospitalAPI.Controllers
         public ActionResult GetRecommendedAppointments(RecommendedAppointmentsDTO recommendedAppointmentsDTO)
         {
             return Ok(_appointmentMapper.ToDTO(_physicianScheduleService.GetRecommendedAppointments(new DateRange(recommendedAppointmentsDTO.From,
-                recommendedAppointmentsDTO.To), recommendedAppointmentsDTO.DoctorId, recommendedAppointmentsDTO.Priority)));
+                recommendedAppointmentsDTO.To), recommendedAppointmentsDTO.doctor, recommendedAppointmentsDTO.Priority)));
         }
+        [HttpPost("create")]
+        public ActionResult Create()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            List<WorkTime> workTimes = new List<WorkTime>();
+            workTimes.Add(new WorkTime(new DateRange(new DateTime(2022, 12, 12), new DateTime(2022, 12, 23)),new TimeRange( new TimeSpan(10, 0, 0), new TimeSpan(11, 0, 0))));
+             PhysicianSchedule physicianSchedule = new PhysicianSchedule(2, 2, workTimes, new List<Appointment>());
+            _physicianScheduleService.Create(physicianSchedule);
+            return CreatedAtAction("GetById", new { id = physicianSchedule.PhysicianScheduleId }, physicianSchedule);
+        }
     }
 }

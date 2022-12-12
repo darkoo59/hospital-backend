@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<PhysicianSchedule> GetAll();
         PhysicianSchedule GetById(int id);
+        void Schedule(Appointment appointment);
         void Create(PhysicianSchedule physicianSchedule);
         void Update(PhysicianSchedule physicianSchedule);
         void Delete(PhysicianSchedule physicianSchedule);

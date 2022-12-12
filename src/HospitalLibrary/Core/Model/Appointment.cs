@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Appointment
+    public class Appointment : EntityObject
     {
-        public int AppointmentId { get; set; }
-        [Required]
+        //public int AppointmentId { get; set; }
+        //[Required]
         public DateRange ScheduledDate { get; set; }
         public int? DoctorId { get; set; }
         [ForeignKey("DoctorId")]
