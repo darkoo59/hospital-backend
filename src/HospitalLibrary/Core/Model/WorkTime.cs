@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Model
         public DateTime StartTime { get; }
         public DateTime EndTime { get; }
 
-        public WorkTime(DateRange dateRange, DateTime startTime, DateTime endTime) 
+        public WorkTime(DateRange dateRange, DateTime startTime, DateTime endTime)
         {
             if (Validate(startTime, endTime))
             {
@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Model
                 StartTime = startTime;
                 EndTime = endTime;
             }
-            else 
+            else
             {
                 throw new ArgumentException("Passed arguments are not valid!");
             }
@@ -35,7 +35,7 @@ namespace HospitalLibrary.Core.Model
 
         private bool Validate(DateTime startTime, DateTime endTime)
         {
-            return  startTime < endTime;
+            return startTime < endTime;
         }
     }
 }

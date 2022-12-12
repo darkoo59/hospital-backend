@@ -26,10 +26,8 @@ namespace IntegrationAPI.Controllers
                                                         [FromQuery] float bloodQuantity,
                                                         [FromQuery(Name = "userEmail")] string email)
         {
-            Console.WriteLine("U controlleru " + email);
             if (!ModelState.IsValid)
             {
-                System.Diagnostics.Debug.WriteLine("ne valja");
                 return BadRequest(ModelState);
             }
             bool data = await _bloodTypeService.CheckBloodTypeAvailability(bloodType, apiKey, bloodQuantity, email);

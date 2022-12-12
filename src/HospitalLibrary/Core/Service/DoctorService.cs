@@ -27,6 +27,5 @@ namespace HospitalLibrary.Core.Service
         {
             return _doctorRepository.GetById(id);
         }
-
     }
 }

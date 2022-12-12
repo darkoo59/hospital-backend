@@ -39,9 +39,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
-
-
-
+        public DbSet<Consilium> Consiliums { get; set; }
+        public DbSet<MoveRequest> MoveRequests { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -55,6 +54,8 @@ namespace HospitalLibrary.Settings
         // ne treba se koristiti za aplikaciju u produkciji
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Database.SetInitializer<HospitalDbContext>(null);
+
             modelBuilder.Entity<Equipment>().HasData(
                 new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 1, RoomId = 1, Name = "Syringe", Quantity = 50 },
                 new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 },
@@ -146,15 +147,15 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<MedicalRecord>().HasMany(mr => mr.Allergens).WithMany(a => a.MedicalRecords);
 
             modelBuilder.Entity<Patient>().HasData(
-                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric", Email = "proba@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 1},
-                new Patient() { PatientId = 2, Name = "Marko", Surname = "Markovic", Email = "proba1@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 2},
-                new Patient() { PatientId = 3, Name = "Aleksa", Surname = "Aleksic", Email = "proba2@gmail.com", Password = "123", IsAccountActivated = false , MedicalRecord = 3},
-                new Patient() { PatientId = 4, Name = "Pera", Surname = "Peric", Email = "proba3@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 4 },
-                new Patient() { PatientId = 5, Name = "Marko", Surname = "Markovic", Email = "proba4@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 5 },
-                new Patient() { PatientId = 6, Name = "Aleksa", Surname = "Aleksic", Email = "proba5@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 6 },
-                new Patient() { PatientId = 7, Name = "Pera", Surname = "Peric", Email = "proba6@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 7 },
-                new Patient() { PatientId = 8, Name = "Marko", Surname = "Markovic", Email = "proba7@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 8 },
-                new Patient() { PatientId = 9, Name = "Aleksa", Surname = "Aleksic", Email = "proba8@gmail.com", Password = "123", IsAccountActivated = false, MedicalRecord = 9 }
+                new Patient() { PatientId = 1, Name = "Pera", Surname = "Peric", IsAccountActivated = false, MedicalRecord = 1},
+                new Patient() {PatientId = 2, Name = "Marko", Surname = "Markovic", IsAccountActivated = false, MedicalRecord = 2 },
+                new Patient() {PatientId = 3, Name = "Aleksa", Surname = "Aleksic", IsAccountActivated = false, MedicalRecord = 3 },
+                new Patient() {PatientId = 4, Name = "Pera", Surname = "Peric", IsAccountActivated = false, MedicalRecord = 4 },
+                new Patient() {PatientId = 5, Name = "Marko", Surname = "Markovic", IsAccountActivated = false, MedicalRecord = 5 },
+                new Patient() {PatientId = 6, Name = "Aleksa", Surname = "Aleksic", IsAccountActivated = false, MedicalRecord = 6 },
+                new Patient() {PatientId = 7, Name = "Pera", Surname = "Peric", IsAccountActivated = false, MedicalRecord = 7 },
+                new Patient() {PatientId = 8, Name = "Marko", Surname = "Markovic", IsAccountActivated = false, MedicalRecord = 8 },
+                new Patient() {PatientId = 9, Name = "Aleksa", Surname = "Aleksic", IsAccountActivated = false, MedicalRecord = 9 }
             );
 
             modelBuilder.Entity<Patient>().HasMany(p => p.Doctors).WithMany(dr => dr.Patients);
@@ -260,7 +261,7 @@ namespace HospitalLibrary.Settings
                new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
            );
             modelBuilder.Entity<User>().HasData(
-                new User() { UserId = 1, Username = "username", Password = "password", Role = UserRole.patient}
+                new User() { UserId = 1, Email = "email", Password = "password", Role = UserRole.patient}
             );
 
             modelBuilder.Entity<PhysicianSchedule>()
@@ -272,7 +273,6 @@ namespace HospitalLibrary.Settings
                new Symptom() { SymptomId = 2, Name = "Sore throat" },
                new Symptom() { SymptomId = 3, Name = "Elevated body temperature" }
            );
-
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
             modelBuilder.Entity<Appointment>().HasKey(v => v.Id);
             modelBuilder.Entity<ExaminationReport>().HasKey(v => v.Id);
@@ -281,6 +281,15 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Appointment>()
                 .Property(b => b.ScheduledDate)
                 .HasColumnType("jsonb");
+
+            modelBuilder.Entity<Consilium>()
+                .Property(b => b.DateRange)
+                .HasColumnType("jsonb");
+
+            //modelBuilder.Entity<MoveRequest>().HasKey(m => m.fromRoomId);
+            modelBuilder.Entity<MoveRequest>().HasData(
+                new MoveRequest() {id = 1, type="EquipmentMove", fromRoomId = 1, toRoomId = 2, chosenStartTime = new System.DateTime(2022,12,10,15,0,0), duration = new System.TimeSpan(0, 30, 0), equipment = "Syringe", quantity = 2 }
+            );
 
 
             base.OnModelCreating(modelBuilder);

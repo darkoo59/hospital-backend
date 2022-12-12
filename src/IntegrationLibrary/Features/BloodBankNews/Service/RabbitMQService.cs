@@ -34,6 +34,7 @@ namespace IntegrationLibrary.Features.BloodBankNews.Service
 
         private void InitRabbitMQ()
         {
+
             var factory = new ConnectionFactory { HostName = _rabbitMQSettings.HostName };
 
             // create connection  

@@ -1,21 +1,27 @@
 ﻿using HospitalAPI.Mappers;
 using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.SharedModel;
+using Microsoft.IdentityModel.Abstractions;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalAPI.Registration.Mappers
 {
     public class PatientMapper : IGenericMapper<Patient, PatientDTO>
     {
+        public DoctorService _doctorService;
+        public AllergenService _allergenService;
+
         public Patient ToModel(PatientDTO patientDTO)
         {
             Patient patient = new Patient();
             patient.PatientId = patientDTO.PatientId;
             patient.Name = patientDTO.Name;
             patient.Surname = patientDTO.Surname;
-            patient.Email = patientDTO.Email;
-            patient.Password = patientDTO.Password;
             patient.IsAccountActivated = patientDTO.IsAccountActivated;
+            patient.Doctors = new List<Doctor>();
 
             return patient;
         }
@@ -29,8 +35,6 @@ namespace HospitalAPI.Registration.Mappers
                 patient.PatientId = patientDTO.PatientId;
                 patient.Name = patientDTO.Name;
                 patient.Surname = patientDTO.Surname;
-                patient.Email = patientDTO.Email;
-                patient.Password = patientDTO.Password;
                 patient.IsAccountActivated = patientDTO.IsAccountActivated;
                 patients.Add(patient);
             }
@@ -44,8 +48,6 @@ namespace HospitalAPI.Registration.Mappers
             patientDTO.PatientId = patient.PatientId;
             patientDTO.Name = patient.Name;
             patientDTO.Surname = patient.Surname;
-            patientDTO.Email = patient.Email;
-            patientDTO.Password = patient.Password;
             patientDTO.IsAccountActivated = patient.IsAccountActivated;
 
             return patientDTO;
@@ -60,8 +62,6 @@ namespace HospitalAPI.Registration.Mappers
                 patientDTO.PatientId = patient.PatientId;
                 patientDTO.Name = patient.Name;
                 patientDTO.Surname = patient.Surname;
-                patientDTO.Email = patient.Email;
-                patientDTO.Password = patient.Password;
                 patientDTO.IsAccountActivated = patient.IsAccountActivated;
 
                 patientDTOs.Add(patientDTO);

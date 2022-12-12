@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HospitalAPI.Registration.Dtos;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.SharedModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

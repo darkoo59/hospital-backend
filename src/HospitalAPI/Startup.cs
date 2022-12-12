@@ -29,6 +29,7 @@ using HospitalAPI.Registration.Mappers;
 using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
 
 namespace HospitalAPI
 {
@@ -59,25 +60,30 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IGenericMapper<Room, RoomDTO>, RoomMapper>();
 
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
             services.AddScoped<IRoomMapService, RoomMapService>();
 
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
+            services.AddScoped<IGenericMapper<User,PatientDTO>, UserPatientMapper>();
 
             services.AddScoped<IAllergenService, AllergenService>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<IGenericMapper<Allergen, AllergenDTO>, AllergenMapper>();
 
-            //services.AddScoped<IMedicalRecordService, MedicalRecordService>();
-            //services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
-            //services.AddScoped<IGenericMapper<MedicalRecord, MedicalRecordDTO>, MedicalRecordMapper>();
-
-            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
+            services.AddScoped<ISpecializationService, SpecializationService>();
+            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+            services.AddScoped<IGenericMapper<Specialization, SpecializationDTO>, SpecializationMapper>();
+            
+            services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+            services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
+            services.AddScoped<IGenericMapper<MedicalRecord, PatientDTO>, MedicalRecordMapper>();
+            
             services.AddScoped<IGenericMapper<Appointment, AppointmentDTO>, AppointmentMapper>();
             services.AddScoped<IGenericMapper<Bed, BedDTO>, BedMapper>();
-            services.AddScoped<IGenericMapper<Room, RoomDTO>, RoomMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatment, InpatientTreatmentDTO>, InpatientTreatmentMapper>();
             services.AddScoped<IGenericMapper<Medicine, MedicineDTO>, MedicineMapper>();
             services.AddScoped<IGenericMapper<MedicineTherapy, MedicineTherapyDTO>, MedicineTherapyMapper>();
@@ -90,6 +96,8 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
 
+            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
@@ -100,6 +108,11 @@ namespace HospitalAPI
             services.AddScoped<IVacationRequestService, VacationRequestService>();
             services.AddScoped<IVacationRequestRepository, VacationRequestRepository>();
             services.AddScoped<IGenericMapper<VacationRequest, VacationRequestDTO>, VacationRequestMapper>();
+
+            services.AddScoped<IConsiliumService, ConsiliumService>();
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IGenericMapper<Consilium, ConsiliumDTO>, ConsiliumMapper>();
+
 
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
