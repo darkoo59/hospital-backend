@@ -30,7 +30,7 @@ namespace HospitalTests.Unit
 
             service.CreateConsiliumWithDoctors(consilium,doctorIds);
 
-            Assert.Equal(consilium.StartTime.ToString(), "22-Dec-22 11:00:00");
+            Assert.Equal(consilium.StartTime.ToString(), "22-Dec-22 10:00:00");
         }
 
         [Fact]
@@ -48,12 +48,11 @@ namespace HospitalTests.Unit
             consilium.Topic = "Pregled snimka";
             consilium.DateRange = dateRange;
             consilium.Duration = 30;
-            consilium.DoctorIds = specIds;
             consilium.SpecializationIds = specIds;
 
-            service.CreateConsiliumWithDoctors(consilium, specIds);
+            service.CreateConsiliumWithSpecializations(consilium, specIds);
 
-            Assert.Equal(consilium.StartTime.ToString(), "22-Dec-22 11:00:00");
+            Assert.Equal(consilium.StartTime.ToString(), "22-Dec-22 10:00:00");
         }
 
         #region private
@@ -89,7 +88,7 @@ namespace HospitalTests.Unit
             return new()
             {
                 new Doctor() { DoctorId = 1, Name = "Dejan", Surname = "Dejanovic", SpecializationId = 1, RoomId = 2 },
-                new Doctor() { DoctorId = 2, Name = "Marko", Surname = "Cvijetic", SpecializationId = 1, RoomId = 1 },
+                new Doctor() { DoctorId = 2, Name = "Marko", Surname = "Cvijetic", SpecializationId = 2, RoomId = 1 },
                 new Doctor() { DoctorId = 3, Name = "Mirko", Surname = "Marjanovic", SpecializationId = 3, RoomId = 3 },
             };
         }
