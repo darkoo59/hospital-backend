@@ -1855,34 +1855,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             UserId = 1,
-                            Email = "doctor1",
-                            Password = "doctor1",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            Email = "doctor2",
-                            Password = "doctor2",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            Email = "doctor3",
-                            Password = "doctor3",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 4,
-                            Email = "doctor4",
-                            Password = "doctor4",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 5,
                             Email = "email",
                             Password = "password",
                             Role = 0
