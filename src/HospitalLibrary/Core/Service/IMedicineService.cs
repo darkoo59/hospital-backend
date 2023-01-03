@@ -14,6 +14,5 @@ namespace HospitalLibrary.Core.Service
         Task<bool> Create(Medicine medicine);
         void Update(Medicine medicine);
         void Delete(Medicine medicine);
-        List<Medicine> GetAll(List<int> ids);
     }
 }

@@ -12,25 +12,12 @@ namespace HospitalLibrary.Core.Service
         private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
         private readonly IDoctorRepository _doctorRepository;
         List<List<int>> requiredDoctorsIdList = new List<List<int>>();
-        private IConsiliumRepository consiliumRepository;
 
         public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorRepository doctorRepository, IPhysicianScheduleRepository physicianScheduleRepository)
         {
             _consiliumRepository = consiliumRepository;
             _doctorRepository = doctorRepository;
             _physicianScheduleRepository = physicianScheduleRepository;          
-        }
-
-        public ConsiliumService(IConsiliumRepository consiliumRepository,IDoctorRepository doctorRepository, PhysicianScheduleRepository physicianScheduleRepository)
-        {
-            _consiliumRepository = consiliumRepository;
-            _doctorRepository = doctorRepository;
-            _physicianScheduleRepository = physicianScheduleRepository;
-        }
-
-        public ConsiliumService(IConsiliumRepository consiliumRepository)
-        {
-            _consiliumRepository = consiliumRepository;
         }
 
         public void Create(Consilium consilium)
@@ -52,7 +39,7 @@ namespace HospitalLibrary.Core.Service
         {
             int counter = 0;
             Appointment appointment = new Appointment();
-            appointment.ScheduledDate.Start = dateTime;
+            appointment.Start = dateTime;
 
             foreach (Doctor doctor in doctors)
             {
@@ -79,7 +66,7 @@ namespace HospitalLibrary.Core.Service
             List<Doctor> requiredDoctors = new List<Doctor>();
             Appointment appointment = new Appointment();
             consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
-            appointment.ScheduledDate.Start = consilium.StartTime;
+            appointment.Start = consilium.StartTime;
 
             foreach (int doctorId in DoctorIds)
             {
@@ -94,15 +81,11 @@ namespace HospitalLibrary.Core.Service
 
             ifPetlja:
             {
-
-                if (appointment.ScheduledDate.Start.Hour > 10 && appointment.ScheduledDate.Start.Hour < 20)
-
+                if (appointment.Start.Hour > 10 && appointment.Start.Hour < 20)
                 {
-                    if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.ScheduledDate.Start) == true)
+                    if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.Start) == true)
                     {
-                        consilium.StartTime = new DateTime(appointment.ScheduledDate.Start.Year,appointment.ScheduledDate.Start.Month,appointment.ScheduledDate.Start.Day,appointment.ScheduledDate.Start.Hour,appointment.ScheduledDate.Start.Minute,appointment.ScheduledDate.Start.Second);
-                        consilium.RoomId = requiredDoctors[0].RoomId;
-
+                        consilium.StartTime = new DateTime(appointment.Start.Year,appointment.Start.Month,appointment.Start.Day,appointment.Start.Hour,appointment.Start.Minute,appointment.Start.Second);
                         _consiliumRepository.Create(consilium);
                         return;
                     }
@@ -113,7 +96,7 @@ namespace HospitalLibrary.Core.Service
                 }
             }
             ifPetlja1:
-                appointment.ScheduledDate.Start = appointment.ScheduledDate.Start.AddMinutes(30);
+                appointment.Start = appointment.Start.AddMinutes(30);
                 goto ifPetlja;
         }
 
@@ -125,7 +108,7 @@ namespace HospitalLibrary.Core.Service
             List<int> freeDoctorsSpecializationId = new List<int>();
             Appointment appointment = new Appointment();
             consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
-            appointment.ScheduledDate.Start = consilium.StartTime;
+            appointment.Start = consilium.StartTime;
             int counter = 0;
 
             foreach (int specializationId in SpecializationIds)
@@ -140,7 +123,7 @@ namespace HospitalLibrary.Core.Service
             }
             ifPetlja:
 
-            if (appointment.ScheduledDate.Start.Hour >= 10 && appointment.ScheduledDate.Start.Hour <= 20) 
+            if (appointment.Start.Hour >= 10 && appointment.Start.Hour <= 20) 
             {
                 foreach (Doctor doctor in potentialDoctors)
                 {
@@ -159,50 +142,22 @@ namespace HospitalLibrary.Core.Service
                     if (freeDoctorsId.Count == potentialDoctors.Count() && common.SequenceEqual(SpecializationIds))
                     {
                         consilium.DoctorIds = freeDoctorsId;
-                        consilium.RoomId = doctor.RoomId;
-
-                        consilium.StartTime = appointment.ScheduledDate.Start;
+                        consilium.StartTime = appointment.Start;
                         _consiliumRepository.Create(consilium);
                         return;
                     }
                     if(counter == potentialDoctors.Count())
                     {
-                        appointment.ScheduledDate.Start = appointment.ScheduledDate.Start.AddMinutes(30);
+                        appointment.Start = appointment.Start.AddMinutes(30);
                         freeDoctorsId.Clear();
                         freeDoctorsSpecializationId.Clear();
                         counter = 0;
                         goto ifPetlja;
                     }
                 }
-                appointment.ScheduledDate.Start = appointment.ScheduledDate.Start.AddMinutes(30);
+                appointment.Start = appointment.Start.AddMinutes(30);
                 goto ifPetlja;
             } 
-        }
-
-        public IEnumerable<Consilium> GetAll()
-        {
-            return _consiliumRepository.GetAll();
-        }
-
-        public IEnumerable<Consilium> GetAllConsiliumsOfDoctor(int id)
-        {
-            List<Consilium> consiliums = _consiliumRepository.GetAll().ToList();
-
-            List<Consilium> doctorsConsilium = new List<Consilium>();
-            foreach(Consilium c in consiliums)
-            {
-                List<int> doctors = c.DoctorIds;
-                foreach (int doctor in doctors)
-                {
-                    if(doctor == id)
-                    {
-                        doctorsConsilium.Add(c);
-                        break;
-                    }
-                }
-            }
-            return doctorsConsilium;
-
         }
     }
 }

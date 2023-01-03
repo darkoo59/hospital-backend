@@ -8,7 +8,6 @@ namespace HospitalLibrary.Core.Model
 {
     public class ExaminationReport : EntityObject
     {
-        //
         public List<int> SymptomIds { get; set; }
         public List<Symptom> Symptoms { get;  }
         public string Report { get; set; }

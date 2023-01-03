@@ -13,12 +13,12 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExaminationReportsController : ControllerBase
+    public class ExaminationReportController : ControllerBase
     {
         private readonly IExaminationReportService _service;
         private readonly IGenericMapper<ExaminationReport, ExaminationReportDTO> _mapper;
 
-        public ExaminationReportsController(IExaminationReportService examinationReportService, IGenericMapper<ExaminationReport, ExaminationReportDTO> mapper)
+        public ExaminationReportController(IExaminationReportService examinationReportService, IGenericMapper<ExaminationReport, ExaminationReportDTO> mapper)
         {
             _service = examinationReportService;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace HospitalAPI.Controllers
 
             ExaminationReport examinationReport = _mapper.ToModel(examinationReportDTO);
             _service.Create(examinationReport);
-            return CreatedAtAction("GetById", new { id = examinationReport.Id }, examinationReport);
+            return CreatedAtAction("GetById", new { id = examinationReport.ExaminationReportId }, examinationReport);
         }
 
         [HttpGet("{id}")]
