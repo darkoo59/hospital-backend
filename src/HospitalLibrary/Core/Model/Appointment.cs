@@ -18,7 +18,6 @@ namespace HospitalLibrary.Core.Model
 
         public Appointment()
         {
-        
         }
 
         public Appointment(DateRange scheduledDate, int? doctorId, Doctor doctor, int? patientId, Patient patient, bool isFinished)
@@ -43,5 +42,7 @@ namespace HospitalLibrary.Core.Model
             }
             return false;
         }
+
+
     }
 }

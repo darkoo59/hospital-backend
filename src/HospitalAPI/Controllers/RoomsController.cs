@@ -93,6 +93,9 @@ namespace HospitalAPI.Controllers
 			return Ok(_roomService.SearchForEquipment(query));
 		}
 
+
+
+
 		// POST api/rooms
 		[HttpPost]
 		public ActionResult Create(Room room)
@@ -117,13 +120,8 @@ namespace HospitalAPI.Controllers
 			return Ok(moveRequest);
 		}
 		[HttpPost("renovationSplit")]
-		public ActionResult AddRenovationSplitRequest(MoveRequestDTO renovationRequestDTO)
+		public ActionResult AddRenovationSplitRequest(MoveRequest renovationRequest)
 		{
-
-			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
-				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartTime, renovationRequestDTO.Duration,
-				renovationRequestDTO.DurationTimeUnit);
-
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
@@ -132,33 +130,22 @@ namespace HospitalAPI.Controllers
 			return Ok(renovationRequest);
 		}
 
-		[HttpPost("renovationMerge")]
-		public ActionResult AddRenovationMergeRequest(MoveRequestDTO renovationRequestDTO)
-		{
-			MoveRequest renovationRequest = new MoveRequest(renovationRequestDTO.type, renovationRequestDTO.FirstRoomId,
-				renovationRequestDTO.SecondRoomId, renovationRequestDTO.ChosenStartTime, renovationRequestDTO.Duration,
-				renovationRequestDTO.DurationTimeUnit);
+        [HttpPost("renovationMerge")]
+        public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _roomService.AddRenovationMergeRequest(renovationRequest);
+            return Ok(renovationRequest);
+        }
 
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-			_roomService.AddRenovationMergeRequest(renovationRequest);
-			return Ok(renovationRequest);
-		}
-
-		[HttpGet("moveRequests/check")]
+        [HttpGet("moveRequests/check")]
 		public ActionResult CheckMoveRequests()
 		{
 			return Ok(_roomService.CheckMoveRequests());
 		}
-
-		[HttpGet("viewRequests/{roomId}")]
-		public ActionResult GetRequestsForRoom(int roomId)
-		{
-			return Ok(_roomService.GetRequestsForRoom(roomId));
-		}
-
 
 		/*        [HttpPatch]
 				public ActionResult MoveEquipment(MoveRequest moveRequest)
@@ -216,17 +203,7 @@ namespace HospitalAPI.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("viewRequests/{id}")]
-		public ActionResult DeleteRequest(int id)
-		{
-			MoveRequest requestToDelete = _roomService.GetRequestById(id);
-			if (requestToDelete == null)
-			{
-				return NotFound();
-			}
-			_roomService.DeleteRequest(requestToDelete);
-			return NoContent();
-		}
+
 
 		[HttpPost("freeAppointments")]
 		public ActionResult GetFreeAppointments(FreeAppointmentRequestDTO freeAppointmentRequestDTO)
@@ -239,9 +216,9 @@ namespace HospitalAPI.Controllers
 
 		[HttpPost("renovationSplitInstant")]
 		public void RenovationSplitOneRoom(MoveRequest renovationRequest)
-		{
+        {
 			_roomService.RenovationSplitOneRoom(renovationRequest);
-		}
+        }
 		[HttpPost("renovationMergeInstant")]
 		public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
 		{
