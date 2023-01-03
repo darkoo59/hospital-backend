@@ -17,5 +17,7 @@ namespace HospitalLibrary.Core.Service
         List<Appointment> GetAvailableAppointments(int doctorId, DateTime date);
         void Schedule(int doctorId, Appointment appointment);
         void TransferAppointment(int doctorId, Appointment appointment);
+        PhysicianSchedule Get(int doctorId);
+        List<Appointment> GetAppointments(int doctorId);
     }
 }
