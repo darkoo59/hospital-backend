@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Migrate : Migration
+    public partial class AddConsiliumTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -681,16 +681,16 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "EquipmentType", "Name", "Quantity", "RoomId" },
                 values: new object[,]
                 {
+                    { 8, 1, "Ultrasound ", 1, 4 },
                     { 7, 1, "Defibrillator", 2, 3 },
                     { 6, 1, "Scalpel", 4, 3 },
                     { 5, 1, "Wheelchairs", 2, 2 },
-                    { 10, 1, "Tounge depressor", 12, 5 },
                     { 4, 1, "Scissors", 10, 2 },
                     { 3, 1, "Gloves", 50, 2 },
                     { 2, 1, "Tounge depressor", 32, 1 },
                     { 1, 1, "Syringe", 50, 1 },
-                    { 9, 1, "CT scanner", 2, 4 },
-                    { 8, 1, "Ultrasound ", 1, 4 }
+                    { 10, 1, "Tounge depressor", 12, 5 },
+                    { 9, 1, "CT scanner", 2, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -768,32 +768,32 @@ namespace HospitalLibrary.Migrations
                     { 28, "B", "neki opis1", 1, 250, "205B", 0, 283, 358, 270 },
                     { 34, "B", "neki opis2", 2, 250, "303B", 0, 283, 10, 270 },
                     { 27, "B", "neki opis", 1, 250, "204B", 0, 283, 10, 530 },
-                    { 6, "A", "neki opis3", 1, 250, "201A", 0, 380, 10, 10 },
+                    { 8, "A", "neki opis5", 1, 250, "203A", 0, 170, 10, 530 },
                     { 25, "B", "neki opis1", 1, 250, "202B", 0, 480, 505, 10 },
+                    { 3, "A", "neki opis2", 0, 250, "103A", 0, 170, 10, 530 },
+                    { 4, "A", "neki opis", 0, 250, "104A", 0, 170, 220, 270 },
+                    { 5, "A", "neki opis1", 0, 250, "105A", 0, 170, 220, 530 },
+                    { 6, "A", "neki opis3", 1, 250, "201A", 0, 380, 10, 10 },
+                    { 7, "A", "neki opis4", 1, 250, "202A", 0, 170, 10, 270 },
                     { 9, "A", "neki opis4", 1, 250, "204A", 0, 170, 220, 270 },
                     { 10, "A", "neki opis5", 1, 250, "205A", 0, 170, 220, 530 },
                     { 11, "A", "neki opis6", 2, 250, "301A", 0, 380, 10, 10 },
                     { 12, "A", "neki opis7", 2, 250, "302A", 0, 170, 10, 270 },
                     { 13, "A", "neki opis8", 2, 250, "303A", 0, 170, 10, 530 },
-                    { 5, "A", "neki opis1", 0, 250, "105A", 0, 170, 220, 530 },
-                    { 4, "A", "neki opis", 0, 250, "104A", 0, 170, 220, 270 },
-                    { 3, "A", "neki opis2", 0, 250, "103A", 0, 170, 10, 530 },
                     { 26, "B", "neki opis2", 1, 250, "203B", 0, 283, 10, 270 },
                     { 2, "A", "neki opis1", 0, 250, "102A", 0, 170, 10, 270 },
                     { 1, "A", "neki opis", 0, 250, "101A", 0, 380, 10, 10 },
-                    { 8, "A", "neki opis5", 1, 250, "203A", 0, 170, 10, 530 },
-                    { 7, "A", "neki opis4", 1, 250, "202A", 0, 170, 10, 270 },
+                    { 17, "B", "neki opis1", 0, 250, "102B", 0, 480, 505, 10 },
+                    { 24, "B", "neki opis", 1, 250, "201B", 0, 485, 10, 10 },
+                    { 23, "B", "neki opis2", 0, 250, "108B", 0, 282, 706, 530 },
+                    { 22, "B", "neki opis1", 0, 250, "107B", 0, 282, 706, 270 },
+                    { 21, "B", "neki opis2", 0, 250, "106B", 0, 283, 358, 530 },
                     { 14, "A", "neki opis7", 2, 250, "304A", 0, 170, 220, 270 },
+                    { 20, "B", "neki opis1", 0, 250, "105B", 0, 283, 358, 270 },
                     { 15, "A", "neki opis8", 2, 250, "305A", 0, 170, 220, 530 },
                     { 16, "B", "neki opis", 0, 250, "101B", 0, 485, 10, 10 },
-                    { 17, "B", "neki opis1", 0, 250, "102B", 0, 480, 505, 10 },
-                    { 18, "B", "neki opis2", 0, 250, "103B", 0, 283, 10, 270 },
                     { 19, "B", "neki opis", 0, 250, "104B", 0, 283, 10, 530 },
-                    { 20, "B", "neki opis1", 0, 250, "105B", 0, 283, 358, 270 },
-                    { 21, "B", "neki opis2", 0, 250, "106B", 0, 283, 358, 530 },
-                    { 22, "B", "neki opis1", 0, 250, "107B", 0, 282, 706, 270 },
-                    { 23, "B", "neki opis2", 0, 250, "108B", 0, 282, 706, 530 },
-                    { 24, "B", "neki opis", 1, 250, "201B", 0, 485, 10, 10 }
+                    { 18, "B", "neki opis2", 0, 250, "103B", 0, 283, 10, 270 }
                 });
 
             migrationBuilder.InsertData(
@@ -812,23 +812,30 @@ namespace HospitalLibrary.Migrations
                 values: new object[,]
                 {
                     { 3, null, "Elevated body temperature" },
-                    { 2, null, "Sore throat" },
-                    { 1, null, "High blood presure" }
+                    { 1, null, "High blood presure" },
+                    { 2, null, "Sore throat" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Email", "Password", "Role" },
-                values: new object[] { 1, "email", "password", 0 });
+                values: new object[,]
+                {
+                    { 1, "doctor1", "doctor1", 1 },
+                    { 2, "doctor2", "doctor2", 1 },
+                    { 3, "doctor3", "doctor3", 1 },
+                    { 5, "email", "password", 0 },
+                    { 4, "doctor4", "doctor4", 1 }
+                });
 
             migrationBuilder.InsertData(
                 table: "VacationRequests",
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 2, 4, new DateTime(2023, 1, 1, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(520), "Tired", new DateTime(2022, 12, 27, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(496), 2, "Urgent" },
-                    { 1, 4, new DateTime(2022, 12, 27, 14, 13, 51, 551, DateTimeKind.Local).AddTicks(5950), "Tired", new DateTime(2022, 12, 22, 14, 13, 51, 546, DateTimeKind.Local).AddTicks(8210), 1, "NoUrgent" },
-                    { 3, 4, new DateTime(2023, 1, 6, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(532), "Tired", new DateTime(2023, 1, 1, 14, 13, 51, 552, DateTimeKind.Local).AddTicks(527), 0, "NoUrgent" }
+                    { 3, 4, new DateTime(2023, 1, 28, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1456), "Tired", new DateTime(2023, 1, 23, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1451), 0, "NoUrgent" },
+                    { 1, 4, new DateTime(2023, 1, 18, 13, 33, 45, 867, DateTimeKind.Local).AddTicks(8239), "Tired", new DateTime(2023, 1, 13, 13, 33, 45, 861, DateTimeKind.Local).AddTicks(6413), 1, "NoUrgent" },
+                    { 2, 4, new DateTime(2023, 1, 23, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1444), "Tired", new DateTime(2023, 1, 18, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1417), 2, "Urgent" }
                 });
 
             migrationBuilder.InsertData(
