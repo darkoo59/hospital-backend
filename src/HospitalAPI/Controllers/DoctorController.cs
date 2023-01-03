@@ -43,7 +43,6 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
 
-
             return Ok(_doctorMapper.ToDTO(doctor));
         }
     }

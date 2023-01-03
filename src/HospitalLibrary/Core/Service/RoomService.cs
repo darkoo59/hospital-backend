@@ -45,10 +45,19 @@ namespace HospitalLibrary.Core.Service
             _roomRepository.Update(room);
         }
         
-
         public void Delete(Room room)
         {
             _roomRepository.Delete(room);
+        }
+
+        public void DeleteRequest(MoveRequest request)
+        {
+            _roomRepository.DeleteRequest(request);
+        }
+
+        public MoveRequest GetRequestById(int id)
+        {
+            return _roomRepository.GetRequestById(id);
         }
 
         public IEnumerable<Equipment> GetEquipment(int id)
@@ -96,6 +105,10 @@ namespace HospitalLibrary.Core.Service
         public void RenovationMergeTwoRooms(MoveRequest renovationRequest)
         {
             _roomRepository.RenovationMergeTwoRooms(renovationRequest);
+        }
+        public IEnumerable<MoveRequest> GetRequestsForRoom(int roomId)
+        {
+            return _roomRepository.GetRequestsForRoom(roomId);
         }
     }
 }

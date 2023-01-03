@@ -13,9 +13,6 @@ namespace HospitalAPI.Dtos
         public DateTime DateRangeEnd { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
-        public int RoomId { get; set; }
-
-
         public List<int> DoctorIds { get; set; }
         public List<int> SpecializationIds { get; set; }
     }

@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221211223528_ovaJeNajjaca")]
+    partial class ovaJeNajjaca
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1855,34 +1857,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             UserId = 1,
-                            Email = "doctor1",
-                            Password = "doctor1",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            Email = "doctor2",
-                            Password = "doctor2",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            Email = "doctor3",
-                            Password = "doctor3",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 4,
-                            Email = "doctor4",
-                            Password = "doctor4",
-                            Role = 1
-                        },
-                        new
-                        {
-                            UserId = 5,
                             Email = "email",
                             Password = "password",
                             Role = 0

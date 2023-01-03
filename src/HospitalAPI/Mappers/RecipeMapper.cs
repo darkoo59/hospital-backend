@@ -23,7 +23,6 @@ namespace HospitalAPI.Mappers
             RecipeDTO recipeDTO = new RecipeDTO();
             recipeDTO.RecipeId = recipe.RecipeId;
             recipeDTO.WayOfUse = recipe.WayOfUse;
-            recipeDTO.MedicineIds = recipe.MedicineIds;
             recipeDTO.Medicines = _medicineMapper.ToDTO(recipe.Medicines);
             recipeDTO.DateOfIssue = recipe.DateOfIssue;
 
@@ -39,7 +38,6 @@ namespace HospitalAPI.Mappers
                 RecipeDTO recipeDTO = new RecipeDTO();
                 recipeDTO.RecipeId = recipe.RecipeId;
                 recipeDTO.WayOfUse = recipe.WayOfUse;
-                recipeDTO.MedicineIds = recipe.MedicineIds;
                 recipeDTO.Medicines = _medicineMapper.ToDTO(recipe.Medicines);
                 recipeDTO.DateOfIssue = recipe.DateOfIssue;
                 recipesDTOs.Add(recipeDTO);
@@ -53,7 +51,6 @@ namespace HospitalAPI.Mappers
             Recipe recipe = new Recipe();
             recipe.RecipeId = recipeDTO.RecipeId;
             recipe.WayOfUse = recipeDTO.WayOfUse;
-            recipe.MedicineIds = recipeDTO.MedicineIds;
             recipe.Medicines = _medicineMapper.ToModel(recipeDTO.Medicines);
             recipe.DateOfIssue = recipeDTO.DateOfIssue;
 
@@ -68,7 +65,6 @@ namespace HospitalAPI.Mappers
                 Recipe recipe = new Recipe();
                 recipe.RecipeId = recipeDTO.RecipeId;
                 recipe.WayOfUse = recipeDTO.WayOfUse;
-                recipe.MedicineIds = recipeDTO.MedicineIds;
                 recipe.Medicines = _medicineMapper.ToModel(recipeDTO.Medicines);
                 recipe.DateOfIssue = recipeDTO.DateOfIssue;
                 recipes.Add(recipe);

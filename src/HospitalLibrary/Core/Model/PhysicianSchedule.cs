@@ -12,25 +12,19 @@ namespace HospitalLibrary.Core.Model
         public List<Appointment> Appointments { get; set; }
         public List<Vacation> Vacations { get; set; }
 
-        public PhysicianSchedule()
-        {
-        }
-
-        public PhysicianSchedule(int physicianScheduleId, int doctorId, Doctor doctor, List<WorkTime> workTimes, List<Appointment> appointments, List<Vacation> vacations)
-        {
-            PhysicianScheduleId = physicianScheduleId;
-            DoctorId = doctorId;
-            Doctor = doctor;
-            WorkTimes = workTimes;
-            Appointments = appointments;
-            Vacations = vacations;
-        }
+        //public PhysicianSchedule(int physicianScheduleId, int doctorId, List<WorkTime> workTimes, List<Appointment> appointments, List<Vacation> vacations)
+        //{
+        //    DoctorId = doctorId;
+        //    WorkTimes = workTimes;
+        //    Appointments = appointments;
+        //    Vacations = vacations;
+        //}
 
         public bool IsAppointmentAvailable(Appointment appointment)
         {
             foreach (var a in Appointments)
             {
-                if (a.ScheduledDate.Start == appointment.ScheduledDate.Start)
+                if (a.Start.Hour == appointment.Start.Hour && a.Start.Minute == appointment.Start.Minute)
                 {
                     return false;
                 }
@@ -43,7 +37,7 @@ namespace HospitalLibrary.Core.Model
         {
             foreach (var vacation in Vacations)
             {
-                if (appointment.ScheduledDate.Start >= vacation.StartDate && appointment.ScheduledDate.Start <= vacation.EndDate)
+                if (appointment.Start >= vacation.StartDate && appointment.Start <= vacation.EndDate)
                 {
                     return false;
                 }
@@ -55,7 +49,7 @@ namespace HospitalLibrary.Core.Model
 
         private static bool IsDoctorWorking(Appointment appointment, WorkTime workTime)
         {
-            return appointment.ScheduledDate.Start >= workTime.DateRange.Start && appointment.ScheduledDate.Start <= workTime.DateRange.End && appointment.ScheduledDate.Start.TimeOfDay >= workTime.StartTime.TimeOfDay && appointment.ScheduledDate.Start.TimeOfDay <= workTime.EndTime.TimeOfDay;
+            return appointment.Start >= workTime.DateRange.Start && appointment.Start <= workTime.DateRange.End && appointment.Start.TimeOfDay >= workTime.StartTime && appointment.Start.TimeOfDay <= workTime.EndTime;
         }
 
         private bool IsDoctorAvailable(Appointment appointment)
@@ -78,7 +72,7 @@ namespace HospitalLibrary.Core.Model
 
         public bool IsAppointmentValid(Appointment appointment)
         {
-            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.ScheduledDate.Start);
+            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.Start);
         }
 
 
@@ -87,7 +81,7 @@ namespace HospitalLibrary.Core.Model
             List<Appointment> appointments = new List<Appointment>();
             foreach (Appointment appointment in Appointments)
             {
-                if (appointment.ScheduledDate.Start > startDate && appointment.ScheduledDate.Start < endDate)
+                if (appointment.Start > startDate && appointment.Start < endDate)
                 {
                     appointments.Add(appointment);
                 }
