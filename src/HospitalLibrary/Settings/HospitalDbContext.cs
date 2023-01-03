@@ -261,7 +261,11 @@ namespace HospitalLibrary.Settings
                new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
            );
             modelBuilder.Entity<User>().HasData(
-                new User() { UserId = 1, Email = "email", Password = "password", Role = UserRole.patient}
+                new User() { UserId = 1, Email = "doctor1", Password = "doctor1", Role = UserRole.doctor },
+                new User() { UserId = 2, Email = "doctor2", Password = "doctor2", Role = UserRole.doctor },
+                new User() { UserId = 3, Email = "doctor3", Password = "doctor3", Role = UserRole.doctor },
+                new User() { UserId = 4, Email = "doctor4", Password = "doctor4", Role = UserRole.doctor },
+                new User() { UserId = 5, Email = "email", Password = "password", Role = UserRole.patient }
             );
 
             modelBuilder.Entity<PhysicianSchedule>()
@@ -274,9 +278,9 @@ namespace HospitalLibrary.Settings
                new Symptom() { SymptomId = 3, Name = "Elevated body temperature" }
            );
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
-
             modelBuilder.Entity<Appointment>().HasKey(v => v.Id);
             modelBuilder.Entity<ExaminationReport>().HasKey(v => v.Id);
+
 
             modelBuilder.Entity<Appointment>()
                 .Property(b => b.ScheduledDate)

@@ -37,14 +37,19 @@ namespace HospitalAPI.Mappers
 
         public DoctorDTO ToDTO(Doctor doctor)
         {
-            DoctorDTO doctorDTO = new DoctorDTO();
-            doctorDTO.DoctorId = doctor.DoctorId;
-            doctorDTO.Name = doctor.Name;
-            doctorDTO.Surname = doctor.Surname;
-            doctorDTO.SpecializationId = doctor.SpecializationId;
-            doctorDTO.RoomId = doctor.RoomId;
+            if (doctor != null)
+            {
+                DoctorDTO doctorDTO = new DoctorDTO();
+                doctorDTO.DoctorId = doctor.DoctorId;
+                doctorDTO.Name = doctor.Name;
+                doctorDTO.Surname = doctor.Surname;
+                doctorDTO.SpecializationId = doctor.SpecializationId;
+                doctorDTO.RoomId = doctor.RoomId;
 
-            return doctorDTO;
+                return doctorDTO;
+            }
+
+            return null;
         }
 
         public List<DoctorDTO> ToDTO(List<Doctor> doctors)
