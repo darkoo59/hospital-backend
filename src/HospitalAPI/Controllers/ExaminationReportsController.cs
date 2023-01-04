@@ -46,7 +46,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("search/{searchText}")]
         public ActionResult Search(String searchText)
         {
-           return Ok(_mapper.ToDTO(_service.Search(searchText).ToList()));
+          return Ok(_mapper.ToDTO(_service.Search(searchText).ToList()));
         }
 
         [HttpGet("{id}")]
