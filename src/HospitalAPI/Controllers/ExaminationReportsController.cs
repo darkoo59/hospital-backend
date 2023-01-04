@@ -43,10 +43,10 @@ namespace HospitalAPI.Controllers
             return Ok(_mapper.ToDTO(_service.GetAll().ToList()));
         }
 
-        [HttpGet("search")]
+        [HttpGet("search/{searchText}")]
         public ActionResult Search(String searchText)
         {
-            return Ok(_mapper.ToDTO(_service.Search(searchText).ToList()));
+           return Ok(_mapper.ToDTO(_service.Search(searchText).ToList()));
         }
 
         [HttpGet("{id}")]
