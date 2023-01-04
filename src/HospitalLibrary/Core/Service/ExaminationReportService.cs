@@ -41,5 +41,68 @@ namespace HospitalLibrary.Core.Service
         {
             _examinationReportRepository.Update(examinationReport);
         }
+
+        public bool IsAlreadyAdded(List<ExaminationReport> foundedReports, ExaminationReport examinationReport)
+        {
+            if(foundedReports.Count == 0)
+            {
+                return false;
+            }
+            
+            foreach(ExaminationReport examination in foundedReports)
+            {
+                if(examination.Id == examinationReport.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<ExaminationReport> Search(String searchText)
+        {
+            List<ExaminationReport> reports = _examinationReportRepository.GetAll().ToList();
+            List<ExaminationReport> foundedReports = new List<ExaminationReport>();
+
+            if (searchText.Contains("") &&  !searchText.Contains("'"))
+            {
+                string[] splittedSearchText = searchText.Split(' ');
+
+                foreach(ExaminationReport examinationReport in reports)
+                {
+                    foreach(String s in splittedSearchText)
+                    {
+                        if (examinationReport.Report.ToLower().Contains(s.ToLower()))
+                        {
+                            if (IsAlreadyAdded(foundedReports, examinationReport) == false)
+                            {
+                                foundedReports.Add(examinationReport);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (searchText.Contains("'"))
+            {
+                searchText = searchText.Replace("'"," ");
+                string[] splittedSearchText = searchText.Split(" ");
+                
+                foreach (ExaminationReport examinationReport in reports)
+                {
+                    foreach (String s in splittedSearchText)
+                    {
+                        if (examinationReport.Report.Equals(s))
+                        {
+                            if (IsAlreadyAdded(foundedReports, examinationReport) == false)
+                            {
+                                foundedReports.Add(examinationReport);
+                            }
+                        }
+                    }
+                }
+            }
+            return foundedReports;
+        }
     }
 }

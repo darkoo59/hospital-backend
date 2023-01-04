@@ -69,7 +69,7 @@ namespace HospitalAPI.Controllers
             return Ok(_mapper.ToDTO(_service.GetAll().ToList()));
         }
 
-        [HttpPost("create")]
+        [HttpGet("create")]
         public ActionResult Create()
         {
             if (!ModelState.IsValid)
