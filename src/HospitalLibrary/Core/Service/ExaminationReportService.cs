@@ -90,13 +90,18 @@ namespace HospitalLibrary.Core.Service
                 
                 foreach (ExaminationReport examinationReport in reports)
                 {
-                    foreach (String s in splittedSearchText)
+                    string[] splittedReport = examinationReport.Report.Split(' ');
+                    
+                    foreach(String s1 in splittedReport)
                     {
-                        if (examinationReport.Report.Equals(s))
+                        foreach (String s2 in splittedSearchText)
                         {
-                            if (IsAlreadyAdded(foundedReports, examinationReport) == false)
+                            if (s1.Equals(s2))
                             {
-                                foundedReports.Add(examinationReport);
+                                if (IsAlreadyAdded(foundedReports, examinationReport) == false)
+                                {
+                                    foundedReports.Add(examinationReport);
+                                }
                             }
                         }
                     }
