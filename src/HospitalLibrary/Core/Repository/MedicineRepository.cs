@@ -35,7 +35,25 @@ namespace HospitalLibrary.Core.Repository
 
         public Medicine GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Medicines.Find(id);
+        }
+
+        public List<Medicine> GetByIds(List<int> ids)
+        {
+            List<Medicine> allMedicines = GetAll().ToList();
+            List<Medicine> returnMedicines = new List<Medicine>();
+            
+            foreach(int id in ids) 
+            { 
+                foreach(Medicine medicine in allMedicines)
+                {
+                    if(medicine.MedicineId == id)
+                    {
+                        returnMedicines.Add(medicine);
+                    }
+                }
+            }
+            return returnMedicines;
         }
 
         public void Update(Medicine medicine)

@@ -37,6 +37,18 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = examinationReport.Id }, examinationReport);
         }
 
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_mapper.ToDTO(_service.GetAll().ToList()));
+        }
+
+        [HttpGet("search/{searchText}")]
+        public ActionResult Search(String searchText)
+        {
+          return Ok(_mapper.ToDTO(_service.Search(searchText).ToList()));
+        }
+
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
