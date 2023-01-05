@@ -3,18 +3,18 @@ using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
     public class ExaminationReportService : IExaminationReportService
     {
         private readonly IExaminationReportRepository _examinationReportRepository;
+        private readonly IMedicineRepository _medicineRepository;
 
-        public ExaminationReportService(IExaminationReportRepository examinationReportRepository)
+        public ExaminationReportService(IExaminationReportRepository examinationReportRepository,IMedicineRepository medicineRepository)
         {
             _examinationReportRepository = examinationReportRepository;
+            _medicineRepository = medicineRepository;
         }
 
         public void Create(ExaminationReport examinationReport)
@@ -63,14 +63,15 @@ namespace HospitalLibrary.Core.Service
         {
             List<ExaminationReport> reports = _examinationReportRepository.GetAll().ToList();
             List<ExaminationReport> foundedReports = new List<ExaminationReport>();
-
-            if (searchText.Contains("") &&  !searchText.Contains("'"))
+            //Pretraga po obicnim recima
+            if (searchText.Contains("") && !searchText.Contains("'"))
             {
                 string[] splittedSearchText = searchText.Split(' ');
 
-                foreach(ExaminationReport examinationReport in reports)
+                //Pretraga sadrzaja po obicnim recima
+                foreach (ExaminationReport examinationReport in reports)
                 {
-                    foreach(String s in splittedSearchText)
+                    foreach (String s in splittedSearchText)
                     {
                         if (examinationReport.Report.ToLower().Contains(s.ToLower()))
                         {
@@ -81,8 +82,29 @@ namespace HospitalLibrary.Core.Service
                         }
                     }
                 }
+                //Pretraga lekova po obicnim recima
+                foreach (ExaminationReport examinationReport in reports)
+                {
+                    foreach (String s in splittedSearchText)
+                    {
+                        foreach (Recipe recipe in examinationReport.Recipes)
+                        {
+                            foreach (Medicine medicine in recipe.Medicines)
+                            {
+                                if (medicine.Name.ToLower().Contains(s.ToLower()))
+                                {
+                                    if (IsAlreadyAdded(foundedReports, examinationReport) == false)
+                                    {
+                                        foundedReports.Add(examinationReport);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
+           
+            //Pretraga sadrzaja po frazama
             if (searchText.Contains("'"))
             {
                 searchText = searchText.Replace("'"," ");
@@ -101,6 +123,27 @@ namespace HospitalLibrary.Core.Service
                                 if (IsAlreadyAdded(foundedReports, examinationReport) == false)
                                 {
                                     foundedReports.Add(examinationReport);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Pretraga lekova po frazama
+                foreach (ExaminationReport examinationReport in reports)
+                {
+                    foreach (String s in splittedSearchText)
+                    {
+                        foreach (Recipe recipe in examinationReport.Recipes)
+                        {
+                            foreach (Medicine medicine in recipe.Medicines)
+                            {
+                                if (medicine.Name.Equals(s))
+                                {
+                                    if (IsAlreadyAdded(foundedReports, examinationReport) == false)
+                                    {
+                                        foundedReports.Add(examinationReport);
+                                    }
                                 }
                             }
                         }

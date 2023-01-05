@@ -31,7 +31,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<ExaminationReport> GetAll()
         {
-            return _context.ExaminationReports.Include(r => r.Symptoms).Include(r => r.Recipes).ToList();
+            return _context.ExaminationReports.Include(r => r.Symptoms).Include(r => r.Recipes).ThenInclude(y => y.Medicines).ToList();
         }
 
         public ExaminationReport GetById(int id)
