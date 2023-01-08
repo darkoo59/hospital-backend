@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class ExaminationReport : Migration
+    public partial class migrationnn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -833,9 +833,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 3, 4, new DateTime(2023, 1, 29, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3696), "Tired", new DateTime(2023, 1, 24, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3684), 0, "NoUrgent" },
-                    { 1, 4, new DateTime(2023, 1, 19, 11, 49, 38, 840, DateTimeKind.Local).AddTicks(8860), "Tired", new DateTime(2023, 1, 14, 11, 49, 38, 834, DateTimeKind.Local).AddTicks(7125), 1, "NoUrgent" },
-                    { 2, 4, new DateTime(2023, 1, 24, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3671), "Tired", new DateTime(2023, 1, 19, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3629), 2, "Urgent" }
+                    { 3, 4, new DateTime(2023, 2, 2, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3480), "Tired", new DateTime(2023, 1, 28, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3478), 0, "NoUrgent" },
+                    { 1, 4, new DateTime(2023, 1, 23, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(2521), "Tired", new DateTime(2023, 1, 18, 15, 13, 45, 339, DateTimeKind.Local).AddTicks(2299), 1, "NoUrgent" },
+                    { 2, 4, new DateTime(2023, 1, 28, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3475), "Tired", new DateTime(2023, 1, 23, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3465), 2, "Urgent" }
                 });
 
             migrationBuilder.InsertData(
