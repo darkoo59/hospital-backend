@@ -118,6 +118,9 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IGenericMapper<Doctor, DoctorDTO>, DoctorMapper>();
 
+            services.AddScoped<IEquipmentTenderService, EquipmentTenderService>();
+
+
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
             services.AddScoped<IGenericMapper<Blood, BloodDTO>, BloodMapper>();
@@ -159,6 +162,8 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<WorkTime, WorkTimeDTO>, WorkTimeMapper>();
             services.AddScoped<IGenericMapper<Vacation, VacationDTO>, VacationMapper>();
             services.AddScoped<IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO>, PhysicianScheduleMapper>();
+
+
 
             SetupAuth(services);
         }
