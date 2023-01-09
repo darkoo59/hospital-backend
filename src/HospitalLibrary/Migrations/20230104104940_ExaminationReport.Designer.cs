@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230104104940_ExaminationReport")]
+    partial class ExaminationReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -530,9 +532,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Report")
                         .HasColumnType("text");
 
@@ -937,7 +936,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.PhysicianSchedule", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PhysicianScheduleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -948,7 +947,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<List<WorkTime>>("WorkTimes")
                         .HasColumnType("jsonb");
 
-                    b.HasKey("Id");
+                    b.HasKey("PhysicianScheduleId");
 
                     b.HasIndex("DoctorId");
 
@@ -1657,11 +1656,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-
                             EndDate = new DateTime(2023, 1, 19, 11, 49, 38, 840, DateTimeKind.Local).AddTicks(8860),
                             Reason = "Tired",
                             StartDate = new DateTime(2023, 1, 14, 11, 49, 38, 834, DateTimeKind.Local).AddTicks(7125),
-
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1669,7 +1666,6 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-
                             EndDate = new DateTime(2023, 1, 24, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3671),
                             Reason = "Tired",
                             StartDate = new DateTime(2023, 1, 19, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3629),
@@ -1686,60 +1682,6 @@ namespace HospitalLibrary.Migrations
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DomainEvent");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("DomainEvent");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.EventStream", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EventStreams");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.EventWrapper", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("EventId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("EventNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EventStreamId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventWrappers");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b =>
@@ -1967,44 +1909,6 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.ExaminationFinished", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
-
-                    b.HasDiscriminator().HasValue("ExaminationFinished");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.ExaminationStarted", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
-
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("integer");
-
-                    b.HasDiscriminator().HasValue("ExaminationStarted");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.RecipesCreated", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
-
-                    b.HasDiscriminator().HasValue("RecipesCreated");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.ReportEntered", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
-
-                    b.HasDiscriminator().HasValue("ReportEntered");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.SymptomsSelected", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
-
-                    b.HasDiscriminator().HasValue("SymptomsSelected");
-                });
-
             modelBuilder.Entity("AllergenMedicalRecord", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Allergen", null)
@@ -2177,15 +2081,6 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.PhysicianSchedule", null)
                         .WithMany("Vacations")
                         .HasForeignKey("PhysicianScheduleId");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.EventWrapper", b =>
-                {
-                    b.HasOne("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId");
-
-                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>

@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI.Authorization;
+using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.BloodBankNews.Enums;
 using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
@@ -152,6 +153,16 @@ namespace IntegrationAPI.Controllers
                 return Ok();
             }
             return Unauthorized();
+        }
+
+        [HttpPost("report")]
+        public IActionResult GenerateAndUploadPdf(DateRange dateRange)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                _equipmentTenderService.GenerateAndUploadPdf(dateRange);
+            }
+            return Ok();
         }
     }
 }

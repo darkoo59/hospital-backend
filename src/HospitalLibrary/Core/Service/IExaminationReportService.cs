@@ -14,5 +14,6 @@ namespace HospitalLibrary.Core.Service
         void Create(ExaminationReport examinationReport);
         void Update(ExaminationReport examinationReport);
         void Delete(ExaminationReport examinationReport);
+        List<ExaminationReport> Search(String searchText);
     }
 }

@@ -119,5 +119,10 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
                 throw;
             }
         }
+
+        public ICollection<TenderApplication> GetFinishedApplications()
+        {
+            return _context.TenderApplications.ToList();
+        }
     }
 }
