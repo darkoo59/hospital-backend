@@ -9,7 +9,9 @@ using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO;
 using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Renci.SshNet;
 using System;
+using System.IO;
 using System.Security.Claims;
 
 namespace IntegrationAPI.Controllers
@@ -161,7 +163,12 @@ namespace IntegrationAPI.Controllers
         {
             if (HttpContext.User.Identity != null)
             {
-                _equipmentTenderService.GenerateAndUploadPdf(new DateRange(dto.DateFrom, dto.DateTo));
+                string filepath = _equipmentTenderService.GenerateAndUploadPdf(new DateRange(dto.DateFrom, dto.DateTo));
+
+                var file = System.IO.File.OpenRead(filepath);
+
+                return File(file, "application/pdf");
+
             }
             return Ok();
         }

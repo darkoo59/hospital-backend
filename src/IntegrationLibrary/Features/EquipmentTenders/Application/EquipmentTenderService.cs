@@ -166,7 +166,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             _repository.Update(ta);
         }
 
-        public void GenerateAndUploadPdf(DateRange dateRange)
+        public string GenerateAndUploadPdf(DateRange dateRange)
         {
             var folderPath = Environment.CurrentDirectory + "\\PDFs";
             var fileName = "TenderReport_" + DateTime.Now.Ticks + ".pdf";
@@ -175,6 +175,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             GeneratePdf(_repository.GetFinishedApplications(dateRange), filePath);
 
             SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+            return filePath;
         }
 
         private void GeneratePdf(ICollection<TenderApplication> data, string filePath)
@@ -183,17 +184,23 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
 
-            section.AddParagraph("Hello");
             foreach(TenderApplication ta in data)
             {
+                section.AddParagraph("Tender name: " + ta.EquipmentTender.Title);
+                section.AddParagraph("Tender finished on: " + ta.Finished);
+
                 string temp = "";
+                int i = 0;
                 foreach (TenderOffer offer in ta.TenderOffers)
                 {
-                    temp += offer.TenderRequirement.BloodType;
+                    if (i != 0) temp += ", ";
+                    temp += offer.TenderRequirement.BloodType + " -> ";
                     temp += offer.TenderRequirement.Amount;
-                    temp += "  ";
+                    
+                    i++;
                 }
                 section.AddParagraph(temp);
+                section.AddParagraph();
             }
 
             builder.Build(stream);
