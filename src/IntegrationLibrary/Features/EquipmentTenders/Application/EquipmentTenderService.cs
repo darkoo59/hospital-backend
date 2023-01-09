@@ -172,7 +172,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             var fileName = "TenderReport_" + DateTime.Now.Ticks + ".pdf";
             var filePath = Path.Combine(folderPath, fileName);
 
-            GeneratePdf(_repository.GetFinishedApplications(), filePath);
+            GeneratePdf(_repository.GetFinishedApplications(dateRange), filePath);
 
             SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
         }

@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
+﻿using IntegrationLibrary.Core.Utility;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
@@ -16,6 +17,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         void DeleteApplicationByIdAndUser(int id, int userId);
         TenderApplication GetApplicationById(int id);
         EquipmentTender GetTenderWithApplicationsById(int id);
-        ICollection<TenderApplication> GetFinishedApplications();
+        ICollection<TenderApplication> GetFinishedApplications(DateRange dr);
     }
 }

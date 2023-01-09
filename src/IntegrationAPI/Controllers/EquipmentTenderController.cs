@@ -7,6 +7,7 @@ using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO;
+using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -156,11 +157,11 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost("report")]
-        public IActionResult GenerateAndUploadPdf(DateRange dateRange)
+        public IActionResult GenerateAndUploadPdf([FromBody] UrgentOrderReportDTO dto)
         {
             if (HttpContext.User.Identity != null)
             {
-                _equipmentTenderService.GenerateAndUploadPdf(dateRange);
+                _equipmentTenderService.GenerateAndUploadPdf(new DateRange(dto.DateFrom, dto.DateTo));
             }
             return Ok();
         }
