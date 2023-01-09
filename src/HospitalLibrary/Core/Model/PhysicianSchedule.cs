@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class PhysicianSchedule
+    public class PhysicianSchedule : EntityObject
     {
-        public int PhysicianScheduleId { get; set; }
+        //public int PhysicianScheduleId { get; set; }
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
         public List<WorkTime> WorkTimes { get; set; }
@@ -18,7 +18,6 @@ namespace HospitalLibrary.Core.Model
 
         public PhysicianSchedule(int physicianScheduleId, int doctorId, Doctor doctor, List<WorkTime> workTimes, List<Appointment> appointments, List<Vacation> vacations)
         {
-            PhysicianScheduleId = physicianScheduleId;
             DoctorId = doctorId;
             Doctor = doctor;
             WorkTimes = workTimes;

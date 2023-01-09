@@ -31,5 +31,15 @@ namespace IntegrationAPI.Controllers
 
             return Ok(result.HasEnough);
         }
+
+        [HttpPost]
+        public ActionResult GenerateUrgentOrderReport([FromBody] UrgentOrderReportDTO dto)
+        {
+            //if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
+
+            _service.CreateUrgentOrderReport(dto.DateFrom, dto.DateTo);
+
+            return Ok();
+        }
     }
 }

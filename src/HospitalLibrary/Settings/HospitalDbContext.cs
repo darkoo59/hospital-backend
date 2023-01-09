@@ -1,4 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.EventSourcing.Infrastructure;
+using HospitalLibrary.EventSourcing.Model.ExaminationEvents;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
@@ -41,6 +43,16 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<MoveRequest> MoveRequests { get; set; }
+        public DbSet<EventStream> EventStreams { get; set; }
+        public DbSet<EventWrapper> EventWrappers { get; set; }
+        public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
+        public DbSet<ExaminationStarted> ExaminationStartedEvents { get; set; }
+        public DbSet<RecipesCreated> RecipesCreatedEvents { get; set; }
+        public DbSet<ReportEntered> ReportEnteredEvents { get; set; }
+        public DbSet<SymptomsSelected> SymptomsSelectedEvents { get; set; }
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -280,6 +292,7 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
             modelBuilder.Entity<Appointment>().HasKey(v => v.Id);
             modelBuilder.Entity<ExaminationReport>().HasKey(v => v.Id);
+            modelBuilder.Entity<PhysicianSchedule>().HasKey(v => v.Id);
 
 
             modelBuilder.Entity<Appointment>()

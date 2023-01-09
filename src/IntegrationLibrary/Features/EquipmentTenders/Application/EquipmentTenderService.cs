@@ -1,4 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
+﻿using Gehtsoft.PDFFlow.Builder;
+using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.Blood.DTO;
 using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBank.Model;
@@ -13,6 +15,7 @@ using IntegrationLibrary.HospitalService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Application
 {
@@ -138,6 +141,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
                     SendEmailToOtherParticipants(userIter.Email, ta);
             }
             ta.EquipmentTender.SetState(TenderState.CLOSED);
+            ta.SetDate(DateTime.Now);
 
             List<BloodDTO> bloodDTOs = new();
             foreach (TenderOffer offer in ta.TenderOffers)
@@ -205,6 +209,30 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
                 _bloodBankService.SendEmail(content);
                 break;
             }
+        }
+        
+        public void GenerateAndUploadPdf(DateRange dateRange)
+        {
+            var folderPath = Environment.CurrentDirectory + "\\PDFs";
+            var fileName = "TenderReport_" + DateTime.Now.Ticks + ".pdf";
+            var filePath = Path.Combine(folderPath, fileName);
+
+            ICollection<TenderApplication> data = new List<TenderApplication>();
+            
+            GeneratePdf(data, filePath);
+
+            //SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+        }
+
+        private void GeneratePdf(ICollection<TenderApplication> data, string filePath)
+        {
+            var stream = new FileStream(filePath, FileMode.Create);
+            DocumentBuilder builder = DocumentBuilder.New();
+            var section = builder.AddSection();
+            section.AddParagraph("Hello");
+
+            builder.Build(stream);
+            stream.Close();
         }
     }
 }

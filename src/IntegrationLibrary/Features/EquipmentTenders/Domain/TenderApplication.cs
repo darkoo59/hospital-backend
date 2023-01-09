@@ -14,6 +14,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
         public User User { get; private set; }
         public int UserId { get; private set; }
         public bool HasWon { get; private set; }
+        public DateTime Finished { get; private set; } 
         
         public TenderApplication() { }
         public TenderApplication(string note, int equipmentTenderId, int userId, ICollection<TenderOffer> tenderOffers)
@@ -34,6 +35,11 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Domain
         public void SetHasWon(bool hasWon)
         {
             HasWon = hasWon;
+        }
+
+        public void SetDate(DateTime date)
+        {
+            Finished = date;
         }
 
         public class InvalidDataException : Exception
