@@ -13,6 +13,8 @@ namespace HospitalLibrary.Core.Model
         public string Title { get; set; }
         public DateTime? ExpiresOn { get; set; }
         public string Description { get; set; }
+
+        public TenderState State { get; set; }
         public ICollection<TenderRequirement> Requirements { get; set; }
     }
 }
