@@ -1,6 +1,7 @@
 ﻿using Gehtsoft.PDFFlow.Builder;
 using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.Blood.DTO;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
@@ -184,24 +185,49 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
 
-            foreach(TenderApplication ta in data)
+            double[] nums = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            double totalMoney = 0;
+
+            section.AddParagraph("Tender report");
+            section.AddLine();
+            section.AddParagraph(" ");
+
+            foreach (TenderApplication ta in data)
             {
                 section.AddParagraph("Tender name: " + ta.EquipmentTender.Title);
+                section.AddParagraph("Blood bank: " + ta.User.AppName);
                 section.AddParagraph("Tender finished on: " + ta.Finished);
+                section.AddParagraph(" ");
 
-                string temp = "";
-                int i = 0;
                 foreach (TenderOffer offer in ta.TenderOffers)
                 {
-                    if (i != 0) temp += ", ";
+                    string temp = "           ";
                     temp += offer.TenderRequirement.BloodType + " -> ";
                     temp += offer.TenderRequirement.Amount;
-                    
-                    i++;
+                    temp += " (" + offer.Money.Amount + " EUR)";
+                    nums[(int)offer.TenderRequirement.BloodType] += offer.TenderRequirement.Amount;
+                    totalMoney += offer.Money.Amount;
+                    section.AddParagraph(temp);
                 }
-                section.AddParagraph(temp);
-                section.AddParagraph();
+                
+                section.AddParagraph(" ");
+                section.AddParagraph(" ");
             }
+
+            section.AddParagraph("Total");
+            section.AddLine();
+            section.AddParagraph(" ");
+
+            for (int i = 0; i < 8; i++)
+            {
+                string temp = "";
+                temp += (BloodType)i + " -> ";
+                temp += nums[i];
+                section.AddParagraph(temp);
+            }
+
+            section.AddParagraph(" ");
+            section.AddParagraph("Total money: " + totalMoney + " EUR");
 
             builder.Build(stream);
             stream.Close();

@@ -124,9 +124,10 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
         public ICollection<TenderApplication> GetFinishedApplications(DateRange dr)
         {
             return _context.TenderApplications.Include(e => e.TenderOffers).ThenInclude(e => e.TenderRequirement)
-                                               .Include(e => e.EquipmentTender)
-                                               .Where(ta => ta.HasWon && ta.Finished >= dr.StartDate && ta.Finished <= dr.EndDate)
-                                               .ToList();
+                                              .Include(e => e.User)
+                                              .Include(e => e.EquipmentTender)
+                                              .Where(ta => ta.HasWon && ta.Finished >= dr.StartDate && ta.Finished <= dr.EndDate)
+                                              .ToList();
         }
     }
 }
