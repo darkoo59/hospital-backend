@@ -14,5 +14,6 @@ namespace IntegrationLibrary.Features.BloodBank.Service
         User GetBy(string email);
         void ChangePassword(string email, ChangePasswordDTO dto);
         User GetById(int id);
+        string GetAppNameByServer(string server);
     }
 }

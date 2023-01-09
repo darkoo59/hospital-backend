@@ -115,5 +115,10 @@ namespace IntegrationLibrary.Features.BloodBank.Service
         {
             return _userRepository.GetById(id);
         }
+
+        public string GetAppNameByServer(string server)
+        {
+            return _userRepository.GetAppNameByServer(server);
+        }
     }
 }
