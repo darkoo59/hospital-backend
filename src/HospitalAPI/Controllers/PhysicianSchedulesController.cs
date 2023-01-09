@@ -36,7 +36,7 @@ namespace HospitalAPI.Controllers
 
             PhysicianSchedule physicianSchedule = _mapper.ToModel(physicianScheduleDTO);
             _service.Create(physicianSchedule);
-            return CreatedAtAction("GetById", new { id = physicianSchedule.PhysicianScheduleId }, physicianSchedule);
+            return CreatedAtAction("GetById", new { id = physicianSchedule.Id }, physicianSchedule);
         }
 
         [HttpGet("{id}")]
@@ -83,7 +83,7 @@ namespace HospitalAPI.Controllers
             appointments.Add(new Appointment(new DateRange(new DateTime(2022, 12, 8, 7, 0, 0), new DateTime(2022, 12, 8, 7, 30, 0)), 1, null, 1, null, false));
             PhysicianSchedule physicianSchedule = new PhysicianSchedule(1, 1, null, workTimes, appointments, new List<Vacation>());
             _service.Create(physicianSchedule);
-            return CreatedAtAction("GetById", new { id = physicianSchedule.PhysicianScheduleId }, physicianSchedule);
+            return CreatedAtAction("GetById", new { id = physicianSchedule.Id }, physicianSchedule);
         }
 
         [HttpPut("{id}")]
@@ -94,7 +94,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != physicianSchedule.PhysicianScheduleId)
+            if (id != physicianSchedule.Id)
             {
                 return BadRequest();
             }
