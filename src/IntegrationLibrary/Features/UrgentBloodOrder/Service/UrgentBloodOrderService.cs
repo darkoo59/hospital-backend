@@ -1,13 +1,16 @@
 ﻿using Gehtsoft.PDFFlow.Builder;
 using Gehtsoft.PDFFlow.Models.Enumerations;
 using Grpc.Core;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using IntegrationLibrary.Features.UrgentBloodOrder.Model;
 using IntegrationLibrary.Features.UrgentBloodOrder.Repository;
 using IntegrationLibrary.HospitalService;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,12 +26,14 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
         private readonly IHospitalService _hospitalService;
         private readonly IUrgentOrderRepository _urgentRepository;
         private readonly IUserService _userService;
+        private readonly IBloodBankService _bloodBankService;
         private Channel _channel { get; set; }
-        public UrgentBloodOrderService(IHospitalService hospitalRepository, IUrgentOrderRepository urgentRepository, IUserService userService)
+        public UrgentBloodOrderService(IHospitalService hospitalRepository, IUrgentOrderRepository urgentRepository, IUserService userService, IBloodBankService bbService)
         {
             this._hospitalService = hospitalRepository;
             this._urgentRepository = urgentRepository;
             this._userService = userService;
+            this._bloodBankService = bbService;
         }
 
         public UrgentResponse InvokeUrgentOrder(int bloodType, float quantity, string server)
@@ -83,7 +88,7 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
         public String CreateUrgentOrderReport(DateTime dateFrom, DateTime dateTo)
         {
             List<UrgentOrder> urgentOrders = _urgentRepository.GetInInterval(dateFrom, dateTo)
-                .OrderBy(x => (int) x.BloodType).ToList();
+                .OrderBy(x => (int)x.BloodType).ToList();
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
 
             String pdfName = "Urgent_order_report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
@@ -98,9 +103,9 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
             var section = builder.AddSection();
             section.AddParagraph("Urgent order report for the time period of " + dateFrom.ToString("dd/mm/yyyy") + " to " + dateTo.ToString("dd/mm/yyyy")).SetFontSize(20).SetAlignment(HorizontalAlignment.Center).ToDocument();
 
-            foreach(UrgentOrder order in urgentOrders)
+            foreach (UrgentOrder order in urgentOrders)
             {
-                section.AddParagraph("Blood type:" + order.BloodType.ToString() + "  |  Quantity: " + order.Quantity + "ml  |  Date: " + order.Date.ToShortDateString() +  "  |  Blood bank: " + order.BloodBankName).SetFontSize(16).SetMarginTop(8).ToDocument();
+                section.AddParagraph("Blood type:" + order.BloodType.ToString() + "  |  Quantity: " + order.Quantity + "ml  |  Date: " + order.Date.ToShortDateString() + "  |  Blood bank: " + order.BloodBankName).SetFontSize(16).SetMarginTop(8).ToDocument();
                 switch (order.BloodType)
                 {
                     case BloodType.A_PLUS:
@@ -157,6 +162,19 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
             section.AddParagraph("Total blood of type O+ : " + totalOPlus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             section.AddParagraph("Total blood of type O- : " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             builder.Build(myStream);
+            var attachment = new FormFile(myStream, 0, myStream.Length, "streamFile", filePath.Split(@"\").Last())
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = "application/pdf"
+            };
+            MailContent content = new MailContent()
+            {
+                Attachments = new List<IFormFile> { attachment },
+                ToEmail = "darko.selakovic11@gmail.com",
+                Body = "In attachment we send you a report about urgent blood order.",
+                Subject = "Urgent report"
+            };
+            _bloodBankService.SendEmail(content);
             myStream.Close();
 
             SFTPService.UploadPDF(filePath, "Urgent\\" + pdfName);

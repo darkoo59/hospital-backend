@@ -38,7 +38,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<User>().HasData(
                 new User() { Id = 1, Email = "email1@gmail.com", AppName = "app1", Password = "123", Server = "localhost:5555" },
-                new User() { Id = 2, Email = "email2@gmail.com", AppName = "app2", Password = "123", Server = "localhost:6555" },
+                new User() { Id = 2, Email = "darko.selakovic11@gmail.com", AppName = "app2", Password = "123", Server = "localhost:6555" },
                 new User() { Id = 3, Email = "email3@gmail.com", AppName = "app3", Password = "123", Server = "localhost:7555" }
             );
             modelBuilder.Entity<BankNews>().HasData(
