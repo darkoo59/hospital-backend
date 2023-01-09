@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230107211048_AddEventsStreamTable")]
+    partial class AddEventsStreamTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -530,9 +532,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Report")
                         .HasColumnType("text");
 
@@ -937,7 +936,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.PhysicianSchedule", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PhysicianScheduleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -948,7 +947,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<List<WorkTime>>("WorkTimes")
                         .HasColumnType("jsonb");
 
-                    b.HasKey("Id");
+                    b.HasKey("PhysicianScheduleId");
 
                     b.HasIndex("DoctorId");
 
@@ -1657,11 +1656,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-
-                            EndDate = new DateTime(2023, 1, 19, 11, 49, 38, 840, DateTimeKind.Local).AddTicks(8860),
+                            EndDate = new DateTime(2023, 1, 22, 22, 10, 47, 57, DateTimeKind.Local).AddTicks(8220),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 14, 11, 49, 38, 834, DateTimeKind.Local).AddTicks(7125),
-
+                            StartDate = new DateTime(2023, 1, 17, 22, 10, 47, 53, DateTimeKind.Local).AddTicks(1831),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1669,10 +1666,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-
-                            EndDate = new DateTime(2023, 1, 24, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3671),
+                            EndDate = new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2447),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 19, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3629),
+                            StartDate = new DateTime(2023, 1, 22, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2426),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1680,9 +1676,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 29, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3696),
+                            EndDate = new DateTime(2023, 2, 1, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2459),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 24, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3684),
+                            StartDate = new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2454),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });

@@ -106,7 +106,7 @@ namespace HospitalTests.Unit
         {
             return new()
             {
-                new PhysicianSchedule { DoctorId = 1, Vacations = null, PhysicianScheduleId = 1, Appointments = new List<Appointment>() }
+                new PhysicianSchedule { DoctorId = 1, Vacations = null, Id = 1, Appointments = new List<Appointment>() }
             };
         }
 
