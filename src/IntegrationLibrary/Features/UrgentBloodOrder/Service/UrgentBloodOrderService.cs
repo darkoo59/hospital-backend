@@ -85,11 +85,11 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
                 .OrderBy(x => (int) x.BloodType).ToList();
             double totalAPlus = 0, totalAMinus = 0, totalBPlus = 0, totalBMinus = 0, totalABPlus = 0, totalABMinus = 0, totalOPlus = 0, totalOMinus = 0;
 
-
-            var folderPath = Environment.CurrentDirectory + "/PDFs";
-            var filePath = Path.Combine(folderPath, "Urgent_order_report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
+            String pdfName = "Urgent_order_report" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString()
                 + "-" + DateTime.Now.Year.ToString() + "-" +
-                DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".pdf");
+                DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".pdf";
+            var folderPath = Environment.CurrentDirectory + "/PDFs";
+            var filePath = Path.Combine(folderPath, pdfName);
 
             var myStream = new FileStream(filePath, FileMode.Create);
 
