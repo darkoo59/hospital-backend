@@ -122,7 +122,10 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
 
         public ICollection<TenderApplication> GetFinishedApplications()
         {
-            return _context.TenderApplications.ToList();
+            return _context.TenderApplications.Include(e => e.TenderOffers).ThenInclude(e => e.TenderRequirement)
+                                               .Include(e => e.EquipmentTender)
+                                               .Where(ta => ta.HasWon)
+                                               .ToList();
         }
     }
 }

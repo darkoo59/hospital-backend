@@ -172,11 +172,9 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             var fileName = "TenderReport_" + DateTime.Now.Ticks + ".pdf";
             var filePath = Path.Combine(folderPath, fileName);
 
-            ICollection<TenderApplication> data = new List<TenderApplication>();
-            
-            GeneratePdf(data, filePath);
+            GeneratePdf(_repository.GetFinishedApplications(), filePath);
 
-            //SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+            SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
         }
 
         private void GeneratePdf(ICollection<TenderApplication> data, string filePath)
@@ -184,7 +182,19 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             var stream = new FileStream(filePath, FileMode.Create);
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
+
             section.AddParagraph("Hello");
+            foreach(TenderApplication ta in data)
+            {
+                string temp = "";
+                foreach (TenderOffer offer in ta.TenderOffers)
+                {
+                    temp += offer.TenderRequirement.BloodType;
+                    temp += offer.TenderRequirement.Amount;
+                    temp += "  ";
+                }
+                section.AddParagraph(temp);
+            }
 
             builder.Build(stream);
             stream.Close();

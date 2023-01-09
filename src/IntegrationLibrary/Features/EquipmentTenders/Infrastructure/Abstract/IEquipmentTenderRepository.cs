@@ -16,5 +16,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         void DeleteApplicationByIdAndUser(int id, int userId);
         TenderApplication GetApplicationById(int id);
         EquipmentTender GetTenderWithApplicationsById(int id);
+        ICollection<TenderApplication> GetFinishedApplications();
     }
 }
