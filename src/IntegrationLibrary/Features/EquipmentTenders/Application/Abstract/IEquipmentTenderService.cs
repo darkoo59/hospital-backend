@@ -20,6 +20,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application.Abstract
         void SetWinner(int applicationId);
         void ConfirmWinner(int applicationId, string email);
         void DeclineWinner(int applicationId, string email);
-        void GenerateAndUploadPdf(DateRange dateRange);
+        string GenerateAndUploadPdf(DateRange dateRange);
     }
 }
