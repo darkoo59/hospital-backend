@@ -30,6 +30,10 @@ using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
+using HospitalLibrary.EventSourcing.Service;
+using HospitalLibrary.EventSourcing.Repository;
+using HospitalLibrary.EventSourcing.Infrastructure;
+using HospitalLibrary.EventSourcing.Projections.Examination;
 
 namespace HospitalAPI
 {
@@ -159,6 +163,16 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<WorkTime, WorkTimeDTO>, WorkTimeMapper>();
             services.AddScoped<IGenericMapper<Vacation, VacationDTO>, VacationMapper>();
             services.AddScoped<IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO>, PhysicianScheduleMapper>();
+
+            services.AddScoped<IExaminationRepository, ExaminationRepository>();
+            services.AddScoped<IExaminationService, ExaminationService>();
+            services.AddScoped<EventStore>();
+
+            services.AddScoped<IGenericMapper<AverageNumberOfSteps, AverageNumberOfExaminationStepsDTO>, AverageNumberOfExaminationStepsMapper>();
+            services.AddScoped<IGenericMapper<AverageNumberOfVisitsToCertainStep, AverageNumberOfVisitsToCertainStepDTO>, AverageNumberOfVisitsToCertainStepMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfExam, AverageDurationOfExamDTO>, AverageDurationOfExamMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfEachStep, AverageDurationOfEachStepDTO>, AverageDurationOfEachStepMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfSingleStep, AverageDurationOfSingleStepDTO>, AverageDurationOfSingleStepMapper>();
 
             SetupAuth(services);
         }

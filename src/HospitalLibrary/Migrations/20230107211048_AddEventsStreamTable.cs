@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class AddConsiliumTable : Migration
+    public partial class AddEventsStreamTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,6 +91,20 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DomainEvent",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Time = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Discriminator = table.Column<string>(type: "text", nullable: false),
+                    AppointmentId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DomainEvent", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Equipment",
                 columns: table => new
                 {
@@ -104,6 +118,18 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventStreams",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Version = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventStreams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -268,6 +294,26 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VacationRequests", x => x.VacationRequestId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventWrappers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    EventId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EventStreamId = table.Column<string>(type: "text", nullable: true),
+                    EventNumber = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventWrappers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventWrappers_DomainEvent_EventId",
+                        column: x => x.EventId,
+                        principalTable: "DomainEvent",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -833,9 +879,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 3, 4, new DateTime(2023, 1, 28, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1456), "Tired", new DateTime(2023, 1, 23, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1451), 0, "NoUrgent" },
-                    { 1, 4, new DateTime(2023, 1, 18, 13, 33, 45, 867, DateTimeKind.Local).AddTicks(8239), "Tired", new DateTime(2023, 1, 13, 13, 33, 45, 861, DateTimeKind.Local).AddTicks(6413), 1, "NoUrgent" },
-                    { 2, 4, new DateTime(2023, 1, 23, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1444), "Tired", new DateTime(2023, 1, 18, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1417), 2, "Urgent" }
+                    { 3, 4, new DateTime(2023, 2, 1, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2459), "Tired", new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2454), 0, "NoUrgent" },
+                    { 1, 4, new DateTime(2023, 1, 22, 22, 10, 47, 57, DateTimeKind.Local).AddTicks(8220), "Tired", new DateTime(2023, 1, 17, 22, 10, 47, 53, DateTimeKind.Local).AddTicks(1831), 1, "NoUrgent" },
+                    { 2, 4, new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2447), "Tired", new DateTime(2023, 1, 22, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2426), 2, "Urgent" }
                 });
 
             migrationBuilder.InsertData(
@@ -903,6 +949,11 @@ namespace HospitalLibrary.Migrations
                 name: "IX_Doctors_SpecializationId",
                 table: "Doctors",
                 column: "SpecializationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventWrappers_EventId",
+                table: "EventWrappers",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InpatientTreatments_BedId",
@@ -996,6 +1047,12 @@ namespace HospitalLibrary.Migrations
                 name: "Equipment");
 
             migrationBuilder.DropTable(
+                name: "EventStreams");
+
+            migrationBuilder.DropTable(
+                name: "EventWrappers");
+
+            migrationBuilder.DropTable(
                 name: "Feedbacks");
 
             migrationBuilder.DropTable(
@@ -1024,6 +1081,9 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "MedicalRecords");
+
+            migrationBuilder.DropTable(
+                name: "DomainEvent");
 
             migrationBuilder.DropTable(
                 name: "InpatientTreatmentTherapies");

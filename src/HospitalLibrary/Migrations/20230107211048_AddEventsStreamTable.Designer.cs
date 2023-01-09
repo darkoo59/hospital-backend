@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20230103123348_AddConsiliumTable")]
-    partial class AddConsiliumTable
+    [Migration("20230107211048_AddEventsStreamTable")]
+    partial class AddEventsStreamTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1656,9 +1656,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 18, 13, 33, 45, 867, DateTimeKind.Local).AddTicks(8239),
+                            EndDate = new DateTime(2023, 1, 22, 22, 10, 47, 57, DateTimeKind.Local).AddTicks(8220),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 13, 13, 33, 45, 861, DateTimeKind.Local).AddTicks(6413),
+                            StartDate = new DateTime(2023, 1, 17, 22, 10, 47, 53, DateTimeKind.Local).AddTicks(1831),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1666,9 +1666,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 23, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1444),
+                            EndDate = new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2447),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 18, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1417),
+                            StartDate = new DateTime(2023, 1, 22, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2426),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1676,12 +1676,66 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 28, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1456),
+                            EndDate = new DateTime(2023, 2, 1, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2459),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 23, 13, 33, 45, 868, DateTimeKind.Local).AddTicks(1451),
+                            StartDate = new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2454),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DomainEvent");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("DomainEvent");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.EventStream", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventStreams");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.EventWrapper", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("EventNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EventStreamId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventWrappers");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b =>
@@ -1909,6 +1963,44 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.ExaminationFinished", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
+
+                    b.HasDiscriminator().HasValue("ExaminationFinished");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.ExaminationStarted", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("ExaminationStarted");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.RecipesCreated", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
+
+                    b.HasDiscriminator().HasValue("RecipesCreated");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.ReportEntered", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
+
+                    b.HasDiscriminator().HasValue("ReportEntered");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Model.ExaminationEvents.SymptomsSelected", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent");
+
+                    b.HasDiscriminator().HasValue("SymptomsSelected");
+                });
+
             modelBuilder.Entity("AllergenMedicalRecord", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Allergen", null)
@@ -2081,6 +2173,15 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.PhysicianSchedule", null)
                         .WithMany("Vacations")
                         .HasForeignKey("PhysicianScheduleId");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.EventSourcing.Infrastructure.EventWrapper", b =>
+                {
+                    b.HasOne("HospitalLibrary.EventSourcing.Infrastructure.DomainEvent", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>

@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230108200506_AddAppointmentIdToExaminationReportsTable")]
+    partial class AddAppointmentIdToExaminationReportsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -937,7 +939,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.PhysicianSchedule", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PhysicianScheduleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -948,7 +950,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<List<WorkTime>>("WorkTimes")
                         .HasColumnType("jsonb");
 
-                    b.HasKey("Id");
+                    b.HasKey("PhysicianScheduleId");
 
                     b.HasIndex("DoctorId");
 
@@ -1657,9 +1659,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 23, 22, 25, 6, 865, DateTimeKind.Local).AddTicks(1156),
+                            EndDate = new DateTime(2023, 1, 23, 21, 5, 3, 954, DateTimeKind.Local).AddTicks(4659),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 18, 22, 25, 6, 858, DateTimeKind.Local).AddTicks(1178),
+                            StartDate = new DateTime(2023, 1, 18, 21, 5, 3, 944, DateTimeKind.Local).AddTicks(2139),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1667,9 +1669,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 28, 22, 25, 6, 865, DateTimeKind.Local).AddTicks(4674),
+                            EndDate = new DateTime(2023, 1, 28, 21, 5, 3, 954, DateTimeKind.Local).AddTicks(7647),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 23, 22, 25, 6, 865, DateTimeKind.Local).AddTicks(4644),
+                            StartDate = new DateTime(2023, 1, 23, 21, 5, 3, 954, DateTimeKind.Local).AddTicks(7622),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1677,9 +1679,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 2, 22, 25, 6, 865, DateTimeKind.Local).AddTicks(4689),
+                            EndDate = new DateTime(2023, 2, 2, 21, 5, 3, 954, DateTimeKind.Local).AddTicks(7661),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 28, 22, 25, 6, 865, DateTimeKind.Local).AddTicks(4683),
+                            StartDate = new DateTime(2023, 1, 28, 21, 5, 3, 954, DateTimeKind.Local).AddTicks(7655),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });

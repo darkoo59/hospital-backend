@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Model
         public List<Symptom> Symptoms { get;  }
         public string Report { get; set; }
         public List<Recipe> Recipes { get;  }
-        public int AppointmentId { get;  }
+        public int AppointmentId { get; set; }
 
         public ExaminationReport()
         {

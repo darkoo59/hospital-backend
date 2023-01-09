@@ -25,7 +25,7 @@ namespace HospitalAPI.Mappers
         public PhysicianScheduleDTO ToDTO(PhysicianSchedule physicianSchedule)
         {
             PhysicianScheduleDTO physicianScheduleDTO = new PhysicianScheduleDTO();
-            physicianScheduleDTO.PhysicianScheduleId = physicianSchedule.PhysicianScheduleId;
+            physicianScheduleDTO.PhysicianScheduleId = physicianSchedule.Id;
             physicianScheduleDTO.DoctorId = physicianSchedule.DoctorId;
             physicianScheduleDTO.Doctor = _doctorMapper.ToDTO(physicianSchedule.Doctor);
             physicianScheduleDTO.WorkTimes = _workTimeMapper.ToDTO(physicianSchedule.WorkTimes);
@@ -41,7 +41,7 @@ namespace HospitalAPI.Mappers
             foreach (var physicianSchedule in physicianSchedules)
             {
                 PhysicianScheduleDTO physicianScheduleDTO = new PhysicianScheduleDTO();
-                physicianScheduleDTO.PhysicianScheduleId = physicianSchedule.PhysicianScheduleId;
+                physicianScheduleDTO.PhysicianScheduleId = physicianSchedule.Id;
                 physicianScheduleDTO.DoctorId = physicianSchedule.DoctorId;
                 physicianScheduleDTO.Doctor = _doctorMapper.ToDTO(physicianSchedule.Doctor);
                 physicianScheduleDTO.WorkTimes = _workTimeMapper.ToDTO(physicianSchedule.WorkTimes);
