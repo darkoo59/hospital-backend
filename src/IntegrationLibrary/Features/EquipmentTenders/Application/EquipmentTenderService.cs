@@ -176,7 +176,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             
             GeneratePdf(data, filePath);
 
-            //SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+            SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
         }
 
         private void GeneratePdf(ICollection<TenderApplication> data, string filePath)

@@ -3,6 +3,7 @@ using Gehtsoft.PDFFlow.Models.Enumerations;
 using Grpc.Core;
 using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBank.Service;
+using IntegrationLibrary.Features.EquipmentTenders.Application;
 using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using IntegrationLibrary.Features.UrgentBloodOrder.Model;
 using IntegrationLibrary.Features.UrgentBloodOrder.Repository;
@@ -157,6 +158,9 @@ namespace IntegrationLibrary.Features.UrgentBloodOrder.Service
             section.AddParagraph("Total blood of type O- : " + totalOMinus + "ml.").SetFontSize(14).SetMarginTop(10).ToDocument();
             builder.Build(myStream);
             myStream.Close();
+
+            SFTPService.UploadPDF(filePath, "Urgent\\" + pdfName);
+
             return filePath;
         }
 

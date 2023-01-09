@@ -318,7 +318,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Description = "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2023, 2, 8, 11, 19, 19, 512, DateTimeKind.Local).AddTicks(3151),
+                            ExpiresOn = new DateTime(2023, 2, 8, 12, 44, 57, 184, DateTimeKind.Local).AddTicks(3496),
                             State = 0,
                             Title = "Tender 1"
                         },
@@ -326,11 +326,15 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 2,
                             Description = "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.",
-
-                            ExpiresOn = new DateTime(2023, 2, 8, 11, 19, 19, 515, DateTimeKind.Local).AddTicks(7492),
+                            ExpiresOn = new DateTime(2023, 2, 8, 12, 44, 57, 194, DateTimeKind.Local).AddTicks(7171),
+                            State = 0,
+                            Title = "Tender 2"
+                        },
+                        new
+                        {
+                            Id = 3,
                             Description = "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2023, 1, 24, 2, 18, 29, 735, DateTimeKind.Local).AddTicks(3912),
-                            ExpiresOn = new DateTime(2023, 2, 8, 11, 19, 19, 515, DateTimeKind.Local).AddTicks(7717),
+                            ExpiresOn = new DateTime(2023, 2, 8, 12, 44, 57, 194, DateTimeKind.Local).AddTicks(8208),
                             State = 0,
                             Title = "Tender 3"
                         });
