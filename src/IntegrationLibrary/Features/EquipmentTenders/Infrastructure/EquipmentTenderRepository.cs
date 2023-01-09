@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
+﻿using IntegrationLibrary.Core.Utility;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -120,9 +121,13 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             }
         }
 
-        public ICollection<TenderApplication> GetFinishedApplications()
+        public ICollection<TenderApplication> GetFinishedApplications(DateRange dr)
         {
-            return _context.TenderApplications.ToList();
+            return _context.TenderApplications.Include(e => e.TenderOffers).ThenInclude(e => e.TenderRequirement)
+                                              .Include(e => e.User)
+                                              .Include(e => e.EquipmentTender)
+                                              .Where(ta => ta.HasWon && ta.Finished >= dr.StartDate && ta.Finished <= dr.EndDate)
+                                              .ToList();
         }
     }
 }

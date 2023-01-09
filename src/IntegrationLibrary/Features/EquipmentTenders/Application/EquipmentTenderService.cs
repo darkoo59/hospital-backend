@@ -1,6 +1,7 @@
 ﻿using Gehtsoft.PDFFlow.Builder;
 using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.Blood.DTO;
+using IntegrationLibrary.Features.Blood.Enums;
 using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
@@ -166,17 +167,16 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             _repository.Update(ta);
         }
 
-        public void GenerateAndUploadPdf(DateRange dateRange)
+        public string GenerateAndUploadPdf(DateRange dateRange)
         {
             var folderPath = Environment.CurrentDirectory + "\\PDFs";
             var fileName = "TenderReport_" + DateTime.Now.Ticks + ".pdf";
             var filePath = Path.Combine(folderPath, fileName);
 
-            ICollection<TenderApplication> data = new List<TenderApplication>();
-            
-            GeneratePdf(data, filePath);
+            GeneratePdf(_repository.GetFinishedApplications(dateRange), filePath);
 
-            //SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+            SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+            return filePath;
         }
 
         private void GeneratePdf(ICollection<TenderApplication> data, string filePath)
@@ -184,7 +184,50 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             var stream = new FileStream(filePath, FileMode.Create);
             DocumentBuilder builder = DocumentBuilder.New();
             var section = builder.AddSection();
-            section.AddParagraph("Hello");
+
+            double[] nums = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            double totalMoney = 0;
+
+            section.AddParagraph("Tender report");
+            section.AddLine();
+            section.AddParagraph(" ");
+
+            foreach (TenderApplication ta in data)
+            {
+                section.AddParagraph("Tender name: " + ta.EquipmentTender.Title);
+                section.AddParagraph("Blood bank: " + ta.User.AppName);
+                section.AddParagraph("Tender finished on: " + ta.Finished);
+                section.AddParagraph(" ");
+
+                foreach (TenderOffer offer in ta.TenderOffers)
+                {
+                    string temp = "           ";
+                    temp += offer.TenderRequirement.BloodType + " -> ";
+                    temp += offer.TenderRequirement.Amount;
+                    temp += " (" + offer.Money.Amount + " EUR)";
+                    nums[(int)offer.TenderRequirement.BloodType] += offer.TenderRequirement.Amount;
+                    totalMoney += offer.Money.Amount;
+                    section.AddParagraph(temp);
+                }
+                
+                section.AddParagraph(" ");
+                section.AddParagraph(" ");
+            }
+
+            section.AddParagraph("Total");
+            section.AddLine();
+            section.AddParagraph(" ");
+
+            for (int i = 0; i < 8; i++)
+            {
+                string temp = "";
+                temp += (BloodType)i + " -> ";
+                temp += nums[i];
+                section.AddParagraph(temp);
+            }
+
+            section.AddParagraph(" ");
+            section.AddParagraph("Total money: " + totalMoney + " EUR");
 
             builder.Build(stream);
             stream.Close();

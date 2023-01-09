@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20230109101920_mig")]
-    partial class mig
+    [Migration("20230109131937_nova")]
+    partial class nova
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -320,7 +320,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             Description = "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2023, 2, 8, 11, 19, 19, 512, DateTimeKind.Local).AddTicks(3151),
+                            ExpiresOn = new DateTime(2023, 2, 8, 14, 19, 36, 290, DateTimeKind.Local).AddTicks(1545),
                             State = 0,
                             Title = "Tender 1"
                         },
@@ -328,7 +328,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 2,
                             Description = "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.",
-                            ExpiresOn = new DateTime(2023, 2, 8, 11, 19, 19, 515, DateTimeKind.Local).AddTicks(7492),
+                            ExpiresOn = new DateTime(2023, 2, 8, 14, 19, 36, 296, DateTimeKind.Local).AddTicks(8091),
                             State = 0,
                             Title = "Tender 2"
                         },
@@ -336,7 +336,7 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 3,
                             Description = "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.",
-                            ExpiresOn = new DateTime(2023, 2, 8, 11, 19, 19, 515, DateTimeKind.Local).AddTicks(7717),
+                            ExpiresOn = new DateTime(2023, 2, 8, 14, 19, 36, 296, DateTimeKind.Local).AddTicks(8682),
                             State = 0,
                             Title = "Tender 3"
                         });
@@ -555,6 +555,64 @@ namespace IntegrationLibrary.Migrations
                             BloodBankId = 2,
                             ReportFrequency = "* * * * *",
                             ReportPeriod = 3
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Features.UrgentBloodOrder.Model.UrgentOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("BloodBankName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UrgentOrders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BloodBankName = "app2",
+                            BloodType = 0,
+                            Date = new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Quantity = 100.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BloodBankName = "app1",
+                            BloodType = 3,
+                            Date = new DateTime(2022, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Quantity = 80.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BloodBankName = "app2",
+                            BloodType = 6,
+                            Date = new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Quantity = 160.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BloodBankName = "app3",
+                            BloodType = 4,
+                            Date = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Quantity = 310.0
                         });
                 });
 
