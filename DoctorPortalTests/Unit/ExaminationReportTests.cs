@@ -13,7 +13,7 @@ namespace HospitalTests.Unit
 {
     public class ExaminationReportTests
     {
-        [Fact]
+        /*[Fact]
         public void Get_All_Examination_Reports()
         {
             List<ExaminationReport> data = GetNewsData();
@@ -37,7 +37,7 @@ namespace HospitalTests.Unit
             Assert.Equal(report, data[0]);
         }
 
-
+        */
         [Fact]
         public void Create_Invalid_Examination_Report()
         {

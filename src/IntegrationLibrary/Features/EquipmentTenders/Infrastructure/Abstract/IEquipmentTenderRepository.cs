@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
+﻿using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using System.Collections.Generic;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
@@ -16,5 +17,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         void DeleteApplicationByIdAndUser(int id, int userId);
         TenderApplication GetApplicationById(int id);
         EquipmentTender GetTenderWithApplicationsById(int id);
+        ICollection<User> GetAllUsersByTenderEquipmentId(int id);
     }
 }

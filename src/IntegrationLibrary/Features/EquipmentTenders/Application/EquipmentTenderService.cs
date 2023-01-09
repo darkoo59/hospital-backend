@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.Blood.DTO;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Features.Blood.DTO;
 using IntegrationLibrary.Features.BloodBank;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
@@ -11,6 +12,7 @@ using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.HospitalService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Application
 {
@@ -124,10 +126,17 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             User user = _userService.GetBy(email);
 
             TenderApplication ta = _repository.GetApplicationById(applicationId);
+            List<User> tenderParticipants = _repository.GetAllUsersByTenderEquipmentId(ta.EquipmentTender.Id).ToList();
             if (ta == null) throw new Exception("Application has not been found.");
             if (ta.User.Id != user.Id) throw new Exception("Invalid access");
             if (!ta.HasWon) throw new Exception("Some error has occurred");
 
+            SendEmailToWinner(email, ta);
+            foreach (User userIter in tenderParticipants)
+            {
+                if (!userIter.Email.Equals(email))
+                    SendEmailToOtherParticipants(userIter.Email, ta);
+            }
             ta.EquipmentTender.SetState(TenderState.CLOSED);
 
             List<BloodDTO> bloodDTOs = new();
@@ -160,6 +169,42 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             ta.SetHasWon(false);
 
             _repository.Update(ta);
+        }
+
+        public void SendEmailToWinner(string email, TenderApplication ta)
+        {
+            foreach(TenderOffer to in ta.TenderOffers)
+            {
+                MailContent content = new MailContent()
+                {
+                    ToEmail = email,
+                    Subject = "Hospital tender ended",
+                    Body = "    Congratulations, you have successfully won our equipment tender. Detailed informations " +
+                    "about tender are in the continuation of this email. Blood amount : " + to.TenderRequirement.Amount + " ." +
+                    "Blood type :" + to.TenderRequirement.BloodType.ToString() + ".",
+                    Attachments = null
+                };
+                _bloodBankService.SendEmail(content);
+                break;
+            }
+        }
+
+        public void SendEmailToOtherParticipants(string email, TenderApplication ta)
+        {
+            foreach (TenderOffer to in ta.TenderOffers)
+            {
+                MailContent content = new MailContent()
+                {
+                    ToEmail = email,
+                    Subject = "Hospital tender ended",
+                    Body = "    Unfortunately, you did not win on our equipment tender. Detailed informations " +
+                    "about tender are in the continuation of this email. Blood amount : " + to.TenderRequirement.Amount + " ." +
+                    "Blood type :" + to.TenderRequirement.BloodType.ToString() + ".",
+                    Attachments = null
+                };
+                _bloodBankService.SendEmail(content);
+                break;
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
+﻿using IntegrationLibrary.Features.BloodBank.Model;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
@@ -118,6 +120,23 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             {
                 throw;
             }
+        }
+
+        public ICollection<User> GetAllUsersByTenderEquipmentId(int id)
+        {
+            ICollection<User> usersToReturn = new List<User>();
+            foreach (TenderApplication ta in _context.TenderApplications)
+            {
+                if(ta.EquipmentTender.Id == id)
+                {
+                    foreach(User user in _context.Users)
+                    {
+                        if(user.Id == ta.UserId)
+                            usersToReturn.Add(user);
+                    }
+                }
+            }
+            return usersToReturn;
         }
     }
 }
