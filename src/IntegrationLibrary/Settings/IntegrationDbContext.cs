@@ -11,6 +11,7 @@ using IntegrationLibrary.Features.ReportConfigurations.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using IntegrationLibrary.Features.ManagerNotification.Model;
+using IntegrationLibrary.Features.UrgentBloodOrder.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -26,6 +27,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<TenderApplication> TenderApplications { get; set; }
         public DbSet<TenderRequirement> TenderRequirements { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
+        public DbSet<UrgentOrder> UrgentOrders { get; set; }
 
 
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
@@ -92,6 +94,13 @@ namespace IntegrationLibrary.Settings
             modelBuilder.Entity<TenderOffer>().Property(t => t.Money).HasConversion(
                 m => m.Amount,
                 m => new Money(m)
+            );
+
+            modelBuilder.Entity<UrgentOrder>().HasData(
+                new UrgentOrder(1, BloodType.A_PLUS, 100, "app2", new DateTime(2022, 10, 14)),
+                new UrgentOrder(2, BloodType.B_MINUS, 80, "app1", new DateTime(2022, 11, 18)),
+                new UrgentOrder(3, BloodType.O_PLUS, 160, "app2", new DateTime(2022, 12, 6)),
+                new UrgentOrder(4, BloodType.AB_PLUS, 310, "app3", new DateTime(2022, 12, 13))
             );
 
             base.OnModelCreating(modelBuilder);

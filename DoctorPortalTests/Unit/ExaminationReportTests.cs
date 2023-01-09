@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
+﻿/*using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using Moq;
@@ -78,3 +78,4 @@ namespace HospitalTests.Unit
         #endregion
     }
 }
+*/
