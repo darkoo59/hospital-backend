@@ -1,35 +1,32 @@
+using System.Text;
+using System.Threading.Tasks;
 using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
+using HospitalAPI.Registration.Dtos;
+using HospitalAPI.Registration.Mappers;
 using HospitalLibrary.Core.Model;
-using HospitalLibrary.SharedModel;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.HospitalMap.Repository;
 using HospitalLibrary.HospitalMap.Service;
+using HospitalLibrary.Registration.Repository;
+using HospitalLibrary.Registration.Service;
+using HospitalLibrary.RenovationEventSourcing;
+using HospitalLibrary.Security;
 using HospitalLibrary.Settings;
-using MailKit;
+using HospitalLibrary.SharedModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Identity;
-using System;
-using HospitalLibrary.Security;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Registration.Repository;
-using HospitalLibrary.Registration.Service;
-using HospitalAPI.Registration.Mappers;
-using HospitalAPI.Registration.Dtos;
-using HospitalLibrary.Feedbacks.Repository;
-using HospitalLibrary.Feedbacks.Service;
-using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
+using Microsoft.OpenApi.Models;
 
 namespace HospitalAPI
 {
@@ -160,7 +157,14 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<Vacation, VacationDTO>, VacationMapper>();
             services.AddScoped<IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO>, PhysicianScheduleMapper>();
 
-            SetupAuth(services);
+			services.AddScoped<IEventInvoker, EventInvoker>();
+			services.AddScoped<IEventService, EventService>();
+			services.AddScoped<IEventRepository, EventRepository>();
+
+
+
+
+			SetupAuth(services);
         }
 
         private static void SetupAuth(IServiceCollection services)

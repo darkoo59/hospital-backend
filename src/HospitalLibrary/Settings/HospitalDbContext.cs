@@ -1,11 +1,11 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.RenovationEventSourcing;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 
 namespace HospitalLibrary.Settings
@@ -41,8 +41,10 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<MoveRequest> MoveRequests { get; set; }
+		public DbSet<Event> Events { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                .EnableSensitiveDataLogging();
 
