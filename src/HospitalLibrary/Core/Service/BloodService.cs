@@ -76,7 +76,7 @@ namespace HospitalLibrary.Core.Service
             }
         }
 
-        public Boolean ChangeQuantity(BloodUsageEvidency bloodUsageEvidency)
+        public Boolean ChangeQuantityy(BloodUsageEvidency bloodUsageEvidency)
         {
 
             Blood blood = _bloodRepository.GetByBloodType(bloodUsageEvidency.BloodType);

@@ -34,6 +34,7 @@ using IntegrationLibrary.Features.MonthlyBloodSubscription.Service;
 using IntegrationLibrary.Features.MonthlyBloodSubscription.Repository;
 using IntegrationLibrary.Features.ManagerNotification.Service;
 using IntegrationLibrary.Features.ManagerNotification.Repository;
+using IntegrationLibrary.Features.UrgentBloodOrder.Repository;
 
 namespace IntegrationAPI
 {
@@ -105,6 +106,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
 
             services.AddScoped<IUrgentBloodOrderService, UrgentBloodOrderService>();
+            services.AddScoped<IUrgentOrderRepository, UrgentOrderRepository>();
 
             services.AddScoped<IHospitalService, HospitalService>();
 
@@ -120,6 +122,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IManagerNotificationService, ManagerNotificationService>();
             services.AddScoped<IManagerNotificationRepository, ManagerNotificationRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

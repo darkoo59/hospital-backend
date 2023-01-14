@@ -27,6 +27,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using System.Threading.Tasks;
+using HospitalLibrary.Registration.Repository;
+using HospitalLibrary.Registration.Service;
+using HospitalAPI.Registration.Mappers;
+using HospitalAPI.Registration.Dtos;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
+using HospitalLibrary.EventSourcing.Service;
+using HospitalLibrary.EventSourcing.Repository;
+using HospitalLibrary.EventSourcing.Infrastructure;
+using HospitalLibrary.EventSourcing.Projections.Examination;
 
 namespace HospitalAPI
 {
@@ -115,6 +128,9 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IGenericMapper<Doctor, DoctorDTO>, DoctorMapper>();
 
+            services.AddScoped<IEquipmentTenderService, EquipmentTenderService>();
+
+
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
             services.AddScoped<IGenericMapper<Blood, BloodDTO>, BloodMapper>();
@@ -161,10 +177,18 @@ namespace HospitalAPI
 			services.AddScoped<IEventService, EventService>();
 			services.AddScoped<IEventRepository, EventRepository>();
 
+            services.AddScoped<IExaminationRepository, ExaminationRepository>();
+            services.AddScoped<IExaminationService, ExaminationService>();
+            services.AddScoped<EventStore>();
+
+            services.AddScoped<IGenericMapper<AverageNumberOfSteps, AverageNumberOfExaminationStepsDTO>, AverageNumberOfExaminationStepsMapper>();
+            services.AddScoped<IGenericMapper<AverageNumberOfVisitsToCertainStep, AverageNumberOfVisitsToCertainStepDTO>, AverageNumberOfVisitsToCertainStepMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfExam, AverageDurationOfExamDTO>, AverageDurationOfExamMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfEachStep, AverageDurationOfEachStepDTO>, AverageDurationOfEachStepMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfSingleStep, AverageDurationOfSingleStepDTO>, AverageDurationOfSingleStepMapper>();
 
 
-
-			SetupAuth(services);
+            SetupAuth(services);
         }
 
         private static void SetupAuth(IServiceCollection services)

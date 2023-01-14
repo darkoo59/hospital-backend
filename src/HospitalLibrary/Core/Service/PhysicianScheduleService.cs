@@ -1,4 +1,9 @@
 ﻿using System;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
@@ -71,14 +76,17 @@ namespace HospitalLibrary.Core.Service
             return appointments;
         }
 
-        public void Schedule(int doctorId, Appointment appointment)
+        public bool Schedule(int doctorId, Appointment appointment)
         {
             PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
             if (physicianSchedule.IsAppointmentValid(appointment))
             {
                 physicianSchedule.Appointments.Add(appointment);
-                _physicianScheduleRepository.Update(physicianSchedule);
+                Update(physicianSchedule);
+                return true;
             }
+
+            return false;
         }
 
         public void TransferAppointment(int doctorId, Appointment appointment)
