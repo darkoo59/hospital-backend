@@ -44,11 +44,11 @@ namespace HospitalLibrary.Core.Model
             {
                 if (appointment.ScheduledDate.Start >= vacation.StartDate && appointment.ScheduledDate.Start <= vacation.EndDate)
                 {
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
 
@@ -77,7 +77,7 @@ namespace HospitalLibrary.Core.Model
 
         public bool IsAppointmentValid(Appointment appointment)
         {
-            return IsAppointmentAvailable(appointment) && IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.ScheduledDate.Start);
+            return IsAppointmentAvailable(appointment) && !IsDoctorOnVacation(appointment) && IsDoctorAvailable(appointment) && !IsWeekend(appointment.ScheduledDate.Start);
         }
 
 

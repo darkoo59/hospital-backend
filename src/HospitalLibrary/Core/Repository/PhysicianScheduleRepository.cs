@@ -55,6 +55,7 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(PhysicianSchedule physicianSchedule)
         {
+            _context.Attach(physicianSchedule);
             _context.Entry(physicianSchedule).State = EntityState.Modified;
 
             try
