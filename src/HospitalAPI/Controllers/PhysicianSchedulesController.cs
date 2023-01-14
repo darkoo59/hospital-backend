@@ -39,6 +39,17 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = physicianSchedule.Id }, physicianSchedule);
         }
 
+        [HttpPost("{doctorId}")]
+        public ActionResult ScheduleAppointment(int doctorId, AppointmentDTO appointmentDTO)
+        {
+            if (_service.Schedule(doctorId, _appointmentMapper.ToModel(appointmentDTO)))
+            {
+                return Ok(doctorId);
+            }
+            else
+                return Ok(0);
+        }
+
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -78,7 +89,7 @@ namespace HospitalAPI.Controllers
             }
 
             List<WorkTime> workTimes = new List<WorkTime>();
-            workTimes.Add(new WorkTime(new DateRange(new DateTime(2022, 12, 8), new DateTime(2022, 12, 25)), new DateTime(2022, 11, 11, 7, 0, 0), new DateTime(2022, 11, 11, 15, 0, 0)));
+            workTimes.Add(new WorkTime(new DateRange(new DateTime(2023, 1, 10), new DateTime(2023, 12, 25)), new DateTime(2022, 11, 11, 7, 0, 0), new DateTime(2022, 11, 11, 15, 0, 0)));
             List<Appointment> appointments = new List<Appointment>();
             appointments.Add(new Appointment(new DateRange(new DateTime(2022, 12, 8, 7, 0, 0), new DateTime(2022, 12, 8, 7, 30, 0)), 1, null, 1, null, false));
             PhysicianSchedule physicianSchedule = new PhysicianSchedule(1, 1, null, workTimes, appointments, new List<Vacation>());
