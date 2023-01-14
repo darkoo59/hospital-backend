@@ -1,12 +1,12 @@
+﻿using System;
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -99,6 +99,32 @@ namespace HospitalLibrary.Core.Service
         public void Update(PhysicianSchedule physicianSchedule)
         {
             _physicianScheduleRepository.Update(physicianSchedule);
+        }
+
+        public Dictionary<int, int> GetDoctorWorkloadForDateRangeByDays(int doctorId, DateTime startDate, DateTime endDate)
+        {
+            PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
+            Dictionary<int, int> doctorWorkload = new Dictionary<int, int>();
+
+            for(int i = 0; i <= endDate.Day - startDate.Day; i++)
+            {
+                int numberOfAppointmentsForDay = physicianSchedule.Get(doctorId, startDate.AddDays(i), startDate.AddDays(i+1)).Count;
+                doctorWorkload.Add(startDate.Day + i, numberOfAppointmentsForDay);
+            }
+            return doctorWorkload;
+        }
+
+        public Dictionary<int, int> GetDoctorWorkloadForDateRangeByMonths(int doctorId, DateTime startDate, DateTime endDate)
+        {
+            PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
+            Dictionary<int, int> doctorWorkload = new Dictionary<int, int>();
+
+            for (int i = 0; i <= endDate.Month - startDate.Month; i++)
+            {
+                int numberOfAppointmentsForMonth = physicianSchedule.Get(doctorId, startDate.AddMonths(i), startDate.AddMonths(i + 1)).Count;
+                doctorWorkload.Add(startDate.Month + i, numberOfAppointmentsForMonth);
+            }
+            return doctorWorkload;
         }
     }
 }
