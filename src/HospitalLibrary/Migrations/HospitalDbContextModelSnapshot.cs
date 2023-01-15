@@ -1657,11 +1657,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-
-                            EndDate = new DateTime(2023, 1, 19, 11, 49, 38, 840, DateTimeKind.Local).AddTicks(8860),
+                            EndDate = new DateTime(2023, 1, 29, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(1986),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 14, 11, 49, 38, 834, DateTimeKind.Local).AddTicks(7125),
-
+                            StartDate = new DateTime(2023, 1, 24, 21, 5, 9, 946, DateTimeKind.Local).AddTicks(2474),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1669,10 +1667,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-
-                            EndDate = new DateTime(2023, 1, 24, 11, 49, 38, 841, DateTimeKind.Local).AddTicks(3671),
+                            EndDate = new DateTime(2023, 2, 3, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3635),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 23, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3465),
+                            StartDate = new DateTime(2023, 1, 29, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3621),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1680,9 +1677,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 2, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3480),
+                            EndDate = new DateTime(2023, 2, 8, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3642),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 28, 15, 13, 45, 341, DateTimeKind.Local).AddTicks(3478),
+                            StartDate = new DateTime(2023, 2, 3, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3639),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1902,6 +1899,24 @@ namespace HospitalLibrary.Migrations
                             Quantity = 12,
                             RoomId = 5
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationEventSourcing.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("HospitalLibrary.SharedModel.User", b =>
