@@ -123,21 +123,12 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             }
         }
 
-        public ICollection<User> GetAllUsersByTenderEquipmentId(int id)
+        public ICollection<TenderApplication> GetAllUsersByTenderEquipmentId(int id)
         {
-            ICollection<User> usersToReturn = new List<User>();
-            foreach (TenderApplication ta in _context.TenderApplications)
-            {
-                if(ta.EquipmentTender.Id == id)
-                {
-                    foreach(User user in _context.Users)
-                    {
-                        if(user.Id == ta.UserId)
-                            usersToReturn.Add(user);
-                    }
-                }
-            }
-            return usersToReturn;
+            return _context.TenderApplications.Include(ta => ta.User)
+                .Include(ta => ta.EquipmentTender)
+                .Where(ta => ta.EquipmentTenderId == id)
+                .ToList();
         }
         
         public ICollection<TenderApplication> GetFinishedApplications(DateRange dr)

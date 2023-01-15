@@ -130,7 +130,11 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             User user = _userService.GetBy(email);
 
             TenderApplication ta = _repository.GetApplicationById(applicationId);
-            List<User> tenderParticipants = _repository.GetAllUsersByTenderEquipmentId(ta.EquipmentTender.Id).ToList();
+            List<User> tenderParticipants = new List<User>();
+            foreach (TenderApplication taIter in _repository.GetAllUsersByTenderEquipmentId(applicationId))
+            {
+                tenderParticipants.Add(taIter.User);
+            }
             if (ta == null) throw new Exception("Application has not been found.");
             if (ta.User.Id != user.Id) throw new Exception("Invalid access");
             if (!ta.HasWon) throw new Exception("Some error has occurred");
@@ -180,6 +184,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
         {
             foreach(TenderOffer to in ta.TenderOffers)
             {
+
                 MailContent content = new MailContent()
                 {
                     ToEmail = email,
