@@ -1657,9 +1657,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 29, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(1986),
+                            EndDate = new DateTime(2023, 1, 30, 22, 0, 30, 725, DateTimeKind.Local).AddTicks(9171),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 24, 21, 5, 9, 946, DateTimeKind.Local).AddTicks(2474),
+                            StartDate = new DateTime(2023, 1, 25, 22, 0, 30, 719, DateTimeKind.Local).AddTicks(9923),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1667,9 +1667,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 3, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3635),
+                            EndDate = new DateTime(2023, 2, 4, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(3028),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 29, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3621),
+                            StartDate = new DateTime(2023, 1, 30, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(2986),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1677,9 +1677,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 8, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3642),
+                            EndDate = new DateTime(2023, 2, 9, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(3043),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 2, 3, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3639),
+                            StartDate = new DateTime(2023, 2, 4, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(3038),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1752,16 +1752,18 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("IsDisplayedPublic")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Privatisation")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Textt")
                         .HasColumnType("text");
 
-                    b.Property<string>("User")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Feedbacks");
 
@@ -1771,27 +1773,27 @@ namespace HospitalLibrary.Migrations
                             Id = 1,
                             Date = "25.10.2022",
                             IsDisplayedPublic = false,
+                            PatientId = 5,
                             Privatisation = false,
-                            Textt = "Awesome clinic!",
-                            User = "Милош"
+                            Textt = "Awesome clinic!"
                         },
                         new
                         {
                             Id = 2,
                             Date = "25.10.2022",
                             IsDisplayedPublic = false,
+                            PatientId = 5,
                             Privatisation = false,
-                            Textt = "It's okay... I guess.",
-                            User = "Немања"
+                            Textt = "It's okay... I guess."
                         },
                         new
                         {
                             Id = 3,
                             Date = "25.10.2022",
                             IsDisplayedPublic = false,
+                            PatientId = 5,
                             Privatisation = false,
-                            Textt = "Awful.",
-                            User = "Огњен"
+                            Textt = "Awful."
                         });
                 });
 
@@ -2201,6 +2203,15 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("EventId");
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>

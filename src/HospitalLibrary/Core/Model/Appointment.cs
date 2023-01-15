@@ -42,7 +42,5 @@ namespace HospitalLibrary.Core.Model
             }
             return false;
         }
-
-
     }
 }

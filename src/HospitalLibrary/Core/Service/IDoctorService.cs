@@ -7,5 +7,6 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<Doctor> GetAll();
         Doctor GetById(int id);
+        IEnumerable<Doctor> GetAllBySpecialization(int specializationId);
     }
 }

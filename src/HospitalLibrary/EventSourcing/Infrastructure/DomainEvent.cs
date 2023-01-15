@@ -16,7 +16,10 @@ namespace HospitalLibrary.EventSourcing.Infrastructure
             Id = new Guid();
             Time = DateTime.Now;
         }
-
+        public DomainEvent(int aggregateId)
+        {
+            //Id = aggregateId;
+        }
         
     }
 }

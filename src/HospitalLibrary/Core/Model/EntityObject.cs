@@ -2,7 +2,7 @@
 {
     public abstract class EntityObject
     {
-        public int Id;
+        public int Id { get; set; }
         //protected abstract IEnumerable<object> GetEqualityComponents();
 
         public override bool Equals(object obj)

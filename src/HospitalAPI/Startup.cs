@@ -40,6 +40,7 @@ using HospitalLibrary.EventSourcing.Service;
 using HospitalLibrary.EventSourcing.Repository;
 using HospitalLibrary.EventSourcing.Infrastructure;
 using HospitalLibrary.EventSourcing.Projections.Examination;
+using HospitalLibrary.Feedbacks.Model;
 
 namespace HospitalAPI
 {
@@ -92,6 +93,8 @@ namespace HospitalAPI
             services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
             services.AddScoped<IGenericMapper<MedicalRecord, PatientDTO>, MedicalRecordMapper>();
             
+
+            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
             services.AddScoped<IGenericMapper<Appointment, AppointmentDTO>, AppointmentMapper>();
             services.AddScoped<IGenericMapper<Bed, BedDTO>, BedMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatment, InpatientTreatmentDTO>, InpatientTreatmentMapper>();
@@ -99,6 +102,7 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<MedicineTherapy, MedicineTherapyDTO>, MedicineTherapyMapper>();
             services.AddScoped<IGenericMapper<BloodTherapy, BloodTherapyDTO>, BloodTherapyMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatmentTherapy, InpatientTreatmentTherapyDTO>, InpatientTreatmentTherapyMapper>();
+            services.AddScoped<IGenericMapper<Feedback, FeedbackDTO>, FeedbackMapper>();
 
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
@@ -187,7 +191,7 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<AverageDurationOfEachStep, AverageDurationOfEachStepDTO>, AverageDurationOfEachStepMapper>();
             services.AddScoped<IGenericMapper<AverageDurationOfSingleStep, AverageDurationOfSingleStepDTO>, AverageDurationOfSingleStepMapper>();
 
-            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            //services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
 
             SetupAuth(services);

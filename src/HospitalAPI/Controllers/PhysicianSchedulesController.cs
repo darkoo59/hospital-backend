@@ -5,6 +5,7 @@ using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Security;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -16,7 +17,6 @@ namespace HospitalAPI.Controllers
         private readonly IPhysicianScheduleService _service;
         private readonly IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO> _mapper;
         private readonly IGenericMapper<Appointment, AppointmentDTO> _appointmentMapper;
-
         public PhysicianSchedulesController(IPhysicianScheduleService service, IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO> mapper, IGenericMapper<Appointment, AppointmentDTO> appointmentMapper)
         {
             _service = service;
@@ -47,7 +47,11 @@ namespace HospitalAPI.Controllers
             else
                 return Ok(0);
         }
-
+        [HttpPost("schedule")]
+        public ActionResult Schedule(AppointmentDTO appointmentDTO)
+        {
+            return Ok(_service.Schedule((int)appointmentDTO.DoctorId, _appointmentMapper.ToModel(appointmentDTO)));
+        }
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -140,6 +144,15 @@ namespace HospitalAPI.Controllers
             return Ok(_service.GetDoctorWorkloadForDateRangeByMonths(doctorWorkloadDTO.DoctorId, doctorWorkloadDTO.StartDate, doctorWorkloadDTO.EndDate));
         }
 
-
+        [HttpPost("appointments/getAvailable")]
+        public ActionResult GetAppointments(AppointmentDTO appointmentDTO)
+        {
+            List<String> times = new List<String>();
+            foreach (AppointmentDTO appointment in _appointmentMapper.ToDTO(_service.GetAvailableAppointments((int)appointmentDTO.DoctorId, appointmentDTO.Date))) 
+            {
+                times.Add(appointment.Time);
+            }
+            return Ok(times);
+        }
     }
 }

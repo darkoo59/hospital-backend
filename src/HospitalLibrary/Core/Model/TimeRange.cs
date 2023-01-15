@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class DateRange : ValueObject
+    public class TimeRange : ValueObject
     {
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-
-        public DateRange(DateTime start, DateTime end)
+        public TimeSpan Start { get; }
+        public TimeSpan End { get; }
+        public TimeRange(TimeSpan start, TimeSpan end)
         {
             if (Validate(start, end))
             {
@@ -23,16 +22,14 @@ namespace HospitalLibrary.Core.Model
                 throw new Exception("Passed arguments are not valid!");
             }
         }
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Start;
             yield return End;
         }
-
-        private bool Validate(DateTime start, DateTime end)
+        private bool Validate(TimeSpan start, TimeSpan end)
         {
-            return start < end;  
+            return start <= end;
         }
     }
 }

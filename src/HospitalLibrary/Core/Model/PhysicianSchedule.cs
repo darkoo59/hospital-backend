@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -93,7 +94,5 @@ namespace HospitalLibrary.Core.Model
             }
             return appointments;
         }
-
-
     }
 }
