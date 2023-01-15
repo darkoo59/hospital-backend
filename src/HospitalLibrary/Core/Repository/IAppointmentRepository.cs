@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,5 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IAppointmentRepository
     {
-        public void Add(ScheduledAppointment scheduledAppointment);
-        public void Update(ScheduledAppointment scheduledAppointment);
     }
 }

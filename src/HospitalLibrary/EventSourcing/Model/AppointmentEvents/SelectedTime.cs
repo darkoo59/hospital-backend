@@ -9,12 +9,14 @@ namespace HospitalLibrary.Core.Model
 {
     public class SelectedTime : DomainEvent
     {
-        public SelectedTime(int aggregateId, TimeSpan time, TimeSpan timeSpentInSeconds) : base(aggregateId)
+        public SelectedTime(int aggregateId, TimeSpan time, DateTime start, int appointmentId) : base(aggregateId)
         {
             this.Time = time;
-            TimeSpentInSeconds = timeSpentInSeconds;
+            this.Start = start;
+            AppointmentId = appointmentId;
         }
+        public int AppointmentId { get; set; }
         public TimeSpan Time { get; set; }
-        public TimeSpan TimeSpentInSeconds { get; private set; }
+        public DateTime Start { get; set; }
     }
 }

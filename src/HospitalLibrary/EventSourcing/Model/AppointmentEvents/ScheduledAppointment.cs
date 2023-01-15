@@ -1,4 +1,6 @@
 ﻿using HospitalLibrary.EventSourcing.Infrastructure;
+using HospitalLibrary.EventSourcing.Model.AppointmentEvents;
+using HospitalLibrary.EventSourcing.Model.Snapshots;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +15,36 @@ namespace HospitalLibrary.Core.Model
         public DateRange ScheduledDate { get; set; }
         public Doctor Doctor { get; set; }
         public ScheduledAppointment() 
-        { }
-        public void SelectDate(DateTime start, DateTime end, DateTime selectedDate) 
         {
-            Causes(new SelectedDate(this.Id, selectedDate, end - start));
+            Causes(new AppointmentStarted(DateTime.Now));
         }
-        public void SelectSpecialization(DateTime start, DateTime end, Specialization specialization) 
+        public ScheduledAppointment(AppointmentSnapshot snapshot) 
         {
-            Causes(new SelectedSpecialization(this.Id, specialization, end - start));
+            Version = snapshot.Version;
         }
-        public void SelectDoctor(DateTime start, DateTime end, Doctor doctor)
+        public AppointmentSnapshot GetAppointmentShapshot() 
         {
-            Causes(new SelectedDoctor(this.Id, doctor, end - start));
+            var snapshot = new AppointmentSnapshot();
+
+            snapshot.Version = Version;
+
+            return snapshot;
         }
-        public void SelectTime(DateTime start, DateTime end, TimeSpan time)
+        public void SelectDate(DateTime selectedDate) 
         {
-            Causes(new SelectedTime(this.Id, time, end - start));
+            Causes(new SelectedDate(this.Id, selectedDate, DateTime.Now));
+        }
+        public void SelectSpecialization(Specialization specialization) 
+        {
+            Causes(new SelectedSpecialization(this.Id, specialization, DateTime.Now));
+        }
+        public void SelectDoctor(Doctor doctor)
+        {
+            Causes(new SelectedDoctor(this.Id, doctor, DateTime.Now));
+        }
+        public void SelectTime(TimeSpan time, int appointmentId)
+        {
+            Causes(new SelectedTime(this.Id, time, DateTime.Now, appointmentId));
         }
         private void Causes(DomainEvent @event)
         {

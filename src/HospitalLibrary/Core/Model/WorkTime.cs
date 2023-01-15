@@ -9,6 +9,8 @@ namespace HospitalLibrary.Core.Model
     {
         public DateRange DateRange { get; }
         public TimeRange TimeRange { get; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         //[Required]
         //public int? DoctorId { get; }
         //[ForeignKey("DoctorId")]

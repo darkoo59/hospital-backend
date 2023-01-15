@@ -44,13 +44,12 @@ namespace HospitalLibrary.Core.Service
 
         public void Schedule(int doctorId, Appointment appointment)
         {
-            /*PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
+            PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
             if (physicianSchedule.IsAppointmentValid(appointment))
             {
                 physicianSchedule.Appointments.Add(appointment);
                 _physicianScheduleRepository.Update(physicianSchedule);
-            }*/
-            _physicianScheduleRepository.Schedule(appointment);
+            }
         }
 
         public void TransferAppointment(int doctorId, Appointment appointment)
