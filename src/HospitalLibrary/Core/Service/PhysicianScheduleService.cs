@@ -13,9 +13,12 @@ namespace HospitalLibrary.Core.Service
     public class PhysicianScheduleService : IPhysicianScheduleService
     {
         private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
-        public PhysicianScheduleService(IPhysicianScheduleRepository physicianScheduleRepository)
+        private readonly IAppointmentRepository _appointmentRepository;
+
+        public PhysicianScheduleService(IPhysicianScheduleRepository physicianScheduleRepository, IAppointmentRepository appointmentRepository)
         {
             _physicianScheduleRepository = physicianScheduleRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public void Create(PhysicianSchedule physicianSchedule)
@@ -101,6 +104,13 @@ namespace HospitalLibrary.Core.Service
             _physicianScheduleRepository.Update(physicianSchedule);
         }
 
+        public void SetAppointmentToFinish(int appointmentId)
+        {
+            Appointment appointment = _appointmentRepository.GetById(appointmentId);
+            appointment.IsFinished = true;
+            _appointmentRepository.Update(appointment);
+        }
+        
         public Dictionary<int, int> GetDoctorWorkloadForDateRangeByDays(int doctorId, DateTime startDate, DateTime endDate)
         {
             PhysicianSchedule physicianSchedule = _physicianScheduleRepository.Get(doctorId);
@@ -125,6 +135,7 @@ namespace HospitalLibrary.Core.Service
                 doctorWorkload.Add(startDate.Month + i, numberOfAppointmentsForMonth);
             }
             return doctorWorkload;
+
         }
     }
 }

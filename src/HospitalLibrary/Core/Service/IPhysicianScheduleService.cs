@@ -16,7 +16,9 @@ namespace HospitalLibrary.Core.Service
         void TransferAppointment(int doctorId, Appointment appointment);
         PhysicianSchedule Get(int doctorId);
         List<Appointment> GetAppointments(int doctorId);
+        void SetAppointmentToFinish(int appointmentId);
         Dictionary<int, int> GetDoctorWorkloadForDateRangeByDays(int doctorId, DateTime startDate, DateTime endDate);
         Dictionary<int, int> GetDoctorWorkloadForDateRangeByMonths(int doctorId, DateTime startDate, DateTime endDate);
 	}
+
 }
