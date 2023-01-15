@@ -18,5 +18,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract
         TenderApplication GetApplicationById(int id);
         EquipmentTender GetTenderWithApplicationsById(int id);
         ICollection<TenderApplication> GetFinishedApplications(DateRange dr);
+        ICollection<TenderApplication> GetAllUsersByTenderEquipmentId(int id);
     }
 }

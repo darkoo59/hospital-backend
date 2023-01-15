@@ -1,9 +1,11 @@
+﻿﻿using IntegrationLibrary.Features.BloodBank.Model;
 ﻿using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
@@ -121,6 +123,14 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             }
         }
 
+        public ICollection<TenderApplication> GetAllUsersByTenderEquipmentId(int id)
+        {
+            return _context.TenderApplications.Include(ta => ta.User)
+                .Include(ta => ta.EquipmentTender)
+                .Where(ta => ta.EquipmentTenderId == id)
+                .ToList();
+        }
+        
         public ICollection<TenderApplication> GetFinishedApplications(DateRange dr)
         {
             return _context.TenderApplications.Include(e => e.TenderOffers).ThenInclude(e => e.TenderRequirement)
