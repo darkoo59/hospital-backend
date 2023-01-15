@@ -47,7 +47,7 @@ namespace HospitalLibrary.Core.Model
         }
         private bool Validate(DateTime startTime, DateTime endTime)
         {
-            return startTime < endTime;
+            return startTime <= endTime;
         }
     }
 }

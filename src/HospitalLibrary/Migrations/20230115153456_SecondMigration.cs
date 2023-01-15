@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class SecondMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,17 +88,6 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Consiliums", x => x.ConsiliumId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DateRange",
-                columns: table => new
-                {
-                    Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    End = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
                 });
 
             migrationBuilder.CreateTable(
@@ -323,20 +312,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vacations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vacations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EventWrappers",
                 columns: table => new
                 {
@@ -528,34 +503,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ScheduledDate = table.Column<DateRange>(type: "jsonb", nullable: false),
-                    DoctorId = table.Column<int>(type: "integer", nullable: true),
-                    PatientId = table.Column<int>(type: "integer", nullable: true),
-                    IsFinished = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "DoctorId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
-                        principalColumn: "PatientId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DoctorPatient",
                 columns: table => new
                 {
@@ -586,9 +533,7 @@ namespace HospitalLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
-                    WorkTimes = table.Column<List<WorkTime>>(type: "jsonb", nullable: true),
-                    Appointments = table.Column<List<Appointment>>(type: "jsonb", nullable: true),
-                    Vacations = table.Column<List<Vacation>>(type: "jsonb", nullable: true)
+                    WorkTimes = table.Column<List<WorkTime>>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -618,6 +563,62 @@ namespace HospitalLibrary.Migrations
                         principalTable: "InpatientTreatments",
                         principalColumn: "InpatientTreatmentId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ScheduledDate = table.Column<DateRange>(type: "jsonb", nullable: false),
+                    DoctorId = table.Column<int>(type: "integer", nullable: true),
+                    PatientId = table.Column<int>(type: "integer", nullable: true),
+                    IsFinished = table.Column<bool>(type: "boolean", nullable: false),
+                    PhysicianScheduleId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "PatientId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Appointments_PhysicianSchedules_PhysicianScheduleId",
+                        column: x => x.PhysicianScheduleId,
+                        principalTable: "PhysicianSchedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vacations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PhysicianScheduleId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vacations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vacations_PhysicianSchedules_PhysicianScheduleId",
+                        column: x => x.PhysicianScheduleId,
+                        principalTable: "PhysicianSchedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -893,9 +894,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 3, 4, new DateTime(2023, 2, 9, 13, 4, 10, 578, DateTimeKind.Local).AddTicks(3862), "Tired", new DateTime(2023, 2, 4, 13, 4, 10, 578, DateTimeKind.Local).AddTicks(3857), 0, "NoUrgent" },
-                    { 1, 4, new DateTime(2023, 1, 30, 13, 4, 10, 577, DateTimeKind.Local).AddTicks(7656), "Tired", new DateTime(2023, 1, 25, 13, 4, 10, 571, DateTimeKind.Local).AddTicks(9415), 1, "NoUrgent" },
-                    { 2, 4, new DateTime(2023, 2, 4, 13, 4, 10, 578, DateTimeKind.Local).AddTicks(3846), "Tired", new DateTime(2023, 1, 30, 13, 4, 10, 578, DateTimeKind.Local).AddTicks(3762), 2, "Urgent" }
+                    { 3, 4, new DateTime(2023, 2, 9, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4184), "Tired", new DateTime(2023, 2, 4, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4180), 0, "NoUrgent" },
+                    { 1, 4, new DateTime(2023, 1, 30, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(1202), "Tired", new DateTime(2023, 1, 25, 16, 34, 54, 18, DateTimeKind.Local).AddTicks(8445), 1, "NoUrgent" },
+                    { 2, 4, new DateTime(2023, 2, 4, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4172), "Tired", new DateTime(2023, 1, 30, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4144), 2, "Urgent" }
                 });
 
             migrationBuilder.InsertData(
@@ -933,6 +934,11 @@ namespace HospitalLibrary.Migrations
                 name: "IX_Appointments_PatientId",
                 table: "Appointments",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_PhysicianScheduleId",
+                table: "Appointments",
+                column: "PhysicianScheduleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Beds_RoomId",
@@ -1019,6 +1025,11 @@ namespace HospitalLibrary.Migrations
                 table: "Users",
                 column: "Email",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacations_PhysicianScheduleId",
+                table: "Vacations",
+                column: "PhysicianScheduleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1043,9 +1054,6 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Consiliums");
-
-            migrationBuilder.DropTable(
-                name: "DateRange");
 
             migrationBuilder.DropTable(
                 name: "DoctorPatient");
@@ -1075,9 +1083,6 @@ namespace HospitalLibrary.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "PhysicianSchedules");
-
-            migrationBuilder.DropTable(
                 name: "Symptoms");
 
             migrationBuilder.DropTable(
@@ -1105,7 +1110,7 @@ namespace HospitalLibrary.Migrations
                 name: "Medicines");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "PhysicianSchedules");
 
             migrationBuilder.DropTable(
                 name: "InpatientTreatments");
@@ -1114,7 +1119,7 @@ namespace HospitalLibrary.Migrations
                 name: "Recipes");
 
             migrationBuilder.DropTable(
-                name: "Specializations");
+                name: "Doctors");
 
             migrationBuilder.DropTable(
                 name: "Beds");
@@ -1124,6 +1129,9 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "ExaminationReports");
+
+            migrationBuilder.DropTable(
+                name: "Specializations");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

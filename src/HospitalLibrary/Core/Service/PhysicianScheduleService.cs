@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using Org.BouncyCastle.Crypto.Tls;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -37,7 +38,7 @@ namespace HospitalLibrary.Core.Service
 
         public List<Appointment> GetAvailableAppointments(int doctorId, DateTime date)
         {
-            throw new NotImplementedException();
+            return FindFreeAppointments(new DateRange(date, date.AddSeconds(1)), doctorId);
         }
 
         public PhysicianSchedule GetById(int id)
@@ -132,6 +133,7 @@ namespace HospitalLibrary.Core.Service
                 app.DoctorId = 2;
                 app.Doctor = _doctorRepository.GetById(2);
                 app.PatientId = 1;
+                app.IsFinished = false;
                 appointments.Add(app);
             }
             return appointments;
@@ -191,7 +193,7 @@ namespace HospitalLibrary.Core.Service
         }
         private void DeleteDoctorsBusyTimes(List<DateRange> dateRanges, int doctorId)
         {
-            foreach (Appointment app in _physicianScheduleRepository.FindAppointmentsByDoctor(doctorId))
+            foreach (Appointment app in GetAppointments(doctorId))
             {
                 foreach (DateRange dateRange in dateRanges)
                 {

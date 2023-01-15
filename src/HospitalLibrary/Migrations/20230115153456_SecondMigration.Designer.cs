@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230115153456_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1657,9 +1659,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 30, 20, 26, 6, 794, DateTimeKind.Local).AddTicks(8385),
+                            EndDate = new DateTime(2023, 1, 30, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(1202),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 25, 20, 26, 6, 756, DateTimeKind.Local).AddTicks(6740),
+                            StartDate = new DateTime(2023, 1, 25, 16, 34, 54, 18, DateTimeKind.Local).AddTicks(8445),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1667,9 +1669,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 4, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1371),
+                            EndDate = new DateTime(2023, 2, 4, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4172),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 30, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1339),
+                            StartDate = new DateTime(2023, 1, 30, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4144),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1677,9 +1679,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 9, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1383),
+                            EndDate = new DateTime(2023, 2, 9, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4184),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 2, 4, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1378),
+                            StartDate = new DateTime(2023, 2, 4, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4180),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1752,18 +1754,16 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("IsDisplayedPublic")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("Privatisation")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Textt")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.Property<string>("User")
+                        .HasColumnType("text");
 
-                    b.HasIndex("PatientId");
+                    b.HasKey("Id");
 
                     b.ToTable("Feedbacks");
 
@@ -1773,27 +1773,27 @@ namespace HospitalLibrary.Migrations
                             Id = 1,
                             Date = "25.10.2022",
                             IsDisplayedPublic = false,
-                            PatientId = 5,
                             Privatisation = false,
-                            Textt = "Awesome clinic!"
+                            Textt = "Awesome clinic!",
+                            User = "Милош"
                         },
                         new
                         {
                             Id = 2,
                             Date = "25.10.2022",
                             IsDisplayedPublic = false,
-                            PatientId = 5,
                             Privatisation = false,
-                            Textt = "It's okay... I guess."
+                            Textt = "It's okay... I guess.",
+                            User = "Немања"
                         },
                         new
                         {
                             Id = 3,
                             Date = "25.10.2022",
                             IsDisplayedPublic = false,
-                            PatientId = 5,
                             Privatisation = false,
-                            Textt = "Awful."
+                            Textt = "Awful.",
+                            User = "Огњен"
                         });
                 });
 
@@ -2203,15 +2203,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("EventId");
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>

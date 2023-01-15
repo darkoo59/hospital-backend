@@ -40,6 +40,7 @@ using HospitalLibrary.EventSourcing.Service;
 using HospitalLibrary.EventSourcing.Repository;
 using HospitalLibrary.EventSourcing.Infrastructure;
 using HospitalLibrary.EventSourcing.Projections.Examination;
+using HospitalLibrary.Feedbacks.Model;
 
 namespace HospitalAPI
 {
@@ -101,6 +102,7 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<MedicineTherapy, MedicineTherapyDTO>, MedicineTherapyMapper>();
             services.AddScoped<IGenericMapper<BloodTherapy, BloodTherapyDTO>, BloodTherapyMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatmentTherapy, InpatientTreatmentTherapyDTO>, InpatientTreatmentTherapyMapper>();
+            services.AddScoped<IGenericMapper<Feedback, FeedbackDTO>, FeedbackMapper>();
 
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();

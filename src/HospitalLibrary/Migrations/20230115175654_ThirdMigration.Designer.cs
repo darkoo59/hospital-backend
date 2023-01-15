@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230115175654_ThirdMigration")]
+    partial class ThirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1657,9 +1659,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 30, 20, 26, 6, 794, DateTimeKind.Local).AddTicks(8385),
+                            EndDate = new DateTime(2023, 1, 30, 18, 56, 51, 467, DateTimeKind.Local).AddTicks(3950),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 25, 20, 26, 6, 756, DateTimeKind.Local).AddTicks(6740),
+                            StartDate = new DateTime(2023, 1, 25, 18, 56, 51, 459, DateTimeKind.Local).AddTicks(9649),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1667,9 +1669,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 4, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1371),
+                            EndDate = new DateTime(2023, 2, 4, 18, 56, 51, 467, DateTimeKind.Local).AddTicks(6909),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 30, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1339),
+                            StartDate = new DateTime(2023, 1, 30, 18, 56, 51, 467, DateTimeKind.Local).AddTicks(6882),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1677,9 +1679,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 9, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1383),
+                            EndDate = new DateTime(2023, 2, 9, 18, 56, 51, 467, DateTimeKind.Local).AddTicks(6922),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 2, 4, 20, 26, 6, 795, DateTimeKind.Local).AddTicks(1378),
+                            StartDate = new DateTime(2023, 2, 4, 18, 56, 51, 467, DateTimeKind.Local).AddTicks(6917),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1752,7 +1754,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("IsDisplayedPublic")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("Privatisation")
@@ -1762,8 +1764,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("Feedbacks");
 
@@ -2203,15 +2203,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("EventId");
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationReport", b =>
