@@ -281,6 +281,8 @@ namespace HospitalLibrary.Core.Repository
             int newId = _context.Rooms.OrderBy(r => r.Id).Last().Id + 1;
             string newNumber = roomToSplit.Number + "/2";
             Room newRoom = new Room() { Id = newId, FloorId = roomToSplit.FloorId, Number = newNumber, BuildingId = roomToSplit.BuildingId, Width = roomToSplit.Width / 2, Height = roomToSplit.Height, X = roomToSplit.X + roomToSplit.Width / 2, Y = roomToSplit.Y };
+            newRoom.Description = "razdvojene";
+            roomToSplit.Description = "razdvojene";
             Create(newRoom);
             roomToSplit.Width = roomToSplit.Width / 2;
             Update(roomToSplit);
@@ -291,6 +293,7 @@ namespace HospitalLibrary.Core.Repository
             Room room1 = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.fromRoomId);
             Room room2 = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.toRoomId);
             room1.Number = room1.Number;
+            room1.Description = "spojene";
             if(room1.Y != room2.Y)
             {
                 room1.Height += room2.Height;
