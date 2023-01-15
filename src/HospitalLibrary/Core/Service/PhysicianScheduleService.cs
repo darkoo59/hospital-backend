@@ -13,9 +13,12 @@ namespace HospitalLibrary.Core.Service
     public class PhysicianScheduleService : IPhysicianScheduleService
     {
         private readonly IPhysicianScheduleRepository _physicianScheduleRepository;
-        public PhysicianScheduleService(IPhysicianScheduleRepository physicianScheduleRepository)
+        private readonly IAppointmentRepository _appointmentRepository;
+
+        public PhysicianScheduleService(IPhysicianScheduleRepository physicianScheduleRepository, IAppointmentRepository appointmentRepository)
         {
             _physicianScheduleRepository = physicianScheduleRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public void Create(PhysicianSchedule physicianSchedule)
@@ -99,6 +102,13 @@ namespace HospitalLibrary.Core.Service
         public void Update(PhysicianSchedule physicianSchedule)
         {
             _physicianScheduleRepository.Update(physicianSchedule);
+        }
+
+        public void SetAppointmentToFinish(int appointmentId)
+        {
+            Appointment appointment = _appointmentRepository.GetById(appointmentId);
+            appointment.IsFinished = true;
+            _appointmentRepository.Update(appointment);
         }
     }
 }

@@ -178,6 +178,8 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<AverageDurationOfEachStep, AverageDurationOfEachStepDTO>, AverageDurationOfEachStepMapper>();
             services.AddScoped<IGenericMapper<AverageDurationOfSingleStep, AverageDurationOfSingleStepDTO>, AverageDurationOfSingleStepMapper>();
 
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
 
             SetupAuth(services);
         }

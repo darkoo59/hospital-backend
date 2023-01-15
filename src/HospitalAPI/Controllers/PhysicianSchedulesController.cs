@@ -122,6 +122,13 @@ namespace HospitalAPI.Controllers
             return Ok(physicianSchedule);
         }
 
+        [HttpPut("finish/{appointmentId}")]
+        public ActionResult SetAppointmentToFinish(int appointmentId)
+        {
+            _service.SetAppointmentToFinish(appointmentId);
+            return Ok(appointmentId);
+        }
+
 
     }
 }
