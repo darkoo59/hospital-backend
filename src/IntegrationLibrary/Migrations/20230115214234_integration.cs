@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class nova : Migration
+    public partial class integration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -254,9 +254,9 @@ namespace IntegrationLibrary.Migrations
                 columns: new[] { "Id", "Description", "ExpiresOn", "State", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2023, 2, 8, 14, 19, 36, 290, DateTimeKind.Local).AddTicks(1545), 0, "Tender 1" },
-                    { 2, "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.", new DateTime(2023, 2, 8, 14, 19, 36, 296, DateTimeKind.Local).AddTicks(8091), 0, "Tender 2" },
-                    { 3, "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2023, 2, 8, 14, 19, 36, 296, DateTimeKind.Local).AddTicks(8682), 0, "Tender 3" }
+                    { 1, "Congue nisi vitae suscipit tellus mauris. Et leo duis ut diam quam nulla. Porttitor eget dolor morbi non arcu risus quis. Tempor nec feugiat nisl pretium. Pharetra et ultrices neque ornare aenean euismod elementum nisi. Dui sapien eget mi proin sed libero enim sed faucibus. Vitae turpis massa sed elementum tempus. Urna molestie at elementum eu facilisis sed. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2023, 2, 14, 22, 42, 33, 965, DateTimeKind.Local).AddTicks(8047), 0, "Tender 1" },
+                    { 2, "Egestas congue quisque egestas diam in. Pretium aenean pharetra magna ac placerat. Ultrices neque ornare aenean euismod. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Ac feugiat sed lectus vestibulum. Mi proin sed libero enim sed faucibus turpis in eu. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Enim ut tellus elementum sagittis vitae et.", new DateTime(2023, 2, 14, 22, 42, 33, 981, DateTimeKind.Local).AddTicks(1449), 0, "Tender 2" },
+                    { 3, "Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Facilisi cras fermentum odio eu feugiat. Rhoncus aenean vel elit scelerisque. Eget nunc scelerisque viverra mauris in aliquam. Blandit libero volutpat sed cras ornare. Tellus elementum sagittis vitae et leo duis. Est lorem ipsum dolor sit amet consectetur. Ullamcorper malesuada proin libero nunc consequat interdum varius.", new DateTime(2023, 2, 14, 22, 42, 33, 981, DateTimeKind.Local).AddTicks(1859), 0, "Tender 3" }
                 });
 
             migrationBuilder.InsertData(
@@ -285,9 +285,9 @@ namespace IntegrationLibrary.Migrations
                 columns: new[] { "Id", "AppName", "Email", "Password", "Server" },
                 values: new object[,]
                 {
-                    { 3, "app3", "email3@gmail.com", "123", "localhost:7555" },
-                    { 2, "app2", "email2@gmail.com", "123", "localhost:6555" },
-                    { 1, "app1", "email1@gmail.com", "123", "localhost:5555" }
+                    { 3, "app3", "darkoo59bet@gmail.com", "123", "localhost:7555" },
+                    { 2, "app2", "darko.selakovic11@gmail.com", "123", "localhost:6555" },
+                    { 1, "app1", "darkoo59@gmail.com", "123", "localhost:5555" }
                 });
 
             migrationBuilder.InsertData(
