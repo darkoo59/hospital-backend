@@ -48,11 +48,12 @@ namespace HospitalLibrary.Core.Service
             SpecializationIds.Add(SpecializationId);
         }
 
-        public bool IsDoctorsAvailableOnConsiliumDate(List<Doctor> doctors, DateTime dateTime)
+        public bool IsDoctorsAvailableOnConsiliumDate(List<Doctor> doctors, DateTime start, Consilium consilium)
         {
             int counter = 0;
             Appointment appointment = new Appointment();
-            appointment.ScheduledDate.Start = dateTime;
+            DateTime end = start.AddMinutes(consilium.Duration);
+            appointment.ScheduledDate = new DateRange(start, end);
 
             foreach (Doctor doctor in doctors)
             {
@@ -79,7 +80,9 @@ namespace HospitalLibrary.Core.Service
             List<Doctor> requiredDoctors = new List<Doctor>();
             Appointment appointment = new Appointment();
             consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
-            appointment.ScheduledDate.Start = consilium.StartTime;
+            DateTime start = consilium.StartTime;
+            DateTime end = start.AddMinutes(consilium.Duration);
+            appointment.ScheduledDate = new DateRange(start, end);
 
             foreach (int doctorId in DoctorIds)
             {
@@ -98,7 +101,7 @@ namespace HospitalLibrary.Core.Service
                 if (appointment.ScheduledDate.Start.Hour > 10 && appointment.ScheduledDate.Start.Hour < 20)
 
                 {
-                    if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.ScheduledDate.Start) == true)
+                    if (IsDoctorsAvailableOnConsiliumDate(requiredDoctors, appointment.ScheduledDate.Start, consilium) == true)
                     {
                         consilium.StartTime = new DateTime(appointment.ScheduledDate.Start.Year,appointment.ScheduledDate.Start.Month,appointment.ScheduledDate.Start.Day,appointment.ScheduledDate.Start.Hour,appointment.ScheduledDate.Start.Minute,appointment.ScheduledDate.Start.Second);
                         consilium.RoomId = requiredDoctors[0].RoomId;
@@ -125,7 +128,8 @@ namespace HospitalLibrary.Core.Service
             List<int> freeDoctorsSpecializationId = new List<int>();
             Appointment appointment = new Appointment();
             consilium.StartTime = new DateTime(consilium.DateRange.Start.Year, consilium.DateRange.Start.Month, consilium.DateRange.Start.Day,10, 0, 0);
-            appointment.ScheduledDate.Start = consilium.StartTime;
+            DateTime end = consilium.StartTime.AddMinutes(consilium.Duration);
+            appointment.ScheduledDate = new DateRange(consilium.StartTime, end);
             int counter = 0;
 
             foreach (int specializationId in SpecializationIds)

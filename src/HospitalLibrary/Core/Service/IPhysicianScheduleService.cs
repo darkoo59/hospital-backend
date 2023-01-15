@@ -1,9 +1,6 @@
-﻿using HospitalLibrary.Core.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -15,9 +12,14 @@ namespace HospitalLibrary.Core.Service
         void Update(PhysicianSchedule physicianSchedule);
         void Delete(PhysicianSchedule physicianSchedule);
         List<Appointment> GetAvailableAppointments(int doctorId, DateTime date);
-        void Schedule(int doctorId, Appointment appointment);
+        bool Schedule(int doctorId, Appointment appointment);
         void TransferAppointment(int doctorId, Appointment appointment);
+        List<Appointment> GetRecommendedAppointments(DateRange dateRange, int doctorId, string priority);
         PhysicianSchedule Get(int doctorId);
         List<Appointment> GetAppointments(int doctorId);
-    }
+        void SetAppointmentToFinish(int appointmentId);
+        Dictionary<int, int> GetDoctorWorkloadForDateRangeByDays(int doctorId, DateTime startDate, DateTime endDate);
+        Dictionary<int, int> GetDoctorWorkloadForDateRangeByMonths(int doctorId, DateTime startDate, DateTime endDate);
+	}
+
 }

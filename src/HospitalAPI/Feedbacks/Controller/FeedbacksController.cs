@@ -1,6 +1,13 @@
-﻿using HospitalLibrary.Feedbacks.Model;
+﻿using HospitalAPI.Dtos;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Registration.Service;
+using HospitalLibrary.SharedModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalAPI.Feedbacks.Controller
 {
@@ -9,10 +16,15 @@ namespace HospitalAPI.Feedbacks.Controller
     public class FeedbacksController : ControllerBase
     {
         private readonly IFeedbackService _feedbackService;
+        private readonly IGenericMapper<Feedback, FeedbackDTO> _mapper;
+        private readonly IPatientService _patientService;
 
-        public FeedbacksController(IFeedbackService feedbackService)
+
+        public FeedbacksController(IFeedbackService feedbackService, IGenericMapper<Feedback, FeedbackDTO> mapper, IPatientService patientService)
         {
+            _patientService = patientService;
             _feedbackService = feedbackService;
+            _mapper = mapper;
         }
 
         // GET: api/feedbacks
@@ -22,15 +34,33 @@ namespace HospitalAPI.Feedbacks.Controller
             string privatisation = HttpContext.Request.Query["private"].ToString();
             if (privatisation.Length == 0)
             {
-                return Ok(_feedbackService.GetAll());
+                List<FeedbackDTO> feedbacks = new List<FeedbackDTO>();
+                foreach(FeedbackDTO feedback in _mapper.ToDTO(_feedbackService.GetAll().ToList())) 
+                {
+                    Patient patient = _patientService.GetById(feedback.PatientId);
+                    feedbacks.Add(new FeedbackDTO(feedback.Id, feedback.Textt, patient.Name+" "+patient.Surname, feedback.PatientId, feedback.Date));
+                }
+                return Ok(feedbacks);
             }
             else if (privatisation.Equals("true"))
             {
-                return Ok(_feedbackService.GetAllPrivate());
+                List<FeedbackDTO> feedbacks = new List<FeedbackDTO>();
+                foreach (FeedbackDTO feedback in _mapper.ToDTO(_feedbackService.GetAllPrivate().ToList()))
+                {
+                    Patient patient = _patientService.GetById(feedback.PatientId);
+                    feedbacks.Add(new FeedbackDTO(feedback.Id, feedback.Textt, patient.Name + " " + patient.Surname, feedback.PatientId, feedback.Date));
+                }
+                return Ok(feedbacks);
             }
             else
             {
-                return Ok(_feedbackService.GetAllPublicNotPublished());
+                List<FeedbackDTO> feedbacks = new List<FeedbackDTO>();
+                foreach (FeedbackDTO feedback in _mapper.ToDTO(_feedbackService.GetAllPublicNotPublished().ToList()))
+                {
+                    Patient patient = _patientService.GetById(feedback.PatientId);
+                    feedbacks.Add(new FeedbackDTO(feedback.Id, feedback.Textt, patient.Name + " " + patient.Surname, feedback.PatientId, feedback.Date));
+                }
+                return Ok(feedbacks);
             }
         }
 

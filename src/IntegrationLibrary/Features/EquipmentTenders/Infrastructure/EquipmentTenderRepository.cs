@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.BloodBank.Model;
+﻿﻿using IntegrationLibrary.Features.BloodBank.Model;
+﻿using IntegrationLibrary.Core.Utility;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
 using IntegrationLibrary.Settings;
@@ -139,9 +140,13 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Infrastructure
             return usersToReturn;
         }
         
-        public ICollection<TenderApplication> GetFinishedApplications()
+        public ICollection<TenderApplication> GetFinishedApplications(DateRange dr)
         {
-            return _context.TenderApplications.ToList();
+            return _context.TenderApplications.Include(e => e.TenderOffers).ThenInclude(e => e.TenderRequirement)
+                                              .Include(e => e.User)
+                                              .Include(e => e.EquipmentTender)
+                                              .Where(ta => ta.HasWon && ta.Finished >= dr.StartDate && ta.Finished <= dr.EndDate)
+                                              .ToList();
         }
     }
 }
