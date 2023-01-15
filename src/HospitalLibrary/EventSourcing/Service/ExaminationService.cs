@@ -62,8 +62,8 @@ namespace HospitalLibrary.EventSourcing.Service
             int totalNumOfEvents = 0;
             foreach (var examinationReport in _examinationReportRepository.GetAll())
             {
-                //var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
-                //totalNumOfEvents += _repository.GetStream(streamName, 0, int.MaxValue).ToList().Count;
+                var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
+                totalNumOfEvents += _repository.GetStream(streamName, 0, int.MaxValue).ToList().Count;
             }
 
             if (_examinationReportRepository.GetAll().ToList().Count > 0)
@@ -84,7 +84,7 @@ namespace HospitalLibrary.EventSourcing.Service
             double finishExaminationCnt = 0;
             foreach (var examinationReport in _examinationReportRepository.GetAll())
             {
-                /*var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
+                var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
                 foreach (var @event in _repository.GetStream(streamName, 0, int.MaxValue))
                 {
                     if (@event.GetType() == typeof(ExaminationStarted))
@@ -97,7 +97,7 @@ namespace HospitalLibrary.EventSourcing.Service
                         createRecipesCnt++;
                     else if (@event.GetType() == typeof(ExaminationFinished))
                         finishExaminationCnt++;
-                }*/
+                }
             }
 
             int numOfStreams = _examinationReportRepository.GetAll().ToList().Count;
@@ -116,12 +116,12 @@ namespace HospitalLibrary.EventSourcing.Service
             double totalTimeInSeconds = 0;
             foreach (var examinationReport in _examinationReportRepository.GetAll())
             {
-                /*var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
+                var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
                 List<Object> events = _repository.GetStream(streamName, 0, int.MaxValue).ToList();
                 DomainEvent lastEvent = (DomainEvent)events[events.Count - 1];
                 DomainEvent firstEvent = (DomainEvent)events[0];
                 TimeSpan ts = lastEvent.Time.Subtract(firstEvent.Time);
-                totalTimeInSeconds += GetSeconds(ts);*/
+                totalTimeInSeconds += GetSeconds(ts);
             }
 
             double averageDurationInSeconds = totalTimeInSeconds / _examinationReportRepository.GetAll().ToList().Count;
@@ -145,7 +145,7 @@ namespace HospitalLibrary.EventSourcing.Service
             double finishExaminationInSeconds = 0;
             foreach (var examinationReport in _examinationReportRepository.GetAll())
             {
-                /*var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
+                var streamName = string.Format("{0}-{1}", typeof(Examination).Name, examinationReport.AppointmentId.ToString());
                 List<object> events = _repository.GetStream(streamName, 0, int.MaxValue).ToList();
                 for (int i = 1; i < events.Count; i++)
                 {
@@ -177,7 +177,7 @@ namespace HospitalLibrary.EventSourcing.Service
                         DomainEvent d2 = (DomainEvent)events[i - 1];
                         finishExaminationInSeconds += GetSeconds(d1.Time.Subtract(d2.Time));
                     }
-                }*/
+                }
             }
 
             return new AverageDurationOfEachStep(selectSymptomsInSeconds / selectSymptomsCnt, enterReportInSeconds / enterReportCnt, createRecipesInSeconds / createRecipesCnt, finishExaminationInSeconds / finishExaminationCnt);

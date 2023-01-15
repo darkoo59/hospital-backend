@@ -6,17 +6,31 @@ namespace HospitalLibrary.Core.Model
 {
     public class Appointment : EntityObject
     {
-        //public int AppointmentId { get; set; }
-        //[Required]
+        [Required]
         public DateRange ScheduledDate { get; set; }
         public int? DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public virtual Doctor Doctor { get; set; }
         public int? PatientId { get; set; }
         [ForeignKey("PatientId")]
-        public virtual Patient Patient { get; set; }
+        public Patient Patient { get; set; }
+        public bool IsFinished { get; set; }
 
-        public bool CheckIfDateRangeInAppointment(DateRange dateRange) 
+        public Appointment()
+        {
+        }
+
+        public Appointment(DateRange scheduledDate, int? doctorId, Doctor doctor, int? patientId, Patient patient, bool isFinished)
+        {
+            ScheduledDate = scheduledDate;
+            DoctorId = doctorId;
+            Doctor = doctor;
+            PatientId = patientId;
+            Patient = patient;
+            IsFinished = isFinished;
+        }
+
+        public bool CheckIfDateRangeInAppointment(DateRange dateRange)
         {
             if (this.ScheduledDate.Start.CompareTo(dateRange.Start) <= 0 && this.ScheduledDate.End.CompareTo(dateRange.Start) > 0)
             {

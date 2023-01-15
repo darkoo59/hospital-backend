@@ -8,10 +8,9 @@ namespace HospitalLibrary.Core.Model
 {
     public class DateRange : ValueObject
     {
-        public DateTime Start { get; }
-        public DateTime End { get; }
-        public DateRange() { 
-        }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+
         public DateRange(DateTime start, DateTime end)
         {
             if (Validate(start, end))

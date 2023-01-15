@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Diagnostics;
 using HospitalAPI.Registration.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HospitalAPI.Registration.Controllers
 {
@@ -59,6 +61,27 @@ namespace HospitalAPI.Registration.Controllers
                 var role = HttpContext.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value;
                 return Ok(JsonSerializer.Serialize(_userService.GetById(userId)));
             }
+            return Unauthorized();
+        }
+        
+        [HttpGet("authorization/manager")]
+        public ActionResult GetManagerAuthorization()
+        {
+            if (HttpContext.User.Identity == null) return Unauthorized();
+            try
+            {
+                var userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == "id").Value);
+                var role = HttpContext.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value;
+                if (role == "manager")
+                {
+                    return Ok(JsonSerializer.Serialize(_userService.GetById(userId)));
+                }
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+            
             return Unauthorized();
         }
     }

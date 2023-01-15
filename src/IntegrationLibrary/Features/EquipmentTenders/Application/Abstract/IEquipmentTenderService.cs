@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Features.EquipmentTenders.Domain;
+﻿using IntegrationLibrary.Core.Utility;
+using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using System.Collections.Generic;
 
@@ -19,5 +20,6 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application.Abstract
         void SetWinner(int applicationId);
         void ConfirmWinner(int applicationId, string email);
         void DeclineWinner(int applicationId, string email);
+        string GenerateAndUploadPdf(DateRange dateRange);
     }
 }

@@ -11,7 +11,7 @@ namespace HospitalLibrary.SharedModel
         public int UserId { get; set; }
         [Required, NotNull, EmailAddress]
         public string Email { get; set; }
-        [Required, NotNull, MinLength(3, ErrorMessage = "Password needs to be atleast 3 characters or more")]
+        [Required, NotNull, MinLength(3, ErrorMessage = "Password needs to be at least 3 characters or more")]
         public string Password { get; set; }
         public UserRole Role { get; set; }
 

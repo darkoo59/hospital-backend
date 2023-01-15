@@ -14,19 +14,18 @@ using System.Text.Json;
 using IntegrationLibrary.Features.BloodBank.Repository;
 using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.DTO;
-using IntegrationLibrary.Features.Blood.Service;
 
 namespace IntegrationLibrary.Features.BloodBank.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IBloodBankService _mailService;
+        private readonly IBloodBankService _bloodBankService;
 
-        public UserService(IUserRepository userRepository, IBloodBankService mailService)
+        public UserService(IUserRepository userRepository, IBloodBankService bloodBankService)
         {
             _userRepository = userRepository;
-            _mailService = mailService;
+            _bloodBankService = bloodBankService;
         }
 
         public async Task<bool> Register(User user)
@@ -38,7 +37,7 @@ namespace IntegrationLibrary.Features.BloodBank.Service
             user.Password = KeyGenerator.GetUniqueKey(16);
 
 
-            string key = await BloodService.GenerateApiKey(user);
+            string key = await _bloodBankService.GenerateApiKey(user);
             _userRepository.Register(user);
 
             MailContent mailContent = JsonSerializer.Deserialize<MailContent>(File.ReadAllText("../IntegrationLibrary/Resources/mailTemplate.json"));
@@ -46,7 +45,7 @@ namespace IntegrationLibrary.Features.BloodBank.Service
             mailContent.ToEmail = user.Email;
             mailContent.Body = mailContent.Body + user.Password + ". API_KEY: " + key;
 
-            await _mailService.SendEmail(mailContent);
+            await _bloodBankService.SendEmail(mailContent);
 
             return true;
         }
@@ -115,6 +114,11 @@ namespace IntegrationLibrary.Features.BloodBank.Service
         public User GetById(int id)
         {
             return _userRepository.GetById(id);
+        }
+
+        public string GetAppNameByServer(string server)
+        {
+            return _userRepository.GetAppNameByServer(server);
         }
     }
 }

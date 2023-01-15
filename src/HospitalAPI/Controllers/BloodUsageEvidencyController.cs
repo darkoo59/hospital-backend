@@ -45,20 +45,20 @@ namespace HospitalAPI.Controllers
             }
 
             BloodUsageEvidency bloodUsageEvidency = _bloodUsageEvidencyMapper.ToModel(bloodUsageEvidencyDTO);
-            //Boolean isEnoughBlood;
+            Boolean isEnoughBlood;
             try
             {
-               //isEnoughBlood = _bloodService.ChangeQuantity(bloodUsageEvidency);
+               isEnoughBlood = _bloodService.ChangeQuantityy(bloodUsageEvidency);
                 
             }
             catch
             {
                 return BadRequest();
             }
-            /*if (isEnoughBlood)
+            if (isEnoughBlood)
             {
                 _bloodUsageEvidencyService.Create(bloodUsageEvidency);
-            }*/
+            }
 
             return CreatedAtAction("GetById", new { id = bloodUsageEvidency.BloodUsageEvidencyId }, bloodUsageEvidency);
 

@@ -1,4 +1,5 @@
 ﻿using HospitalAPI.Dtos;
+using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,26 @@ namespace HospitalAPI.Mappers
 {
     public class AppointmentMapper : IGenericMapper<Appointment, AppointmentDTO>
     {
+        private readonly IGenericMapper<DateRange, DateRangeDTO> _dateRangeMapper;
+        private readonly IGenericMapper<Patient, PatientDTO> _patientMapper;
+
+        public AppointmentMapper(IGenericMapper<DateRange, DateRangeDTO> dateRangeMapper, IGenericMapper<Patient, PatientDTO> patientMapper)
+        {
+            _dateRangeMapper = dateRangeMapper;
+            _patientMapper = patientMapper;
+        }
+
         public Appointment ToModel(AppointmentDTO appointmentDTO) {
             Appointment appointment = new Appointment();
-            appointment.Id = appointmentDTO.AppointmentId;
-            string day = appointmentDTO.Date.Split("/")[1];
-            string month = appointmentDTO.Date.Split("/")[0];
-            string year = appointmentDTO.Date.Split("/")[2];
+            appointment.Id = appointmentDTO.Id;
             string hours = appointmentDTO.Time.Split(":")[0];
             string minutes = appointmentDTO.Time.Split(":")[1];
-            Console.WriteLine(day + " " + month + " " + year);
-            DateTime date = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));
-            DateTime start = date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
-            DateTime end = date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
-            appointment.ScheduledDate = new DateRange(date, date.AddMinutes(30));
+            DateTime start = appointmentDTO.Date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
+            DateTime end = start.AddMinutes(30);
+            appointment.ScheduledDate = _dateRangeMapper.ToModel(new DateRangeDTO(start, end));
             appointment.PatientId = appointmentDTO.PatientId;
+            appointment.DoctorId = appointmentDTO.DoctorId;
+            appointment.IsFinished = appointmentDTO.IsFinished;
 
             return appointment;
         }
@@ -33,17 +40,15 @@ namespace HospitalAPI.Mappers
             foreach (var appointmentDTO in appointmentDTOs) 
             {
                 Appointment appointment = new Appointment();
-                appointment.Id = appointmentDTO.AppointmentId;
-                string day = appointmentDTO.Date.Split("/")[1];
-                string month = appointmentDTO.Date.Split("/")[0];
-                string year = appointmentDTO.Date.Split("/")[2];
+                appointment.Id = appointmentDTO.Id;
                 string hours = appointmentDTO.Time.Split(":")[0];
                 string minutes = appointmentDTO.Time.Split(":")[1];
-                DateTime date = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));  
-                DateTime start = date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
-                DateTime end = date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
-                appointment.ScheduledDate = new DateRange(start, end.AddMinutes(30));
+                DateTime start = appointmentDTO.Date.AddHours(Int32.Parse(hours)).AddMinutes(Int32.Parse(minutes));
+                DateTime end = start.AddMinutes(30);
+                appointment.ScheduledDate = _dateRangeMapper.ToModel(new DateRangeDTO(start, end));
                 appointment.PatientId = appointmentDTO.PatientId;
+                appointment.DoctorId = appointmentDTO.DoctorId;
+                appointment.IsFinished = appointmentDTO.IsFinished;
                 appointments.Add(appointment);
             }
 
@@ -52,13 +57,14 @@ namespace HospitalAPI.Mappers
 
         public AppointmentDTO ToDTO(Appointment appointment) {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentId = appointment.Id;
-            appointmentDTO.Date = appointment.ScheduledDate.Start.ToString("d", CultureInfo.GetCultureInfo("en-ES"));
+            appointmentDTO.Id = appointment.Id;
+            appointmentDTO.Date = appointment.ScheduledDate.Start;
             appointmentDTO.Time = appointment.ScheduledDate.Start.Hour.ToString() + ":" + appointment.ScheduledDate.Start.Minute.ToString();
-            appointmentDTO.DoctorId = (int)appointment.DoctorId;
             appointmentDTO.PatientId = (int)appointment.PatientId;
-            appointmentDTO.Name = appointment.Doctor.Name;
-            appointmentDTO.Surname = appointment.Doctor.Surname;
+            appointmentDTO.Patient = _patientMapper.ToDTO(appointment.Patient);
+            appointmentDTO.DoctorId = appointment.DoctorId;
+            appointmentDTO.IsFinished = appointment.IsFinished;
+
             return appointmentDTO;
         }
 
@@ -67,13 +73,13 @@ namespace HospitalAPI.Mappers
             foreach (var appointment in appointments) 
             {
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
-                appointmentDTO.AppointmentId = appointment.Id;
-                appointmentDTO.Date = appointment.ScheduledDate.Start.ToString("d", CultureInfo.GetCultureInfo("en-ES"));
+                appointmentDTO.Id = appointment.Id;
+                appointmentDTO.Date = appointment.ScheduledDate.Start;
                 appointmentDTO.Time = appointment.ScheduledDate.Start.Hour.ToString() + ":" + appointment.ScheduledDate.Start.Minute.ToString();
-                appointmentDTO.DoctorId = (int)appointment.DoctorId;
                 appointmentDTO.PatientId = (int)appointment.PatientId;
-                appointmentDTO.Name = appointment.Doctor.Name;
-                appointmentDTO.Surname = appointment.Doctor.Surname;
+                appointmentDTO.Patient = _patientMapper.ToDTO(appointment.Patient);
+                appointmentDTO.DoctorId = appointment.DoctorId;
+                appointmentDTO.IsFinished = appointment.IsFinished;
                 appointmentDTOs.Add(appointmentDTO);
             }
 

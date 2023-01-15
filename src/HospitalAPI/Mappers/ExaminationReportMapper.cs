@@ -22,10 +22,12 @@ namespace HospitalAPI.Mappers
         public ExaminationReportDTO ToDTO(ExaminationReport examinationReport)
         {
             ExaminationReportDTO examinationReportDTO = new ExaminationReportDTO();
-            examinationReportDTO.ExaminationReportId = examinationReport.ExaminationReportId;
+            examinationReportDTO.ExaminationReportId = examinationReport.Id;
+            examinationReportDTO.SymptomIds = examinationReport.SymptomIds;
             examinationReportDTO.Symptoms = _symptomMapper.ToDTO(examinationReport.Symptoms);
             examinationReportDTO.Report = examinationReport.Report;
             examinationReportDTO.Recipes = _recipeMapper.ToDTO(examinationReport.Recipes);
+            examinationReportDTO.AppointmentId = examinationReport.AppointmentId;
 
             return examinationReportDTO;
         }
@@ -36,10 +38,12 @@ namespace HospitalAPI.Mappers
             foreach (var examinationReport in examinationReports)
             {
                 ExaminationReportDTO examinationReportDTO = new ExaminationReportDTO();
-                examinationReportDTO.ExaminationReportId = examinationReport.ExaminationReportId;
+                examinationReportDTO.ExaminationReportId = examinationReport.Id;
+                examinationReportDTO.SymptomIds = examinationReport.SymptomIds;
                 examinationReportDTO.Symptoms = _symptomMapper.ToDTO(examinationReport.Symptoms);
                 examinationReportDTO.Report = examinationReport.Report;
                 examinationReportDTO.Recipes = _recipeMapper.ToDTO(examinationReport.Recipes);
+                examinationReportDTO.AppointmentId = examinationReport.AppointmentId;
                 examinationReportDTOs.Add(examinationReportDTO);
             }
 
@@ -48,13 +52,16 @@ namespace HospitalAPI.Mappers
 
         public ExaminationReport ToModel(ExaminationReportDTO examinationReportDTO)
         {
-            ExaminationReport examinationReport = new ExaminationReport();
-            examinationReport.ExaminationReportId = examinationReportDTO.ExaminationReportId;
-            examinationReport.Symptoms = _symptomMapper.ToModel(examinationReportDTO.Symptoms);
-            examinationReport.Report = examinationReportDTO.Report;
-            examinationReport.Recipes = _recipeMapper.ToModel(examinationReportDTO.Recipes);
+            //ExaminationReport examinationReport = new ExaminationReport();
+            //examinationReport.ExaminationReportId = examinationReportDTO.ExaminationReportId;
+            //examinationReport.SymptomIds = examinationReportDTO.SymptomIds;
+            //examinationReport.Symptoms = _symptomMapper.ToModel(examinationReportDTO.Symptoms);
+            //examinationReport.Report = examinationReportDTO.Report;
+            //examinationReport.Recipes = _recipeMapper.ToModel(examinationReportDTO.Recipes);
+            //examinationReport.AppointmentId = examinationReportDTO.AppointmentId;
+            return new ExaminationReport(examinationReportDTO.SymptomIds, _symptomMapper.ToModel(examinationReportDTO.Symptoms), examinationReportDTO.Report, _recipeMapper.ToModel(examinationReportDTO.Recipes), examinationReportDTO.AppointmentId);
 
-            return examinationReport;
+            //return examinationReport;
         }
 
         public List<ExaminationReport> ToModel(List<ExaminationReportDTO> examinationReportDTOs)
@@ -62,12 +69,14 @@ namespace HospitalAPI.Mappers
             List<ExaminationReport> examinationReports = new List<ExaminationReport>();
             foreach (var examinationReportDTO in examinationReportDTOs)
             {
-                ExaminationReport examinationReport = new ExaminationReport();
-                examinationReport.ExaminationReportId = examinationReportDTO.ExaminationReportId;
-                examinationReport.Symptoms = _symptomMapper.ToModel(examinationReportDTO.Symptoms);
-                examinationReport.Report = examinationReportDTO.Report;
-                examinationReport.Recipes = _recipeMapper.ToModel(examinationReportDTO.Recipes);
-                examinationReports.Add(examinationReport);
+                //ExaminationReport examinationReport = new ExaminationReport();
+                //examinationReport.ExaminationReportId = examinationReportDTO.ExaminationReportId;
+                //examinationReport.SymptomIds = examinationReportDTO.SymptomIds;
+                //examinationReport.Symptoms = _symptomMapper.ToModel(examinationReportDTO.Symptoms);
+                //examinationReport.Report = examinationReportDTO.Report;
+                //examinationReport.Recipes = _recipeMapper.ToModel(examinationReportDTO.Recipes);
+                //examinationReport.AppointmentId = examinationReportDTO.AppointmentId;
+                examinationReports.Add(new ExaminationReport(examinationReportDTO.SymptomIds, _symptomMapper.ToModel(examinationReportDTO.Symptoms), examinationReportDTO.Report, _recipeMapper.ToModel(examinationReportDTO.Recipes), examinationReportDTO.AppointmentId));
             }
 
             return examinationReports;

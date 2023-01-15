@@ -29,5 +29,18 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_medicineMapper.ToDTO(_medicineService.GetAll().ToList()));
         }
+
+        [HttpGet("{ids}")]
+        public ActionResult GetAll(string ids)
+        {
+            List<int> parameters = new List<int>();
+            string[] tokens = ids.Split(",");
+            foreach (var token in tokens)
+            {
+                parameters.Add(Int32.Parse(token));
+            }
+
+            return Ok(_medicineMapper.ToDTO(_medicineService.GetAll(parameters)));
+        }
     }
 }

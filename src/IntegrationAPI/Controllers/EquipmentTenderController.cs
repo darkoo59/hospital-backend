@@ -1,10 +1,17 @@
-﻿using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
+﻿using IntegrationAPI.Authorization;
+using IntegrationLibrary.Core.Utility;
+using IntegrationLibrary.Features.BloodBankNews.Enums;
+using IntegrationLibrary.Features.EquipmentTenders.Application;
+using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
 using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.UserDTO;
+using IntegrationLibrary.Features.UrgentBloodOrder.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Renci.SshNet;
 using System;
+using System.IO;
 using System.Security.Claims;
 
 namespace IntegrationAPI.Controllers
@@ -39,6 +46,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             EquipmentTender et = _equipmentTenderService.GetById(id);
             if (et == null) throw new Exception("Tender with the given ID has not been found.");
             return Ok(new EquipmentTenderDTO(et));
@@ -58,6 +66,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateEquipmentTenderDTO dto)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _equipmentTenderService.Create(dto);
             return Ok();
         }
@@ -89,6 +98,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet("application/tender/{id}")]
         public IActionResult GetAllApplicationsByTenderId(int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             EquipmentTender et = _equipmentTenderService.GetTenderWithApplicationsById(id);
             if (et == null) throw new Exception("Tender with the given ID has not been found.");
             return Ok(new TenderWithApplicationsDTO(et));
@@ -97,6 +107,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet("application/{id}")]
         public IActionResult GetApplicationById(int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             TenderApplication ta = _equipmentTenderService.GetApplicationById(id);
             if (ta == null) throw new Exception("Tender application with the given ID has not been found.");
             return Ok(new UserTenderApplicationDTO(ta));
@@ -117,6 +128,7 @@ namespace IntegrationAPI.Controllers
         [HttpPatch("winner")]
         public IActionResult SetWinner([FromBody] int id)
         {
+            if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
             _equipmentTenderService.SetWinner(id);
             return Ok();
         }
@@ -144,6 +156,21 @@ namespace IntegrationAPI.Controllers
                 return Ok();
             }
             return Unauthorized();
+        }
+
+        [HttpPost("report")]
+        public IActionResult GenerateAndUploadPdf([FromBody] UrgentOrderReportDTO dto)
+        {
+            if (HttpContext.User.Identity != null)
+            {
+                string filepath = _equipmentTenderService.GenerateAndUploadPdf(new DateRange(dto.DateFrom, dto.DateTo));
+
+                var file = System.IO.File.OpenRead(filepath);
+
+                return File(file, "application/pdf");
+
+            }
+            return Ok();
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.EventSourcing.Infrastructure;
 using HospitalLibrary.EventSourcing.Model.ExaminationEvents;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.RenovationEventSourcing;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 
 namespace HospitalLibrary.Settings
@@ -41,6 +41,9 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
+        public DbSet<MoveRequest> MoveRequests { get; set; }
+		public DbSet<Event> Events { get; set; }
         public DbSet<EventStream> EventStreams { get; set; }
         public DbSet<EventWrapper> EventWrappers { get; set; }
         public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
@@ -48,7 +51,12 @@ namespace HospitalLibrary.Settings
         public DbSet<RecipesCreated> RecipesCreatedEvents { get; set; }
         public DbSet<ReportEntered> ReportEnteredEvents { get; set; }
         public DbSet<SymptomsSelected> SymptomsSelectedEvents { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+
+
+
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                .EnableSensitiveDataLogging();
 
@@ -60,6 +68,8 @@ namespace HospitalLibrary.Settings
         // ne treba se koristiti za aplikaciju u produkciji
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Database.SetInitializer<HospitalDbContext>(null);
+
             modelBuilder.Entity<Equipment>().HasData(
                 new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 1, RoomId = 1, Name = "Syringe", Quantity = 50 },
                 new Equipment() { EquipmentType = EquipmentType.Dynamic, Id = 2, RoomId = 1, Name = "Tounge depressor", Quantity = 32 },
@@ -265,7 +275,11 @@ namespace HospitalLibrary.Settings
                new InpatientTreatmentTherapy() { InpatientTreatmentTherapyId = 1, InpatientTreatmentId = 1 }
            );
             modelBuilder.Entity<User>().HasData(
-                new User() { UserId = 1, Email = "email", Password = "password", Role = UserRole.patient}
+                new User() { UserId = 1, Email = "doctor1", Password = "doctor1", Role = UserRole.doctor },
+                new User() { UserId = 2, Email = "doctor2", Password = "doctor2", Role = UserRole.doctor },
+                new User() { UserId = 3, Email = "doctor3", Password = "doctor3", Role = UserRole.doctor },
+                new User() { UserId = 4, Email = "doctor4", Password = "doctor4", Role = UserRole.doctor },
+                new User() { UserId = 5, Email = "email", Password = "password", Role = UserRole.patient }
             );
 
             modelBuilder.Entity<PhysicianSchedule>()
@@ -291,8 +305,24 @@ namespace HospitalLibrary.Settings
                new Symptom() { SymptomId = 2, Name = "Sore throat" },
                new Symptom() { SymptomId = 3, Name = "Elevated body temperature" }
            );
-
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
+            modelBuilder.Entity<Appointment>().HasKey(v => v.Id);
+            modelBuilder.Entity<ExaminationReport>().HasKey(v => v.Id);
+            modelBuilder.Entity<PhysicianSchedule>().HasKey(v => v.Id);
+
+
+            modelBuilder.Entity<Appointment>()
+                .Property(b => b.ScheduledDate)
+                .HasColumnType("jsonb");
+
+            modelBuilder.Entity<Consilium>()
+                .Property(b => b.DateRange)
+                .HasColumnType("jsonb");
+
+            //modelBuilder.Entity<MoveRequest>().HasKey(m => m.fromRoomId);
+            modelBuilder.Entity<MoveRequest>().HasData(
+                new MoveRequest() {id = 1, type="EquipmentMove", fromRoomId = 1, toRoomId = 2, chosenStartTime = new System.DateTime(2022,12,10,15,0,0), duration = new System.TimeSpan(0, 30, 0), equipment = "Syringe", quantity = 2 }
+            );
 
 
             base.OnModelCreating(modelBuilder);

@@ -20,6 +20,6 @@ namespace HospitalLibrary.EventSourcing.Infrastructure
         {
             //Id = aggregateId;
         }
-
+        
     }
 }

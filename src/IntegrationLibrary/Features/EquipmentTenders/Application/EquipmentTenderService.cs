@@ -1,4 +1,9 @@
-﻿using IntegrationLibrary.Features.BloodBank.Model;
+﻿using Gehtsoft.PDFFlow.Builder;
+using IntegrationLibrary.Core.Utility;
+using IntegrationLibrary.Features.Blood.DTO;
+using IntegrationLibrary.Features.Blood.Enums;
+using IntegrationLibrary.Features.BloodBank;
+using IntegrationLibrary.Features.BloodBank.Model;
 using IntegrationLibrary.Features.BloodBank.Service;
 using IntegrationLibrary.Features.EquipmentTenders.Application.Abstract;
 using IntegrationLibrary.Features.EquipmentTenders.Domain;
@@ -6,8 +11,10 @@ using IntegrationLibrary.Features.EquipmentTenders.DTO;
 using IntegrationLibrary.Features.EquipmentTenders.DTO.CreateDTO;
 using IntegrationLibrary.Features.EquipmentTenders.Enums;
 using IntegrationLibrary.Features.EquipmentTenders.Infrastructure.Abstract;
+using IntegrationLibrary.HospitalService;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace IntegrationLibrary.Features.EquipmentTenders.Application
 {
@@ -15,10 +22,14 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
     {
         private readonly IEquipmentTenderRepository _repository;
         private readonly IUserService _userService;
-        public EquipmentTenderService(IEquipmentTenderRepository repository, IUserService userService)
+        private readonly IHospitalService _hospitalService;
+        private readonly IBloodBankService _bloodBankService;
+        public EquipmentTenderService(IEquipmentTenderRepository repository, IUserService userService, IHospitalService hospitalService, IBloodBankService bloodBankService)
         {
             _repository = repository;
             _userService = userService;
+            _hospitalService = hospitalService;
+            _bloodBankService = bloodBankService;
         }
 
         public void Create(CreateEquipmentTenderDTO dto)
@@ -26,7 +37,7 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             List<TenderRequirement> temp = new();
             foreach (TenderRequirementDTO req in dto.Requirements)
             {
-                temp.Add(new TenderRequirement(req.Name, req.Amount));
+                temp.Add(new TenderRequirement(req.Type, req.Amount));
             }
             
             EquipmentTender et = new(dto.Title, dto.ExpiresOn, dto.Description, temp);
@@ -122,6 +133,21 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             if (!ta.HasWon) throw new Exception("Some error has occurred");
 
             ta.EquipmentTender.SetState(TenderState.CLOSED);
+            ta.SetDate(DateTime.Now);
+
+            List<BloodDTO> bloodDTOs = new();
+            foreach (TenderOffer offer in ta.TenderOffers)
+            {
+                BloodDTO dto = new()
+                {
+                    Type = offer.TenderRequirement.BloodType,
+                    Amount = offer.TenderRequirement.Amount
+                };
+                bloodDTOs.Add(dto);
+            }
+
+            _ = _bloodBankService.ConfirmTender(user, bloodDTOs).Result;
+            _ = _hospitalService.UpdateBlood(bloodDTOs).Result;
 
             _repository.Update(ta);
         }
@@ -139,6 +165,72 @@ namespace IntegrationLibrary.Features.EquipmentTenders.Application
             ta.SetHasWon(false);
 
             _repository.Update(ta);
+        }
+
+        public string GenerateAndUploadPdf(DateRange dateRange)
+        {
+            var folderPath = Environment.CurrentDirectory + "\\PDFs";
+            var fileName = "TenderReport_" + DateTime.Now.Ticks + ".pdf";
+            var filePath = Path.Combine(folderPath, fileName);
+
+            GeneratePdf(_repository.GetFinishedApplications(dateRange), filePath);
+
+            SFTPService.UploadPDF(filePath, "Tender\\" + fileName);
+            return filePath;
+        }
+
+        private void GeneratePdf(ICollection<TenderApplication> data, string filePath)
+        {
+            var stream = new FileStream(filePath, FileMode.Create);
+            DocumentBuilder builder = DocumentBuilder.New();
+            var section = builder.AddSection();
+
+            double[] nums = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            double totalMoney = 0;
+
+            section.AddParagraph("Tender report");
+            section.AddLine();
+            section.AddParagraph(" ");
+
+            foreach (TenderApplication ta in data)
+            {
+                section.AddParagraph("Tender name: " + ta.EquipmentTender.Title);
+                section.AddParagraph("Blood bank: " + ta.User.AppName);
+                section.AddParagraph("Tender finished on: " + ta.Finished);
+                section.AddParagraph(" ");
+
+                foreach (TenderOffer offer in ta.TenderOffers)
+                {
+                    string temp = "           ";
+                    temp += offer.TenderRequirement.BloodType + " -> ";
+                    temp += offer.TenderRequirement.Amount;
+                    temp += " (" + offer.Money.Amount + " EUR)";
+                    nums[(int)offer.TenderRequirement.BloodType] += offer.TenderRequirement.Amount;
+                    totalMoney += offer.Money.Amount;
+                    section.AddParagraph(temp);
+                }
+                
+                section.AddParagraph(" ");
+                section.AddParagraph(" ");
+            }
+
+            section.AddParagraph("Total");
+            section.AddLine();
+            section.AddParagraph(" ");
+
+            for (int i = 0; i < 8; i++)
+            {
+                string temp = "";
+                temp += (BloodType)i + " -> ";
+                temp += nums[i];
+                section.AddParagraph(temp);
+            }
+
+            section.AddParagraph(" ");
+            section.AddParagraph("Total money: " + totalMoney + " EUR");
+
+            builder.Build(stream);
+            stream.Close();
         }
     }
 }

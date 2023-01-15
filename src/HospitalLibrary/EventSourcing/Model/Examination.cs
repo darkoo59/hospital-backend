@@ -77,7 +77,7 @@ namespace HospitalLibrary.EventSourcing.Model
         private void When(ExaminationStarted examinationStarted)
         {
             Id = examinationStarted.AppointmentId;
-            //_dateRange.Start = examinationStarted.Time; 
+            _dateRange.Start = examinationStarted.Time; 
             _appointmentId = examinationStarted.AppointmentId;
         }
 
@@ -95,7 +95,7 @@ namespace HospitalLibrary.EventSourcing.Model
 
         private void When(ExaminationFinished examinationFinished)
         {
-            //_dateRange.End = examinationFinished.Time;
+            _dateRange.End = examinationFinished.Time;
         }
 
     }
