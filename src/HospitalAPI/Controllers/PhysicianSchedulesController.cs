@@ -1,13 +1,11 @@
-﻿using HospitalAPI.Dtos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers
 {
@@ -122,11 +120,24 @@ namespace HospitalAPI.Controllers
             return Ok(physicianSchedule);
         }
 
+
         [HttpPut("finish/{appointmentId}")]
         public ActionResult SetAppointmentToFinish(int appointmentId)
         {
             _service.SetAppointmentToFinish(appointmentId);
             return Ok(appointmentId);
+        }
+        
+        [HttpGet("doctorWorkloadByDays")]
+        public ActionResult GetDoctorWorkloadByDays(DoctorWorkloadDTO doctorWorkloadDTO)
+        {
+            return Ok(_service.GetDoctorWorkloadForDateRangeByDays(doctorWorkloadDTO.DoctorId, doctorWorkloadDTO.StartDate, doctorWorkloadDTO.EndDate));
+        }
+
+        [HttpGet("doctorWorkloadByMonths")]
+        public ActionResult GetDoctorWorkloadByByMonths(DoctorWorkloadDTO doctorWorkloadDTO)
+        {
+            return Ok(_service.GetDoctorWorkloadForDateRangeByMonths(doctorWorkloadDTO.DoctorId, doctorWorkloadDTO.StartDate, doctorWorkloadDTO.EndDate));
         }
 
 

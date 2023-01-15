@@ -1,13 +1,13 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.EventSourcing.Infrastructure;
 using HospitalLibrary.EventSourcing.Model.ExaminationEvents;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.RenovationEventSourcing;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 
 namespace HospitalLibrary.Settings
@@ -43,6 +43,7 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<MoveRequest> MoveRequests { get; set; }
+		public DbSet<Event> Events { get; set; }
         public DbSet<EventStream> EventStreams { get; set; }
         public DbSet<EventWrapper> EventWrappers { get; set; }
         public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
@@ -54,7 +55,8 @@ namespace HospitalLibrary.Settings
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                .EnableSensitiveDataLogging();
 
