@@ -91,6 +91,21 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
+        public void DeleteRequest(MoveRequest request)
+        {
+            _context.MoveRequests.Remove(request);
+            _context.SaveChanges();
+        }
+
+        public MoveRequest GetRequestById(int id)
+        {
+            return _context.MoveRequests.Find(id);
+        }
+        public IEnumerable<MoveRequest> GetRequestsForRoom(int roomId)
+        {
+            return _context.MoveRequests.Where(m => m.fromRoomId == roomId || m.toRoomId == roomId);
+        }
+
         public IEnumerable<Equipment> GetEquipment(int id)
         {
             List<Equipment> equipmentList = new List<Equipment>();

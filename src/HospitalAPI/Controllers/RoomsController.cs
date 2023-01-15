@@ -112,6 +112,7 @@ namespace HospitalAPI.Controllers
 		[HttpPost("moveRequests")]
 		public ActionResult AddMoveRequest(MoveRequest moveRequest)
 		{
+			
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
@@ -120,12 +121,18 @@ namespace HospitalAPI.Controllers
 			return Ok(moveRequest);
 		}
 		[HttpPost("renovationSplit")]
-		public ActionResult AddRenovationSplitRequest(MoveRequest renovationRequest)
+		public ActionResult AddRenovationSplitRequest(MoveRequestDTO renovationRequestDTO)
 		{
-			if (!ModelState.IsValid)
+			MoveRequest renovationRequest = new MoveRequest();
+			renovationRequest.fromRoomId = renovationRequestDTO.FirstRoomId;
+			renovationRequest.toRoomId = renovationRequestDTO.SecondRoomId;
+			renovationRequest.type = renovationRequestDTO.type;
+			renovationRequest.chosenStartTime = renovationRequestDTO.ChosenStartTime;
+			renovationRequest.duration = new System.TimeSpan(renovationRequestDTO.Duration,0,0,0);
+/*			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
-			}
+			}*/
 			_roomService.AddRenovationSplitRequest(renovationRequest);
 			return Ok(renovationRequest);
 		}
@@ -133,10 +140,10 @@ namespace HospitalAPI.Controllers
         [HttpPost("renovationMerge")]
         public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
         {
-            if (!ModelState.IsValid)
+/*            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }*/
             _roomService.AddRenovationMergeRequest(renovationRequest);
             return Ok(renovationRequest);
         }
@@ -158,7 +165,23 @@ namespace HospitalAPI.Controllers
 					return Ok(moveRequest);
 				}*/
 
+		[HttpGet("viewRequests/{roomId}")]
+		public ActionResult GetRequestsForRoom(int roomId)
+		{
+			return Ok(_roomService.GetRequestsForRoom(roomId));
+		}
 
+		[HttpDelete("viewRequests/{id}")]
+		public ActionResult DeleteRequest(int id)
+		{
+			MoveRequest requestToDelete = _roomService.GetRequestById(id);
+			if (requestToDelete == null)
+			{
+				return NotFound();
+			}
+			_roomService.DeleteRequest(requestToDelete);
+			return NoContent();
+		}
 
 		// PUT api/rooms/2
 		[HttpPut("{id}")]

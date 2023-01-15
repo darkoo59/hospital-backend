@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20230107211048_AddEventsStreamTable")]
-    partial class AddEventsStreamTable
+    [Migration("20230114200510_ajmo")]
+    partial class ajmo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -532,6 +532,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Report")
                         .HasColumnType("text");
 
@@ -936,7 +939,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.PhysicianSchedule", b =>
                 {
-                    b.Property<int>("PhysicianScheduleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -947,7 +950,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<List<WorkTime>>("WorkTimes")
                         .HasColumnType("jsonb");
 
-                    b.HasKey("PhysicianScheduleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
 
@@ -1656,9 +1659,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 1,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 22, 22, 10, 47, 57, DateTimeKind.Local).AddTicks(8220),
+                            EndDate = new DateTime(2023, 1, 29, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(1986),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 17, 22, 10, 47, 53, DateTimeKind.Local).AddTicks(1831),
+                            StartDate = new DateTime(2023, 1, 24, 21, 5, 9, 946, DateTimeKind.Local).AddTicks(2474),
                             Status = 1,
                             Urgency = "NoUrgent"
                         },
@@ -1666,9 +1669,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 2,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2447),
+                            EndDate = new DateTime(2023, 2, 3, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3635),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 22, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2426),
+                            StartDate = new DateTime(2023, 1, 29, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3621),
                             Status = 2,
                             Urgency = "Urgent"
                         },
@@ -1676,9 +1679,9 @@ namespace HospitalLibrary.Migrations
                         {
                             VacationRequestId = 3,
                             DoctorId = 4,
-                            EndDate = new DateTime(2023, 2, 1, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2459),
+                            EndDate = new DateTime(2023, 2, 8, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3642),
                             Reason = "Tired",
-                            StartDate = new DateTime(2023, 1, 27, 22, 10, 47, 58, DateTimeKind.Local).AddTicks(2454),
+                            StartDate = new DateTime(2023, 2, 3, 21, 5, 9, 949, DateTimeKind.Local).AddTicks(3639),
                             Status = 0,
                             Urgency = "NoUrgent"
                         });
@@ -1898,6 +1901,24 @@ namespace HospitalLibrary.Migrations
                             Quantity = 12,
                             RoomId = 5
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationEventSourcing.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("HospitalLibrary.SharedModel.User", b =>

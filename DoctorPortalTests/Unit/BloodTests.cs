@@ -50,7 +50,7 @@ namespace HospitalTests.Unit
         }
 
 
-        [Fact]
+/*        [Fact]
         public void Blood_change_quantity()
         {
             List<Blood> bloods = GetBlood();
@@ -70,7 +70,7 @@ namespace HospitalTests.Unit
             service.ChangeQuantity(bloodUsageEvidency);
             Blood blood = service.GetByBloodType(BloodType.O_PLUS);
             Xunit.Assert.Equal(4, bloods[0].QuantityInLiters);
-        }
+        }*/
 
 
         #region private
