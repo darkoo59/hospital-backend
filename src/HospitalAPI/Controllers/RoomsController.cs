@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
@@ -138,13 +139,19 @@ namespace HospitalAPI.Controllers
 		}
 
         [HttpPost("renovationMerge")]
-        public ActionResult AddRenovationMergeRequest(MoveRequest renovationRequest)
+        public ActionResult AddRenovationMergeRequest(MoveRequestDTO renovationRequestDTO)
         {
-/*            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }*/
-            _roomService.AddRenovationMergeRequest(renovationRequest);
+			MoveRequest renovationRequest = new MoveRequest();
+			renovationRequest.fromRoomId = renovationRequestDTO.FirstRoomId;
+			renovationRequest.toRoomId = renovationRequestDTO.SecondRoomId;
+			renovationRequest.type = renovationRequestDTO.type;
+			renovationRequest.chosenStartTime = renovationRequestDTO.ChosenStartTime;
+			renovationRequest.duration = new System.TimeSpan(renovationRequestDTO.Duration, 0, 0, 0);
+			/*            if (!ModelState.IsValid)
+						{
+							return BadRequest(ModelState);
+						}*/
+			_roomService.AddRenovationMergeRequest(renovationRequest);
             return Ok(renovationRequest);
         }
 
@@ -168,7 +175,12 @@ namespace HospitalAPI.Controllers
 		[HttpGet("viewRequests/{roomId}")]
 		public ActionResult GetRequestsForRoom(int roomId)
 		{
-			return Ok(_roomService.GetRequestsForRoom(roomId));
+			IEnumerable<MoveRequest> ms = _roomService.GetRequestsForRoom(roomId);
+			foreach (MoveRequest m in ms)
+            {
+				m.chosenStartTime += new TimeSpan(1, 0, 0, 0);
+            }
+			return Ok(ms);
 		}
 
 		[HttpDelete("viewRequests/{id}")]

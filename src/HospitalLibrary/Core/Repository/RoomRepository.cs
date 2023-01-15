@@ -239,22 +239,38 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<DateTime> FindFreeTimeSlots(FreeAppointmentRequest freeAppointmentRequest)
         {
             List<DateTime> freeTimeSlots = new List<DateTime>();
-            //List<DateTime> takenTimeSlots = new List<DateTime>();
+            List<DateTime> takenTimeSlots = new List<DateTime>();
             DateTime wantedStart = freeAppointmentRequest.WantedStartDate;
             DateTime wantedEnd = freeAppointmentRequest.WantedEndDate;
             TimeSpan duration = freeAppointmentRequest.Duration;
             DateTime klizno = wantedStart;
-/*            List <MoveRequest> moveRequests = _context.MoveRequests.ToList();
-            foreach(MoveRequest mvr in moveRequests)
+
+            List<MoveRequest> moveRequests = GetRequestsForRoom(freeAppointmentRequest.FirstRoomId).ToList();
+            /*            foreach (MoveRequest mvr in moveRequests)
+                        {
+                            if (mvr.fromRoomId == freeAppointmentRequest.FirstRoomId || mvr.fromRoomId == freeAppointmentRequest.SecondRoomId || mvr.toRoomId == freeAppointmentRequest.FirstRoomId || mvr.toRoomId == freeAppointmentRequest.SecondRoomId)
+                            {
+                                takenTimeSlots.Add(mvr.chosenStartTime);
+                            }
+                        }*/
+            bool shouldBeAdded = true;
+            for (klizno = wantedStart; klizno + duration <= wantedEnd; klizno += new TimeSpan(1, 0, 0, 0))
             {
-                if(mvr.fromRoomId == freeAppointmentRequest.FirstRoomId || mvr.fromRoomId == freeAppointmentRequest.SecondRoomId || mvr.toRoomId == freeAppointmentRequest.FirstRoomId || mvr.toRoomId == freeAppointmentRequest.SecondRoomId)
+                foreach (MoveRequest m in moveRequests)
                 {
-                    takenTimeSlots.Add(mvr.chosenStartTime);
-                }
-            }*/
-            for(klizno = wantedStart; klizno + duration <= wantedEnd; klizno += duration)
-            {
-                freeTimeSlots.Add(klizno);
+                    if (!((klizno >= m.chosenStartTime && klizno <= m.chosenStartTime + m.duration) || (klizno + duration >= m.chosenStartTime && klizno + duration <= m.chosenStartTime + m.duration)))
+                    {
+                        shouldBeAdded = true;
+                    }
+                    else
+                    {
+                        shouldBeAdded = false;
+                        break;
+                    }
+                }   
+
+                if(shouldBeAdded)
+                    freeTimeSlots.Add(klizno);
             }
             return freeTimeSlots;
         }
@@ -274,7 +290,7 @@ namespace HospitalLibrary.Core.Repository
         {
             Room room1 = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.fromRoomId);
             Room room2 = _context.Rooms.FirstOrDefault(r => r.Id == renovationRequest.toRoomId);
-            room1.Number = room1.Number + "+" + room2.Number;
+            room1.Number = room1.Number;
             if(room1.Y != room2.Y)
             {
                 room1.Height += room2.Height;
