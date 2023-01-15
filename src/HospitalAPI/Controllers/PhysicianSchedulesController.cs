@@ -120,6 +120,14 @@ namespace HospitalAPI.Controllers
             return Ok(physicianSchedule);
         }
 
+
+        [HttpPut("finish/{appointmentId}")]
+        public ActionResult SetAppointmentToFinish(int appointmentId)
+        {
+            _service.SetAppointmentToFinish(appointmentId);
+            return Ok(appointmentId);
+        }
+        
         [HttpGet("doctorWorkloadByDays")]
         public ActionResult GetDoctorWorkloadByDays(DoctorWorkloadDTO doctorWorkloadDTO)
         {
