@@ -17,6 +17,9 @@ namespace HospitalLibrary.Core.Service
         void Create(Room room);
         void Update(Room room);
         void Delete(Room room);
+        void DeleteRequest(MoveRequest request);
+        MoveRequest GetRequestById(int id);
+        IEnumerable<MoveRequest> GetRequestsForRoom(int roomId);
         void MoveEquipment(MoveRequest moveRequest);
         void AddMoveRequest(MoveRequest moveRequest);
         void AddRenovationSplitRequest(MoveRequest renovationRequest);

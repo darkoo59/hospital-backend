@@ -38,8 +38,8 @@ namespace HospitalTests.Unit
             //Assert.Equal(report, data[0]);
         }
 
-        */
-        /*[Fact]
+        
+        [Fact]
         public void Create_Invalid_Examination_Report()
         {
             List<int> symptomIds = new List<int>();

@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class SecondMigration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -159,23 +159,6 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExaminationReports", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Feedbacks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Privatisation = table.Column<bool>(type: "boolean", nullable: false),
-                    Textt = table.Column<string>(type: "text", nullable: true),
-                    User = table.Column<string>(type: "text", nullable: true),
-                    Date = table.Column<string>(type: "text", nullable: true),
-                    IsDisplayedPublic = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -395,6 +378,29 @@ namespace HospitalLibrary.Migrations
                         principalTable: "MedicalRecords",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Privatisation = table.Column<bool>(type: "boolean", nullable: false),
+                    Textt = table.Column<string>(type: "text", nullable: true),
+                    PatientId = table.Column<int>(type: "integer", nullable: true),
+                    Date = table.Column<string>(type: "text", nullable: true),
+                    IsDisplayedPublic = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Feedbacks_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "PatientId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -695,8 +701,8 @@ namespace HospitalLibrary.Migrations
                 values: new object[,]
                 {
                     { 3, true, "201B3", null },
-                    { 1, false, "201B1", null },
-                    { 2, true, "201B2", null }
+                    { 2, true, "201B2", null },
+                    { 1, false, "201B1", null }
                 });
 
             migrationBuilder.InsertData(
@@ -704,8 +710,8 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "BloodRequestId", "BloodType", "DoctorId", "FinalDate", "QuantityInLiters", "ReasonForRequest" },
                 values: new object[,]
                 {
-                    { 2, 0, 1, new DateTime(2022, 11, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 3.0, "Heart surgery" },
                     { 3, 7, 1, new DateTime(2022, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 3.5, "Heart surgery" },
+                    { 2, 0, 1, new DateTime(2022, 11, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 3.0, "Heart surgery" },
                     { 1, 5, 1, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 2.5, "Heart surgery" }
                 });
 
@@ -717,9 +723,9 @@ namespace HospitalLibrary.Migrations
                     { 6, 5, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1100.0, "Hearth surgery" },
                     { 5, 3, new DateTime(2022, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 180.0, "Hearth surgery" },
                     { 4, 0, new DateTime(2022, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 700.0, "Hearth surgery" },
+                    { 3, 6, new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 450.0, "Hearth surgery" },
                     { 2, 3, new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 300.0, "Hearth surgery" },
-                    { 1, 0, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 200.0, "Hearth surgery" },
-                    { 3, 6, new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 450.0, "Hearth surgery" }
+                    { 1, 0, new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 200.0, "Hearth surgery" }
                 });
 
             migrationBuilder.InsertData(
@@ -727,14 +733,14 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "BloodId", "BloodType", "QuantityInLiters" },
                 values: new object[,]
                 {
+                    { 8, 5, 4.0 },
                     { 7, 3, 4.0 },
                     { 6, 1, 4.0 },
                     { 5, 7, 4.0 },
                     { 4, 4, 4.0 },
                     { 3, 2, 4.0 },
                     { 2, 0, 4.0 },
-                    { 1, 6, 4.0 },
-                    { 8, 5, 4.0 }
+                    { 1, 6, 4.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -746,22 +752,12 @@ namespace HospitalLibrary.Migrations
                     { 7, 1, "Defibrillator", 2, 3 },
                     { 6, 1, "Scalpel", 4, 3 },
                     { 5, 1, "Wheelchairs", 2, 2 },
-                    { 4, 1, "Scissors", 10, 2 },
-                    { 3, 1, "Gloves", 50, 2 },
                     { 2, 1, "Tounge depressor", 32, 1 },
+                    { 3, 1, "Gloves", 50, 2 },
+                    { 9, 1, "CT scanner", 2, 4 },
                     { 1, 1, "Syringe", 50, 1 },
-                    { 10, 1, "Tounge depressor", 12, 5 },
-                    { 9, 1, "CT scanner", 2, 4 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Feedbacks",
-                columns: new[] { "Id", "Date", "IsDisplayedPublic", "Privatisation", "Textt", "User" },
-                values: new object[,]
-                {
-                    { 1, "25.10.2022", false, false, "Awesome clinic!", "Милош" },
-                    { 2, "25.10.2022", false, false, "It's okay... I guess.", "Немања" },
-                    { 3, "25.10.2022", false, false, "Awful.", "Огњен" }
+                    { 4, 1, "Scissors", 10, 2 },
+                    { 10, 1, "Tounge depressor", 12, 5 }
                 });
 
             migrationBuilder.InsertData(
@@ -769,15 +765,15 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "BloodType" },
                 values: new object[,]
                 {
-                    { 8, 7 },
-                    { 6, 1 },
-                    { 5, 7 },
-                    { 4, 2 },
-                    { 3, 5 },
-                    { 2, 6 },
-                    { 1, 0 },
                     { 9, 3 },
-                    { 7, 4 }
+                    { 4, 2 },
+                    { 1, 0 },
+                    { 2, 6 },
+                    { 3, 5 },
+                    { 5, 7 },
+                    { 6, 1 },
+                    { 7, 4 },
+                    { 8, 7 }
                 });
 
             migrationBuilder.InsertData(
@@ -785,8 +781,8 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "MedicineId", "Manufacturer", "Name", "RecipeId" },
                 values: new object[,]
                 {
-                    { 1, "Galenika", "Aspirin", null },
                     { 2, "Hemofarm", "Bromazepam", null },
+                    { 1, "Galenika", "Aspirin", null },
                     { 3, "Hemofarm", "Caffetin", null }
                 });
 
@@ -800,15 +796,15 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "PatientId", "IsAccountActivated", "MedicalRecord", "Name", "Surname", "UserId" },
                 values: new object[,]
                 {
-                    { 9, false, 9, "Aleksa", "Aleksic", 0 },
-                    { 1, false, 1, "Pera", "Peric", 0 },
-                    { 2, false, 2, "Marko", "Markovic", 0 },
                     { 8, false, 8, "Marko", "Markovic", 0 },
-                    { 4, false, 4, "Pera", "Peric", 0 },
-                    { 5, false, 5, "Marko", "Markovic", 0 },
-                    { 6, false, 6, "Aleksa", "Aleksic", 0 },
                     { 7, false, 7, "Pera", "Peric", 0 },
-                    { 3, false, 3, "Aleksa", "Aleksic", 0 }
+                    { 6, false, 6, "Aleksa", "Aleksic", 0 },
+                    { 5, false, 5, "Marko", "Markovic", 0 },
+                    { 4, false, 4, "Pera", "Peric", 0 },
+                    { 3, false, 3, "Aleksa", "Aleksic", 0 },
+                    { 2, false, 2, "Marko", "Markovic", 0 },
+                    { 1, false, 1, "Pera", "Peric", 0 },
+                    { 9, false, 9, "Aleksa", "Aleksic", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -816,45 +812,45 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "BuildingId", "Description", "FloorId", "Height", "Number", "Type", "Width", "X", "Y" },
                 values: new object[,]
                 {
-                    { 32, "B", "neki opis", 2, 250, "301B", 0, 485, 10, 10 },
+                    { 28, "B", "neki opis1", 1, 250, "205B", 0, 283, 358, 270 },
                     { 29, "B", "neki opis2", 1, 250, "206B", 0, 283, 358, 530 },
                     { 30, "B", "neki opis1", 1, 250, "207B", 0, 282, 706, 270 },
                     { 31, "B", "neki opis2", 1, 250, "208B", 0, 282, 706, 530 },
+                    { 32, "B", "neki opis", 2, 250, "301B", 0, 485, 10, 10 },
                     { 33, "B", "neki opis1", 2, 250, "302B", 0, 480, 505, 10 },
-                    { 39, "B", "neki opis2", 2, 250, "308B", 0, 282, 706, 530 },
+                    { 38, "B", "neki opis1", 2, 250, "307B", 0, 282, 706, 270 },
                     { 35, "B", "neki opis", 2, 250, "304B", 0, 283, 10, 530 },
                     { 36, "B", "neki opis1", 2, 250, "305B", 0, 283, 358, 270 },
                     { 37, "B", "neki opis2", 2, 250, "306B", 0, 283, 358, 530 },
-                    { 38, "B", "neki opis1", 2, 250, "307B", 0, 282, 706, 270 },
-                    { 28, "B", "neki opis1", 1, 250, "205B", 0, 283, 358, 270 },
-                    { 34, "B", "neki opis2", 2, 250, "303B", 0, 283, 10, 270 },
+                    { 39, "B", "neki opis2", 2, 250, "308B", 0, 282, 706, 530 },
                     { 27, "B", "neki opis", 1, 250, "204B", 0, 283, 10, 530 },
-                    { 8, "A", "neki opis5", 1, 250, "203A", 0, 170, 10, 530 },
-                    { 25, "B", "neki opis1", 1, 250, "202B", 0, 480, 505, 10 },
-                    { 3, "A", "neki opis2", 0, 250, "103A", 0, 170, 10, 530 },
-                    { 4, "A", "neki opis", 0, 250, "104A", 0, 170, 220, 270 },
-                    { 5, "A", "neki opis1", 0, 250, "105A", 0, 170, 220, 530 },
+                    { 34, "B", "neki opis2", 2, 250, "303B", 0, 283, 10, 270 },
+                    { 26, "B", "neki opis2", 1, 250, "203B", 0, 283, 10, 270 },
                     { 6, "A", "neki opis3", 1, 250, "201A", 0, 380, 10, 10 },
-                    { 7, "A", "neki opis4", 1, 250, "202A", 0, 170, 10, 270 },
+                    { 24, "B", "neki opis", 1, 250, "201B", 0, 485, 10, 10 },
                     { 9, "A", "neki opis4", 1, 250, "204A", 0, 170, 220, 270 },
                     { 10, "A", "neki opis5", 1, 250, "205A", 0, 170, 220, 530 },
-                    { 11, "A", "neki opis6", 2, 250, "301A", 0, 380, 10, 10 },
-                    { 12, "A", "neki opis7", 2, 250, "302A", 0, 170, 10, 270 },
-                    { 13, "A", "neki opis8", 2, 250, "303A", 0, 170, 10, 530 },
-                    { 26, "B", "neki opis2", 1, 250, "203B", 0, 283, 10, 270 },
+                    { 5, "A", "neki opis1", 0, 250, "105A", 0, 170, 220, 530 },
+                    { 4, "A", "neki opis", 0, 250, "104A", 0, 170, 220, 270 },
+                    { 3, "A", "neki opis2", 0, 250, "103A", 0, 170, 10, 530 },
                     { 2, "A", "neki opis1", 0, 250, "102A", 0, 170, 10, 270 },
+                    { 25, "B", "neki opis1", 1, 250, "202B", 0, 480, 505, 10 },
                     { 1, "A", "neki opis", 0, 250, "101A", 0, 380, 10, 10 },
-                    { 17, "B", "neki opis1", 0, 250, "102B", 0, 480, 505, 10 },
-                    { 24, "B", "neki opis", 1, 250, "201B", 0, 485, 10, 10 },
-                    { 23, "B", "neki opis2", 0, 250, "108B", 0, 282, 706, 530 },
-                    { 22, "B", "neki opis1", 0, 250, "107B", 0, 282, 706, 270 },
-                    { 21, "B", "neki opis2", 0, 250, "106B", 0, 283, 358, 530 },
+                    { 8, "A", "neki opis5", 1, 250, "203A", 0, 170, 10, 530 },
+                    { 12, "A", "neki opis7", 2, 250, "302A", 0, 170, 10, 270 },
+                    { 11, "A", "neki opis6", 2, 250, "301A", 0, 380, 10, 10 },
                     { 14, "A", "neki opis7", 2, 250, "304A", 0, 170, 220, 270 },
-                    { 20, "B", "neki opis1", 0, 250, "105B", 0, 283, 358, 270 },
                     { 15, "A", "neki opis8", 2, 250, "305A", 0, 170, 220, 530 },
                     { 16, "B", "neki opis", 0, 250, "101B", 0, 485, 10, 10 },
+                    { 17, "B", "neki opis1", 0, 250, "102B", 0, 480, 505, 10 },
+                    { 18, "B", "neki opis2", 0, 250, "103B", 0, 283, 10, 270 },
                     { 19, "B", "neki opis", 0, 250, "104B", 0, 283, 10, 530 },
-                    { 18, "B", "neki opis2", 0, 250, "103B", 0, 283, 10, 270 }
+                    { 20, "B", "neki opis1", 0, 250, "105B", 0, 283, 358, 270 },
+                    { 21, "B", "neki opis2", 0, 250, "106B", 0, 283, 358, 530 },
+                    { 22, "B", "neki opis1", 0, 250, "107B", 0, 282, 706, 270 },
+                    { 23, "B", "neki opis2", 0, 250, "108B", 0, 282, 706, 530 },
+                    { 13, "A", "neki opis8", 2, 250, "303A", 0, 170, 10, 530 },
+                    { 7, "A", "neki opis4", 1, 250, "202A", 0, 170, 10, 270 }
                 });
 
             migrationBuilder.InsertData(
@@ -862,9 +858,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "SpecializationId", "Name" },
                 values: new object[,]
                 {
-                    { 3, "Family medicine" },
                     { 1, "Anesthesiology" },
-                    { 2, "Dermatology" }
+                    { 2, "Dermatology" },
+                    { 3, "Family medicine" }
                 });
 
             migrationBuilder.InsertData(
@@ -872,9 +868,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "SymptomId", "ExaminationReportId", "Name" },
                 values: new object[,]
                 {
+                    { 2, null, "Sore throat" },
                     { 3, null, "Elevated body temperature" },
-                    { 1, null, "High blood presure" },
-                    { 2, null, "Sore throat" }
+                    { 1, null, "High blood presure" }
                 });
 
             migrationBuilder.InsertData(
@@ -885,8 +881,8 @@ namespace HospitalLibrary.Migrations
                     { 1, "doctor1", "doctor1", 1 },
                     { 2, "doctor2", "doctor2", 1 },
                     { 3, "doctor3", "doctor3", 1 },
-                    { 5, "email", "password", 0 },
-                    { 4, "doctor4", "doctor4", 1 }
+                    { 4, "doctor4", "doctor4", 1 },
+                    { 5, "email", "password", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -894,9 +890,9 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "VacationRequestId", "DoctorId", "EndDate", "Reason", "StartDate", "Status", "Urgency" },
                 values: new object[,]
                 {
-                    { 3, 4, new DateTime(2023, 2, 9, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4184), "Tired", new DateTime(2023, 2, 4, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4180), 0, "NoUrgent" },
-                    { 1, 4, new DateTime(2023, 1, 30, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(1202), "Tired", new DateTime(2023, 1, 25, 16, 34, 54, 18, DateTimeKind.Local).AddTicks(8445), 1, "NoUrgent" },
-                    { 2, 4, new DateTime(2023, 2, 4, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4172), "Tired", new DateTime(2023, 1, 30, 16, 34, 54, 26, DateTimeKind.Local).AddTicks(4144), 2, "Urgent" }
+                    { 3, 4, new DateTime(2023, 2, 9, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(3043), "Tired", new DateTime(2023, 2, 4, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(3038), 0, "NoUrgent" },
+                    { 2, 4, new DateTime(2023, 2, 4, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(3028), "Tired", new DateTime(2023, 1, 30, 22, 0, 30, 726, DateTimeKind.Local).AddTicks(2986), 2, "Urgent" },
+                    { 1, 4, new DateTime(2023, 1, 30, 22, 0, 30, 725, DateTimeKind.Local).AddTicks(9171), "Tired", new DateTime(2023, 1, 25, 22, 0, 30, 719, DateTimeKind.Local).AddTicks(9923), 1, "NoUrgent" }
                 });
 
             migrationBuilder.InsertData(
@@ -908,6 +904,16 @@ namespace HospitalLibrary.Migrations
                     { 3, "Aleksa", 1, 2, "Santic" },
                     { 1, "Ognjen", 1, 3, "Nikolic" },
                     { 4, "Nikola", 1, 3, "Peric" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Feedbacks",
+                columns: new[] { "Id", "Date", "IsDisplayedPublic", "PatientId", "Privatisation", "Textt" },
+                values: new object[,]
+                {
+                    { 1, "25.10.2022", false, 5, false, "Awesome clinic!" },
+                    { 2, "25.10.2022", false, 5, false, "It's okay... I guess." },
+                    { 3, "25.10.2022", false, 5, false, "Awful." }
                 });
 
             migrationBuilder.InsertData(
@@ -969,6 +975,11 @@ namespace HospitalLibrary.Migrations
                 name: "IX_EventWrappers_EventId",
                 table: "EventWrappers",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedbacks_PatientId",
+                table: "Feedbacks",
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InpatientTreatments_BedId",
