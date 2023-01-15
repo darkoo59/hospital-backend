@@ -210,6 +210,7 @@ namespace HospitalLibrary.RenovationEventSourcing
 				if (@event.EventType == EventType.RenovationScheduled)
 				{
 					averagePageTime = new Dictionary<string, double>(backupDictionary);
+					previousEvent = null;
 					continue;
 				}
 				else if (@event.EventType == EventType.Canceled)
