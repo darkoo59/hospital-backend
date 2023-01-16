@@ -32,7 +32,7 @@ namespace HospitalLibrary.Core.Model
 
         private bool Validate(DateTime start, DateTime end)
         {
-            return start < end;        
+            return start < end;  
         }
     }
 }

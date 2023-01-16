@@ -1,26 +1,32 @@
+using System.Text;
+using System.Threading.Tasks;
 using HospitalAPI.Dtos;
 using HospitalAPI.Mappers;
+using HospitalAPI.Registration.Dtos;
+using HospitalAPI.Registration.Mappers;
 using HospitalLibrary.Core.Model;
-using HospitalLibrary.SharedModel;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.HospitalMap.Repository;
 using HospitalLibrary.HospitalMap.Service;
+using HospitalLibrary.Registration.Repository;
+using HospitalLibrary.Registration.Service;
+using HospitalLibrary.RenovationEventSourcing;
+using HospitalLibrary.Security;
 using HospitalLibrary.Settings;
-using MailKit;
+using HospitalLibrary.SharedModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Identity;
-using System;
-using HospitalLibrary.Security;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Registration.Repository;
@@ -30,6 +36,11 @@ using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Core.Repository.HospitalLibrary.Core.Repository;
+using HospitalLibrary.EventSourcing.Service;
+using HospitalLibrary.EventSourcing.Repository;
+using HospitalLibrary.EventSourcing.Infrastructure;
+using HospitalLibrary.EventSourcing.Projections.Examination;
+using HospitalLibrary.Feedbacks.Model;
 
 namespace HospitalAPI
 {
@@ -82,6 +93,8 @@ namespace HospitalAPI
             services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
             services.AddScoped<IGenericMapper<MedicalRecord, PatientDTO>, MedicalRecordMapper>();
             
+
+            services.AddScoped<IGenericMapper<Patient, PatientDTO>, PatientMapper>();
             services.AddScoped<IGenericMapper<Appointment, AppointmentDTO>, AppointmentMapper>();
             services.AddScoped<IGenericMapper<Bed, BedDTO>, BedMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatment, InpatientTreatmentDTO>, InpatientTreatmentMapper>();
@@ -89,6 +102,7 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<MedicineTherapy, MedicineTherapyDTO>, MedicineTherapyMapper>();
             services.AddScoped<IGenericMapper<BloodTherapy, BloodTherapyDTO>, BloodTherapyMapper>();
             services.AddScoped<IGenericMapper<InpatientTreatmentTherapy, InpatientTreatmentTherapyDTO>, InpatientTreatmentTherapyMapper>();
+            services.AddScoped<IGenericMapper<Feedback, FeedbackDTO>, FeedbackMapper>();
 
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
@@ -117,6 +131,9 @@ namespace HospitalAPI
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IGenericMapper<Doctor, DoctorDTO>, DoctorMapper>();
+
+            services.AddScoped<IEquipmentTenderService, EquipmentTenderService>();
+
 
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
@@ -159,6 +176,23 @@ namespace HospitalAPI
             services.AddScoped<IGenericMapper<WorkTime, WorkTimeDTO>, WorkTimeMapper>();
             services.AddScoped<IGenericMapper<Vacation, VacationDTO>, VacationMapper>();
             services.AddScoped<IGenericMapper<PhysicianSchedule, PhysicianScheduleDTO>, PhysicianScheduleMapper>();
+
+			services.AddScoped<IEventInvoker, EventInvoker>();
+			services.AddScoped<IEventService, EventService>();
+			services.AddScoped<IEventRepository, EventRepository>();
+
+            services.AddScoped<IExaminationRepository, ExaminationRepository>();
+            services.AddScoped<IExaminationService, ExaminationService>();
+            services.AddScoped<EventStore>();
+
+            services.AddScoped<IGenericMapper<AverageNumberOfSteps, AverageNumberOfExaminationStepsDTO>, AverageNumberOfExaminationStepsMapper>();
+            services.AddScoped<IGenericMapper<AverageNumberOfVisitsToCertainStep, AverageNumberOfVisitsToCertainStepDTO>, AverageNumberOfVisitsToCertainStepMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfExam, AverageDurationOfExamDTO>, AverageDurationOfExamMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfEachStep, AverageDurationOfEachStepDTO>, AverageDurationOfEachStepMapper>();
+            services.AddScoped<IGenericMapper<AverageDurationOfSingleStep, AverageDurationOfSingleStepDTO>, AverageDurationOfSingleStepMapper>();
+
+            //services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
 
             SetupAuth(services);
         }

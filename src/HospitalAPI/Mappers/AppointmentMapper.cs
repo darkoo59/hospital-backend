@@ -1,8 +1,10 @@
 ﻿using HospitalAPI.Dtos;
 using HospitalAPI.Registration.Dtos;
 using HospitalLibrary.Core.Model;
+using Npgsql.TypeHandlers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,9 +60,9 @@ namespace HospitalAPI.Mappers
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             appointmentDTO.Id = appointment.Id;
             appointmentDTO.Date = appointment.ScheduledDate.Start;
-            appointmentDTO.Time = appointment.ScheduledDate.Start.Hour.ToString() + ":" + appointment.ScheduledDate.Start.Minute.ToString();
+            appointmentDTO.Time = appointment.ScheduledDate.Start.ToString("HH:mm");
             appointmentDTO.PatientId = (int)appointment.PatientId;
-            appointmentDTO.Patient = _patientMapper.ToDTO(appointment.Patient);
+            if(appointment.Patient != null)appointmentDTO.Patient = _patientMapper.ToDTO(appointment.Patient);
             appointmentDTO.DoctorId = appointment.DoctorId;
             appointmentDTO.IsFinished = appointment.IsFinished;
 
@@ -74,9 +76,9 @@ namespace HospitalAPI.Mappers
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.Id = appointment.Id;
                 appointmentDTO.Date = appointment.ScheduledDate.Start;
-                appointmentDTO.Time = appointment.ScheduledDate.Start.Hour.ToString() + ":" + appointment.ScheduledDate.Start.Minute.ToString();
+                appointmentDTO.Time = appointment.ScheduledDate.Start.ToString("HH:mm");
                 appointmentDTO.PatientId = (int)appointment.PatientId;
-                appointmentDTO.Patient = _patientMapper.ToDTO(appointment.Patient);
+                if (appointment.Patient != null) appointmentDTO.Patient = _patientMapper.ToDTO(appointment.Patient);
                 appointmentDTO.DoctorId = appointment.DoctorId;
                 appointmentDTO.IsFinished = appointment.IsFinished;
                 appointmentDTOs.Add(appointmentDTO);

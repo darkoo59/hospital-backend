@@ -1,11 +1,13 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.EventSourcing.Infrastructure;
+using HospitalLibrary.EventSourcing.Model.ExaminationEvents;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.HospitalMap.Enums;
 using HospitalLibrary.HospitalMap.Model;
+using HospitalLibrary.RenovationEventSourcing;
 using HospitalLibrary.SharedModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 
 namespace HospitalLibrary.Settings
@@ -26,7 +28,7 @@ namespace HospitalLibrary.Settings
         //public DbSet<WorkTime> WorkTimes { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
-        public DbSet<VacationRequest> VacationRequests {get;set;}
+        public DbSet<VacationRequest> VacationRequests { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Blood> Bloods { get; set; }
         public DbSet<BloodUsageEvidency> BloodUsageEvidencies { get; set; }
@@ -41,6 +43,17 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationReport> ExaminationReports { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<MoveRequest> MoveRequests { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventStream> EventStreams { get; set; }
+        public DbSet<EventWrapper> EventWrappers { get; set; }
+        public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
+        public DbSet<ExaminationStarted> ExaminationStartedEvents { get; set; }
+        public DbSet<RecipesCreated> RecipesCreatedEvents { get; set; }
+        public DbSet<ReportEntered> ReportEnteredEvents { get; set; }
+        public DbSet<SymptomsSelected> SymptomsSelectedEvents { get; set; }
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -189,9 +202,9 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<Feedback>().HasData(
 
-                new Feedback() { Id = 1, Textt = "Awesome clinic!", User = "Милош", Date = "25.10.2022" },
-                new Feedback() { Id = 2, Textt = "It's okay... I guess.", User = "Немања", Date = "25.10.2022" },
-                new Feedback() { Id = 3, Textt = "Awful.", User = "Огњен", Date = "25.10.2022" }
+                new Feedback() { Id = 1, Textt = "Awesome clinic!", PatientId = 5, Date = "25.10.2022" },
+                new Feedback() { Id = 2, Textt = "It's okay... I guess.", PatientId = 5, Date = "25.10.2022" },
+                new Feedback() { Id = 3, Textt = "Awful.", PatientId = 5, Date = "25.10.2022" }
 
             );
 
@@ -272,6 +285,8 @@ namespace HospitalLibrary.Settings
                 .Property(b => b.WorkTimes)
                 .HasColumnType("jsonb");
 
+            
+            
             modelBuilder.Entity<Symptom>().HasData(
                new Symptom() { SymptomId = 1, Name = "High blood presure" },
                new Symptom() { SymptomId = 2, Name = "Sore throat" },
@@ -280,6 +295,7 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Vacation>().HasKey(v => v.Id);
             modelBuilder.Entity<Appointment>().HasKey(v => v.Id);
             modelBuilder.Entity<ExaminationReport>().HasKey(v => v.Id);
+            modelBuilder.Entity<PhysicianSchedule>().HasKey(v => v.Id);
 
 
             modelBuilder.Entity<Appointment>()

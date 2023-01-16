@@ -27,5 +27,9 @@ namespace HospitalLibrary.Core.Service
         {
             return _doctorRepository.GetById(id);
         }
+        public IEnumerable<Doctor> GetAllBySpecialization(int specialization)
+        {
+            return _doctorRepository.GetAllDoctorsBySpecialization(specialization);
+        }
     }
 }
