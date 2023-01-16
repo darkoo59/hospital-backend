@@ -12,5 +12,6 @@ namespace IntegrationLibrary.Features.BloodBank.Repository
         User GetById(int id);
 
         string GetAppNameByServer(string server);
+        string GetMailByServerName(string server);
     }
 }

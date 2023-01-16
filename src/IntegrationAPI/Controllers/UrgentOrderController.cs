@@ -37,9 +37,11 @@ namespace IntegrationAPI.Controllers
         {
             //if (!AuthorizationUtil.IsAuthorized(Request)) return Unauthorized();
 
-            _service.CreateUrgentOrderReport(dto.DateFrom, dto.DateTo);
+            string filePath = _service.CreateUrgentOrderReport(dto.DateFrom, dto.DateTo);
 
-            return Ok();
+            var file = System.IO.File.OpenRead(filePath);
+
+            return File(file, "application/pdf");
         }
     }
 }

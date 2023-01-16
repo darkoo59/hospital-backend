@@ -45,5 +45,10 @@ namespace IntegrationLibrary.Features.BloodBank.Repository
         {
             return GetAll().FirstOrDefault(user => user.Server == server).AppName;
         }
+
+        public string GetMailByServerName(string server)
+        {
+            return GetAll().FirstOrDefault(user => user.AppName == server).Email;
+        }
     }
 }

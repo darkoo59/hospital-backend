@@ -120,5 +120,10 @@ namespace IntegrationLibrary.Features.BloodBank.Service
         {
             return _userRepository.GetAppNameByServer(server);
         }
+
+        public string GetMailByServerName(string server)
+        {
+            return _userRepository.GetMailByServerName(server);
+        }
     }
 }
